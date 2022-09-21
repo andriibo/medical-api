@@ -1,5 +1,5 @@
 import {Controller, Get} from '@nestjs/common';
-import {AppService, Movie} from './app.service';
+import {AppService} from './app.service';
 
 @Controller()
 export class AppController {
@@ -7,7 +7,7 @@ export class AppController {
     }
 
     @Get()
-    getMovies(): Movie[] {
-        return this.appService.getMovies();
+    getHello(): string {
+        return this.appService.getHello();
     }
 }

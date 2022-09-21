@@ -14,6 +14,10 @@ export class AppService {
         {id: 3, name: 'Star Wars: The Rise of Skywalker', year: 2019},
     ];
 
+    getHello(): string {
+        return 'Hello World!';
+    }
+
     getMovies(): Movie[] {
         return this.movies;
     }
