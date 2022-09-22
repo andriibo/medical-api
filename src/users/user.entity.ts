@@ -2,12 +2,15 @@ import {Entity, Column, PrimaryGeneratedColumn} from 'typeorm';
 
 @Entity()
 export class User {
-    @PrimaryGeneratedColumn()
-    id: string;
+    @PrimaryGeneratedColumn({name: 'user_id'})
+    userId: string;
 
     @Column()
     name: string;
 
-    @Column({default: true})
+    @Column({name: 'is_active', default: true})
     isActive: boolean;
+
+    @Column({name: 'created_at', type: 'timestamp'})
+    createdAt: string;
 }
