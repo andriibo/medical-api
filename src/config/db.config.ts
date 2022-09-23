@@ -1,6 +1,6 @@
 import {DataSourceOptions} from "typeorm"
 
-export const dataSourceOptions = {
+export const dbConnectionOptions = {
     type: 'postgres',
     host: process.env.DB_HOST || '',
     port: Number(process.env.DB_PORT || 5432),
@@ -8,6 +8,4 @@ export const dataSourceOptions = {
     password: process.env.DB_PASSWORD || '',
     database: process.env.DB_NAME || '',
     entities: ['../src/**/**.entity.ts'],
-    migrations: ['../database/migrations/*.ts'],
-    synchronize: false,
 } as DataSourceOptions;

@@ -4,11 +4,11 @@ import {AppService} from './app.service';
 import {TypeOrmModule} from '@nestjs/typeorm';
 import {DataSource} from 'typeorm';
 import {UsersModule} from './users/users.module';
-import {dataSourceOptions} from './config/db.config';
+import {dbConnectionOptions} from './config/db.config';
 
 @Module({
     imports: [
-        TypeOrmModule.forRoot(dataSourceOptions),
+        TypeOrmModule.forRoot(dbConnectionOptions),
         UsersModule,
     ],
     exports: [TypeOrmModule],
