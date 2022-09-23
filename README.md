@@ -32,6 +32,13 @@
 $ npm install
 ```
 
+## Docker
+
+```bash
+# run a stack of services
+$ docker-compose up --build -dV
+```
+
 ## Running the app
 
 ```bash
@@ -56,6 +63,20 @@ $ npm run test:e2e
 
 # test coverage
 $ npm run test:cov
+```
+
+## Migration
+
+```bash
+# commands listed below are specified in the package.json
+# create migration
+$ npm run migration:create {path-to-migration-file}
+
+# run migration
+$ npm run migration:up
+
+# revert migration
+$ npm run migration:down
 ```
 
 ## API Documentation
