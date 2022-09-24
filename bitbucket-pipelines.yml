@@ -1,9 +1,28 @@
 image: atlassian/default-image:3
 
+definitions:
+  steps:
+    - step: &deploy-to-server
+        name: deploy-to-server
+        size: 2x
+        script:
+          - pipe: atlassian/ssh-run:0.4.1
+            variables:
+              SSH_USER: $USER
+              SERVER: $SERVER_DO
+              COMMAND: |
+                export DOCKER_BUILDKIT=1
+                cd /var/www/${WORK_DIR}/
+                git pull origin ${BITBUCKET_BRANCH}
+                docker compose build --no-cache --pull
+                docker compose up -d
+                docker container prune -f
+                docker image prune -a -f
+                
 pipelines:
-  default:
-    - parallel:
+  branches:
+    master:
       - step:
-          name: 'Build and Test'
-          script:
-            - echo "Your build and test goes here..."
+          <<: *deploy-to-server
+          deployment: Develop
+          name: deploy to development
