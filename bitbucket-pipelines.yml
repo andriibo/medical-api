@@ -20,8 +20,8 @@ definitions:
                 docker image prune -a -f
                 
 pipelines:
-  custom:
-    deploy-dev:
+  branches:
+    master:
       - step:
           <<: *deploy-to-server
           deployment: Develop
