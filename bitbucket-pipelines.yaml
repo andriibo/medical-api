@@ -1,0 +1,27 @@
+image: atlassian/default-image:2
+
+definitions:
+  steps:
+    - step: &deploy-to-server
+        name: deploy-to-server
+        size: 2x
+        script:
+          - pipe: atlassian/ssh-run:0.2.8
+            variables:
+              SSH_USER: $USER
+              SERVER: $SERVER_DO
+              COMMAND: |
+                export DOCKER_BUILDKIT=1
+                cd /var/www/${WORK_DIR}/
+                git pull origin ${BITBUCKET_BRANCH}
+                docker compose build --no-cache --pull
+                docker compose up -d
+                docker image prune -a -f
+                
+pipelines:
+  custom:
+    deploy-dev:
+      - step:
+          <<: *deploy-to-server
+          deployment: Develop
+          name: deploy to development
