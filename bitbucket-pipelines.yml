@@ -6,7 +6,7 @@ definitions:
         name: deploy-to-server
         size: 2x
         script:
-          - pipe: atlassian/ssh-run:0.2.8
+          - pipe: atlassian/ssh-run:0.4.1
             variables:
               SSH_USER: $USER
               SERVER: $SERVER_DO
@@ -16,6 +16,7 @@ definitions:
                 git pull origin ${BITBUCKET_BRANCH}
                 docker compose build --no-cache --pull
                 docker compose up -d
+                docker container prune -f
                 docker image prune -a -f
                 
 pipelines:
