@@ -18,9 +18,16 @@
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
     "paths": {
+      "app/*": ["src/application/*"],
+      "config/*": ["src/config/*"],
+      "controllers/*": ["src/presentation/controllers/*"],
+      "database/*": ["database/*"],
+      "domain/*": ["src/domain/*"],
+      "infrastructure/*": ["src/infrastructure/*"],
+      "presentation/*": ["src/presentation/*"],
       "root/*": ["*"],
       "src/*": ["src/*"],
-      "database/*": ["database/*"],
+      "views/*": ["src/presentation/views/*"],
       "tests/*": ["src/test/*"]
     }
   }

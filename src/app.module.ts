@@ -1,17 +1,15 @@
 import {Module} from '@nestjs/common';
-import {AppController} from './app.controller';
-import {AppService} from './app.service';
+import {AppController} from 'controllers/app.controller';
+import {UsersController} from 'controllers/users.controller';
+import {HelloUseCase} from 'app/use-cases/hello.use-case';
 import {TypeOrmModule} from '@nestjs/typeorm';
-import {DataSource} from 'typeorm';
-import {UsersModule} from './users/users.module';
-import {dbConnectionOptions} from './config/db.config';
-import {CognitoService} from './infrastructure/aws/cognito.service';
+import {dbConnectionOptions} from 'config/db.config';
+import {CognitoService} from 'infrastructure/aws/cognito.service';
 import {ConfigModule} from '@nestjs/config';
 
 @Module({
     imports: [
         TypeOrmModule.forRoot(dbConnectionOptions),
-        UsersModule,
         ConfigModule.forRoot({
             isGlobal: true,
         }),
@@ -20,14 +18,14 @@ import {ConfigModule} from '@nestjs/config';
         TypeOrmModule,
         CognitoService,
     ],
-    controllers: [AppController],
+    controllers: [
+        AppController,
+        UsersController,
+    ],
     providers: [
-        AppService,
+        HelloUseCase,
         CognitoService,
     ],
 })
 
-export class AppModule {
-    constructor(private dataSource: DataSource) {
-    }
-}
+export class AppModule {}

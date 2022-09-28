@@ -1,10 +1,10 @@
 import {Controller, Get, Query, Post, Body, Put, Param, Delete} from '@nestjs/common';
-import {CreateUserDto, UpdateUserDto} from './users.dto';
+import {CreateUserView, UpdateUserView} from 'views/users.view';
 
 @Controller('users')
 export class UsersController {
     @Post()
-    create(@Body() createUserDto: CreateUserDto) {
+    create(@Body() createUserView: CreateUserView) {
         return 'This action adds a new user';
     }
 
@@ -14,7 +14,7 @@ export class UsersController {
     }
 
     @Put(':id')
-    update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+    update(@Param('id') id: string, @Body() updateUserView: UpdateUserView) {
         return `This action updates a #${id} user`;
     }
 

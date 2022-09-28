@@ -1,14 +1,26 @@
 import {Test, TestingModule} from '@nestjs/testing';
 import {INestApplication} from '@nestjs/common';
 import * as request from 'supertest';
-import {AppModule} from '../src/app.module';
+import {ConfigModule} from "@nestjs/config";
+import {AppController} from "controllers/app.controller";
+import {HelloUseCase} from "app/use-cases/hello.use-case";
+import {CognitoService} from "infrastructure/aws/cognito.service";
 
 describe('AppController (e2e)', () => {
     let app: INestApplication;
 
     beforeEach(async () => {
         const moduleFixture: TestingModule = await Test.createTestingModule({
-            imports: [AppModule],
+            imports: [
+                ConfigModule.forRoot({
+                    isGlobal: true,
+                }),
+            ],
+            controllers: [AppController],
+            providers: [
+                HelloUseCase,
+                CognitoService,
+            ],
         }).compile();
 
         app = moduleFixture.createNestApplication();
