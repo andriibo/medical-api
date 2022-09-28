@@ -5,15 +5,22 @@ import {TypeOrmModule} from '@nestjs/typeorm';
 import {DataSource} from 'typeorm';
 import {UsersModule} from './users/users.module';
 import {dbConnectionOptions} from './config/db.config';
+import { CognitoService } from './infrastructure/aws/cognito.service';
 
 @Module({
     imports: [
         TypeOrmModule.forRoot(dbConnectionOptions),
         UsersModule,
     ],
-    exports: [TypeOrmModule],
+    exports: [
+        TypeOrmModule,
+        CognitoService,
+    ],
     controllers: [AppController],
-    providers: [AppService],
+    providers: [
+        AppService,
+        CognitoService,
+    ],
 })
 
 export class AppModule {
