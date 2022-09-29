@@ -2,6 +2,7 @@
   "singleQuote": true,
   "trailingComma": "all",
   "endOfLine": "lf",
-  "bracketSpacing": true,
-  "tabWidth": 2
+  "bracketSpacing": false,
+  "tabWidth": 4,
+  "printWidth": 120
 }
