@@ -1,7 +1,12 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { IAuthService } from 'app/abstractions/auth.service';
 import { ConfirmSignUpModel, SignUpModel } from 'app/abstractions/models';
-import { ConfirmSignUpUserView, SignUpUserView } from 'presentation/views/auth';
+import {
+  ConfirmSignUpUserView,
+  SignUpDoctorView,
+  SignUpPatientView,
+  SignUpUserView,
+} from 'presentation/views/auth';
 
 @Injectable()
 export class SignUpUseCase {
@@ -15,7 +20,17 @@ export class SignUpUseCase {
     );
   }
 
-  public async confirmSignUnUser(requestBody: ConfirmSignUpUserView): Promise<void> {
+  public async signUpDoctor(requestBody: SignUpDoctorView): Promise<void> {
+
+  }
+
+  public async signUpPatient(requestBody: SignUpPatientView): Promise<void> {
+
+  }
+
+  public async confirmSignUnUser(
+    requestBody: ConfirmSignUpUserView,
+  ): Promise<void> {
     await this.authService.confirmSignUp(
       new ConfirmSignUpModel(requestBody.userName, requestBody.code),
     );

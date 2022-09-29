@@ -5,6 +5,8 @@ import { SignUpUseCase } from 'app/use-cases/auth/sign-up.use-case';
 import {
   ConfirmSignUpUserView,
   SignInUserView,
+  SignUpDoctorView,
+  SignUpPatientView,
   SignUpUserView,
 } from 'presentation/views/auth';
 
@@ -28,6 +30,24 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   public async signUp(@Body() requestBody: SignUpUserView): Promise<void> {
     await this.signUpUseCase.signUpUser(requestBody);
+  }
+
+  @Post('sign-up/doctor')
+  @HttpCode(HttpStatus.CREATED)
+  @HttpCode(HttpStatus.BAD_REQUEST)
+  public async signUpDoctor(
+    @Body() requestBody: SignUpDoctorView,
+  ): Promise<void> {
+    return this.signUpUseCase.signUpDoctor(requestBody);
+  }
+
+  @Post('sign-up/patient')
+  @HttpCode(HttpStatus.CREATED)
+  @HttpCode(HttpStatus.BAD_REQUEST)
+  public async signUpPatient(
+    @Body() requestBody: SignUpPatientView,
+  ): Promise<void> {
+    return this.signUpUseCase.signUpPatient(requestBody);
   }
 
   @Post('confirm-sign-up')
