@@ -2,7 +2,6 @@ import {SignInUseCase, SignUpUseCase} from 'app/use-cases/auth';
 import {AuthController} from 'controllers/auth.controller';
 import {Module} from '@nestjs/common';
 import {AppController} from 'controllers/app.controller';
-import {UsersController} from 'controllers/users.controller';
 import {HelloUseCase} from 'app/use-cases/hello.use-case';
 import {TypeOrmModule} from '@nestjs/typeorm';
 import {dbConnectionOptions} from 'config/db.config';
@@ -30,7 +29,7 @@ const INTERSEPTORS = [
         }),
     ],
     exports: [TypeOrmModule],
-    controllers: [AuthController, AppController, UsersController],
+    controllers: [AuthController, AppController],
     providers: [
         SignInUseCase,
         SignUpUseCase,

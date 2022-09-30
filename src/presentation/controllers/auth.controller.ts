@@ -2,13 +2,7 @@ import {Body, Controller, HttpCode, HttpStatus, Post} from '@nestjs/common';
 import {ApiResponse, ApiTags} from '@nestjs/swagger';
 import {SignInUseCase} from 'app/use-cases/auth/sign-in.use-case';
 import {SignUpUseCase} from 'app/use-cases/auth/sign-up.use-case';
-import {
-    ConfirmSignUpUserView,
-    SignInUserView,
-    SignUpDoctorView,
-    SignUpPatientView,
-    SignUpUserView,
-} from 'presentation/views/auth';
+import {ConfirmSignUpUserView, SignInUserView, SignUpDoctorView, SignUpPatientView} from 'presentation/views/auth';
 
 @Controller()
 @ApiTags('Auth')
@@ -21,12 +15,6 @@ export class AuthController {
     public async signIn(@Body() requestBody: SignInUserView): Promise<string> {
         const result = await this.signInUseCase.signInUser(requestBody);
         return result;
-    }
-
-    @Post('sign-up')
-    @HttpCode(HttpStatus.OK)
-    public async signUp(@Body() requestBody: SignUpUserView): Promise<void> {
-        await this.signUpUseCase.signUpUser(requestBody);
     }
 
     @Post('sign-up/doctor')
