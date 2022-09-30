@@ -14,7 +14,7 @@ import {AuthGuard, RolesGuard} from 'presentation/guards';
 
 const GUARDS = [AuthGuard, RolesGuard];
 
-const INTERSEPTORS = [
+const INTERCEPTORS = [
     {
         provide: APP_INTERCEPTOR,
         useClass: ErrorsInterceptor,
@@ -38,7 +38,7 @@ const INTERSEPTORS = [
             provide: IAuthService,
             useClass: CognitoService,
         },
-        ...INTERSEPTORS,
+        ...INTERCEPTORS,
         ...GUARDS,
     ],
 })
