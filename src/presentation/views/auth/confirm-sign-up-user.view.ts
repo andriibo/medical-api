@@ -1,8 +1,8 @@
-import { ApiProperty } from '@nestjs/swagger';
+import {ApiProperty} from '@nestjs/swagger';
 
 export class ConfirmSignUpUserView {
-  @ApiProperty()
-  public userName: string;
-  @ApiProperty()
-  public code: string;
+    @ApiProperty()
+    public userName: string;
+    @ApiProperty()
+    public code: string;
 }

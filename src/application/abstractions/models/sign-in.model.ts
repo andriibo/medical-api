@@ -1,9 +1,9 @@
 export class SignInModel {
-  public userName: string;
-  public password: string;
+    public userName: string;
+    public password: string;
 
-  constructor(userName: string, password: string) {
-    this.userName = userName;
-    this.password = password;
-  }
+    constructor(userName: string, password: string) {
+        this.userName = userName;
+        this.password = password;
+    }
 }

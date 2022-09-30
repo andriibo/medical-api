@@ -15,10 +15,7 @@ describe('AppController', () => {
                 }),
             ],
             controllers: [AppController],
-            providers: [
-                HelloUseCase,
-                CognitoService,
-            ],
+            providers: [HelloUseCase, CognitoService],
         }).compile();
 
         appController = app.get<AppController>(AppController);

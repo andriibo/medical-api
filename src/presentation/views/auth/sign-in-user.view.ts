@@ -1,8 +1,8 @@
-import { ApiProperty } from '@nestjs/swagger';
+import {ApiProperty} from '@nestjs/swagger';
 
 export class SignInUserView {
-  @ApiProperty()
-  public userName: string;
-  @ApiProperty()
-  public password: string;
+    @ApiProperty()
+    public userName: string;
+    @ApiProperty()
+    public password: string;
 }

@@ -1,4 +1,4 @@
-import {DataSource, DataSourceOptions} from "typeorm"
+import {DataSource, DataSourceOptions} from 'typeorm';
 import {dbConnectionOptions} from './db.config';
 
 const dataSourceOptions = {

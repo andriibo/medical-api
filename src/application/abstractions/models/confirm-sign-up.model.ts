@@ -1,9 +1,9 @@
 export class ConfirmSignUpModel {
-  public userName: string;
-  public code: string;
+    public userName: string;
+    public code: string;
 
-  constructor(userName: string, code: string) {
-    this.userName = userName;
-    this.code = code;
-  }
+    constructor(userName: string, code: string) {
+        this.userName = userName;
+        this.code = code;
+    }
 }
