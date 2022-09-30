@@ -1,4 +1,13 @@
-import {Injectable, CanActivate, ExecutionContext, SetMetadata, Inject, UnauthorizedException} from '@nestjs/common';
+import {
+    Injectable,
+    CanActivate,
+    ExecutionContext,
+    SetMetadata,
+    Inject,
+    UnauthorizedException,
+    UseGuards,
+    applyDecorators,
+} from '@nestjs/common';
 import {Reflector} from '@nestjs/core';
 import {IAuthService} from 'app/abstractions/auth.service';
 import {CLAIMS} from 'infrastructure/aws/cognito.service';
@@ -34,4 +43,4 @@ export class RolesGuard implements CanActivate {
     }
 }
 
-export const Roles = (...roles: string[]) => SetMetadata('roles', roles);
+export const Roles = (...roles: string[]) => applyDecorators(SetMetadata('roles', roles), UseGuards(RolesGuard));

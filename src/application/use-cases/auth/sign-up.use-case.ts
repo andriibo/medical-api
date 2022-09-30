@@ -9,6 +9,7 @@ export class SignUpUseCase {
 
     public async signUpUser(requestBody: SignUpUserView): Promise<void> {
         await this.authService.signUp(new SignUpModel(requestBody.userName, requestBody.password));
+        this.setUserRole(requestBody.userName, 'Patient');
     }
 
     public async signUpDoctor(requestBody: SignUpDoctorView): Promise<void> {}
@@ -17,5 +18,14 @@ export class SignUpUseCase {
 
     public async confirmSignUnUser(requestBody: ConfirmSignUpUserView): Promise<void> {
         await this.authService.confirmSignUp(new ConfirmSignUpModel(requestBody.userName, requestBody.code));
+    }
+
+    private async setUserRole(userName: string, role: string): Promise<void> {
+        const isGroupExist = await this.authService.isGroupExist(role);
+        if (!isGroupExist) {
+            await this.authService.createUserGroup(role);
+        }
+
+        await this.authService.addUserToGroup(userName, role);
     }
 }
