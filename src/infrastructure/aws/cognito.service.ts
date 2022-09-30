@@ -5,6 +5,9 @@ import {
     AuthFlowType,
     SignUpCommand,
     ConfirmSignUpCommand,
+    AdminAddUserToGroupCommand,
+    CreateGroupCommand,
+    GetGroupCommand,
 } from '@aws-sdk/client-cognito-identity-provider';
 import {ConfigService} from '@nestjs/config';
 import {ConfirmSignUpModel, SignInModel, SignUpModel} from 'app/abstractions/models';
@@ -93,6 +96,54 @@ export class CognitoService implements IAuthService {
             Username: user.userName,
             ConfirmationCode: user.code,
             ClientId: this.config.clientId,
+        });
+
+        try {
+            await this.cognitoClient.send(command);
+        } catch (error) {
+            console.log(error.message);
+            throw error;
+        }
+    }
+
+    public async isGroupExist(groupName: string): Promise<boolean> {
+        const command = new GetGroupCommand({
+            GroupName: groupName,
+            UserPoolId: this.config.userPoolId,
+        });
+
+        try {
+            const group = await this.cognitoClient.send(command);
+            return group.Group?.GroupName === groupName;
+        } catch (error) {
+            if (error.name === 'ResourceNotFoundException') {
+                return false;
+            }
+
+            console.log(error.message);
+            throw error;
+        }
+    }
+
+    public async createUserGroup(groupName: string): Promise<void> {
+        const command = new CreateGroupCommand({
+            GroupName: groupName,
+            UserPoolId: this.config.userPoolId,
+        });
+
+        try {
+            await this.cognitoClient.send(command);
+        } catch (error) {
+            console.log(error.message);
+            throw error;
+        }
+    }
+
+    public async addUserToGroup(userName: string, groupName: string): Promise<void> {
+        const command = new AdminAddUserToGroupCommand({
+            Username: userName,
+            GroupName: groupName,
+            UserPoolId: this.config.userPoolId,
         });
 
         try {

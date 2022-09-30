@@ -9,21 +9,11 @@ import {dbConnectionOptions} from 'config/db.config';
 import {CognitoService} from 'infrastructure/aws/cognito.service';
 import {ConfigModule} from '@nestjs/config';
 import {IAuthService} from 'app/abstractions/auth.service';
-import {APP_GUARD, APP_INTERCEPTOR} from '@nestjs/core';
+import {APP_INTERCEPTOR} from '@nestjs/core';
 import {ErrorsInterceptor} from 'presentation/middlewares/errors-interceptor';
-import {RolesGuard} from 'presentation/guards/roles.guard';
-import {AuthGuard} from 'presentation/guards/auth.guard';
+import {AuthGuard, RolesGuard} from 'presentation/guards';
 
-const GUARDS = [
-    {
-        provide: APP_GUARD,
-        useClass: AuthGuard,
-    },
-    {
-        provide: APP_GUARD,
-        useClass: RolesGuard,
-    },
-];
+const GUARDS = [AuthGuard, RolesGuard];
 
 const INTERSEPTORS = [
     {
