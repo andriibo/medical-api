@@ -1,5 +1,5 @@
 import {Inject, Injectable} from '@nestjs/common';
-import {IAuthService} from 'app/abstractions/auth.service';
+import {IAuthService} from 'app/abstractions/services/auth.service';
 import {SignInModel} from 'app/abstractions/models';
 import {SignInUserView} from 'presentation/views/auth';
 

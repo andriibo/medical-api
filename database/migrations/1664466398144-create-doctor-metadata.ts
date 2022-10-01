@@ -1,44 +1,39 @@
-import {
-  MigrationInterface,
-  QueryRunner,
-  Table,
-  TableForeignKey,
-} from 'typeorm';
+import {MigrationInterface, QueryRunner, Table, TableForeignKey} from 'typeorm';
 
 export class createDoctorMetadata1664466398144 implements MigrationInterface {
-  public async up(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.createTable(
-      new Table({
-        name: 'doctor_metadata',
-        columns: [
-          {
-            name: 'user_id',
-            type: 'uuid',
-          },
-          {
-            name: 'institution',
-            type: 'varchar',
-            length: '100',
-            default: "''",
-            isNullable: false,
-          },
-        ],
-      }),
-      true,
-    );
+    public async up(queryRunner: QueryRunner): Promise<void> {
+        await queryRunner.createTable(
+            new Table({
+                name: 'doctor_metadata',
+                columns: [
+                    {
+                        name: 'user_id',
+                        type: 'uuid',
+                    },
+                    {
+                        name: 'institution',
+                        type: 'varchar',
+                        length: '100',
+                        default: "''",
+                        isNullable: false,
+                    },
+                ],
+            }),
+            true,
+        );
 
-    await queryRunner.createForeignKey(
-      'doctor_metadata',
-      new TableForeignKey({
-        columnNames: ['user_id'],
-        referencedColumnNames: ['user_id'],
-        referencedTableName: 'user',
-        onDelete: 'CASCADE',
-      }),
-    );
-  }
+        await queryRunner.createForeignKey(
+            'doctor_metadata',
+            new TableForeignKey({
+                columnNames: ['user_id'],
+                referencedColumnNames: ['user_id'],
+                referencedTableName: 'user',
+                onDelete: 'CASCADE',
+            }),
+        );
+    }
 
-  public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('doctor_metadata');
-  }
+    public async down(queryRunner: QueryRunner): Promise<void> {
+        await queryRunner.dropTable('doctor_metadata');
+    }
 }

@@ -1,7 +1,8 @@
 import {ApiProperty} from '@nestjs/swagger';
 import {Length, IsEmail, IsNotEmpty} from 'class-validator';
+import {CreateDoctorDto} from 'domain/dtos/create-doctor.dto';
 
-export class SignUpDoctorView {
+export class SignUpDoctorView extends CreateDoctorDto {
     @ApiProperty()
     @IsNotEmpty()
     @IsEmail()

@@ -11,9 +11,10 @@ import {
 } from '@aws-sdk/client-cognito-identity-provider';
 import {ConfigService} from '@nestjs/config';
 import {ConfirmSignUpModel, SignInModel, SignUpModel} from 'app/abstractions/models';
-import {IAuthService} from 'app/abstractions/auth.service';
+import {IAuthService} from 'app/abstractions/services/auth.service';
 import * as jwt from 'jsonwebtoken';
 import * as jwkToBuffer from 'jwk-to-pem';
+import {User} from 'domain/entities/user.entity';
 
 interface CognitoProviderConfig {
     region: string;
@@ -85,6 +86,7 @@ export class CognitoService implements IAuthService {
 
         try {
             await this.cognitoClient.send(command);
+            await this.setUserRole(user);
         } catch (error) {
             console.log(error.message);
             throw error;
@@ -169,6 +171,15 @@ export class CognitoService implements IAuthService {
                 }
             });
         });
+    }
+
+    private async setUserRole(user: SignUpModel): Promise<void> {
+        const isGroupExist = await this.isGroupExist(user.role);
+        if (!isGroupExist) {
+            await this.createUserGroup(user.role);
+        }
+
+        await this.addUserToGroup(user.userName, user.role);
     }
 
     private isTokenValid(decodedToken, tokenISS): boolean {

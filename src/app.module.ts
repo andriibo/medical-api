@@ -1,17 +1,16 @@
-import {SignInUseCase, SignUpUseCase} from 'app/use-cases/auth';
-import {AuthController} from 'controllers/auth.controller';
 import {Module} from '@nestjs/common';
 import {AppController} from 'controllers/app.controller';
+import {PatientController} from 'controllers/patient.controller';
 import {HelloUseCase} from 'app/use-cases/hello.use-case';
 import {TypeOrmModule} from '@nestjs/typeorm';
 import {dbConnectionOptions} from 'config/db.config';
 import {CognitoService} from 'infrastructure/aws/cognito.service';
 import {ConfigModule} from '@nestjs/config';
-import {IAuthService} from 'app/abstractions/auth.service';
+import {IAuthService} from 'app/abstractions/services/auth.service';
 import {APP_INTERCEPTOR} from '@nestjs/core';
 import {ErrorsInterceptor} from 'presentation/middlewares/errors-interceptor';
 import {AuthGuard, RolesGuard} from 'presentation/guards';
-
+import {AuthModule} from 'infrastructure/modules/auth.module';
 const GUARDS = [AuthGuard, RolesGuard];
 
 const INTERCEPTORS = [
@@ -23,22 +22,24 @@ const INTERCEPTORS = [
 
 @Module({
     imports: [
-        TypeOrmModule.forRoot(dbConnectionOptions),
+        TypeOrmModule.forRoot({
+            ...dbConnectionOptions,
+            autoLoadEntities: true,
+        }),
         ConfigModule.forRoot({
             isGlobal: true,
         }),
+        AuthModule,
     ],
     exports: [TypeOrmModule],
-    controllers: [AuthController, AppController],
+    controllers: [AppController, PatientController],
     providers: [
-        SignInUseCase,
-        SignUpUseCase,
         HelloUseCase,
         {
             provide: IAuthService,
             useClass: CognitoService,
         },
-        ...INTERCEPTORS,
+        // ...INTERCEPTORS,
         ...GUARDS,
     ],
 })

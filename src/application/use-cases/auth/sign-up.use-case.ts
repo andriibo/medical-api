@@ -1,33 +1,32 @@
 import {Inject, Injectable} from '@nestjs/common';
-import {IAuthService} from 'app/abstractions/auth.service';
-import {ConfirmSignUpModel, SignUpModel} from 'app/abstractions/models';
-import {ConfirmSignUpUserView, SignUpDoctorView, SignUpPatientView} from 'presentation/views/auth';
-import {UserRole} from 'domain/entities/user.entity';
+import {IAuthService} from 'app/abstractions/services/auth.service';
+import {SignUpModel} from 'app/abstractions/models';
+import {UserEntityFactory} from 'app/factories/user-entity.factory';
+import {IUserRepository} from 'app/abstractions/repositories/user.repository';
+import {CreateDoctorDto} from 'domain/dtos/create-doctor.dto';
+import {CreatePatientDto} from 'domain/dtos/create-patient.dto';
 
 @Injectable()
 export class SignUpUseCase {
-    constructor(@Inject(IAuthService) private readonly authService: IAuthService) {}
+    constructor(
+        @Inject(IAuthService) private readonly authService: IAuthService,
+        @Inject(IUserRepository) private readonly userRepository: IUserRepository,
+        private readonly userEntityFactory: UserEntityFactory,
+    ) {}
 
-    public async signUpDoctor(requestBody: SignUpDoctorView): Promise<void> {
-        await this.authService.signUp(new SignUpModel(requestBody.email, requestBody.password));
-        this.setUserRole(requestBody.email, UserRole.Doctor);
+    public async signUpDoctor(dto: CreateDoctorDto): Promise<object> {
+        // await this.authService.signUp(SignUpModel.fromCreateDoctorDto(dto));
+
+        const user = this.userEntityFactory.createDoctorByCreateDoctorDto(dto);
+
+        return await this.userRepository.create(user);
     }
 
-    public async signUpPatient(requestBody: SignUpPatientView): Promise<void> {
-        await this.authService.signUp(new SignUpModel(requestBody.email, requestBody.password));
-        this.setUserRole(requestBody.email, UserRole.Patient);
-    }
+    public async signUpPatient(dto: CreatePatientDto): Promise<object> {
+        // await this.authService.signUp(SignUpModel.fromCreatePatientDto(dto));
 
-    public async confirmSignUnUser(requestBody: ConfirmSignUpUserView): Promise<void> {
-        await this.authService.confirmSignUp(new ConfirmSignUpModel(requestBody.userName, requestBody.code));
-    }
+        const user = this.userEntityFactory.createPatientByCreatePatientDto(dto);
 
-    private async setUserRole(userName: string, role: string): Promise<void> {
-        const isGroupExist = await this.authService.isGroupExist(role);
-        if (!isGroupExist) {
-            await this.authService.createUserGroup(role);
-        }
-
-        await this.authService.addUserToGroup(userName, role);
+        return await this.userRepository.create(user);
     }
 }

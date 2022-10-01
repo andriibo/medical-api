@@ -9,7 +9,7 @@ import {
     applyDecorators,
 } from '@nestjs/common';
 import {Reflector} from '@nestjs/core';
-import {IAuthService} from 'app/abstractions/auth.service';
+import {IAuthService} from 'app/abstractions/services/auth.service';
 import {CLAIMS} from 'infrastructure/aws/cognito.service';
 
 @Injectable()
