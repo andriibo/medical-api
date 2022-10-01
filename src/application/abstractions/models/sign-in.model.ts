@@ -1,9 +1,9 @@
-export class SignInModel {
-    public userName: string;
-    public password: string;
+import {AuthUserDto} from 'domain/dtos/auth-user.dto';
 
-    constructor(userName: string, password: string) {
-        this.userName = userName;
-        this.password = password;
+export class SignInModel {
+    private constructor(public readonly userName: string, public readonly password: string) {}
+
+    static fromAuthUserDto(dto: AuthUserDto): SignInModel {
+        return new SignInModel(dto.userName, dto.password);
     }
 }

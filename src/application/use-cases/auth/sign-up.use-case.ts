@@ -1,23 +1,21 @@
-import {Inject, Injectable} from '@nestjs/common';
 import {IAuthService} from 'app/abstractions/services/auth.service';
 import {SignUpModel} from 'app/abstractions/models';
-import {UserEntityFactory} from 'app/factories/user-entity.factory';
+import {IUserEntityMapper} from 'app/abstractions/mappers/user-entity.mapper';
 import {IUserRepository} from 'app/abstractions/repositories/user.repository';
 import {CreateDoctorDto} from 'domain/dtos/create-doctor.dto';
 import {CreatePatientDto} from 'domain/dtos/create-patient.dto';
 
-@Injectable()
 export class SignUpUseCase {
     constructor(
-        @Inject(IAuthService) private readonly authService: IAuthService,
-        @Inject(IUserRepository) private readonly userRepository: IUserRepository,
-        private readonly userEntityFactory: UserEntityFactory,
+        private readonly authService: IAuthService,
+        private readonly userRepository: IUserRepository,
+        private readonly userEntityMapper: IUserEntityMapper,
     ) {}
 
     public async signUpDoctor(dto: CreateDoctorDto): Promise<object> {
         // await this.authService.signUp(SignUpModel.fromCreateDoctorDto(dto));
 
-        const user = this.userEntityFactory.createDoctorByCreateDoctorDto(dto);
+        const user = this.userEntityMapper.mapDoctorByCreateDoctorDto(dto);
 
         return await this.userRepository.create(user);
     }
@@ -25,7 +23,7 @@ export class SignUpUseCase {
     public async signUpPatient(dto: CreatePatientDto): Promise<object> {
         // await this.authService.signUp(SignUpModel.fromCreatePatientDto(dto));
 
-        const user = this.userEntityFactory.createPatientByCreatePatientDto(dto);
+        const user = this.userEntityMapper.mapPatientByCreatePatientDto(dto);
 
         return await this.userRepository.create(user);
     }

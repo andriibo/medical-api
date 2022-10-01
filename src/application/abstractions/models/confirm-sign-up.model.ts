@@ -1,9 +1,9 @@
-export class ConfirmSignUpModel {
-    public userName: string;
-    public code: string;
+import {ConfirmSignUpUserDto} from 'domain/dtos/confirm-sign-up-user.dto';
 
-    constructor(userName: string, code: string) {
-        this.userName = userName;
-        this.code = code;
+export class ConfirmSignUpModel {
+    private constructor(public readonly userName: string, public readonly code: string) {}
+
+    static fromConfirmSignUpUserDto(dto: ConfirmSignUpUserDto): ConfirmSignUpModel {
+        return new ConfirmSignUpModel(dto.userName, dto.code);
     }
 }

@@ -6,17 +6,19 @@ import {UserRepository} from 'infrastructure/repositories/user.repository';
 import {IAuthService} from 'app/abstractions/services/auth.service';
 import {CognitoService} from 'infrastructure/aws/cognito.service';
 import {TypeOrmModule} from '@nestjs/typeorm';
-import {User} from 'domain/entities/user.entity';
-import {UserEntityFactory} from 'app/factories/user-entity.factory';
+import {UserModel} from 'presentation/models/user.model';
+import {IUserEntityMapper} from 'app/abstractions/mappers/user-entity.mapper';
+import {UserModelMapper} from 'infrastructure/mappers/user-model.mapper';
+import {AuthUseCasesFactory} from 'infrastructure/factories/auth-use-cases.factory';
 
 @Module({
-    imports: [TypeOrmModule.forFeature([User])],
+    imports: [TypeOrmModule.forFeature([UserModel])],
     controllers: [AuthController],
     providers: [
         ConfirmSignUpUserUseCase,
         SignInUseCase,
         SignUpUseCase,
-        UserEntityFactory,
+        AuthUseCasesFactory,
         {
             provide: IUserRepository,
             useClass: UserRepository,
@@ -24,6 +26,10 @@ import {UserEntityFactory} from 'app/factories/user-entity.factory';
         {
             provide: IAuthService,
             useClass: CognitoService,
+        },
+        {
+            provide: IUserEntityMapper,
+            useClass: UserModelMapper,
         },
     ],
 })

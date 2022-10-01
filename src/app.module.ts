@@ -1,7 +1,6 @@
 import {Module} from '@nestjs/common';
 import {AppController} from 'controllers/app.controller';
 import {PatientController} from 'controllers/patient.controller';
-import {HelloUseCase} from 'app/use-cases/hello.use-case';
 import {TypeOrmModule} from '@nestjs/typeorm';
 import {dbConnectionOptions} from 'config/db.config';
 import {CognitoService} from 'infrastructure/aws/cognito.service';
@@ -34,7 +33,6 @@ const INTERCEPTORS = [
     exports: [TypeOrmModule],
     controllers: [AppController, PatientController],
     providers: [
-        HelloUseCase,
         {
             provide: IAuthService,
             useClass: CognitoService,

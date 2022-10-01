@@ -1,17 +1,11 @@
-import {Inject, Injectable} from '@nestjs/common';
 import {IAuthService} from 'app/abstractions/services/auth.service';
 import {ConfirmSignUpModel} from 'app/abstractions/models';
-import {ConfirmSignUpUserView} from 'presentation/views/auth';
-import {IUserRepository} from 'app/abstractions/repositories/user.repository';
+import {ConfirmSignUpUserDto} from 'domain/dtos/confirm-sign-up-user.dto';
 
-@Injectable()
 export class ConfirmSignUpUserUseCase {
-    constructor(
-        @Inject(IAuthService) private readonly authService: IAuthService,
-        @Inject(IUserRepository) private readonly usersRepository: IUserRepository,
-    ) {}
+    constructor(private readonly authService: IAuthService) {}
 
-    public async confirmSignUpUser(requestBody: ConfirmSignUpUserView): Promise<void> {
-        await this.authService.confirmSignUp(new ConfirmSignUpModel(requestBody.userName, requestBody.code));
+    public async confirmSignUpUser(dto: ConfirmSignUpUserDto): Promise<void> {
+        await this.authService.confirmSignUp(ConfirmSignUpModel.fromConfirmSignUpUserDto(dto));
     }
 }
