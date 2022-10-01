@@ -9,6 +9,8 @@ export class createPatientMetadata1664466428759 implements MigrationInterface {
                     {
                         name: 'user_id',
                         type: 'uuid',
+                        isGenerated: false,
+                        isPrimary: true,
                     },
                     {
                         name: 'dob',

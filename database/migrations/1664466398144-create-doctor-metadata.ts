@@ -9,6 +9,8 @@ export class createDoctorMetadata1664466398144 implements MigrationInterface {
                     {
                         name: 'user_id',
                         type: 'uuid',
+                        isGenerated: false,
+                        isPrimary: true,
                     },
                     {
                         name: 'institution',

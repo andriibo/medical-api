@@ -1,8 +1,8 @@
 import {Entity, Column, PrimaryGeneratedColumn} from 'typeorm';
-import {User} from 'domain/entities/user.entity';
+import {User, UserMetadata} from 'domain/entities';
 
 @Entity('user')
-export class UserModel extends User {
+export class UserModel implements User {
     @PrimaryGeneratedColumn('uuid', {name: 'user_id'})
     userId: string;
 
@@ -26,4 +26,6 @@ export class UserModel extends User {
 
     @Column({name: 'created_at'})
     createdAt: string;
+
+    metadata: UserMetadata;
 }

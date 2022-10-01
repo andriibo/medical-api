@@ -5,13 +5,13 @@ import {UserRepository} from 'infrastructure/repositories/user.repository';
 import {IAuthService} from 'app/abstractions/services/auth.service';
 import {CognitoService} from 'infrastructure/aws/cognito.service';
 import {TypeOrmModule} from '@nestjs/typeorm';
-import {UserModel} from 'presentation/models/user.model';
+import {UserModel, DoctorMetadataModel, PatientMetadataModel} from 'presentation/models';
 import {IUserEntityMapper} from 'app/abstractions/mappers/user-entity.mapper';
 import {UserModelMapper} from 'infrastructure/mappers/user-model.mapper';
 import {AuthUseCasesFactory} from 'infrastructure/factories/auth-use-cases.factory';
 
 @Module({
-    imports: [TypeOrmModule.forFeature([UserModel])],
+    imports: [TypeOrmModule.forFeature([UserModel, DoctorMetadataModel, PatientMetadataModel])],
     controllers: [AuthController],
     providers: [
         AuthUseCasesFactory,

@@ -21,6 +21,7 @@ export class SignUpPatientView extends CreatePatientDto {
     @ApiProperty()
     @IsNotEmpty()
     public phone: string;
+
     @ApiProperty()
     @IsNotEmpty()
     @IsDateString()

@@ -1,9 +1,11 @@
+import {UserMetadata} from './user-metadata.entity';
+
 export enum UserRole {
     Doctor = 'Doctor',
     Patient = 'Patient',
 }
 
-export class User {
+export interface User {
     userId: string;
 
     email: string;
@@ -19,4 +21,6 @@ export class User {
     isActive: boolean;
 
     createdAt: string;
+
+    metadata: UserMetadata;
 }
