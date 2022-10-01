@@ -10,6 +10,7 @@ import {APP_INTERCEPTOR} from '@nestjs/core';
 import {ErrorsInterceptor} from 'presentation/middlewares/errors-interceptor';
 import {AuthGuard, RolesGuard} from 'presentation/guards';
 import {AuthModule} from 'infrastructure/modules/auth.module';
+
 const GUARDS = [AuthGuard, RolesGuard];
 
 const INTERCEPTORS = [
