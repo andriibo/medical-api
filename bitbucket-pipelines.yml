@@ -9,6 +9,8 @@ definitions:
           - |
              git clone git@bitbucket.org:abnk/devops.git
              cd devops
+             apt-get update
+             apt-get install python3-pip -y
              pip3 install hvac
              python3 env_gen.py --project medical_api --token $VAULT_TOKEN
           - pipe: atlassian/rsync-deploy:0.8.1
