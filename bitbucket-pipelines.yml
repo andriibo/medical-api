@@ -15,7 +15,7 @@ definitions:
              python3 env_gen.py --project medical_api --token $VAULT_TOKEN
           - pipe: atlassian/rsync-deploy:0.8.1
             variables:
-              SSH_USER: $USER
+              USER: $USER
               SERVER: $SERVER_DO
               REMOTE_PATH: "/var/www/${WORK_DIR}/.env"
               LOCAL_PATH: "./devops/.env"
