@@ -18,7 +18,7 @@ definitions:
               USER: $USER
               SERVER: $SERVER_DO
               REMOTE_PATH: "/var/www/${WORK_DIR}/.env"
-              LOCAL_PATH: "./devops/.env"
+              LOCAL_PATH: ".env"
           - pipe: atlassian/ssh-run:0.4.1
             variables:
               SSH_USER: $USER
