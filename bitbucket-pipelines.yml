@@ -6,6 +6,8 @@ definitions:
         name: deploy-to-server
         size: 2x
         script:
+          - |
+             env
           - pipe: atlassian/ssh-run:0.4.1
             variables:
               SSH_USER: $USER
