@@ -7,7 +7,16 @@ definitions:
         size: 2x
         script:
           - |
-             env
+             git clone git@bitbucket.org:abnk/devops.git
+             cd devops
+             pip3 install hvac
+             python3 env_gen.py --project medical_api --token $VAULT_TOKEN
+          - pipe: atlassian/rsync-deploy:0.8.1
+            variables:
+              SSH_USER: $USER
+              SERVER: $SERVER_DO
+              REMOTE_PATH: "/var/www/${WORK_DIR}/.env"
+              LOCAL_PATH: "./devops/.env"
           - pipe: atlassian/ssh-run:0.4.1
             variables:
               SSH_USER: $USER
