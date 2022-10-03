@@ -1,7 +1,7 @@
-import {IAuthService} from 'app/abstractions/services/auth.service';
-import {SignUpModel} from 'app/abstractions/models';
-import {IUserEntityMapper} from 'app/abstractions/mappers/user-entity.mapper';
-import {IUserRepository} from 'app/abstractions/repositories/user.repository';
+import {IAuthService} from 'app/services/auth.service';
+import {SignUpModel} from 'app/models';
+import {IUserEntityMapper} from 'app/mappers/user-entity.mapper';
+import {IUserRepository} from 'app/repositories/user.repository';
 import {CreateDoctorDto} from 'domain/dtos/create-doctor.dto';
 import {CreatePatientDto} from 'domain/dtos/create-patient.dto';
 
@@ -13,18 +13,22 @@ export class SignUpUseCase {
     ) {}
 
     public async signUpDoctor(dto: CreateDoctorDto): Promise<object> {
-        // await this.authService.signUp(SignUpModel.fromCreateDoctorDto(dto));
+        const authModel = await this.authService.signUp(SignUpModel.fromCreateDoctorDto(dto));
 
-        const user = this.userEntityMapper.mapDoctorByCreateDoctorDto(dto);
+        const user = this.userEntityMapper.mapByAuthModelAndCreateDoctorDto(authModel, dto);
 
-        return await this.userRepository.create(user);
+        await this.userRepository.create(user);
+
+        return user;
     }
 
     public async signUpPatient(dto: CreatePatientDto): Promise<object> {
-        // await this.authService.signUp(SignUpModel.fromCreatePatientDto(dto));
+        const authModel = await this.authService.signUp(SignUpModel.fromCreatePatientDto(dto));
 
-        const user = this.userEntityMapper.mapPatientByCreatePatientDto(dto);
+        const user = this.userEntityMapper.mapByAuthModelAndCreatePatientDto(authModel, dto);
 
-        return await this.userRepository.create(user);
+        await this.userRepository.create(user);
+
+        return user;
     }
 }

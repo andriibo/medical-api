@@ -10,11 +10,13 @@ import {
     GetGroupCommand,
 } from '@aws-sdk/client-cognito-identity-provider';
 import {ConfigService} from '@nestjs/config';
-import {ConfirmSignUpModel, SignInModel, SignUpModel} from 'app/abstractions/models';
-import {IAuthService} from 'app/abstractions/services/auth.service';
+import {ConfirmSignUpModel, SignInModel, SignUpModel} from 'app/models';
+import {IAuthService} from 'app/services/auth.service';
 import * as jwt from 'jsonwebtoken';
 import * as jwkToBuffer from 'jwk-to-pem';
 import {User} from 'domain/entities/user.entity';
+import {AuthModel} from './auth.model';
+import {IAuthModel} from 'app/models/auth.model';
 
 interface CognitoProviderConfig {
     region: string;
@@ -71,10 +73,10 @@ export class CognitoService implements IAuthService {
         }
     }
 
-    public async signUp(user: SignUpModel): Promise<void> {
+    public async signUp(signUpModel: SignUpModel): Promise<IAuthModel> {
         const command = new SignUpCommand({
-            Username: user.userName,
-            Password: user.password,
+            Username: signUpModel.userName,
+            Password: signUpModel.password,
             ClientId: this.config.clientId,
             UserAttributes: [
                 {
@@ -85,8 +87,11 @@ export class CognitoService implements IAuthService {
         });
 
         try {
-            await this.cognitoClient.send(command);
-            await this.setUserRole(user);
+            const user = await this.cognitoClient.send(command);
+
+            await this.setUserRole(signUpModel);
+
+            return new AuthModel(user);
         } catch (error) {
             console.log(error.message);
             throw error;
@@ -173,13 +178,13 @@ export class CognitoService implements IAuthService {
         });
     }
 
-    private async setUserRole(user: SignUpModel): Promise<void> {
-        const isGroupExist = await this.isGroupExist(user.role);
+    private async setUserRole(signUpModel: SignUpModel): Promise<void> {
+        const isGroupExist = await this.isGroupExist(signUpModel.role);
         if (!isGroupExist) {
-            await this.createUserGroup(user.role);
+            await this.createUserGroup(signUpModel.role);
         }
 
-        await this.addUserToGroup(user.userName, user.role);
+        await this.addUserToGroup(signUpModel.userName, signUpModel.role);
     }
 
     private isTokenValid(decodedToken, tokenISS): boolean {

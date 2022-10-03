@@ -1,5 +1,5 @@
-import {IAuthService} from 'app/abstractions/services/auth.service';
-import {SignInModel} from 'app/abstractions/models';
+import {IAuthService} from 'app/services/auth.service';
+import {SignInModel} from 'app/models';
 import {AuthUserDto} from 'domain/dtos/auth-user.dto';
 
 export class SignInUseCase {

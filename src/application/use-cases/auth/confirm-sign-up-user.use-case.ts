@@ -1,5 +1,5 @@
-import {IAuthService} from 'app/abstractions/services/auth.service';
-import {ConfirmSignUpModel} from 'app/abstractions/models';
+import {IAuthService} from 'app/services/auth.service';
+import {ConfirmSignUpModel} from 'app/models';
 import {ConfirmSignUpUserDto} from 'domain/dtos/confirm-sign-up-user.dto';
 
 export class ConfirmSignUpUserUseCase {
