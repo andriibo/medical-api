@@ -8,6 +8,7 @@ import {
     AdminAddUserToGroupCommand,
     CreateGroupCommand,
     GetGroupCommand,
+    AdminDeleteUserCommand,
 } from '@aws-sdk/client-cognito-identity-provider';
 import {ConfigService} from '@nestjs/config';
 import {ConfirmSignUpModel, SignInModel, SignUpModel} from 'app/models';
@@ -151,6 +152,20 @@ export class CognitoService implements IAuthService {
             Username: userName,
             GroupName: groupName,
             UserPoolId: this.config.userPoolId,
+        });
+
+        try {
+            await this.cognitoClient.send(command);
+        } catch (error) {
+            console.log(error.message);
+            throw error;
+        }
+    }
+
+    public async deleteUser(user: User): Promise<void> {
+        const command = new AdminDeleteUserCommand({
+            UserPoolId: this.config.userPoolId,
+            Username: user.userId,
         });
 
         try {

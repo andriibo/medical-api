@@ -4,6 +4,7 @@ import {IUserEntityMapper} from 'app/mappers/user-entity.mapper';
 import {IUserRepository} from 'app/repositories/user.repository';
 import {CreateDoctorDto} from 'domain/dtos/create-doctor.dto';
 import {CreatePatientDto} from 'domain/dtos/create-patient.dto';
+import {User} from 'domain/entities';
 
 export class SignUpUseCase {
     constructor(
@@ -17,7 +18,7 @@ export class SignUpUseCase {
 
         const user = this.userEntityMapper.mapByAuthModelAndCreateDoctorDto(authModel, dto);
 
-        await this.userRepository.create(user);
+        await this.createUser(user);
 
         return user;
     }
@@ -27,8 +28,18 @@ export class SignUpUseCase {
 
         const user = this.userEntityMapper.mapByAuthModelAndCreatePatientDto(authModel, dto);
 
-        await this.userRepository.create(user);
+        await this.createUser(user);
 
         return user;
+    }
+
+    private async createUser(user: User): Promise<void> {
+        try {
+            await this.userRepository.create(user);
+        } catch (err) {
+            await this.authService.deleteUser(user);
+
+            throw err;
+        }
     }
 }
