@@ -19,6 +19,8 @@ export class SignUpDoctorView extends CreateDoctorDto {
     public lastName: string;
 
     @ApiProperty()
+    @IsNotEmpty()
+    @Length(11, 11)
     public phone: string;
 
     @ApiProperty()
@@ -28,5 +30,6 @@ export class SignUpDoctorView extends CreateDoctorDto {
 
     @ApiProperty()
     @IsNotEmpty()
+    @Length(8)
     public password: string;
 }
