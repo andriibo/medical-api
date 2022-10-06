@@ -1,4 +1,4 @@
-import {Injectable} from '@nestjs/common';
+import {Injectable, BadRequestException} from '@nestjs/common';
 import {
     CognitoIdentityProviderClient,
     AdminInitiateAuthCommand,
@@ -63,14 +63,15 @@ export class CognitoService implements IAuthService {
 
         try {
             const response = await this.cognitoClient.send(command);
+
             if (response.ChallengeName == null) {
                 return response.AuthenticationResult?.IdToken;
             }
 
             throw new Error(`Auth challenge ${response.ChallengeName} is required.`);
         } catch (error) {
-            console.log(error.message);
-            throw error;
+            console.error(error.message);
+            throw new BadRequestException(error.message);
         }
     }
 
@@ -94,8 +95,8 @@ export class CognitoService implements IAuthService {
 
             return new AuthModel(user);
         } catch (error) {
-            console.log(error.message);
-            throw error;
+            console.error(error.message);
+            throw new BadRequestException(error.message);
         }
     }
 
@@ -109,56 +110,8 @@ export class CognitoService implements IAuthService {
         try {
             await this.cognitoClient.send(command);
         } catch (error) {
-            console.log(error.message);
-            throw error;
-        }
-    }
-
-    public async isGroupExist(groupName: string): Promise<boolean> {
-        const command = new GetGroupCommand({
-            GroupName: groupName,
-            UserPoolId: this.config.userPoolId,
-        });
-
-        try {
-            const group = await this.cognitoClient.send(command);
-            return group.Group?.GroupName === groupName;
-        } catch (error) {
-            if (error.name === 'ResourceNotFoundException') {
-                return false;
-            }
-
-            console.log(error.message);
-            throw error;
-        }
-    }
-
-    public async createUserGroup(groupName: string): Promise<void> {
-        const command = new CreateGroupCommand({
-            GroupName: groupName,
-            UserPoolId: this.config.userPoolId,
-        });
-
-        try {
-            await this.cognitoClient.send(command);
-        } catch (error) {
-            console.log(error.message);
-            throw error;
-        }
-    }
-
-    public async addUserToGroup(userName: string, groupName: string): Promise<void> {
-        const command = new AdminAddUserToGroupCommand({
-            Username: userName,
-            GroupName: groupName,
-            UserPoolId: this.config.userPoolId,
-        });
-
-        try {
-            await this.cognitoClient.send(command);
-        } catch (error) {
-            console.log(error.message);
-            throw error;
+            console.error(error.message);
+            throw new BadRequestException(error.message);
         }
     }
 
@@ -191,6 +144,54 @@ export class CognitoService implements IAuthService {
                 }
             });
         });
+    }
+
+    private async isGroupExist(groupName: string): Promise<boolean> {
+        const command = new GetGroupCommand({
+            GroupName: groupName,
+            UserPoolId: this.config.userPoolId,
+        });
+
+        try {
+            const group = await this.cognitoClient.send(command);
+            return group.Group?.GroupName === groupName;
+        } catch (error) {
+            if (error.name === 'ResourceNotFoundException') {
+                return false;
+            }
+
+            console.log(error.message);
+            throw error;
+        }
+    }
+
+    private async createUserGroup(groupName: string): Promise<void> {
+        const command = new CreateGroupCommand({
+            GroupName: groupName,
+            UserPoolId: this.config.userPoolId,
+        });
+
+        try {
+            await this.cognitoClient.send(command);
+        } catch (error) {
+            console.log(error.message);
+            throw error;
+        }
+    }
+
+    private async addUserToGroup(userName: string, groupName: string): Promise<void> {
+        const command = new AdminAddUserToGroupCommand({
+            Username: userName,
+            GroupName: groupName,
+            UserPoolId: this.config.userPoolId,
+        });
+
+        try {
+            await this.cognitoClient.send(command);
+        } catch (error) {
+            console.log(error.message);
+            throw error;
+        }
     }
 
     private async setUserRole(signUpModel: SignUpModel): Promise<void> {
