@@ -1,5 +1,5 @@
 import {Body, Controller, HttpCode, HttpStatus, Post} from '@nestjs/common';
-import {ApiResponse, ApiTags} from '@nestjs/swagger';
+import {ApiTags} from '@nestjs/swagger';
 import {ConfirmSignUpUserView, SignInUserView, SignUpDoctorView, SignUpPatientView} from 'presentation/views/auth';
 import {AuthUseCasesFactory} from 'infrastructure/factories/auth-use-cases.factory';
 
@@ -10,7 +10,7 @@ export class AuthController {
 
     @Post('sign-in')
     @HttpCode(HttpStatus.OK)
-    @ApiResponse({status: HttpStatus.OK, type: String})
+    @HttpCode(HttpStatus.BAD_REQUEST)
     public async signIn(@Body() requestBody: SignInUserView): Promise<string> {
         const useCase = this.authUseCasesFactory.createSignInUseCase();
 
@@ -37,6 +37,7 @@ export class AuthController {
 
     @Post('confirm-sign-up')
     @HttpCode(HttpStatus.OK)
+    @HttpCode(HttpStatus.BAD_REQUEST)
     public async confirmSignUp(@Body() requestBody: ConfirmSignUpUserView): Promise<void> {
         const useCase = this.authUseCasesFactory.createConfirmSignUpUseCase();
 

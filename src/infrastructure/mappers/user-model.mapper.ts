@@ -1,6 +1,6 @@
 import {UserRole, User} from 'domain/entities/user.entity';
-import {CreateDoctorDto} from 'domain/dtos/create-doctor.dto';
-import {CreatePatientDto} from 'domain/dtos/create-patient.dto';
+import {CreateDoctorDto} from 'domain/dtos/auth/create-doctor.dto';
+import {CreatePatientDto} from 'domain/dtos/auth/create-patient.dto';
 import {UserModel, DoctorMetadataModel, PatientMetadataModel} from 'presentation/models';
 import {IUserEntityMapper} from 'app/mappers/user-entity.mapper';
 import {IAuthModel} from 'app/models/auth.model';

@@ -2,8 +2,8 @@ import {IAuthService} from 'app/services/auth.service';
 import {SignUpModel} from 'app/models';
 import {IUserEntityMapper} from 'app/mappers/user-entity.mapper';
 import {IUserRepository} from 'app/repositories/user.repository';
-import {CreateDoctorDto} from 'domain/dtos/create-doctor.dto';
-import {CreatePatientDto} from 'domain/dtos/create-patient.dto';
+import {CreateDoctorDto} from 'domain/dtos/auth/create-doctor.dto';
+import {CreatePatientDto} from 'domain/dtos/auth/create-patient.dto';
 import {User} from 'domain/entities';
 
 export class SignUpUseCase {

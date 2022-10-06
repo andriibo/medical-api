@@ -1,6 +1,6 @@
 import {Module} from '@nestjs/common';
 import {AppController} from 'controllers/app.controller';
-import {PatientController} from 'controllers/patient.controller';
+import {DataAccessController as PatientDataAccessController} from 'controllers/patient/data-access.controller';
 import {TypeOrmModule} from '@nestjs/typeorm';
 import {dbConnectionOptions} from 'config/db.config';
 import {CognitoService} from 'infrastructure/aws/cognito.service';
@@ -32,7 +32,7 @@ const INTERCEPTORS = [
         AuthModule,
     ],
     exports: [TypeOrmModule],
-    controllers: [AppController, PatientController],
+    controllers: [AppController, PatientDataAccessController],
     providers: [
         {
             provide: IAuthService,
