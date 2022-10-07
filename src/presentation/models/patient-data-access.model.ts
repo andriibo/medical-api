@@ -12,7 +12,7 @@ export class PatientDataAccessModel implements PatientDataAccess {
     @Column('uuid', {name: 'granted_data_id', nullable: true})
     grantedUserId?: string;
 
-    @Column('string', {name: 'invite_id', nullable: true})
+    @Column({name: 'invite_id', nullable: true})
     inviteId?: string;
 
     @Column()

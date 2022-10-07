@@ -1,7 +1,7 @@
 import {Inject, Injectable} from '@nestjs/common';
 import {IAuthService} from 'app/services/auth.service';
 import {IUserEntityMapper} from 'app/mappers/user-entity.mapper';
-import {IUserRepository} from 'app/repositories/user.repository';
+import {IUserRepository} from 'app/repositories';
 import {ConfirmSignUpUserUseCase, SignInUseCase, SignUpUseCase} from 'app/use-cases/auth';
 
 @Injectable()

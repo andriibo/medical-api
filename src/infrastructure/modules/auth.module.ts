@@ -1,6 +1,6 @@
 import {Module} from '@nestjs/common';
 import {AuthController} from 'controllers/auth.controller';
-import {IUserRepository} from 'app/repositories/user.repository';
+import {IUserRepository} from 'app/repositories';
 import {UserRepository} from 'infrastructure/repositories/user.repository';
 import {IAuthService} from 'app/services/auth.service';
 import {CognitoService} from 'infrastructure/aws/cognito.service';

@@ -1,6 +1,5 @@
 import {Module} from '@nestjs/common';
 import {AppController} from 'controllers/app.controller';
-import {DataAccessController as PatientDataAccessController} from 'controllers/patient/data-access.controller';
 import {TypeOrmModule} from '@nestjs/typeorm';
 import {dbConnectionOptions} from 'config/db.config';
 import {CognitoService} from 'infrastructure/aws/cognito.service';
@@ -9,7 +8,7 @@ import {IAuthService} from 'app/services/auth.service';
 import {APP_INTERCEPTOR} from '@nestjs/core';
 import {ErrorsInterceptor} from 'presentation/middlewares/errors-interceptor';
 import {AuthGuard, RolesGuard} from 'presentation/guards';
-import {AuthModule} from 'infrastructure/modules/auth.module';
+import {AuthModule, PatientModule} from 'infrastructure/modules';
 
 const GUARDS = [AuthGuard, RolesGuard];
 
@@ -30,9 +29,10 @@ const INTERCEPTORS = [
             isGlobal: true,
         }),
         AuthModule,
+        PatientModule,
     ],
     exports: [TypeOrmModule],
-    controllers: [AppController, PatientDataAccessController],
+    controllers: [AppController],
     providers: [
         {
             provide: IAuthService,
