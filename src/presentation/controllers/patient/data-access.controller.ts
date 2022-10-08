@@ -7,10 +7,10 @@ import {InitiateDataAccessView} from 'views/patient';
 @Controller('patient')
 @ApiBearerAuth()
 @ApiTags('Patient')
-@Roles('Patient')
 export class DataAccessController {
     constructor(private readonly patientUseCasesFactory: PatientUseCasesFactory) {}
-
+    
+    @Roles('Patient')
     @Post('data-access/initiate')
     @HttpCode(HttpStatus.CREATED)
     @HttpCode(HttpStatus.BAD_REQUEST)
