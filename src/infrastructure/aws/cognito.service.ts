@@ -226,10 +226,6 @@ export class CognitoService implements IAuthService {
     }
 }
 
-export class CLAIMS {
-    public static readonly ROLES = 'cognito:groups';
-}
-
 class USER_ATTRIBUTES {
     public static readonly USER_NAME = 'USERNAME';
     public static readonly PASSWORD = 'PASSWORD';

@@ -1,46 +1,28 @@
-import {
-    Injectable,
-    CanActivate,
-    ExecutionContext,
-    SetMetadata,
-    Inject,
-    UnauthorizedException,
-    UseGuards,
-    applyDecorators,
-} from '@nestjs/common';
+import {Injectable, ExecutionContext, SetMetadata, Inject, UseGuards, applyDecorators} from '@nestjs/common';
 import {Reflector} from '@nestjs/core';
 import {IAuthService} from 'app/services/auth.service';
-import {CLAIMS} from 'infrastructure/aws/cognito.service';
+import {AuthGuard} from './auth.guard';
 
 @Injectable()
-export class RolesGuard implements CanActivate {
-    constructor(private reflector: Reflector, @Inject(IAuthService) private readonly authService: IAuthService) {}
+export class RolesGuard extends AuthGuard {
+    constructor(@Inject(IAuthService) protected readonly authService: IAuthService, private reflector: Reflector) {
+        super(authService);
+    }
 
     async canActivate(context: ExecutionContext): Promise<boolean> {
         const request = context.switchToHttp().getRequest();
-        const token: string = request.headers?.authorization?.replace('Bearer ', '');
 
-        if (this.isNullOrUndefined(token)) {
-            throw new UnauthorizedException();
+        request.tokenClaims = await this.getTokenClaims(request);
+
+        const userRoles: string[] = request.tokenClaims.getRoles();
+
+        const roles = this.reflector.get<string[]>('roles', context.getHandler());
+
+        if (!roles) {
+            return true;
         }
 
-        try {
-            const tokenClaims = await this.authService.getTokenClaims(token);
-            const userRoles: string[] = tokenClaims[CLAIMS.ROLES];
-
-            const roles = this.reflector.get<string[]>('roles', context.getHandler());
-            if (!roles) {
-                return true;
-            }
-
-            return roles.some((role) => userRoles.includes(role));
-        } catch {
-            throw new UnauthorizedException();
-        }
-    }
-
-    private isNullOrUndefined(value: string): boolean {
-        return value === null || value === undefined;
+        return roles.some((role) => userRoles.includes(role));
     }
 }
 

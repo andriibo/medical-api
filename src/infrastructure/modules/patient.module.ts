@@ -3,7 +3,9 @@ import {DataAccessController} from 'controllers/patient/data-access.controller';
 import {IUserRepository, IPatientDataAccessRepository} from 'app/repositories';
 import {UserRepository, PatientDataAccessRepository} from 'infrastructure/repositories';
 import {IAuthService} from 'app/services/auth.service';
+import {IAuthedUserService} from 'app/services/authed-user.service';
 import {CognitoService} from 'infrastructure/aws/cognito.service';
+import {AuthedUserService} from 'infrastructure/services/authed-user.service';
 import {TypeOrmModule} from '@nestjs/typeorm';
 import {PatientDataAccessModel} from 'presentation/models';
 import {PatientUseCasesFactory} from 'infrastructure/factories/patient-use-cases.factory';
@@ -24,6 +26,10 @@ import {PatientUseCasesFactory} from 'infrastructure/factories/patient-use-cases
         {
             provide: IAuthService,
             useClass: CognitoService,
+        },
+        {
+            provide: IAuthedUserService,
+            useClass: AuthedUserService,
         },
     ],
 })

@@ -3,6 +3,7 @@ import {InjectDataSource} from '@nestjs/typeorm';
 import {DataSource} from 'typeorm';
 import {IUserRepository} from 'app/repositories';
 import {UserModel} from 'presentation/models/user.model';
+import {User} from 'domain/entities';
 
 @Injectable()
 export class UserRepository implements IUserRepository {
@@ -26,5 +27,12 @@ export class UserRepository implements IUserRepository {
 
             throw err;
         }
+    }
+
+    async getByUserId(userId: string): Promise<User> {
+        const user = new UserModel();
+        user.userId = userId;
+
+        return user;
     }
 }
