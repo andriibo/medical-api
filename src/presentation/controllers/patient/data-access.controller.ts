@@ -27,6 +27,7 @@ export class DataAccessController {
 
     @Roles('Patient')
     @Get('data-access/list')
+    @HttpCode(HttpStatus.OK)
     @ApiResponse({status: HttpStatus.OK, type: [DataAccessView]})
     public async list(): Promise<DataAccessView[]> {
         const useCase = this.patientUseCasesFactory.createDataAccessListUseCase();

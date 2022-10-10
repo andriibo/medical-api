@@ -8,6 +8,8 @@ export interface IPatientDataAccessRepository {
     getOneByPatientAndGrantedUser(patient: User, grantedUser: User): Promise<PatientDataAccess>;
 
     getByPatient(patient: User): Promise<PatientDataAccess[]>;
+
+    getByGrantedUser(grantedUser: User): Promise<PatientDataAccess[]>;
 }
 
 export const IPatientDataAccessRepository = Symbol('IPatientDataAccessRepository');

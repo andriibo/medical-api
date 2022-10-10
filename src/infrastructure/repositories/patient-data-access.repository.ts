@@ -21,9 +21,15 @@ export class PatientDataAccessRepository implements IPatientDataAccessRepository
         });
     }
 
-    async getByPatient(patient: User): Promise<PatientDataAccess[]> {
+    async getByPatient(user: User): Promise<PatientDataAccess[]> {
         return await this.dataSource.manager.findBy(PatientDataAccessModel, {
-            patientUserId: patient.userId,
+            patientUserId: user.userId,
+        });
+    }
+
+    async getByGrantedUser(user: User): Promise<PatientDataAccess[]> {
+        return await this.dataSource.manager.findBy(PatientDataAccessModel, {
+            grantedUserId: user.userId,
         });
     }
 }
