@@ -9,6 +9,8 @@ import {AuthedUserService} from 'infrastructure/services/authed-user.service';
 import {TypeOrmModule} from '@nestjs/typeorm';
 import {PatientDataAccessModel} from 'presentation/models';
 import {PatientUseCasesFactory} from 'infrastructure/factories/patient-use-cases.factory';
+import {IPatientDataAccessEntityMapper} from 'app/mappers/patient-data-access-entity.mapper';
+import {PatientDataAccessEntityMapper} from 'infrastructure/mappers/patient-data-access-model.mapper';
 
 @Module({
     imports: [TypeOrmModule.forFeature([PatientDataAccessModel])],
@@ -30,6 +32,10 @@ import {PatientUseCasesFactory} from 'infrastructure/factories/patient-use-cases
         {
             provide: IAuthedUserService,
             useClass: AuthedUserService,
+        },
+        {
+            provide: IPatientDataAccessEntityMapper,
+            useClass: PatientDataAccessEntityMapper,
         },
     ],
 })

@@ -1,4 +1,4 @@
-import {Body, Controller, Post, HttpCode, HttpStatus} from '@nestjs/common';
+import {Body, Controller, Post, HttpCode, HttpStatus, BadRequestException} from '@nestjs/common';
 import {ApiBearerAuth, ApiTags} from '@nestjs/swagger';
 import {Roles} from 'presentation/guards';
 import {PatientUseCasesFactory} from 'infrastructure/factories/patient-use-cases.factory';
@@ -9,7 +9,7 @@ import {InitiateDataAccessView} from 'views/patient';
 @ApiTags('Patient')
 export class DataAccessController {
     constructor(private readonly patientUseCasesFactory: PatientUseCasesFactory) {}
-    
+
     @Roles('Patient')
     @Post('data-access/initiate')
     @HttpCode(HttpStatus.CREATED)
@@ -17,6 +17,10 @@ export class DataAccessController {
     public async initiateDataAccess(@Body() requestBody: InitiateDataAccessView): Promise<void> {
         const useCase = this.patientUseCasesFactory.createInitiateDataAccessUseCase();
 
-        await useCase.initiateDataAccess(requestBody);
+        try {
+            await useCase.initiateDataAccess(requestBody);
+        } catch (error) {
+            throw new BadRequestException(error.message);
+        }
     }
 }

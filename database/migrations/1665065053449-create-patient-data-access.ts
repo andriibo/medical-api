@@ -1,4 +1,4 @@
-import {MigrationInterface, QueryRunner, Table, TableIndex} from 'typeorm';
+import {MigrationInterface, QueryRunner, Table, TableForeignKey, TableIndex} from 'typeorm';
 
 export class createPatientDataAccess1665065053449 implements MigrationInterface {
     public async up(queryRunner: QueryRunner): Promise<void> {
@@ -38,7 +38,7 @@ export class createPatientDataAccess1665065053449 implements MigrationInterface 
                     {
                         name: 'status',
                         type: 'enum',
-                        enum: ['Requested', 'Refused', 'Approved'],
+                        enum: ['Initiated', 'Refused', 'Approved'],
                         isNullable: false,
                     },
                     {
@@ -61,19 +61,29 @@ export class createPatientDataAccess1665065053449 implements MigrationInterface 
             }),
         );
 
-        await queryRunner.createIndex(
+        await queryRunner.createForeignKey(
             'patient_data_access',
-            new TableIndex({
-                name: 'IDX_PATIENT_DATA_ACCESS_GRANTED',
-                columnNames: ['granted_user_id', 'patient_user_id'],
-                isUnique: true,
+            new TableForeignKey({
+                columnNames: ['patient_user_id'],
+                referencedColumnNames: ['user_id'],
+                referencedTableName: 'user',
+                onDelete: 'CASCADE',
+            }),
+        );
+
+        await queryRunner.createForeignKey(
+            'patient_data_access',
+            new TableForeignKey({
+                columnNames: ['granted_user_id'],
+                referencedColumnNames: ['user_id'],
+                referencedTableName: 'user',
+                onDelete: 'CASCADE',
             }),
         );
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.dropIndex('patient_data_access', 'IDX_PATIENT_DATA_ACCESS_PATIENT');
-        await queryRunner.dropIndex('patient_data_access', 'IDX_PATIENT_DATA_ACCESS_GRANTED');
         await queryRunner.dropTable('patient_data_access');
     }
 }

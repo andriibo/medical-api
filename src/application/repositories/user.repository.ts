@@ -4,6 +4,8 @@ export interface IUserRepository {
     create(entity: User): Promise<void>;
 
     getByUserId(userId: string): Promise<User>;
+
+    getByEmail(email: string): Promise<User>;
 }
 
 export const IUserRepository = Symbol('IUserRepository');

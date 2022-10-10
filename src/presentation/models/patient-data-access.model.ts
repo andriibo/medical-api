@@ -6,10 +6,10 @@ export class PatientDataAccessModel implements PatientDataAccess {
     @PrimaryColumn('uuid', {name: 'access_id'})
     accessId: string;
 
-    @Column('uuid', {name: 'patient_data_id'})
+    @Column('uuid', {name: 'patient_user_id'})
     patientUserId: string;
 
-    @Column('uuid', {name: 'granted_data_id', nullable: true})
+    @Column('uuid', {name: 'granted_user_id', nullable: true})
     grantedUserId?: string;
 
     @Column({name: 'invite_id', nullable: true})

@@ -1,3 +1,14 @@
+export enum AccessDirection {
+    FromPatient = 'FromPatient',
+    ToPatient = 'ToPatient',
+}
+
+export enum AccessStatus {
+    Approved = 'Approved',
+    Initiated = 'Initiated',
+    Refused = 'Refused',
+}
+
 export interface PatientDataAccess {
     accessId: string;
 
