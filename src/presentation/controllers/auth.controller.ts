@@ -1,7 +1,8 @@
 import {Body, Controller, HttpCode, HttpStatus, Post} from '@nestjs/common';
-import {ApiTags} from '@nestjs/swagger';
+import {ApiResponse, ApiTags} from '@nestjs/swagger';
 import {ConfirmSignUpUserView, SignInUserView, SignUpDoctorView, SignUpPatientView} from 'presentation/views/auth';
 import {AuthUseCasesFactory} from 'infrastructure/factories/auth-use-cases.factory';
+import {UserSignedInView} from 'views/auth/user-signed-in.view';
 
 @Controller()
 @ApiTags('Auth')
@@ -11,7 +12,8 @@ export class AuthController {
     @Post('sign-in')
     @HttpCode(HttpStatus.OK)
     @HttpCode(HttpStatus.BAD_REQUEST)
-    public async signIn(@Body() requestBody: SignInUserView): Promise<string> {
+    @ApiResponse({status: HttpStatus.OK, type: UserSignedInView})
+    public async signIn(@Body() requestBody: SignInUserView): Promise<object> {
         const useCase = this.authUseCasesFactory.createSignInUseCase();
 
         return await useCase.signInUser(requestBody);
