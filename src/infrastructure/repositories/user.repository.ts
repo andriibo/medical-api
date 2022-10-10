@@ -30,9 +30,6 @@ export class UserRepository implements IUserRepository {
     }
 
     async getByUserId(userId: string): Promise<User> {
-        const user = new UserModel();
-        user.userId = userId;
-
-        return user;
+        return await this.dataSource.manager.findOneBy(UserModel, {userId});
     }
 }
