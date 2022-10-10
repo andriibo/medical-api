@@ -1,23 +1,27 @@
-import {Injectable, ExecutionContext, SetMetadata, Inject, UseGuards, applyDecorators} from '@nestjs/common';
+import {
+    Injectable,
+    ExecutionContext,
+    SetMetadata,
+    UseGuards,
+    applyDecorators,
+    UnauthorizedException,
+    CanActivate,
+} from '@nestjs/common';
 import {Reflector} from '@nestjs/core';
-import {IAuthService} from 'app/services/auth.service';
-import {AuthGuard} from './auth.guard';
+import {UserRequest} from 'presentation/middlewares/assign-user.middleware';
 
 @Injectable()
-export class RolesGuard extends AuthGuard {
-    constructor(@Inject(IAuthService) protected readonly authService: IAuthService, private reflector: Reflector) {
-        super(authService);
-    }
+export class RolesGuard implements CanActivate {
+    constructor(private reflector: Reflector) {}
 
     async canActivate(context: ExecutionContext): Promise<boolean> {
-        const request = context.switchToHttp().getRequest();
-
-        request.tokenClaims = await this.getTokenClaims(request);
+        const request: UserRequest = context.switchToHttp().getRequest();
+        if (request.tokenClaims === null) {
+            throw new UnauthorizedException();
+        }
 
         const userRoles: string[] = request.tokenClaims.getRoles();
-
         const roles = this.reflector.get<string[]>('roles', context.getHandler());
-
         if (!roles) {
             return true;
         }
