@@ -1,6 +1,6 @@
 import {Inject, Injectable} from '@nestjs/common';
 import {IUserRepository, IPatientDataAccessRepository} from 'app/repositories';
-import {InitiateDataAccessUseCase} from 'app/use-cases/patient';
+import {InitiateDataAccessUseCase, DataAccessListUseCase} from 'app/use-cases/patient';
 import {IAuthedUserService} from 'app/services/authed-user.service';
 import {IPatientDataAccessEntityMapper} from 'app/mappers/patient-data-access-entity.mapper';
 import {PatientDataAccessSpecification} from 'app/specifications/patient-data-access.specification';
@@ -26,5 +26,9 @@ export class PatientUseCasesFactory {
             this.patientDataAccessEntityMapper,
             patientDataAccessSpecification,
         );
+    }
+
+    public createDataAccessListUseCase(): DataAccessListUseCase {
+        return new DataAccessListUseCase(this.userRepository, this.patientDataAccessRepository, this.authedUserService);
     }
 }

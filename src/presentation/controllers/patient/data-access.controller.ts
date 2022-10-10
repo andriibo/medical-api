@@ -1,8 +1,9 @@
-import {Body, Controller, Post, HttpCode, HttpStatus, BadRequestException} from '@nestjs/common';
-import {ApiBearerAuth, ApiTags} from '@nestjs/swagger';
+import {Body, Controller, Post, HttpCode, HttpStatus, BadRequestException, Get} from '@nestjs/common';
+import {ApiBearerAuth, ApiResponse, ApiTags} from '@nestjs/swagger';
 import {Roles} from 'presentation/guards';
 import {PatientUseCasesFactory} from 'infrastructure/factories/patient-use-cases.factory';
 import {InitiateDataAccessView} from 'views/patient';
+import {DataAccessView} from 'views/patient/data-access.view';
 
 @Controller('patient')
 @ApiBearerAuth()
@@ -14,7 +15,7 @@ export class DataAccessController {
     @Post('data-access/initiate')
     @HttpCode(HttpStatus.CREATED)
     @HttpCode(HttpStatus.BAD_REQUEST)
-    public async initiateDataAccess(@Body() requestBody: InitiateDataAccessView): Promise<void> {
+    public async initiate(@Body() requestBody: InitiateDataAccessView): Promise<void> {
         const useCase = this.patientUseCasesFactory.createInitiateDataAccessUseCase();
 
         try {
@@ -22,5 +23,14 @@ export class DataAccessController {
         } catch (error) {
             throw new BadRequestException(error.message);
         }
+    }
+
+    @Roles('Patient')
+    @Get('data-access/list')
+    @ApiResponse({status: HttpStatus.OK, type: [DataAccessView]})
+    public async list(): Promise<DataAccessView[]> {
+        const useCase = this.patientUseCasesFactory.createDataAccessListUseCase();
+
+        return await useCase.getList();
     }
 }

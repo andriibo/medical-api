@@ -1,6 +1,6 @@
 import {Injectable} from '@nestjs/common';
 import {InjectDataSource} from '@nestjs/typeorm';
-import {DataSource} from 'typeorm';
+import {DataSource, In} from 'typeorm';
 import {IUserRepository} from 'app/repositories';
 import {UserModel} from 'presentation/models/user.model';
 import {User} from 'domain/entities';
@@ -29,11 +29,15 @@ export class UserRepository implements IUserRepository {
         }
     }
 
-    async getByUserId(userId: string): Promise<User> {
+    async getOneByUserId(userId: string): Promise<User> {
         return await this.dataSource.manager.findOneBy(UserModel, {userId});
     }
 
-    async getByEmail(email: string): Promise<User> {
+    async getByUserIds(userIds: string[]): Promise<User[]> {
+        return await this.dataSource.manager.findBy(UserModel, {userId: In(userIds)});
+    }
+
+    async getOneByEmail(email: string): Promise<User> {
         return await this.dataSource.manager.findOneBy(UserModel, {email});
     }
 }

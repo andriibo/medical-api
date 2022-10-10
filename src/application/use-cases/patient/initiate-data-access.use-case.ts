@@ -27,7 +27,7 @@ export class InitiateDataAccessUseCase {
     }
 
     private async getUserToGrant(dto: InitiateDataAccessDto): Promise<User> {
-        const userToGrant = await this.userRepository.getByEmail(dto.email);
+        const userToGrant = await this.userRepository.getOneByEmail(dto.email);
 
         if (userToGrant === null) {
             throw new Error('No doctor account with specified email address. Try another one.');

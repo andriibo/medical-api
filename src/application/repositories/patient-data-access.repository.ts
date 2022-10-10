@@ -5,7 +5,9 @@ import {PatientDataAccessModel} from 'presentation/models';
 export interface IPatientDataAccessRepository {
     create(patientDataAccessModel: PatientDataAccessModel): Promise<void>;
 
-    getByPatientAndGrantedUser(patient: User, grantedUser: User): Promise<PatientDataAccess>;
+    getOneByPatientAndGrantedUser(patient: User, grantedUser: User): Promise<PatientDataAccess>;
+
+    getByPatient(patient: User): Promise<PatientDataAccess[]>;
 }
 
 export const IPatientDataAccessRepository = Symbol('IPatientDataAccessRepository');

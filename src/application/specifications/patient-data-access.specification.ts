@@ -11,7 +11,7 @@ export class PatientDataAccessSpecification {
     }
 
     private async hasInitiatedAccess(patient: User, userToGrant: User): Promise<boolean> {
-        const dataAccess = await this.patientDataAccessRepository.getByPatientAndGrantedUser(patient, userToGrant);
+        const dataAccess = await this.patientDataAccessRepository.getOneByPatientAndGrantedUser(patient, userToGrant);
 
         return dataAccess !== null;
     }
