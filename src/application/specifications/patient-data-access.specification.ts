@@ -1,5 +1,10 @@
 import {UserRole, User} from 'domain/entities/user.entity';
 import {IPatientDataAccessRepository} from 'app/repositories';
+import {
+    PatientDataAccessStatus,
+    PatientDataAccessRequestDirection,
+    PatientDataAccess,
+} from 'domain/entities/patient-data-access.entity';
 
 export class PatientDataAccessSpecification {
     constructor(private readonly patientDataAccessRepository: IPatientDataAccessRepository) {}
@@ -25,6 +30,18 @@ export class PatientDataAccessSpecification {
 
         if (hasInitiatedAccess) {
             throw new Error('Doctor with specified email address has been already invited.');
+        }
+    }
+
+    async assertGrantedUserCanRefuseAccess(grantedUser: User, dataAccess: PatientDataAccess): Promise<void> {
+        const isUserGranted = dataAccess.grantedUserId === grantedUser.userId;
+        const isAccessStatusInitiated = dataAccess.status === PatientDataAccessStatus.Initiated;
+        const isGrantedUserRequested = dataAccess.direction === PatientDataAccessRequestDirection.FromPatient;
+
+        const isRefusingAllowed = isUserGranted && isAccessStatusInitiated && isGrantedUserRequested;
+
+        if (!isRefusingAllowed) {
+            throw new Error('Refusing Not Allowed.');
         }
     }
 }

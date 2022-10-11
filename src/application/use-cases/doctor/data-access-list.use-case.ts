@@ -12,9 +12,9 @@ export class DataAccessListUseCase {
     ) {}
 
     public async getList(): Promise<DataAccessView[]> {
-        const docker = await this.authedUserService.getUser();
+        const doctor = await this.authedUserService.getUser();
 
-        const items = await this.patientDataAccessRepository.getByGrantedUser(docker);
+        const items = await this.patientDataAccessRepository.getByGrantedUser(doctor);
 
         const users = await this.getPatients(items);
 

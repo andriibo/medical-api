@@ -1,7 +1,8 @@
 import {Inject, Injectable} from '@nestjs/common';
 import {IUserRepository, IPatientDataAccessRepository} from 'app/repositories';
-import {DataAccessListUseCase} from 'app/use-cases/doctor';
+import {DataAccessListUseCase, RefuseDataAccessUseCase} from 'app/use-cases/doctor';
 import {IAuthedUserService} from 'app/services/authed-user.service';
+import {PatientDataAccessSpecification} from 'app/specifications/patient-data-access.specification';
 
 @Injectable()
 export class DoctorUseCasesFactory {
@@ -14,5 +15,16 @@ export class DoctorUseCasesFactory {
 
     public createDataAccessListUseCase(): DataAccessListUseCase {
         return new DataAccessListUseCase(this.userRepository, this.patientDataAccessRepository, this.authedUserService);
+    }
+
+    public createRefuseDataAccessUseCase(): RefuseDataAccessUseCase {
+        const patientDataAccessSpecification = new PatientDataAccessSpecification(this.patientDataAccessRepository);
+
+        return new RefuseDataAccessUseCase(
+            this.userRepository,
+            this.patientDataAccessRepository,
+            this.authedUserService,
+            patientDataAccessSpecification,
+        );
     }
 }

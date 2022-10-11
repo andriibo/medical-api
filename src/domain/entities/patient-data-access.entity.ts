@@ -1,9 +1,9 @@
-export enum AccessDirection {
+export enum PatientDataAccessRequestDirection {
     FromPatient = 'FromPatient',
     ToPatient = 'ToPatient',
 }
 
-export enum AccessStatus {
+export enum PatientDataAccessStatus {
     Approved = 'Approved',
     Initiated = 'Initiated',
     Refused = 'Refused',

@@ -3,7 +3,7 @@ import {InitiateDataAccessDto} from 'domain/dtos/patient/initiate-data-access.dt
 import {IAuthedUserService} from 'app/services/authed-user.service';
 import {IPatientDataAccessEntityMapper} from 'app/mappers/patient-data-access-entity.mapper';
 import {PatientDataAccessSpecification} from 'app/specifications/patient-data-access.specification';
-import {AccessDirection, PatientDataAccess} from 'domain/entities/patient-data-access.entity';
+import {PatientDataAccessRequestDirection, PatientDataAccess} from 'domain/entities/patient-data-access.entity';
 import {User} from 'domain/entities';
 
 export class InitiateDataAccessUseCase {
@@ -38,7 +38,7 @@ export class InitiateDataAccessUseCase {
 
     private createDataAccess(patient: User, userToGrant: User): PatientDataAccess {
         const dataAccess = this.patientDataAccessEntityMapper.mapByPatientAndGrantedUser(patient, userToGrant);
-        dataAccess.direction = AccessDirection.FromPatient;
+        dataAccess.direction = PatientDataAccessRequestDirection.FromPatient;
 
         return dataAccess;
     }

@@ -14,6 +14,10 @@ export class PatientDataAccessRepository implements IPatientDataAccessRepository
         await this.dataSource.manager.save(patientDataAccessModel);
     }
 
+    async update(patientDataAccessModel: PatientDataAccessModel): Promise<void> {
+        await this.dataSource.manager.save(patientDataAccessModel);
+    }
+
     async getOneByPatientAndGrantedUser(patient: User, grantedUser: User): Promise<PatientDataAccess> {
         return await this.dataSource.manager.findOneBy(PatientDataAccessModel, {
             patientUserId: patient.userId,
@@ -21,15 +25,19 @@ export class PatientDataAccessRepository implements IPatientDataAccessRepository
         });
     }
 
-    async getByPatient(user: User): Promise<PatientDataAccess[]> {
+    async getByPatient(patient: User): Promise<PatientDataAccess[]> {
         return await this.dataSource.manager.findBy(PatientDataAccessModel, {
-            patientUserId: user.userId,
+            patientUserId: patient.userId,
         });
     }
 
-    async getByGrantedUser(user: User): Promise<PatientDataAccess[]> {
+    async getByGrantedUser(grantedUser: User): Promise<PatientDataAccess[]> {
         return await this.dataSource.manager.findBy(PatientDataAccessModel, {
-            grantedUserId: user.userId,
+            grantedUserId: grantedUser.userId,
         });
+    }
+
+    async getOneByAccessId(accessId: string): Promise<PatientDataAccess> {
+        return await this.dataSource.manager.findOneBy(PatientDataAccessModel, {accessId});
     }
 }
