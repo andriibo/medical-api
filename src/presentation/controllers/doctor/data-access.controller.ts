@@ -3,7 +3,7 @@ import {ApiBearerAuth, ApiResponse, ApiTags} from '@nestjs/swagger';
 import {Roles} from 'presentation/guards';
 import {DoctorUseCasesFactory} from 'infrastructure/factories/doctor-use-cases.factory';
 import {DataAccessView} from 'views/patient/data-access.view';
-import {RefuseDataAccessView} from 'views/data-access';
+import {ApproveDataAccessView, RefuseDataAccessView} from 'views/data-access';
 
 @Controller('doctor')
 @ApiBearerAuth()
@@ -29,6 +29,19 @@ export class DataAccessController {
 
         try {
             await useCase.refuseDataAccess(requestBody);
+        } catch (error) {
+            throw new BadRequestException(error.message);
+        }
+    }
+
+    @Roles('Doctor')
+    @Patch('data-access/approve')
+    @HttpCode(HttpStatus.OK)
+    public async approve(@Body() requestBody: ApproveDataAccessView): Promise<void> {
+        const useCase = this.doctorUseCasesFactory.createApproveDataAccessUseCase();
+
+        try {
+            await useCase.approveDataAccess(requestBody);
         } catch (error) {
             throw new BadRequestException(error.message);
         }

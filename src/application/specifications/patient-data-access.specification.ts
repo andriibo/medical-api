@@ -41,7 +41,19 @@ export class PatientDataAccessSpecification {
         const isRefusingAllowed = isUserGranted && isAccessStatusInitiated && isGrantedUserRequested;
 
         if (!isRefusingAllowed) {
-            throw new Error('Refusing Not Allowed.');
+            throw new Error('Refuse Not Allowed.');
+        }
+    }
+
+    async assertGrantedUserCanApproveAccess(grantedUser: User, dataAccess: PatientDataAccess): Promise<void> {
+        const isUserGranted = dataAccess.grantedUserId === grantedUser.userId;
+        const isAccessStatusInitiated = dataAccess.status === PatientDataAccessStatus.Initiated;
+        const isGrantedUserRequested = dataAccess.direction === PatientDataAccessRequestDirection.FromPatient;
+
+        const isRefusingAllowed = isUserGranted && isAccessStatusInitiated && isGrantedUserRequested;
+
+        if (!isRefusingAllowed) {
+            throw new Error('Approval Not Allowed.');
         }
     }
 }
