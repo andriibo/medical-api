@@ -18,6 +18,10 @@ export class PatientDataAccessRepository implements IPatientDataAccessRepository
         await this.dataSource.manager.save(patientDataAccessModel);
     }
 
+    async delete(patientDataAccessModel: PatientDataAccessModel): Promise<void> {
+        await this.dataSource.manager.remove(patientDataAccessModel);
+    }
+
     async getOneByPatientAndGrantedUser(patient: User, grantedUser: User): Promise<PatientDataAccess> {
         return await this.dataSource.manager.findOneBy(PatientDataAccessModel, {
             patientUserId: patient.userId,

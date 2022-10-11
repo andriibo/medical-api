@@ -13,24 +13,20 @@ export class SignUpUseCase {
         private readonly userEntityMapper: IUserEntityMapper,
     ) {}
 
-    public async signUpDoctor(dto: CreateDoctorDto): Promise<object> {
+    public async signUpDoctor(dto: CreateDoctorDto): Promise<void> {
         const authModel = await this.authService.signUp(SignUpModel.fromCreateDoctorDto(dto));
 
         const user = this.userEntityMapper.mapByAuthModelAndCreateDoctorDto(authModel, dto);
 
         await this.createUser(user);
-
-        return user;
     }
 
-    public async signUpPatient(dto: CreatePatientDto): Promise<object> {
+    public async signUpPatient(dto: CreatePatientDto): Promise<void> {
         const authModel = await this.authService.signUp(SignUpModel.fromCreatePatientDto(dto));
 
         const user = this.userEntityMapper.mapByAuthModelAndCreatePatientDto(authModel, dto);
 
         await this.createUser(user);
-
-        return user;
     }
 
     private async createUser(user: User): Promise<void> {

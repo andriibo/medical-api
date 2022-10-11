@@ -1,9 +1,10 @@
-import {Body, Controller, Post, HttpCode, HttpStatus, BadRequestException, Get} from '@nestjs/common';
+import {Body, Controller, Post, HttpCode, HttpStatus, BadRequestException, Get, Delete} from '@nestjs/common';
 import {ApiBearerAuth, ApiResponse, ApiTags} from '@nestjs/swagger';
 import {Roles} from 'presentation/guards';
 import {PatientUseCasesFactory} from 'infrastructure/factories/patient-use-cases.factory';
 import {InitiateDataAccessView} from 'views/patient';
 import {DataAccessView} from 'views/patient/data-access.view';
+import {DeleteDataAccessView} from 'views/data-access';
 
 @Controller('patient')
 @ApiBearerAuth()
@@ -26,12 +27,26 @@ export class DataAccessController {
     }
 
     @Roles('Patient')
-    @Get('data-access/list')
+    @Get('data-access')
     @HttpCode(HttpStatus.OK)
     @ApiResponse({status: HttpStatus.OK, type: [DataAccessView]})
     public async list(): Promise<DataAccessView[]> {
         const useCase = this.patientUseCasesFactory.createDataAccessListUseCase();
 
         return await useCase.getList();
+    }
+
+    @Roles('Patient')
+    @Delete('data-access')
+    @HttpCode(HttpStatus.NO_CONTENT)
+    @HttpCode(HttpStatus.BAD_REQUEST)
+    public async delete(@Body() requestBody: DeleteDataAccessView): Promise<void> {
+        const useCase = this.patientUseCasesFactory.createDeleteDataAccessUseCase();
+
+        try {
+            await useCase.deleteDataAccess(requestBody);
+        } catch (error) {
+            throw new BadRequestException(error.message);
+        }
     }
 }

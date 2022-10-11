@@ -22,19 +22,19 @@ export class AuthController {
     @Post('sign-up/doctor')
     @HttpCode(HttpStatus.CREATED)
     @HttpCode(HttpStatus.BAD_REQUEST)
-    public async signUpDoctor(@Body() requestBody: SignUpDoctorView): Promise<object> {
+    public async signUpDoctor(@Body() requestBody: SignUpDoctorView): Promise<void> {
         const useCase = this.authUseCasesFactory.createSignUpUseCase();
 
-        return await useCase.signUpDoctor(requestBody);
+        await useCase.signUpDoctor(requestBody);
     }
 
     @Post('sign-up/patient')
     @HttpCode(HttpStatus.CREATED)
     @HttpCode(HttpStatus.BAD_REQUEST)
-    public async signUpPatient(@Body() requestBody: SignUpPatientView): Promise<object> {
+    public async signUpPatient(@Body() requestBody: SignUpPatientView): Promise<void> {
         const useCase = this.authUseCasesFactory.createSignUpUseCase();
 
-        return await useCase.signUpPatient(requestBody);
+        await useCase.signUpPatient(requestBody);
     }
 
     @Post('confirm-sign-up')

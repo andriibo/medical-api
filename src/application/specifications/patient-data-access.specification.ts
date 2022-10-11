@@ -38,9 +38,9 @@ export class PatientDataAccessSpecification {
         const isAccessStatusInitiated = dataAccess.status === PatientDataAccessStatus.Initiated;
         const isGrantedUserRequested = dataAccess.direction === PatientDataAccessRequestDirection.FromPatient;
 
-        const isRefusingAllowed = isUserGranted && isAccessStatusInitiated && isGrantedUserRequested;
+        const isRefuseAllowed = isUserGranted && isAccessStatusInitiated && isGrantedUserRequested;
 
-        if (!isRefusingAllowed) {
+        if (!isRefuseAllowed) {
             throw new Error('Refuse Not Allowed.');
         }
     }
@@ -50,10 +50,32 @@ export class PatientDataAccessSpecification {
         const isAccessStatusInitiated = dataAccess.status === PatientDataAccessStatus.Initiated;
         const isGrantedUserRequested = dataAccess.direction === PatientDataAccessRequestDirection.FromPatient;
 
-        const isRefusingAllowed = isUserGranted && isAccessStatusInitiated && isGrantedUserRequested;
+        const isApproveAllowed = isUserGranted && isAccessStatusInitiated && isGrantedUserRequested;
 
-        if (!isRefusingAllowed) {
+        if (!isApproveAllowed) {
             throw new Error('Approval Not Allowed.');
+        }
+    }
+
+    async assertGrantedUserCanDeleteAccess(grantedUser: User, dataAccess: PatientDataAccess): Promise<void> {
+        const isUserGranted = dataAccess.grantedUserId === grantedUser.userId;
+        const isAccessStatusApproved = dataAccess.status === PatientDataAccessStatus.Approved;
+
+        const isDeleteAllowed = isUserGranted && isAccessStatusApproved;
+
+        if (!isDeleteAllowed) {
+            throw new Error('Delete Not Allowed.');
+        }
+    }
+
+    async assertPatientCanDeleteAccess(patient: User, dataAccess: PatientDataAccess): Promise<void> {
+        const isUserGranted = dataAccess.patientUserId === patient.userId;
+        const isGrantedUserRequested = dataAccess.direction === PatientDataAccessRequestDirection.FromPatient;
+
+        const isDeleteAllowed = isUserGranted && isGrantedUserRequested;
+
+        if (!isDeleteAllowed) {
+            throw new Error('Delete Not Allowed.');
         }
     }
 }
