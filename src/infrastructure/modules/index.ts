@@ -1,5 +1,5 @@
 import {AuthModule} from './auth.module';
-import {DoctorModule} from './doctor.module';
-import {PatientModule} from './patient.module';
+import {PatientDataAccessModule} from './patient-data-access.module';
+import {EmergencyContactModule} from './emergency-contact.module';
 
-export {AuthModule, DoctorModule, PatientModule};
+export {AuthModule, PatientDataAccessModule, EmergencyContactModule};

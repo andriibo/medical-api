@@ -1,27 +1,23 @@
 import {Module} from '@nestjs/common';
-import {DataAccessController} from 'controllers/doctor/data-access.controller';
-import {IUserRepository, IPatientDataAccessRepository} from 'app/repositories';
-import {UserRepository, PatientDataAccessRepository} from 'infrastructure/repositories';
+import {PatientController} from 'controllers/emergency-contact/patient.controller';
+import {IUserRepository} from 'app/repositories';
+import {UserRepository} from 'infrastructure/repositories';
 import {IAuthService} from 'app/services/auth.service';
 import {IAuthedUserService} from 'app/services/authed-user.service';
 import {CognitoService} from 'infrastructure/aws/cognito.service';
 import {AuthedUserService} from 'infrastructure/services/authed-user.service';
 import {TypeOrmModule} from '@nestjs/typeorm';
-import {PatientDataAccessModel} from 'presentation/models';
-import {DoctorUseCasesFactory} from 'infrastructure/factories/doctor-use-cases.factory';
+import {EmergencyContactModel} from 'presentation/models';
+import {PatientUseCasesFactory} from 'infrastructure/factories/emergency-contact';
 
 @Module({
-    imports: [TypeOrmModule.forFeature([PatientDataAccessModel])],
-    controllers: [DataAccessController],
+    imports: [TypeOrmModule.forFeature([EmergencyContactModel])],
+    controllers: [PatientController],
     providers: [
-        DoctorUseCasesFactory,
+        PatientUseCasesFactory,
         {
             provide: IUserRepository,
             useClass: UserRepository,
-        },
-        {
-            provide: IPatientDataAccessRepository,
-            useClass: PatientDataAccessRepository,
         },
         {
             provide: IAuthService,
@@ -33,4 +29,4 @@ import {DoctorUseCasesFactory} from 'infrastructure/factories/doctor-use-cases.f
         },
     ],
 })
-export class DoctorModule {}
+export class EmergencyContactModule {}
