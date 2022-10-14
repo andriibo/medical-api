@@ -1,8 +1,8 @@
-import {Body, Controller, Post, HttpCode, HttpStatus, BadRequestException, Get} from '@nestjs/common';
+import {Body, Controller, Post, HttpCode, HttpStatus, BadRequestException, Get, Delete} from '@nestjs/common';
 import {ApiBearerAuth, ApiResponse, ApiTags} from '@nestjs/swagger';
 import {Roles} from 'presentation/guards';
 import {PatientUseCasesFactory} from 'infrastructure/factories/emergency-contact/patient-use-cases.factory';
-import {CreateContactView, EmergencyContactView} from 'views/emergency-contact';
+import {CreateContactView, ContactView, DeleteContactView} from 'views/emergency-contact';
 
 @Controller('patient/emergency-contact')
 @ApiBearerAuth()
@@ -27,10 +27,24 @@ export class PatientController {
     @Roles('Patient')
     @Get()
     @HttpCode(HttpStatus.OK)
-    @ApiResponse({status: HttpStatus.OK, type: [EmergencyContactView]})
-    public async list(): Promise<EmergencyContactView[]> {
+    @ApiResponse({status: HttpStatus.OK, type: [ContactView]})
+    public async list(): Promise<ContactView[]> {
         const useCase = this.useCasesFactory.createContactListUseCase();
 
         return await useCase.getList();
+    }
+
+    @Roles('Patient')
+    @Delete()
+    @HttpCode(HttpStatus.NO_CONTENT)
+    @HttpCode(HttpStatus.BAD_REQUEST)
+    public async delete(@Body() requestBody: DeleteContactView): Promise<void> {
+        const useCase = this.useCasesFactory.createDeleteContactUseCase();
+
+        try {
+            await useCase.deleteContact(requestBody);
+        } catch (error) {
+            throw new BadRequestException(error.message);
+        }
     }
 }

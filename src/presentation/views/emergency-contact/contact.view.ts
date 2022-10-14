@@ -1,7 +1,7 @@
 import {ApiProperty} from '@nestjs/swagger';
 import {EmergencyContact} from 'domain/entities/emergency-contact.entity';
 
-export class EmergencyContactView {
+export class ContactView {
     @ApiProperty()
     contactId: string;
 
@@ -23,8 +23,8 @@ export class EmergencyContactView {
     @ApiProperty()
     createdAt: string;
 
-    static fromEmergencyContact(emergencyContact: EmergencyContact): EmergencyContactView {
-        const view = new EmergencyContactView();
+    static fromEmergencyContact(emergencyContact: EmergencyContact): ContactView {
+        const view = new ContactView();
         view.contactId = emergencyContact.contactId;
         view.firstName = emergencyContact.firstName;
         view.lastName = emergencyContact.lastName;

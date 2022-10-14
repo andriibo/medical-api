@@ -1,4 +1,5 @@
 import {CreateContactView} from './create-contact.view';
-import {EmergencyContactView} from './emergency-contact.view';
+import {ContactView} from './contact.view';
+import {DeleteContactView} from './delete-contact.view';
 
-export {CreateContactView, EmergencyContactView};
+export {CreateContactView, ContactView, DeleteContactView};

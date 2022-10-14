@@ -1,5 +1,5 @@
 import {Inject, Injectable} from '@nestjs/common';
-import {CreateContactUseCase, ContactListUseCase} from 'app/use-cases/emergency-contact/patient';
+import {CreateContactUseCase, ContactListUseCase, DeleteContactUseCase} from 'app/use-cases/emergency-contact/patient';
 import {IAuthedUserService} from 'app/services/authed-user.service';
 import {IEmergencyContactRepository} from 'app/repositories';
 import {IEmergencyContactEntityMapper} from 'app/mappers/emergency-contact-entity.mapper';
@@ -28,5 +28,15 @@ export class PatientUseCasesFactory {
 
     public createContactListUseCase(): ContactListUseCase {
         return new ContactListUseCase(this.authedUserService, this.emergencyContactRepository);
+    }
+
+    public createDeleteContactUseCase(): DeleteContactUseCase {
+        const emergencyContactSpecification = new EmergencyContactSpecification();
+
+        return new DeleteContactUseCase(
+            this.authedUserService,
+            this.emergencyContactRepository,
+            emergencyContactSpecification,
+        );
     }
 }
