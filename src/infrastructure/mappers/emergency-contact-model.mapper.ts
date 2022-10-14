@@ -1,16 +1,19 @@
 import {EmergencyContactModel} from 'presentation/models';
 import {IEmergencyContactEntityMapper} from 'app/mappers/emergency-contact-entity.mapper';
-import {CreateContactDto} from 'domain/dtos/emergency-contact/create-contact.dto';
+import {ContactDto} from 'domain/dtos/emergency-contact/contact.dto';
 import {EmergencyContact} from 'domain/entities';
 
 export class EmergencyContactModelMapper implements IEmergencyContactEntityMapper {
-    mapByCreateContactDto(createContactDto: CreateContactDto): EmergencyContact {
-        const contact = new EmergencyContactModel();
-        contact.firstName = createContactDto.firstName;
-        contact.lastName = createContactDto.lastName;
-        contact.email = createContactDto.email;
-        contact.phone = createContactDto.phone;
-        contact.relationship = createContactDto.relationship;
+    mapByContactDto(contactDto: ContactDto, contact?: EmergencyContact): EmergencyContact {
+        if (!contact) {
+            contact = new EmergencyContactModel();
+        }
+
+        contact.firstName = contactDto.firstName;
+        contact.lastName = contactDto.lastName;
+        contact.email = contactDto.email;
+        contact.phone = contactDto.phone;
+        contact.relationship = contactDto.relationship;
 
         return contact;
     }

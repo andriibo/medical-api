@@ -1,8 +1,21 @@
-import {Body, Controller, Post, HttpCode, HttpStatus, BadRequestException, Get, Delete} from '@nestjs/common';
+import {
+    Body,
+    Controller,
+    Post,
+    HttpCode,
+    HttpStatus,
+    BadRequestException,
+    Get,
+    Delete,
+    Patch,
+    Param,
+    ParseUUIDPipe,
+} from '@nestjs/common';
 import {ApiBearerAuth, ApiResponse, ApiTags} from '@nestjs/swagger';
 import {Roles} from 'presentation/guards';
 import {PatientUseCasesFactory} from 'infrastructure/factories/emergency-contact/patient-use-cases.factory';
-import {CreateContactView, ContactView, DeleteContactView} from 'views/emergency-contact';
+import {CreateContactView, ContactView, DeleteContactView, UpdateContactView} from 'views/emergency-contact';
+import {RefuseDataAccessView} from 'views/data-access';
 
 @Controller('patient/emergency-contact')
 @ApiBearerAuth()
@@ -32,6 +45,23 @@ export class PatientController {
         const useCase = this.useCasesFactory.createContactListUseCase();
 
         return await useCase.getList();
+    }
+
+    @Roles('Patient')
+    @Patch(':contactId')
+    @HttpCode(HttpStatus.OK)
+    @HttpCode(HttpStatus.BAD_REQUEST)
+    public async refuse(
+        @Param('contactId', ParseUUIDPipe) contactId: string,
+        @Body() requestBody: UpdateContactView,
+    ): Promise<void> {
+        const useCase = this.useCasesFactory.createUpdateContactUseCase();
+
+        try {
+            await useCase.updateContact(contactId, requestBody);
+        } catch (error) {
+            throw new BadRequestException(error.message);
+        }
     }
 
     @Roles('Patient')

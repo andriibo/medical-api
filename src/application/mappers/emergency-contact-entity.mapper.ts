@@ -1,8 +1,8 @@
 import {EmergencyContact} from 'domain/entities';
-import {CreateContactDto} from 'domain/dtos/emergency-contact/create-contact.dto';
+import {ContactDto} from 'domain/dtos/emergency-contact/contact.dto';
 
 export interface IEmergencyContactEntityMapper {
-    mapByCreateContactDto(createContactDto: CreateContactDto): EmergencyContact;
+    mapByContactDto(contactDto: ContactDto, contact?: EmergencyContact): EmergencyContact;
 }
 
 export const IEmergencyContactEntityMapper = Symbol('IEmergencyContactEntityMapper');

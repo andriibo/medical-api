@@ -1,8 +1,8 @@
 import {ApiProperty} from '@nestjs/swagger';
 import {Length, IsEmail, IsNotEmpty, IsIn} from 'class-validator';
-import {CreateContactDto} from 'domain/dtos/emergency-contact/create-contact.dto';
+import {ContactDto} from 'domain/dtos/emergency-contact/contact.dto';
 
-export class CreateContactView extends CreateContactDto {
+export class CreateContactView extends ContactDto {
     @ApiProperty()
     @IsNotEmpty()
     @Length(2, 30)

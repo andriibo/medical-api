@@ -13,6 +13,10 @@ export class EmergencyContactRepository implements IEmergencyContactRepository {
         await this.dataSource.manager.save(emergencyContact);
     }
 
+    async update(emergencyContact: EmergencyContactModel): Promise<void> {
+        await this.dataSource.manager.save(emergencyContact);
+    }
+
     async delete(emergencyContact: EmergencyContactModel): Promise<void> {
         await this.dataSource.manager.remove(emergencyContact);
     }
