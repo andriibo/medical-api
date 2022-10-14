@@ -1,6 +1,6 @@
 import {IPatientDataAccessRepository, IUserRepository} from 'app/repositories';
 import {IAuthedUserService} from 'app/services/authed-user.service';
-import {DataAccessView} from 'views/patient/data-access.view';
+import {DataAccessView} from 'views/data-access';
 import {UserView} from 'views/user/user.view';
 import {PatientDataAccess, User} from 'domain/entities';
 

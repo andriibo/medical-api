@@ -16,4 +16,8 @@ export class EmergencyContactRepository implements IEmergencyContactRepository {
     async getOneByContactId(contactId: string): Promise<EmergencyContact> {
         return await this.dataSource.manager.findOneBy(EmergencyContactModel, {contactId});
     }
+
+    async getByUserId(userId: string): Promise<EmergencyContact[]> {
+        return await this.dataSource.manager.findBy(EmergencyContactModel, {userId});
+    }
 }

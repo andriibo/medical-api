@@ -2,9 +2,7 @@ import {Body, Controller, Post, HttpCode, HttpStatus, BadRequestException, Get, 
 import {ApiBearerAuth, ApiResponse, ApiTags} from '@nestjs/swagger';
 import {Roles} from 'presentation/guards';
 import {PatientUseCasesFactory} from 'infrastructure/factories/patient-data-access/patient-use-cases.factory';
-import {InitiateDataAccessView} from 'views/patient';
-import {DataAccessView} from 'views/patient/data-access.view';
-import {DeleteDataAccessView} from 'views/data-access';
+import {InitiateDataAccessView, DeleteDataAccessView, DataAccessView} from 'views/data-access';
 
 @Controller('patient/data-access')
 @ApiBearerAuth()

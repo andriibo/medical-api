@@ -2,7 +2,7 @@ import {Controller, HttpCode, HttpStatus, Get, Patch, Delete, Body, BadRequestEx
 import {ApiBearerAuth, ApiResponse, ApiTags} from '@nestjs/swagger';
 import {Roles} from 'presentation/guards';
 import {DoctorUseCasesFactory} from 'infrastructure/factories/patient-data-access/doctor-use-cases.factory';
-import {DataAccessView} from 'views/patient/data-access.view';
+import {DataAccessView} from 'views/data-access';
 import {ApproveDataAccessView, DeleteDataAccessView, RefuseDataAccessView} from 'views/data-access';
 
 @Controller('doctor/data-access')

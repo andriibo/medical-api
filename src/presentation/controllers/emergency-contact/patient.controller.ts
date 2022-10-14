@@ -1,8 +1,8 @@
-import {Body, Controller, Post, HttpCode, HttpStatus, BadRequestException} from '@nestjs/common';
-import {ApiBearerAuth, ApiTags} from '@nestjs/swagger';
+import {Body, Controller, Post, HttpCode, HttpStatus, BadRequestException, Get} from '@nestjs/common';
+import {ApiBearerAuth, ApiResponse, ApiTags} from '@nestjs/swagger';
 import {Roles} from 'presentation/guards';
 import {PatientUseCasesFactory} from 'infrastructure/factories/emergency-contact/patient-use-cases.factory';
-import {CreateContactView} from 'views/emergency-contact';
+import {CreateContactView, EmergencyContactView} from 'views/emergency-contact';
 
 @Controller('patient/emergency-contact')
 @ApiBearerAuth()
@@ -22,5 +22,15 @@ export class PatientController {
         } catch (error) {
             throw new BadRequestException(error.message);
         }
+    }
+
+    @Roles('Patient')
+    @Get()
+    @HttpCode(HttpStatus.OK)
+    @ApiResponse({status: HttpStatus.OK, type: [EmergencyContactView]})
+    public async list(): Promise<EmergencyContactView[]> {
+        const useCase = this.useCasesFactory.createContactListUseCase();
+
+        return await useCase.getList();
     }
 }
