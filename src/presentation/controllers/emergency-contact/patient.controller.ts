@@ -14,8 +14,7 @@ import {
 import {ApiBearerAuth, ApiResponse, ApiTags} from '@nestjs/swagger';
 import {Roles} from 'presentation/guards';
 import {PatientUseCasesFactory} from 'infrastructure/factories/emergency-contact/patient-use-cases.factory';
-import {CreateContactView, ContactView, DeleteContactView, UpdateContactView} from 'views/emergency-contact';
-import {RefuseDataAccessView} from 'views/data-access';
+import {CreateContactView, ContactView, UpdateContactView} from 'views/emergency-contact';
 
 @Controller('patient/emergency-contact')
 @ApiBearerAuth()
@@ -65,14 +64,14 @@ export class PatientController {
     }
 
     @Roles('Patient')
-    @Delete()
+    @Delete(':contactId')
     @HttpCode(HttpStatus.NO_CONTENT)
     @HttpCode(HttpStatus.BAD_REQUEST)
-    public async delete(@Body() requestBody: DeleteContactView): Promise<void> {
+    public async delete(@Param('contactId', ParseUUIDPipe) contactId: string): Promise<void> {
         const useCase = this.useCasesFactory.createDeleteContactUseCase();
 
         try {
-            await useCase.deleteContact(requestBody);
+            await useCase.deleteContact(contactId);
         } catch (error) {
             throw new BadRequestException(error.message);
         }

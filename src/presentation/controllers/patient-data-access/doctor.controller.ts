@@ -1,9 +1,19 @@
-import {Controller, HttpCode, HttpStatus, Get, Patch, Delete, Body, BadRequestException} from '@nestjs/common';
+import {
+    Controller,
+    HttpCode,
+    HttpStatus,
+    Get,
+    Patch,
+    Delete,
+    Body,
+    BadRequestException,
+    Param,
+    ParseUUIDPipe,
+} from '@nestjs/common';
 import {ApiBearerAuth, ApiResponse, ApiTags} from '@nestjs/swagger';
 import {Roles} from 'presentation/guards';
 import {DoctorUseCasesFactory} from 'infrastructure/factories/patient-data-access/doctor-use-cases.factory';
 import {DataAccessView} from 'views/data-access';
-import {ApproveDataAccessView, DeleteDataAccessView, RefuseDataAccessView} from 'views/data-access';
 
 @Controller('doctor/data-access')
 @ApiBearerAuth()
@@ -22,42 +32,42 @@ export class DoctorController {
     }
 
     @Roles('Doctor')
-    @Patch('refuse')
+    @Patch('refuse/:accessId')
     @HttpCode(HttpStatus.OK)
     @HttpCode(HttpStatus.BAD_REQUEST)
-    public async refuse(@Body() requestBody: RefuseDataAccessView): Promise<void> {
+    public async refuse(@Param('accessId', ParseUUIDPipe) accessId: string): Promise<void> {
         const useCase = this.useCasesFactory.createRefuseDataAccessUseCase();
 
         try {
-            await useCase.refuseDataAccess(requestBody);
+            await useCase.refuseDataAccess(accessId);
         } catch (error) {
             throw new BadRequestException(error.message);
         }
     }
 
     @Roles('Doctor')
-    @Patch('approve')
+    @Patch('approve/:accessId')
     @HttpCode(HttpStatus.OK)
     @HttpCode(HttpStatus.BAD_REQUEST)
-    public async approve(@Body() requestBody: ApproveDataAccessView): Promise<void> {
+    public async approve(@Param('accessId', ParseUUIDPipe) accessId: string): Promise<void> {
         const useCase = this.useCasesFactory.createApproveDataAccessUseCase();
 
         try {
-            await useCase.approveDataAccess(requestBody);
+            await useCase.approveDataAccess(accessId);
         } catch (error) {
             throw new BadRequestException(error.message);
         }
     }
 
     @Roles('Doctor')
-    @Delete()
+    @Delete(':accessId')
     @HttpCode(HttpStatus.NO_CONTENT)
     @HttpCode(HttpStatus.BAD_REQUEST)
-    public async delete(@Body() requestBody: DeleteDataAccessView): Promise<void> {
+    public async delete(@Param('accessId', ParseUUIDPipe) accessId: string): Promise<void> {
         const useCase = this.useCasesFactory.createDeleteDataAccessUseCase();
 
         try {
-            await useCase.deleteDataAccess(requestBody);
+            await useCase.deleteDataAccess(accessId);
         } catch (error) {
             throw new BadRequestException(error.message);
         }
