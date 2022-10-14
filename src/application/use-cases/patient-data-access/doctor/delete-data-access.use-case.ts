@@ -3,6 +3,7 @@ import {IAuthedUserService} from 'app/services/authed-user.service';
 import {DeleteDataAccessDto} from 'domain/dtos/data-access/delete-data-access.dto';
 import {PatientDataAccessSpecification} from 'app/specifications/patient-data-access.specification';
 import {PatientDataAccess} from 'domain/entities/patient-data-access.entity';
+import {EntityNotFoundError} from 'app/errors/entity-not-found.error';
 
 export class DeleteDataAccessUseCase {
     constructor(
@@ -25,7 +26,7 @@ export class DeleteDataAccessUseCase {
         const dataAccess = await this.patientDataAccessRepository.getOneByAccessId(dto.accessId);
 
         if (dataAccess === null) {
-            throw new Error('Access Not Found.');
+            throw new EntityNotFoundError('Access Not Found.');
         }
 
         return dataAccess;

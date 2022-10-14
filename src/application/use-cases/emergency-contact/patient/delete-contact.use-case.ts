@@ -3,6 +3,7 @@ import {IAuthedUserService} from 'app/services/authed-user.service';
 import {DeleteContactDto} from 'domain/dtos/emergency-contact/delete-contact.dto';
 import {EmergencyContact} from 'domain/entities/emergency-contact.entity';
 import {EmergencyContactSpecification} from 'app/specifications/emergency-contact.specification';
+import {EntityNotFoundError} from 'app/errors/entity-not-found.error';
 
 export class DeleteContactUseCase {
     constructor(
@@ -24,7 +25,7 @@ export class DeleteContactUseCase {
         const contact = await this.emergencyContactRepository.getOneByContactId(dto.contactId);
 
         if (contact === null) {
-            throw new Error('Contact Not Found.');
+            throw new EntityNotFoundError('Contact Not Found.');
         }
 
         return contact;

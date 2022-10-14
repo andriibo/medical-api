@@ -3,6 +3,7 @@ import {IAuthedUserService} from 'app/services/authed-user.service';
 import {ApproveDataAccessDto} from 'domain/dtos/data-access/approve-data-access.dto';
 import {PatientDataAccessSpecification} from 'app/specifications/patient-data-access.specification';
 import {PatientDataAccessStatus, PatientDataAccess} from 'domain/entities/patient-data-access.entity';
+import {EntityNotFoundError} from 'app/errors/entity-not-found.error';
 
 export class ApproveDataAccessUseCase {
     constructor(
@@ -27,7 +28,7 @@ export class ApproveDataAccessUseCase {
         const dataAccess = await this.patientDataAccessRepository.getOneByAccessId(dto.accessId);
 
         if (dataAccess === null) {
-            throw new Error('Access Not Found.');
+            throw new EntityNotFoundError('Access Not Found.');
         }
 
         return dataAccess;

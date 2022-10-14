@@ -5,6 +5,7 @@ import {
     PatientDataAccessRequestDirection,
     PatientDataAccess,
 } from 'domain/entities/patient-data-access.entity';
+import {PatientDataAccessSpecificationError} from 'app/errors/patient-data-access-specification.error';
 
 export class PatientDataAccessSpecification {
     constructor(private readonly patientDataAccessRepository: IPatientDataAccessRepository) {}
@@ -23,13 +24,17 @@ export class PatientDataAccessSpecification {
 
     async assertAccessCanBeInitiated(patient: User, userToGrant: User): Promise<void> {
         if (!this.isUserRoleGrantable(userToGrant.role)) {
-            throw new Error('No doctor account with specified email address. Try another one.');
+            throw new PatientDataAccessSpecificationError(
+                'No doctor account with specified email address. Try another one.',
+            );
         }
 
         const hasInitiatedAccess = await this.hasInitiatedAccess(patient, userToGrant);
 
         if (hasInitiatedAccess) {
-            throw new Error('Doctor with specified email address has been already invited.');
+            throw new PatientDataAccessSpecificationError(
+                'Doctor with specified email address has been already invited.',
+            );
         }
     }
 
@@ -41,7 +46,7 @@ export class PatientDataAccessSpecification {
         const isRefuseAllowed = isUserGranted && isAccessStatusInitiated && isGrantedUserRequested;
 
         if (!isRefuseAllowed) {
-            throw new Error('Refuse Not Allowed.');
+            throw new PatientDataAccessSpecificationError('Refuse Not Allowed.');
         }
     }
 
@@ -53,7 +58,7 @@ export class PatientDataAccessSpecification {
         const isApproveAllowed = isUserGranted && isAccessStatusInitiated && isGrantedUserRequested;
 
         if (!isApproveAllowed) {
-            throw new Error('Approval Not Allowed.');
+            throw new PatientDataAccessSpecificationError('Approval Not Allowed.');
         }
     }
 
@@ -64,7 +69,7 @@ export class PatientDataAccessSpecification {
         const isDeleteAllowed = isUserGranted && isAccessStatusApproved;
 
         if (!isDeleteAllowed) {
-            throw new Error('Delete Not Allowed.');
+            throw new PatientDataAccessSpecificationError('Delete Not Allowed.');
         }
     }
 
@@ -75,7 +80,7 @@ export class PatientDataAccessSpecification {
         const isDeleteAllowed = isUserGranted && isGrantedUserRequested;
 
         if (!isDeleteAllowed) {
-            throw new Error('Delete Not Allowed.');
+            throw new PatientDataAccessSpecificationError('Delete Not Allowed.');
         }
     }
 }
