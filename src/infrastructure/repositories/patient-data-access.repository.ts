@@ -10,16 +10,16 @@ import {User} from 'domain/entities';
 export class PatientDataAccessRepository implements IPatientDataAccessRepository {
     constructor(@InjectDataSource() private dataSource: DataSource) {}
 
-    async create(patientDataAccessModel: PatientDataAccessModel): Promise<void> {
-        await this.dataSource.manager.save(patientDataAccessModel);
+    async create(patientDataAccess: PatientDataAccessModel): Promise<void> {
+        await this.dataSource.manager.save(patientDataAccess);
     }
 
-    async update(patientDataAccessModel: PatientDataAccessModel): Promise<void> {
-        await this.dataSource.manager.save(patientDataAccessModel);
+    async update(patientDataAccess: PatientDataAccessModel): Promise<void> {
+        await this.dataSource.manager.save(patientDataAccess);
     }
 
-    async delete(patientDataAccessModel: PatientDataAccessModel): Promise<void> {
-        await this.dataSource.manager.remove(patientDataAccessModel);
+    async delete(patientDataAccess: PatientDataAccessModel): Promise<void> {
+        await this.dataSource.manager.remove(patientDataAccess);
     }
 
     async getOneByPatientAndGrantedUser(patient: User, grantedUser: User): Promise<PatientDataAccess> {

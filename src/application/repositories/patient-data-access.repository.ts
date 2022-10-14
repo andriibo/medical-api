@@ -1,13 +1,12 @@
 import {PatientDataAccess} from 'domain/entities/patient-data-access.entity';
 import {User} from 'domain/entities';
-import {PatientDataAccessModel} from 'presentation/models';
 
 export interface IPatientDataAccessRepository {
-    create(patientDataAccessModel: PatientDataAccessModel): Promise<void>;
+    create(patientDataAccess: PatientDataAccess): Promise<void>;
 
-    update(patientDataAccessModel: PatientDataAccessModel): Promise<void>;
+    update(patientDataAccess: PatientDataAccess): Promise<void>;
 
-    delete(patientDataAccessModel: PatientDataAccessModel): Promise<void>;
+    delete(patientDataAccess: PatientDataAccess): Promise<void>;
 
     getOneByPatientAndGrantedUser(patient: User, grantedUser: User): Promise<PatientDataAccess>;
 
