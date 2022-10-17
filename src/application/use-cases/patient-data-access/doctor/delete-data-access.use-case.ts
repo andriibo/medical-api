@@ -1,10 +1,11 @@
 import {IPatientDataAccessRepository, IUserRepository} from 'app/repositories';
 import {IAuthedUserService} from 'app/services/authed-user.service';
-import {ApproveDataAccessDto} from 'domain/dtos/data-access/approve-data-access.dto';
+import {DeleteDataAccessDto} from 'domain/dtos/data-access/delete-data-access.dto';
 import {PatientDataAccessSpecification} from 'app/specifications/patient-data-access.specification';
-import {PatientDataAccessStatus, PatientDataAccess} from 'domain/entities/patient-data-access.entity';
+import {PatientDataAccess} from 'domain/entities/patient-data-access.entity';
+import {EntityNotFoundError} from 'app/errors/entity-not-found.error';
 
-export class ApproveDataAccessUseCase {
+export class DeleteDataAccessUseCase {
     constructor(
         private readonly userRepository: IUserRepository,
         private readonly patientDataAccessRepository: IPatientDataAccessRepository,
@@ -12,22 +13,20 @@ export class ApproveDataAccessUseCase {
         private readonly patientDataAccessSpecification: PatientDataAccessSpecification,
     ) {}
 
-    public async approveDataAccess(dto: ApproveDataAccessDto): Promise<void> {
+    public async deleteDataAccess(dto: DeleteDataAccessDto): Promise<void> {
         const user = await this.authedUserService.getUser();
         const dataAccess = await this.getDataAccess(dto);
 
-        await this.patientDataAccessSpecification.assertGrantedUserCanApproveAccess(user, dataAccess);
+        await this.patientDataAccessSpecification.assertGrantedUserCanDeleteAccess(user, dataAccess);
 
-        dataAccess.status = PatientDataAccessStatus.Approved;
-
-        await this.patientDataAccessRepository.update(dataAccess);
+        await this.patientDataAccessRepository.delete(dataAccess);
     }
 
-    private async getDataAccess(dto: ApproveDataAccessDto): Promise<PatientDataAccess> {
+    private async getDataAccess(dto: DeleteDataAccessDto): Promise<PatientDataAccess> {
         const dataAccess = await this.patientDataAccessRepository.getOneByAccessId(dto.accessId);
 
         if (dataAccess === null) {
-            throw new Error('Access Not Found.');
+            throw new EntityNotFoundError('Access Not Found.');
         }
 
         return dataAccess;

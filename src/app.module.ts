@@ -1,4 +1,3 @@
-import {VitalController} from './presentation/controllers/vital.controller';
 import {MiddlewareConsumer, Module, NestModule, RequestMethod} from '@nestjs/common';
 import {AppController} from 'controllers/app.controller';
 import {TypeOrmModule} from '@nestjs/typeorm';
@@ -9,7 +8,7 @@ import {IAuthService} from 'app/services/auth.service';
 import {APP_INTERCEPTOR} from '@nestjs/core';
 import {ErrorsInterceptor} from 'presentation/interceptors/errors.interceptor';
 import {AuthGuard, RolesGuard} from 'presentation/guards';
-import {AuthModule, DoctorModule, PatientModule, VitalModule} from 'infrastructure/modules';
+import {AuthModule, VitalModule, PatientDataAccessModule, EmergencyContactModule} from 'infrastructure/modules';
 import {AssignUserMiddleware} from 'presentation/middlewares/assign-user.middleware';
 
 const GUARDS = [AuthGuard, RolesGuard];
@@ -31,9 +30,9 @@ const INTERCEPTORS = [
             isGlobal: true,
         }),
         AuthModule,
-        DoctorModule,
-        PatientModule,
         VitalModule,
+        PatientDataAccessModule,
+        EmergencyContactModule,
     ],
     exports: [TypeOrmModule],
     controllers: [AppController],

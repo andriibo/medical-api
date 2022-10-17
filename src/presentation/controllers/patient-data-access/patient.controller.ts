@@ -1,23 +1,21 @@
 import {Body, Controller, Post, HttpCode, HttpStatus, BadRequestException, Get, Delete} from '@nestjs/common';
 import {ApiBearerAuth, ApiResponse, ApiTags} from '@nestjs/swagger';
 import {Roles} from 'presentation/guards';
-import {PatientUseCasesFactory} from 'infrastructure/factories/patient-use-cases.factory';
-import {InitiateDataAccessView} from 'views/patient';
-import {DataAccessView} from 'views/patient/data-access.view';
-import {DeleteDataAccessView} from 'views/data-access';
+import {PatientUseCasesFactory} from 'infrastructure/factories/patient-data-access/patient-use-cases.factory';
+import {InitiateDataAccessView, DeleteDataAccessView, DataAccessView} from 'views/data-access';
 
-@Controller('patient')
+@Controller('patient/data-access')
 @ApiBearerAuth()
-@ApiTags('Patient')
-export class DataAccessController {
-    constructor(private readonly patientUseCasesFactory: PatientUseCasesFactory) {}
+@ApiTags('Patient Data Access')
+export class PatientController {
+    constructor(private readonly useCasesFactory: PatientUseCasesFactory) {}
 
     @Roles('Patient')
-    @Post('data-access/initiate')
+    @Post('initiate')
     @HttpCode(HttpStatus.CREATED)
     @HttpCode(HttpStatus.BAD_REQUEST)
     public async initiate(@Body() requestBody: InitiateDataAccessView): Promise<void> {
-        const useCase = this.patientUseCasesFactory.createInitiateDataAccessUseCase();
+        const useCase = this.useCasesFactory.createInitiateDataAccessUseCase();
 
         try {
             await useCase.initiateDataAccess(requestBody);
@@ -27,21 +25,21 @@ export class DataAccessController {
     }
 
     @Roles('Patient')
-    @Get('data-access')
+    @Get()
     @HttpCode(HttpStatus.OK)
     @ApiResponse({status: HttpStatus.OK, type: [DataAccessView]})
     public async list(): Promise<DataAccessView[]> {
-        const useCase = this.patientUseCasesFactory.createDataAccessListUseCase();
+        const useCase = this.useCasesFactory.createDataAccessListUseCase();
 
         return await useCase.getList();
     }
 
     @Roles('Patient')
-    @Delete('data-access')
+    @Delete()
     @HttpCode(HttpStatus.NO_CONTENT)
     @HttpCode(HttpStatus.BAD_REQUEST)
     public async delete(@Body() requestBody: DeleteDataAccessView): Promise<void> {
-        const useCase = this.patientUseCasesFactory.createDeleteDataAccessUseCase();
+        const useCase = this.useCasesFactory.createDeleteDataAccessUseCase();
 
         try {
             await useCase.deleteDataAccess(requestBody);

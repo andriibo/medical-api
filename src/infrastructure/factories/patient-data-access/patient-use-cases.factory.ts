@@ -1,47 +1,39 @@
 import {Inject, Injectable} from '@nestjs/common';
 import {IUserRepository, IPatientDataAccessRepository} from 'app/repositories';
 import {
-    ApproveDataAccessUseCase,
+    InitiateDataAccessUseCase,
     DataAccessListUseCase,
     DeleteDataAccessUseCase,
-    RefuseDataAccessUseCase,
-} from 'app/use-cases/doctor';
+} from 'app/use-cases/patient-data-access/patient';
 import {IAuthedUserService} from 'app/services/authed-user.service';
+import {IPatientDataAccessEntityMapper} from 'app/mappers/patient-data-access-entity.mapper';
 import {PatientDataAccessSpecification} from 'app/specifications/patient-data-access.specification';
 
 @Injectable()
-export class DoctorUseCasesFactory {
+export class PatientUseCasesFactory {
     constructor(
         @Inject(IUserRepository) private readonly userRepository: IUserRepository,
         @Inject(IPatientDataAccessRepository)
         private readonly patientDataAccessRepository: IPatientDataAccessRepository,
         @Inject(IAuthedUserService) private readonly authedUserService: IAuthedUserService,
+        @Inject(IPatientDataAccessEntityMapper)
+        private readonly patientDataAccessEntityMapper: IPatientDataAccessEntityMapper,
     ) {}
+
+    public createInitiateDataAccessUseCase(): InitiateDataAccessUseCase {
+        const patientDataAccessSpecification = new PatientDataAccessSpecification(this.patientDataAccessRepository);
+
+        return new InitiateDataAccessUseCase(
+            this.userRepository,
+            this.patientDataAccessRepository,
+            this.authedUserService,
+            this.patientDataAccessEntityMapper,
+            patientDataAccessSpecification,
+        );
+    }
 
     public createDataAccessListUseCase(): DataAccessListUseCase {
         return new DataAccessListUseCase(this.userRepository, this.patientDataAccessRepository, this.authedUserService);
-    }
-
-    public createRefuseDataAccessUseCase(): RefuseDataAccessUseCase {
-        const patientDataAccessSpecification = new PatientDataAccessSpecification(this.patientDataAccessRepository);
-
-        return new RefuseDataAccessUseCase(
-            this.userRepository,
-            this.patientDataAccessRepository,
-            this.authedUserService,
-            patientDataAccessSpecification,
-        );
-    }
-
-    public createApproveDataAccessUseCase(): ApproveDataAccessUseCase {
-        const patientDataAccessSpecification = new PatientDataAccessSpecification(this.patientDataAccessRepository);
-
-        return new ApproveDataAccessUseCase(
-            this.userRepository,
-            this.patientDataAccessRepository,
-            this.authedUserService,
-            patientDataAccessSpecification,
-        );
     }
 
     public createDeleteDataAccessUseCase(): DeleteDataAccessUseCase {
