@@ -1,4 +1,4 @@
-import {AuthUserDto} from 'domain/dtos/auth/auth-user.dto';
+import {AuthUserDto} from 'domain/dtos/request/auth/auth-user.dto';
 
 export class SignInModel {
     private constructor(public readonly userName: string, public readonly password: string) {}

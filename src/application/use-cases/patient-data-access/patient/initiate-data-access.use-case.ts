@@ -1,5 +1,5 @@
 import {IUserRepository, IPatientDataAccessRepository} from 'app/repositories';
-import {InitiateDataAccessDto} from 'domain/dtos/patient/initiate-data-access.dto';
+import {InitiateDataAccessDto} from 'domain/dtos/request/data-access/initiate-data-access.dto';
 import {IAuthedUserService} from 'app/services/authed-user.service';
 import {IPatientDataAccessEntityMapper} from 'app/mappers/patient-data-access-entity.mapper';
 import {PatientDataAccessSpecification} from 'app/specifications/patient-data-access.specification';

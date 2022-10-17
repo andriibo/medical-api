@@ -2,7 +2,6 @@ import {
     Body,
     Controller,
     Post,
-    HttpCode,
     HttpStatus,
     BadRequestException,
     Get,
@@ -14,20 +13,20 @@ import {
 import {ApiBearerAuth, ApiResponse, ApiTags} from '@nestjs/swagger';
 import {Roles} from 'presentation/guards';
 import {PatientUseCasesFactory} from 'infrastructure/factories/emergency-contact/patient-use-cases.factory';
-import {CreateContactView, ContactView, UpdateContactView} from 'views/emergency-contact';
+import {CreateContactView, UpdateContactView} from 'presentation/views/request/emergency-contact';
+import {ContactView} from 'presentation/views/response/emergency-contact';
+import {ContactDto} from 'domain/dtos/response/emergency-contact/contact.dto';
 
 @Controller('patient/emergency-contact')
 @ApiBearerAuth()
 @ApiTags('Emergency Contact')
 export class PatientController {
-    constructor(private readonly useCasesFactory: PatientUseCasesFactory) {}
+    constructor(private readonly patientUseCasesFactory: PatientUseCasesFactory) {}
 
     @Roles('Patient')
     @Post()
-    @HttpCode(HttpStatus.CREATED)
-    @HttpCode(HttpStatus.BAD_REQUEST)
-    public async initiate(@Body() requestBody: CreateContactView): Promise<void> {
-        const useCase = this.useCasesFactory.createCreateContactUseCase();
+    public async create(@Body() requestBody: CreateContactView): Promise<void> {
+        const useCase = this.patientUseCasesFactory.createCreateContactUseCase();
 
         try {
             await useCase.createContact(requestBody);
@@ -38,23 +37,20 @@ export class PatientController {
 
     @Roles('Patient')
     @Get()
-    @HttpCode(HttpStatus.OK)
     @ApiResponse({status: HttpStatus.OK, type: [ContactView]})
-    public async list(): Promise<ContactView[]> {
-        const useCase = this.useCasesFactory.createContactListUseCase();
+    public async list(): Promise<ContactDto[]> {
+        const useCase = this.patientUseCasesFactory.createContactListUseCase();
 
         return await useCase.getList();
     }
 
     @Roles('Patient')
     @Patch(':contactId')
-    @HttpCode(HttpStatus.OK)
-    @HttpCode(HttpStatus.BAD_REQUEST)
-    public async refuse(
+    public async update(
         @Param('contactId', ParseUUIDPipe) contactId: string,
         @Body() requestBody: UpdateContactView,
     ): Promise<void> {
-        const useCase = this.useCasesFactory.createUpdateContactUseCase();
+        const useCase = this.patientUseCasesFactory.createUpdateContactUseCase();
 
         try {
             await useCase.updateContact(contactId, requestBody);
@@ -65,10 +61,8 @@ export class PatientController {
 
     @Roles('Patient')
     @Delete(':contactId')
-    @HttpCode(HttpStatus.NO_CONTENT)
-    @HttpCode(HttpStatus.BAD_REQUEST)
     public async delete(@Param('contactId', ParseUUIDPipe) contactId: string): Promise<void> {
-        const useCase = this.useCasesFactory.createDeleteContactUseCase();
+        const useCase = this.patientUseCasesFactory.createDeleteContactUseCase();
 
         try {
             await useCase.deleteContact(contactId);

@@ -1,4 +1,4 @@
-import {ContactDto} from 'domain/dtos/emergency-contact/contact.dto';
+import {ContactDto} from 'domain/dtos/request/emergency-contact/contact.dto';
 import {IAuthedUserService} from 'app/services/authed-user.service';
 import {IEmergencyContactRepository} from 'app/repositories';
 import {IEmergencyContactEntityMapper} from 'app/mappers/emergency-contact-entity.mapper';

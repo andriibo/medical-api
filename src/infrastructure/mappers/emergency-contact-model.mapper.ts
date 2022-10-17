@@ -1,6 +1,6 @@
 import {EmergencyContactModel} from 'presentation/models';
 import {IEmergencyContactEntityMapper} from 'app/mappers/emergency-contact-entity.mapper';
-import {ContactDto} from 'domain/dtos/emergency-contact/contact.dto';
+import {ContactDto} from 'domain/dtos/request/emergency-contact/contact.dto';
 import {EmergencyContact} from 'domain/entities';
 
 export class EmergencyContactModelMapper implements IEmergencyContactEntityMapper {

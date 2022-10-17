@@ -1,5 +1,5 @@
-import {CreateDoctorDto} from 'domain/dtos/auth/create-doctor.dto';
-import {CreatePatientDto} from 'domain/dtos/auth/create-patient.dto';
+import {CreateDoctorDto} from 'domain/dtos/request/auth/create-doctor.dto';
+import {CreatePatientDto} from 'domain/dtos/request/auth/create-patient.dto';
 import {UserRole} from 'domain/entities/user.entity';
 
 export class SignUpModel {

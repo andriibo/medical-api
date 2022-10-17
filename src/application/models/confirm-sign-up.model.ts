@@ -1,4 +1,4 @@
-import {ConfirmSignUpUserDto} from 'domain/dtos/auth/confirm-sign-up-user.dto';
+import {ConfirmSignUpUserDto} from 'domain/dtos/request/auth/confirm-sign-up-user.dto';
 
 export class ConfirmSignUpModel {
     private constructor(public readonly userName: string, public readonly code: string) {}

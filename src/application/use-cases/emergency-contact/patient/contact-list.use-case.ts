@@ -1,6 +1,6 @@
 import {IEmergencyContactRepository} from 'app/repositories';
 import {IAuthedUserService} from 'app/services/authed-user.service';
-import {ContactView} from 'views/emergency-contact';
+import {ContactDto} from 'domain/dtos/response/emergency-contact/contact.dto';
 
 export class ContactListUseCase {
     constructor(
@@ -8,11 +8,11 @@ export class ContactListUseCase {
         private readonly emergencyContactRepository: IEmergencyContactRepository,
     ) {}
 
-    public async getList(): Promise<ContactView[]> {
+    public async getList(): Promise<ContactDto[]> {
         const user = await this.authedUserService.getUser();
 
         const items = await this.emergencyContactRepository.getByUserId(user.userId);
 
-        return items.map((item) => ContactView.fromEmergencyContact(item));
+        return items.map((item) => ContactDto.fromEmergencyContact(item));
     }
 }

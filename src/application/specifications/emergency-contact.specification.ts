@@ -1,5 +1,5 @@
 import {EmergencyContact, User} from 'domain/entities';
-import {ContactDto} from 'domain/dtos/emergency-contact/contact.dto';
+import {ContactDto} from 'domain/dtos/request/emergency-contact/contact.dto';
 import {UserRole} from 'domain/entities/user.entity';
 import {EmergencyContactSpecificationError} from 'app/errors/emergency-contact-specification.error';
 
