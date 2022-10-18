@@ -1,6 +1,6 @@
 import {ApiProperty} from '@nestjs/swagger';
 import {IsBoolean, IsNotEmpty, IsNumber, Max, Min} from 'class-validator';
-import {SyncVitalDto} from 'domain/dtos/vital/sync-vital.dto';
+import {SyncVitalDto} from 'domain/dtos/request/vital';
 
 export class SyncVitalView extends SyncVitalDto {
     @ApiProperty()

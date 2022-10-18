@@ -7,7 +7,7 @@ import {IAuthedUserService} from 'app/services/authed-user.service';
 import {CognitoService} from 'infrastructure/aws/cognito.service';
 import {AuthedUserService} from 'infrastructure/services/authed-user.service';
 import {TypeOrmModule} from '@nestjs/typeorm';
-import {EmergencyContactModel} from 'presentation/models';
+import {EmergencyContactModel} from 'infrastructure/models';
 import {PatientUseCasesFactory} from 'infrastructure/factories/emergency-contact';
 import {IEmergencyContactEntityMapper} from 'app/mappers/emergency-contact-entity.mapper';
 import {EmergencyContactModelMapper} from 'infrastructure/mappers/emergency-contact-model.mapper';

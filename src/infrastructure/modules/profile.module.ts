@@ -5,7 +5,7 @@ import {UserRepository, PatientMetadataRepository, DoctorMetadataRepository} fro
 import {IAuthService} from 'app/services/auth.service';
 import {CognitoService} from 'infrastructure/aws/cognito.service';
 import {TypeOrmModule} from '@nestjs/typeorm';
-import {UserModel, DoctorMetadataModel, PatientMetadataModel} from 'presentation/models';
+import {UserModel, DoctorMetadataModel, PatientMetadataModel} from 'infrastructure/models';
 import {DoctorUseCasesFactory, PatientUseCasesFactory} from 'infrastructure/factories/profile';
 import {IAuthedUserService} from 'app/services/authed-user.service';
 import {AuthedUserService} from 'infrastructure/services/authed-user.service';

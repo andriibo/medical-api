@@ -7,7 +7,7 @@ import {IAuthedUserService} from 'app/services/authed-user.service';
 import {CognitoService} from 'infrastructure/aws/cognito.service';
 import {AuthedUserService} from 'infrastructure/services/authed-user.service';
 import {TypeOrmModule} from '@nestjs/typeorm';
-import {PatientDataAccessModel} from 'presentation/models';
+import {PatientDataAccessModel} from 'infrastructure/models';
 import {PatientUseCasesFactory, DoctorUseCasesFactory} from 'infrastructure/factories/patient-data-access';
 import {IPatientDataAccessEntityMapper} from 'app/mappers/patient-data-access-entity.mapper';
 import {PatientDataAccessEntityMapper} from 'infrastructure/mappers/patient-data-access-model.mapper';

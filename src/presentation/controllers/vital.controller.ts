@@ -2,7 +2,7 @@ import {Body, Controller, Get, HttpCode, HttpStatus, Param, Post, Query} from '@
 import {ApiBearerAuth, ApiResponse, ApiTags} from '@nestjs/swagger';
 import {VitalUseCasesFactory} from 'infrastructure/factories/vital-use-cases.factory';
 import {Roles} from 'presentation/guards';
-import {GetVitalParamsView, GetVitalQueryView, SyncVitalView} from 'presentation/views/vital';
+import {GetVitalParamsView, GetVitalQueryView, SyncVitalView} from 'presentation/views/request/vital';
 
 @Controller('vitals')
 @ApiBearerAuth()
