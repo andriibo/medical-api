@@ -8,7 +8,7 @@ export class createVital1665910580108 implements MigrationInterface {
                 name: 'vital',
                 columns: [
                     {
-                        name: 'id',
+                        name: 'vital_id',
                         type: 'uuid',
                         generationStrategy: 'uuid',
                         isGenerated: true,
@@ -43,7 +43,7 @@ export class createVital1665910580108 implements MigrationInterface {
                         isNullable: false,
                     },
                     {
-                        name: 'pr',
+                        name: 'rr',
                         type: 'int',
                         isNullable: false,
                     },
@@ -76,8 +76,8 @@ export class createVital1665910580108 implements MigrationInterface {
         await queryRunner.createIndex(
             'vital',
             new TableIndex({
-                columnNames: ['timestamp'],
-                isUnique: false,
+                columnNames: ['timestamp', 'user_id'],
+                isUnique: true,
             }),
         );
     }

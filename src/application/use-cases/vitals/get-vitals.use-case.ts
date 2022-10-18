@@ -1,19 +1,9 @@
-import {IAuthService} from 'app/services/auth.service';
-import {SignUpModel} from 'app/models';
-import {IUserEntityMapper} from 'app/mappers/user-entity.mapper';
-import {IUserRepository} from 'app/repositories';
-import {CreateDoctorDto} from 'domain/dtos/auth/create-doctor.dto';
-import {CreatePatientDto} from 'domain/dtos/auth/create-patient.dto';
-import {User} from 'domain/entities';
+import {IAuthedUserService} from 'app/services/authed-user.service';
+import {GetVitalsDto} from 'domain/dtos/vital/get-vitals.dto';
 
 export class GetVitalsUseCase {
-    constructor() {}
+    constructor(private readonly authedUserService: IAuthedUserService) {}
 
-    public async getVitals(dto: CreateDoctorDto): Promise<void> {
-        // const authModel = await this.authService.signUp(SignUpModel.fromCreateDoctorDto(dto));
-
-        // const user = this.userEntityMapper.mapByAuthModelAndCreateDoctorDto(authModel, dto);
-
-        // await this.createUser(user);
+    public async getVitals(dto: GetVitalsDto): Promise<void> {
     }
 }

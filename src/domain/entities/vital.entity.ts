@@ -1,7 +1,7 @@
 import {User} from './user.entity';
 
 export interface Vital {
-    id: string;
+    vitalId: string;
 
     timestamp: number;
 
@@ -11,7 +11,7 @@ export interface Vital {
 
     spo: number;
 
-    pr: number;
+    rr: number;
 
     fall: boolean;
 

@@ -4,8 +4,8 @@ import {UserModel} from './user.model';
 
 @Entity('vital')
 export class VitalModel implements Vital {
-    @PrimaryGeneratedColumn('uuid', {name: 'id'})
-    id: string;
+    @PrimaryGeneratedColumn('uuid', {name: 'vital_id'})
+    vitalId: string;
 
     @Column()
     timestamp: number;
@@ -20,7 +20,7 @@ export class VitalModel implements Vital {
     spo: number;
 
     @Column()
-    pr: number;
+    rr: number;
 
     @Column()
     fall: boolean;
