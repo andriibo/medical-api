@@ -3,6 +3,8 @@ import {User} from 'domain/entities/user.entity';
 export interface IUserRepository {
     create(entity: User): Promise<void>;
 
+    updateUserAndMetadata(entity: User): Promise<void>;
+
     getOneByUserId(userId: string): Promise<User>;
 
     getByUserIds(userIds: string[]): Promise<User[]>;

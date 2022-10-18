@@ -3,6 +3,7 @@ import {UserMetadata} from './user-metadata.entity';
 import {DoctorMetadata} from './doctor-metadata.entity';
 import {PatientMetadata} from './patient-metadata.entity';
 import {PatientDataAccess} from './patient-data-access.entity';
+import {Vital} from './vital.entity';
 import {EmergencyContact} from './emergency-contact.entity';
 
-export {User, UserMetadata, DoctorMetadata, PatientMetadata, PatientDataAccess, EmergencyContact};
+export {User, UserMetadata, DoctorMetadata, PatientMetadata, PatientDataAccess, Vital, EmergencyContact};
