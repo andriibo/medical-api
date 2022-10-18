@@ -1,8 +1,14 @@
 import {Inject, Injectable} from '@nestjs/common';
-import {IUserRepository, IDoctorMetadataRepository} from 'app/repositories';
-import {DoctorProfileUseCase, UpdateDoctorProfileUseCase} from 'app/use-cases/profile/doctor';
+import {
+    IUserRepository,
+    IDoctorMetadataRepository,
+    IPatientMetadataRepository,
+    IPatientDataAccessRepository,
+} from 'app/repositories';
+import {DoctorProfileUseCase, UpdateDoctorProfileUseCase, PatientProfileUseCase} from 'app/use-cases/profile/doctor';
 import {IAuthedUserService} from 'app/services/authed-user.service';
 import {IUserProfileMapper} from 'app/mappers/user-profile.mapper';
+import {PatientDataAccessSpecification} from 'app/specifications/patient-data-access.specification';
 
 @Injectable()
 export class DoctorUseCasesFactory {
@@ -10,7 +16,10 @@ export class DoctorUseCasesFactory {
         @Inject(IUserRepository) private readonly userRepository: IUserRepository,
         @Inject(IAuthedUserService) private readonly authedUserService: IAuthedUserService,
         @Inject(IDoctorMetadataRepository) private readonly doctorMetadataRepository: IDoctorMetadataRepository,
+        @Inject(IPatientMetadataRepository) private readonly patientMetadataRepository: IPatientMetadataRepository,
         @Inject(IUserProfileMapper) private readonly userProfileMapper: IUserProfileMapper,
+        @Inject(IPatientDataAccessRepository)
+        private readonly patientDataAccessRepository: IPatientDataAccessRepository,
     ) {}
 
     public createGetDoctorProfileUseCase(): DoctorProfileUseCase {
@@ -23,6 +32,17 @@ export class DoctorUseCasesFactory {
             this.authedUserService,
             this.doctorMetadataRepository,
             this.userProfileMapper,
+        );
+    }
+
+    public createGetPatientProfileUseCase(): PatientProfileUseCase {
+        const patientDataAccessSpecification = new PatientDataAccessSpecification(this.patientDataAccessRepository);
+
+        return new PatientProfileUseCase(
+            this.userRepository,
+            this.authedUserService,
+            this.patientMetadataRepository,
+            patientDataAccessSpecification,
         );
     }
 }

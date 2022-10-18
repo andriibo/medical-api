@@ -1,7 +1,17 @@
 import {Module} from '@nestjs/common';
 import {PatientController, DoctorController} from 'controllers/profile';
-import {IUserRepository, IPatientMetadataRepository, IDoctorMetadataRepository} from 'app/repositories';
-import {UserRepository, PatientMetadataRepository, DoctorMetadataRepository} from 'infrastructure/repositories';
+import {
+    IUserRepository,
+    IPatientMetadataRepository,
+    IDoctorMetadataRepository,
+    IPatientDataAccessRepository,
+} from 'app/repositories';
+import {
+    UserRepository,
+    PatientMetadataRepository,
+    DoctorMetadataRepository,
+    PatientDataAccessRepository,
+} from 'infrastructure/repositories';
 import {IAuthService} from 'app/services/auth.service';
 import {CognitoService} from 'infrastructure/aws/cognito.service';
 import {TypeOrmModule} from '@nestjs/typeorm';
@@ -41,6 +51,10 @@ import {UserProfileMapper} from 'infrastructure/mappers/user-profile.mapper';
         {
             provide: IUserProfileMapper,
             useClass: UserProfileMapper,
+        },
+        {
+            provide: IPatientDataAccessRepository,
+            useClass: PatientDataAccessRepository,
         },
     ],
 })

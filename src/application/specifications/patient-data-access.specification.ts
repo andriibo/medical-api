@@ -16,10 +16,24 @@ export class PatientDataAccessSpecification {
         return grantableRoles.includes(role as UserRole);
     }
 
-    private async hasInitiatedAccess(patient: User, userToGrant: User): Promise<boolean> {
+    private async getAccess(patient: User, userToGrant: User): Promise<PatientDataAccess> {
         const dataAccess = await this.patientDataAccessRepository.getOneByPatientAndGrantedUser(patient, userToGrant);
 
-        return dataAccess !== null;
+        if (dataAccess === null) {
+            throw new PatientDataAccessSpecificationError('Access Is Absent.');
+        }
+
+        return dataAccess;
+    }
+
+    private async hasInitiatedAccess(patient: User, userToGrant: User): Promise<boolean> {
+        try {
+            await this.getAccess(patient, userToGrant);
+        } catch {
+            return false;
+        }
+
+        return true;
     }
 
     async assertAccessCanBeInitiated(patient: User, userToGrant: User): Promise<void> {
@@ -81,6 +95,16 @@ export class PatientDataAccessSpecification {
 
         if (!isDeleteAllowed) {
             throw new PatientDataAccessSpecificationError('Delete Not Allowed.');
+        }
+    }
+
+    async assertGrantedUserHasAccess(grantedUser: User, patient: User): Promise<void> {
+        const dataAccess = await this.getAccess(patient, grantedUser);
+
+        const isAccessStatusApproved = dataAccess.status === PatientDataAccessStatus.Approved;
+
+        if (!isAccessStatusApproved) {
+            throw new PatientDataAccessSpecificationError('Access Is Absent.');
         }
     }
 }
