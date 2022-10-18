@@ -5,24 +5,24 @@ import {DoctorUseCasesFactory} from 'infrastructure/factories/patient-data-acces
 import {DataAccessView} from 'presentation/views/response/data-access';
 import {DataAccessDto} from 'domain/dtos/response/data-access/data-access.dto';
 
-@Controller('doctor/data-access')
+@Controller('doctor')
 @ApiBearerAuth()
 @ApiTags('Patient Data Access')
 export class DoctorController {
     constructor(private readonly doctorUseCasesFactory: DoctorUseCasesFactory) {}
 
     @Roles('Doctor')
-    @Get()
+    @Get('data-accesses')
     @ApiResponse({status: HttpStatus.OK, type: [DataAccessView]})
-    public async list(): Promise<DataAccessDto[]> {
+    public async getDataAccesses(): Promise<DataAccessDto[]> {
         const useCase = this.doctorUseCasesFactory.createDataAccessListUseCase();
 
         return await useCase.getList();
     }
 
     @Roles('Doctor')
-    @Patch('refuse/:accessId')
-    public async refuse(@Param('accessId', ParseUUIDPipe) accessId: string): Promise<void> {
+    @Patch('data-access/refuse/:accessId')
+    public async refuseDataAccess(@Param('accessId', ParseUUIDPipe) accessId: string): Promise<void> {
         const useCase = this.doctorUseCasesFactory.createRefuseDataAccessUseCase();
 
         try {
@@ -33,8 +33,8 @@ export class DoctorController {
     }
 
     @Roles('Doctor')
-    @Patch('approve/:accessId')
-    public async approve(@Param('accessId', ParseUUIDPipe) accessId: string): Promise<void> {
+    @Patch('data-access/approve/:accessId')
+    public async approveDataAccess(@Param('accessId', ParseUUIDPipe) accessId: string): Promise<void> {
         const useCase = this.doctorUseCasesFactory.createApproveDataAccessUseCase();
 
         try {
@@ -45,8 +45,8 @@ export class DoctorController {
     }
 
     @Roles('Doctor')
-    @Delete(':accessId')
-    public async delete(@Param('accessId', ParseUUIDPipe) accessId: string): Promise<void> {
+    @Delete('data-access/:accessId')
+    public async deleteDataAccess(@Param('accessId', ParseUUIDPipe) accessId: string): Promise<void> {
         const useCase = this.doctorUseCasesFactory.createDeleteDataAccessUseCase();
 
         try {

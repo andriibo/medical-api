@@ -16,15 +16,15 @@ import {InitiateDataAccessView} from 'presentation/views/request/data-access';
 import {DataAccessView} from 'presentation/views/response/data-access';
 import {DataAccessDto} from 'domain/dtos/response/data-access/data-access.dto';
 
-@Controller('patient/data-access')
+@Controller('patient')
 @ApiBearerAuth()
 @ApiTags('Patient Data Access')
 export class PatientController {
     constructor(private readonly patientUseCasesFactory: PatientUseCasesFactory) {}
 
     @Roles('Patient')
-    @Post('initiate')
-    public async initiate(@Body() requestBody: InitiateDataAccessView): Promise<void> {
+    @Post('data-access/initiate')
+    public async initiateDataAccess(@Body() requestBody: InitiateDataAccessView): Promise<void> {
         const useCase = this.patientUseCasesFactory.createInitiateDataAccessUseCase();
 
         try {
@@ -35,17 +35,17 @@ export class PatientController {
     }
 
     @Roles('Patient')
-    @Get()
+    @Get('data-accesses')
     @ApiResponse({status: HttpStatus.OK, type: [DataAccessView]})
-    public async list(): Promise<DataAccessDto[]> {
+    public async getDataAccesses(): Promise<DataAccessDto[]> {
         const useCase = this.patientUseCasesFactory.createDataAccessListUseCase();
 
         return await useCase.getList();
     }
 
     @Roles('Patient')
-    @Delete(':accessId')
-    public async delete(@Param('accessId', ParseUUIDPipe) accessId: string): Promise<void> {
+    @Delete('data-access/:accessId')
+    public async deleteDataAccess(@Param('accessId', ParseUUIDPipe) accessId: string): Promise<void> {
         const useCase = this.patientUseCasesFactory.createDeleteDataAccessUseCase();
 
         try {

@@ -17,15 +17,15 @@ import {CreateContactView, UpdateContactView} from 'presentation/views/request/e
 import {ContactView} from 'presentation/views/response/emergency-contact';
 import {ContactDto} from 'domain/dtos/response/emergency-contact/contact.dto';
 
-@Controller('patient/emergency-contact')
+@Controller('patient')
 @ApiBearerAuth()
 @ApiTags('Emergency Contact')
 export class PatientController {
     constructor(private readonly patientUseCasesFactory: PatientUseCasesFactory) {}
 
     @Roles('Patient')
-    @Post()
-    public async create(@Body() requestBody: CreateContactView): Promise<void> {
+    @Post('my-emergency-contact')
+    public async createMyEmergencyContact(@Body() requestBody: CreateContactView): Promise<void> {
         const useCase = this.patientUseCasesFactory.createCreateContactUseCase();
 
         try {
@@ -36,17 +36,17 @@ export class PatientController {
     }
 
     @Roles('Patient')
-    @Get()
+    @Get('my-emergency-contacts')
     @ApiResponse({status: HttpStatus.OK, type: [ContactView]})
-    public async list(): Promise<ContactDto[]> {
+    public async getMyEmergencyContacts(): Promise<ContactDto[]> {
         const useCase = this.patientUseCasesFactory.createContactListUseCase();
 
         return await useCase.getList();
     }
 
     @Roles('Patient')
-    @Patch(':contactId')
-    public async update(
+    @Patch('my-emergency-contact/:contactId')
+    public async updateMyEmergencyContact(
         @Param('contactId', ParseUUIDPipe) contactId: string,
         @Body() requestBody: UpdateContactView,
     ): Promise<void> {
@@ -60,8 +60,8 @@ export class PatientController {
     }
 
     @Roles('Patient')
-    @Delete(':contactId')
-    public async delete(@Param('contactId', ParseUUIDPipe) contactId: string): Promise<void> {
+    @Delete('my-emergency-contact/:contactId')
+    public async deleteMyEmergencyContact(@Param('contactId', ParseUUIDPipe) contactId: string): Promise<void> {
         const useCase = this.patientUseCasesFactory.createDeleteContactUseCase();
 
         try {
