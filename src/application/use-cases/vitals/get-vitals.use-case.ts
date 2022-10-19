@@ -1,3 +1,4 @@
+import {AccessToVitalsDataDeniedError} from 'app/errors';
 import {IPatientDataAccessRepository, IVitalRepository} from 'app/repositories';
 import {IAuthedUserService} from 'app/services/authed-user.service';
 import {GetVitalsDto} from 'domain/dtos/request/vital';
@@ -13,7 +14,7 @@ export class GetVitalsUseCase {
     public async getVitalsByPatient(dto: GetVitalsDto): Promise<GetVitalsResponseDto> {
         const user = await this.authedUserService.getUser();
         if (user.userId !== dto.userId) {
-            throw new Error(); //TODO: Create custom exception
+            throw new AccessToVitalsDataDeniedError('Other user\'s vitals data is not available');
         }
         const vitals = await this.vitalRepository.getByUserForInterval(dto.userId, dto.startDate, dto.endDate);
 
@@ -24,7 +25,7 @@ export class GetVitalsUseCase {
         const user = await this.authedUserService.getUser();
         const dataAccess = await this.patientDataAccessRepository.getOneByPatientAndGrantedUserId(dto.userId, user.userId);
         if (dataAccess === null) {
-            throw new Error(); //TODO: Create custom exception
+            throw new AccessToVitalsDataDeniedError('There is no access to patient\'s vitals data');
         }
 
         const vitals = await this.vitalRepository.getByUserForInterval(dto.userId, dto.startDate, dto.endDate);

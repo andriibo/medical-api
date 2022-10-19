@@ -1,4 +1,4 @@
-import {Body, Controller, Get, HttpCode, HttpStatus, Param, ParseUUIDPipe, Post, Query} from '@nestjs/common';
+import {BadRequestException, Body, Controller, Get, HttpCode, HttpStatus, Param, ParseUUIDPipe, Post, Query} from '@nestjs/common';
 import {ApiBearerAuth, ApiResponse, ApiTags} from '@nestjs/swagger';
 import {GetVitalsDto} from 'domain/dtos/request/vital';
 import {VitalUseCasesFactory} from 'infrastructure/factories/vital-use-cases.factory';
@@ -19,9 +19,13 @@ export class PatientController {
     @ApiResponse({status: HttpStatus.OK, type: SyncVitalResponseView})
     public async syncVitals(@Body() requestBody: SyncVitalView): Promise<SyncVitalResponseView> {
         const useCase = this.useCasesFactory.syncPatientVitals();
-        const responseModel = await useCase.updateVitals(requestBody);
 
-        return responseModel;
+        try {
+            const responseModel = await useCase.updateVitals(requestBody);
+            return responseModel;
+        } catch (error) {
+            throw new BadRequestException(error.message);
+        }
     }
 
     @Roles('Patient')
@@ -33,10 +37,14 @@ export class PatientController {
         @Query() query: GetVitalQueryView,
     ): Promise<GetVitalsView> {
         const useCase = this.useCasesFactory.getVitals();
-        const responseModel = await useCase.getVitalsByPatient(
-            new GetVitalsDto(query.startDate, query.endDate, userId)
-        );
 
-        return responseModel;
+        try {
+            const responseModel = await useCase.getVitalsByPatient(
+                new GetVitalsDto(query.startDate, query.endDate, userId)
+            );
+            return responseModel;
+        } catch (error) {
+            throw new BadRequestException(error.message);
+        }
     }
 }

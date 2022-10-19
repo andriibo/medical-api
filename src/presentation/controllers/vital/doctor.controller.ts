@@ -1,4 +1,4 @@
-import {Controller, Get, HttpCode, HttpStatus, Param, ParseUUIDPipe, Query} from '@nestjs/common';
+import {BadRequestException, Controller, Get, HttpCode, HttpStatus, Param, ParseUUIDPipe, Query} from '@nestjs/common';
 import {ApiBearerAuth, ApiResponse, ApiTags} from '@nestjs/swagger';
 import {GetVitalsDto} from 'domain/dtos/request/vital';
 import {VitalUseCasesFactory} from 'infrastructure/factories/vital-use-cases.factory';
@@ -21,8 +21,12 @@ export class DoctorController {
         @Query() query: GetVitalQueryView,
     ): Promise<GetVitalsView> {
         const useCase = this.useCasesFactory.getVitals();
-        const responseModel = await useCase.getVitalsByDoctor(new GetVitalsDto(query.startDate, query.endDate, userId));
 
-        return responseModel;
+        try {
+            const responseModel = await useCase.getVitalsByDoctor(new GetVitalsDto(query.startDate, query.endDate, userId));
+            return responseModel;
+        } catch (error) {
+            throw new BadRequestException(error.message);
+        }
     }
 }
