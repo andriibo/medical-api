@@ -8,7 +8,14 @@ import {IAuthService} from 'app/services/auth.service';
 import {APP_INTERCEPTOR} from '@nestjs/core';
 import {ErrorsInterceptor} from 'presentation/interceptors/errors.interceptor';
 import {AuthGuard, RolesGuard} from 'presentation/guards';
-import {AuthModule, VitalModule, PatientDataAccessModule, EmergencyContactModule, ProfileModule} from 'infrastructure/modules';
+import {
+    AuthModule,
+    VitalModule,
+    PatientDataAccessModule,
+    EmergencyContactModule,
+    ProfileModule,
+    MailModule,
+} from 'infrastructure/modules';
 import {AssignUserMiddleware} from 'presentation/middlewares/assign-user.middleware';
 
 const GUARDS = [AuthGuard, RolesGuard];
@@ -34,6 +41,7 @@ const INTERCEPTORS = [
         PatientDataAccessModule,
         EmergencyContactModule,
         ProfileModule,
+        MailModule,
     ],
     exports: [TypeOrmModule],
     controllers: [AppController],
