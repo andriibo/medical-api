@@ -24,9 +24,9 @@ export class createPatientDataAccess1665065053449 implements MigrationInterface 
                         isNullable: true,
                     },
                     {
-                        name: 'invite_id',
+                        name: 'granted_user_email',
                         type: 'varchar',
-                        length: '8',
+                        length: '100',
                         isNullable: true,
                     },
                     {
@@ -61,6 +61,15 @@ export class createPatientDataAccess1665065053449 implements MigrationInterface 
             }),
         );
 
+        await queryRunner.createIndex(
+            'patient_data_access',
+            new TableIndex({
+                name: 'IDX_GRANTED_USER_EMAIL',
+                columnNames: ['granted_user_email'],
+                isUnique: false,
+            }),
+        );
+
         await queryRunner.createForeignKey(
             'patient_data_access',
             new TableForeignKey({
@@ -84,6 +93,7 @@ export class createPatientDataAccess1665065053449 implements MigrationInterface 
 
     public async down(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.dropIndex('patient_data_access', 'IDX_PATIENT_DATA_ACCESS_PATIENT');
+        await queryRunner.dropIndex('patient_data_access', 'IDX_GRANTED_USER_EMAIL');
         await queryRunner.dropTable('patient_data_access');
     }
 }
