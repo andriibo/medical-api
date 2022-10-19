@@ -1,3 +1,4 @@
+import {DoctorUseCasesFactory} from './doctor-use-cases.factory';
 import {PatientUseCasesFactory} from './patient-use-cases.factory';
 
-export {PatientUseCasesFactory};
+export {DoctorUseCasesFactory, PatientUseCasesFactory};

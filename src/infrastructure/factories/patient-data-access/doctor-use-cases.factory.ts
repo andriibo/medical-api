@@ -16,6 +16,8 @@ export class DoctorUseCasesFactory {
         @Inject(IPatientDataAccessRepository)
         private readonly patientDataAccessRepository: IPatientDataAccessRepository,
         @Inject(IAuthedUserService) private readonly authedUserService: IAuthedUserService,
+        @Inject(PatientDataAccessSpecification)
+        private readonly patientDataAccessSpecification: PatientDataAccessSpecification,
     ) {}
 
     public createDataAccessListUseCase(): DataAccessListUseCase {
@@ -23,35 +25,29 @@ export class DoctorUseCasesFactory {
     }
 
     public createRefuseDataAccessUseCase(): RefuseDataAccessUseCase {
-        const patientDataAccessSpecification = new PatientDataAccessSpecification(this.patientDataAccessRepository);
-
         return new RefuseDataAccessUseCase(
             this.userRepository,
             this.patientDataAccessRepository,
             this.authedUserService,
-            patientDataAccessSpecification,
+            this.patientDataAccessSpecification,
         );
     }
 
     public createApproveDataAccessUseCase(): ApproveDataAccessUseCase {
-        const patientDataAccessSpecification = new PatientDataAccessSpecification(this.patientDataAccessRepository);
-
         return new ApproveDataAccessUseCase(
             this.userRepository,
             this.patientDataAccessRepository,
             this.authedUserService,
-            patientDataAccessSpecification,
+            this.patientDataAccessSpecification,
         );
     }
 
     public createDeleteDataAccessUseCase(): DeleteDataAccessUseCase {
-        const patientDataAccessSpecification = new PatientDataAccessSpecification(this.patientDataAccessRepository);
-
         return new DeleteDataAccessUseCase(
             this.userRepository,
             this.patientDataAccessRepository,
             this.authedUserService,
-            patientDataAccessSpecification,
+            this.patientDataAccessSpecification,
         );
     }
 }

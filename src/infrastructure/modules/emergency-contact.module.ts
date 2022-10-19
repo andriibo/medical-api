@@ -1,21 +1,19 @@
 import {Module} from '@nestjs/common';
-import {PatientController} from 'controllers/emergency-contact/patient.controller';
+import {DoctorController, PatientController} from 'controllers/emergency-contact';
 import {IUserRepository, IEmergencyContactRepository} from 'app/repositories';
 import {UserRepository, EmergencyContactRepository} from 'infrastructure/repositories';
-import {IAuthService} from 'app/services/auth.service';
-import {IAuthedUserService} from 'app/services/authed-user.service';
-import {CognitoService} from 'infrastructure/aws/cognito.service';
-import {AuthedUserService} from 'infrastructure/services/authed-user.service';
 import {TypeOrmModule} from '@nestjs/typeorm';
 import {EmergencyContactModel} from 'infrastructure/models';
-import {PatientUseCasesFactory} from 'infrastructure/factories/emergency-contact';
+import {DoctorUseCasesFactory, PatientUseCasesFactory} from 'infrastructure/factories/emergency-contact';
 import {IEmergencyContactEntityMapper} from 'app/mappers/emergency-contact-entity.mapper';
 import {EmergencyContactModelMapper} from 'infrastructure/mappers/emergency-contact-model.mapper';
+import {AuthModule, PatientDataAccessModule} from 'infrastructure/modules';
 
 @Module({
-    imports: [TypeOrmModule.forFeature([EmergencyContactModel])],
-    controllers: [PatientController],
+    imports: [TypeOrmModule.forFeature([EmergencyContactModel]), AuthModule, PatientDataAccessModule],
+    controllers: [DoctorController, PatientController],
     providers: [
+        DoctorUseCasesFactory,
         PatientUseCasesFactory,
         {
             provide: IUserRepository,
@@ -24,14 +22,6 @@ import {EmergencyContactModelMapper} from 'infrastructure/mappers/emergency-cont
         {
             provide: IEmergencyContactRepository,
             useClass: EmergencyContactRepository,
-        },
-        {
-            provide: IAuthService,
-            useClass: CognitoService,
-        },
-        {
-            provide: IAuthedUserService,
-            useClass: AuthedUserService,
         },
         {
             provide: IEmergencyContactEntityMapper,
