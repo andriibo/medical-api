@@ -10,7 +10,7 @@ export interface IPatientDataAccessRepository {
 
     getOneByPatientAndGrantedUser(patient: User, grantedUser: User): Promise<PatientDataAccess>;
 
-    getOneByPatientAndGrantedUserId(patient: User, grantedUserId: string): Promise<PatientDataAccess>;
+    getOneByPatientAndGrantedUserId(patientId: string, grantedUserId: string): Promise<PatientDataAccess>;
 
     getByPatient(patient: User): Promise<PatientDataAccess[]>;
 

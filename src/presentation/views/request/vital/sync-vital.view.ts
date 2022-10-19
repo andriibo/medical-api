@@ -1,12 +1,6 @@
 import {ApiProperty} from '@nestjs/swagger';
-import {ArrayMinSize, IsBoolean, IsNotEmpty, IsNumber, Max, Min} from 'class-validator';
+import {ArrayMinSize, IsArray, IsNotEmpty, IsBoolean, IsNumber, Max, Min, ValidateNested} from 'class-validator';
 import {SyncVitalDto, VitalDto} from 'domain/dtos/request/vital';
-
-export class SyncVitalView extends SyncVitalDto {
-    @ApiProperty()
-    @ArrayMinSize(1)
-    public vital: VitalView[] = [];
-}
 
 export class VitalView extends VitalDto {
     @ApiProperty()
@@ -46,4 +40,12 @@ export class VitalView extends VitalDto {
     @IsNotEmpty()
     @IsNumber()
     public timestamp: number;
+}
+
+export class SyncVitalView extends SyncVitalDto {
+    @ApiProperty({isArray: true, type: VitalView})
+    @IsArray()
+    @ValidateNested()
+    @ArrayMinSize(1)
+    public vitals: VitalView[] = [];
 }

@@ -8,7 +8,7 @@ export class VitalUseCasesFactory {
     constructor(
         @Inject(IAuthedUserService) private readonly authedUserService: IAuthedUserService,
         @Inject(IVitalRepository) private readonly vitalRepository: IVitalRepository,
-        @Inject(IVitalRepository) private readonly patientDataAccessRepository: IPatientDataAccessRepository,
+        @Inject(IPatientDataAccessRepository) private readonly patientDataAccessRepository: IPatientDataAccessRepository,
     ) {}
 
     public getVitals(): GetVitalsUseCase {

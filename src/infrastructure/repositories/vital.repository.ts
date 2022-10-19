@@ -10,9 +10,20 @@ export class VitalRepository implements IVitalRepository {
     constructor(@InjectDataSource() private dataSource: DataSource) {}
 
     async createRange(vitals: Vital[], user: User): Promise<Vital[]> {
-        const savedVitals = await this.dataSource.manager.save(
-            vitals.map((vital) => ({...vital, user: user, userId: user.userId})),
-        );
+        const vitalsModel = vitals.map((vital) => {
+            const vitalModel = new VitalModel();
+            vitalModel.fall = vital.fall;
+            vitalModel.hr = vital.hr;
+            vitalModel.rr = vital.rr;
+            vitalModel.spo = vital.spo;
+            vitalModel.temperature = vital.temperature;
+            vitalModel.timestamp = vital.timestamp;
+            vitalModel.user = user;
+            vitalModel.userId = user.userId;
+            vitalModel.vitalId = vital.vitalId;
+            return vitalModel;
+        });
+        const savedVitals = await this.dataSource.manager.save(vitalsModel);
         return savedVitals;
     }
 
@@ -26,7 +37,7 @@ export class VitalRepository implements IVitalRepository {
     async getByUserForInterval(userId: string, startDate: Date, endDate: Date): Promise<Vital[]> {
         return await this.dataSource.manager.findBy(VitalModel, {
             userId: userId,
-            timestamp: Between<number>(startDate.getTime(), endDate.getTime()), // TODO: Check behaviour devide 1000
+            timestamp: Between<number>(new Date(startDate).getTime(), new Date(endDate).getTime()), // TODO: Check behaviour devide 1000
         });
     }
 }

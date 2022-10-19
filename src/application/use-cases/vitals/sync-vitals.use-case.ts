@@ -22,11 +22,10 @@ export class SyncVitalsUseCase {
         const alreadySavedVitals = await this.vitalRepository.getAlreadySavedByUser(
             user.userId,
             vitals.map((vital) => vital.timestamp),
-        );
-        const vitalsToBeSaved = vitals.filter(
-            (vital) => !alreadySavedVitals.map((savedVital) => savedVital.timestamp).includes(vital.timestamp)
-        );
-
+        )
+        const alreadySavedTimestamps = alreadySavedVitals.map((savedVital) => +savedVital.timestamp);
+        const vitalsToBeSaved = vitals.filter((vital) => !alreadySavedTimestamps.includes(vital.timestamp));
+ 
         return vitalsToBeSaved;
     }
 }

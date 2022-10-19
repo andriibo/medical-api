@@ -22,7 +22,7 @@ export class GetVitalsUseCase {
 
     public async getVitalsByDoctor(dto: GetVitalsDto): Promise<GetVitalsResponseDto> {
         const user = await this.authedUserService.getUser();
-        const dataAccess = await this.patientDataAccessRepository.getOneByPatientAndGrantedUserId(user, dto.userId);
+        const dataAccess = await this.patientDataAccessRepository.getOneByPatientAndGrantedUserId(dto.userId, user.userId);
         if (dataAccess === null) {
             throw new Error(); //TODO: Create custom exception
         }
