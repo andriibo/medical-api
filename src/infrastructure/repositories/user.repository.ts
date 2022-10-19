@@ -18,14 +18,9 @@ export class UserRepository implements IUserRepository {
         try {
             await queryRunner.manager.save(entity);
             await queryRunner.manager.save(entity.metadata);
-
-            await queryRunner.commitTransaction();
-            await queryRunner.release();
-        } catch (err) {
+        } finally {
             await queryRunner.rollbackTransaction();
             await queryRunner.release();
-
-            throw err;
         }
     }
 
@@ -38,14 +33,9 @@ export class UserRepository implements IUserRepository {
         try {
             await queryRunner.manager.save(entity);
             await queryRunner.manager.save(entity.metadata);
-
-            await queryRunner.commitTransaction();
-            await queryRunner.release();
-        } catch (err) {
+        } finally {
             await queryRunner.rollbackTransaction();
             await queryRunner.release();
-
-            throw err;
         }
     }
 

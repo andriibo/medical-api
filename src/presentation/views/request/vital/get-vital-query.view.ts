@@ -1,14 +1,14 @@
 import {ApiProperty} from '@nestjs/swagger';
-import {IsDate, IsNotEmpty} from 'class-validator';
+import {IsDateString, IsNotEmpty} from 'class-validator';
 
 export class GetVitalQueryView {
     @ApiProperty()
     @IsNotEmpty()
-    @IsDate()
+    @IsDateString()
     public startDate: Date;
 
     @ApiProperty()
     @IsNotEmpty()
-    @IsDate()
+    @IsDateString()
     public endDate: Date;
 }

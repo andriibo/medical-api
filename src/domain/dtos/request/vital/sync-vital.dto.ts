@@ -1,4 +1,8 @@
 export class SyncVitalDto {
+    public vitals: VitalDto[];
+}
+
+export class VitalDto {
     public temperature: number;
 
     public hr: number;
