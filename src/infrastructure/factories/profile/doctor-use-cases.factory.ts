@@ -20,6 +20,8 @@ export class DoctorUseCasesFactory {
         @Inject(IUserProfileMapper) private readonly userProfileMapper: IUserProfileMapper,
         @Inject(IPatientDataAccessRepository)
         private readonly patientDataAccessRepository: IPatientDataAccessRepository,
+        @Inject(PatientDataAccessSpecification)
+        private readonly patientDataAccessSpecification: PatientDataAccessSpecification,
     ) {}
 
     public createGetDoctorProfileUseCase(): DoctorProfileUseCase {
@@ -36,13 +38,11 @@ export class DoctorUseCasesFactory {
     }
 
     public createGetPatientProfileUseCase(): PatientProfileUseCase {
-        const patientDataAccessSpecification = new PatientDataAccessSpecification(this.patientDataAccessRepository);
-
         return new PatientProfileUseCase(
             this.userRepository,
             this.authedUserService,
             this.patientMetadataRepository,
-            patientDataAccessSpecification,
+            this.patientDataAccessSpecification,
         );
     }
 }

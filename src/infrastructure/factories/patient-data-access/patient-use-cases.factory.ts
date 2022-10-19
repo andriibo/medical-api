@@ -18,17 +18,17 @@ export class PatientUseCasesFactory {
         @Inject(IAuthedUserService) private readonly authedUserService: IAuthedUserService,
         @Inject(IPatientDataAccessEntityMapper)
         private readonly patientDataAccessEntityMapper: IPatientDataAccessEntityMapper,
+        @Inject(PatientDataAccessSpecification)
+        private readonly patientDataAccessSpecification: PatientDataAccessSpecification,
     ) {}
 
     public createInitiateDataAccessUseCase(): InitiateDataAccessUseCase {
-        const patientDataAccessSpecification = new PatientDataAccessSpecification(this.patientDataAccessRepository);
-
         return new InitiateDataAccessUseCase(
             this.userRepository,
             this.patientDataAccessRepository,
             this.authedUserService,
             this.patientDataAccessEntityMapper,
-            patientDataAccessSpecification,
+            this.patientDataAccessSpecification,
         );
     }
 
@@ -37,13 +37,11 @@ export class PatientUseCasesFactory {
     }
 
     public createDeleteDataAccessUseCase(): DeleteDataAccessUseCase {
-        const patientDataAccessSpecification = new PatientDataAccessSpecification(this.patientDataAccessRepository);
-
         return new DeleteDataAccessUseCase(
             this.userRepository,
             this.patientDataAccessRepository,
             this.authedUserService,
-            patientDataAccessSpecification,
+            this.patientDataAccessSpecification,
         );
     }
 }

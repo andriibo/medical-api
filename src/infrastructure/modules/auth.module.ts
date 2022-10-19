@@ -9,9 +9,12 @@ import {UserModel, DoctorMetadataModel, PatientMetadataModel} from 'presentation
 import {IUserEntityMapper} from 'app/mappers/user-entity.mapper';
 import {UserModelMapper} from 'infrastructure/mappers/user-model.mapper';
 import {AuthUseCasesFactory} from 'infrastructure/factories/auth-use-cases.factory';
+import {IAuthedUserService} from 'app/services/authed-user.service';
+import {AuthedUserService} from 'infrastructure/services/authed-user.service';
 
 @Module({
     imports: [TypeOrmModule.forFeature([UserModel, DoctorMetadataModel, PatientMetadataModel])],
+    exports: [IAuthService, IAuthedUserService],
     controllers: [AuthController],
     providers: [
         AuthUseCasesFactory,
@@ -22,6 +25,10 @@ import {AuthUseCasesFactory} from 'infrastructure/factories/auth-use-cases.facto
         {
             provide: IAuthService,
             useClass: CognitoService,
+        },
+        {
+            provide: IAuthedUserService,
+            useClass: AuthedUserService,
         },
         {
             provide: IUserEntityMapper,

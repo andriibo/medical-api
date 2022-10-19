@@ -13,16 +13,16 @@ export class DoctorUseCasesFactory {
         private readonly emergencyContactRepository: IEmergencyContactRepository,
         @Inject(IPatientDataAccessRepository)
         private readonly patientDataAccessRepository: IPatientDataAccessRepository,
+        @Inject(PatientDataAccessSpecification)
+        private readonly patientDataAccessSpecification: PatientDataAccessSpecification,
     ) {}
 
     public createPatientContactUseCase(): PatientContactListUseCase {
-        const patientDataAccessSpecification = new PatientDataAccessSpecification(this.patientDataAccessRepository);
-
         return new PatientContactListUseCase(
             this.userRepository,
             this.authedUserService,
             this.emergencyContactRepository,
-            patientDataAccessSpecification,
+            this.patientDataAccessSpecification,
         );
     }
 }
