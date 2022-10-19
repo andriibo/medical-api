@@ -3,6 +3,7 @@ import {IPatientDataAccessRepository, IVitalRepository} from 'app/repositories';
 import {IAuthedUserService} from 'app/services/authed-user.service';
 import {GetVitalsDto} from 'domain/dtos/request/vital';
 import {GetVitalsDto as GetVitalsResponseDto} from 'domain/dtos/response/vital/';
+import { PatientDataAccess, PatientDataAccessStatus } from 'domain/entities/patient-data-access.entity';
 
 export class GetVitalsUseCase {
     constructor(
@@ -24,12 +25,20 @@ export class GetVitalsUseCase {
     public async getVitalsByDoctor(dto: GetVitalsDto): Promise<GetVitalsResponseDto> {
         const user = await this.authedUserService.getUser();
         const dataAccess = await this.patientDataAccessRepository.getOneByPatientAndGrantedUserId(dto.userId, user.userId);
-        if (dataAccess === null) {
+        if (this.isDoctorHasNoAccess(dataAccess)) {
             throw new AccessToVitalsDataDeniedError('There is no access to patient\'s vitals data');
         }
 
         const vitals = await this.vitalRepository.getByUserForInterval(dto.userId, dto.startDate, dto.endDate);
 
         return GetVitalsResponseDto.fromVitalsList(vitals);
+    }
+
+    private isDoctorHasAccess(dataAccess: PatientDataAccess): boolean {
+        return dataAccess !== null && dataAccess.status === PatientDataAccessStatus.Approved;
+    }
+
+    private isDoctorHasNoAccess(dataAccess: PatientDataAccess): boolean {
+        return !this.isDoctorHasAccess(dataAccess);
     }
 }
