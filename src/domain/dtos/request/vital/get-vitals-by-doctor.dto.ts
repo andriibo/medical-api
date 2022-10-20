@@ -1,4 +1,4 @@
-export class GetVitalsDto {
+export class GetVitalsByDoctorDto {
     public userId: string;
 
     public startDate: Date;

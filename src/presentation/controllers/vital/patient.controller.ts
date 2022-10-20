@@ -1,17 +1,6 @@
-import {
-    BadRequestException,
-    Body,
-    Controller,
-    Get,
-    HttpCode,
-    HttpStatus,
-    Param,
-    ParseUUIDPipe,
-    Post,
-    Query,
-} from '@nestjs/common';
+import {BadRequestException, Body, Controller, Get, HttpCode, HttpStatus, Post, Query} from '@nestjs/common';
 import {ApiBearerAuth, ApiResponse, ApiTags} from '@nestjs/swagger';
-import {GetVitalsDto} from 'domain/dtos/request/vital';
+import {GetVitalsByPatientDto} from 'domain/dtos/request/vital';
 import {VitalUseCasesFactory} from 'infrastructure/factories/vital-use-cases.factory';
 import {Roles} from 'presentation/guards';
 import {GetVitalQueryView, SyncVitalView} from 'presentation/views/request/vital';
@@ -39,17 +28,14 @@ export class PatientController {
     }
 
     @Roles('Patient')
-    @Get(':userId/vitals')
+    @Get('vitals')
     @HttpCode(HttpStatus.OK)
     @ApiResponse({status: HttpStatus.OK, type: GetVitalsView})
-    public async getVitals(
-        @Param('userId', ParseUUIDPipe) userId: string,
-        @Query() query: GetVitalQueryView,
-    ): Promise<GetVitalsView> {
+    public async getVitals(@Query() query: GetVitalQueryView): Promise<GetVitalsView> {
         const useCase = this.useCasesFactory.getVitals();
 
         try {
-            return await useCase.getVitalsByPatient(new GetVitalsDto(query.startDate, query.endDate, userId));
+            return await useCase.getVitalsByPatient(new GetVitalsByPatientDto(query.startDate, query.endDate));
         } catch (error) {
             throw new BadRequestException(error.message);
         }

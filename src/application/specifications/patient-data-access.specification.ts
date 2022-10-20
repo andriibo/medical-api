@@ -98,8 +98,8 @@ export class PatientDataAccessSpecification {
         }
     }
 
-    async assertGrantedUserHasAccess(grantedUser: User, patient: User): Promise<void> {
-        const dataAccess = await this.getAccess(patient.userId, grantedUser.userId);
+    async assertGrantedUserHasAccess(grantedUserId: string, patientUserId: string): Promise<void> {
+        const dataAccess = await this.getAccess(patientUserId, grantedUserId);
 
         const isAccessStatusApproved = dataAccess.status === PatientDataAccessStatus.Approved;
 
