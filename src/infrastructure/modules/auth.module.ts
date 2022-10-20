@@ -14,7 +14,7 @@ import {AuthedUserService} from 'infrastructure/services/authed-user.service';
 
 @Module({
     imports: [TypeOrmModule.forFeature([UserModel, DoctorMetadataModel, PatientMetadataModel])],
-    exports: [IAuthService, IAuthedUserService],
+    exports: [IAuthService, IAuthedUserService, IUserRepository],
     controllers: [AuthController],
     providers: [
         AuthUseCasesFactory,

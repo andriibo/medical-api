@@ -23,8 +23,7 @@ export class DoctorController {
         const useCase = this.useCasesFactory.getVitals();
 
         try {
-            const responseModel = await useCase.getVitalsByDoctor(new GetVitalsDto(query.startDate, query.endDate, userId));
-            return responseModel;
+            return await useCase.getVitalsByDoctor(new GetVitalsDto(query.startDate, query.endDate, userId));
         } catch (error) {
             throw new BadRequestException(error.message);
         }

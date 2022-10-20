@@ -24,8 +24,7 @@ export class SyncVitalsUseCase {
             vitals.map((vital) => vital.timestamp),
         )
         const alreadySavedTimestamps = alreadySavedVitals.map((savedVital) => +savedVital.timestamp);
-        const vitalsToBeSaved = vitals.filter((vital) => !alreadySavedTimestamps.includes(vital.timestamp));
- 
-        return vitalsToBeSaved;
+
+        return vitals.filter((vital) => !alreadySavedTimestamps.includes(vital.timestamp));
     }
 }

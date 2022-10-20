@@ -1,6 +1,7 @@
 import {Inject, Injectable} from '@nestjs/common';
-import {IPatientDataAccessRepository, IVitalRepository} from 'app/repositories';
+import {IUserRepository, IVitalRepository} from 'app/repositories';
 import {IAuthedUserService} from 'app/services/authed-user.service';
+import {PatientDataAccessSpecification} from 'app/specifications/patient-data-access.specification';
 import {GetVitalsUseCase, SyncVitalsUseCase} from 'app/use-cases/vitals';
 
 @Injectable()
@@ -8,11 +9,17 @@ export class VitalUseCasesFactory {
     constructor(
         @Inject(IAuthedUserService) private readonly authedUserService: IAuthedUserService,
         @Inject(IVitalRepository) private readonly vitalRepository: IVitalRepository,
-        @Inject(IPatientDataAccessRepository) private readonly patientDataAccessRepository: IPatientDataAccessRepository,
+        private readonly patientDataAccessSpecification: PatientDataAccessSpecification,
+        @Inject(IUserRepository) private readonly userRepository: IUserRepository,
     ) {}
 
     public getVitals(): GetVitalsUseCase {
-        return new GetVitalsUseCase(this.authedUserService, this.patientDataAccessRepository, this.vitalRepository);
+        return new GetVitalsUseCase(
+            this.authedUserService,
+            this.vitalRepository,
+            this.patientDataAccessSpecification,
+            this.userRepository,
+        );
     }
 
     public syncPatientVitals(): SyncVitalsUseCase {

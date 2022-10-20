@@ -1,4 +1,15 @@
-import {BadRequestException, Body, Controller, Get, HttpCode, HttpStatus, Param, ParseUUIDPipe, Post, Query} from '@nestjs/common';
+import {
+    BadRequestException,
+    Body,
+    Controller,
+    Get,
+    HttpCode,
+    HttpStatus,
+    Param,
+    ParseUUIDPipe,
+    Post,
+    Query,
+} from '@nestjs/common';
 import {ApiBearerAuth, ApiResponse, ApiTags} from '@nestjs/swagger';
 import {GetVitalsDto} from 'domain/dtos/request/vital';
 import {VitalUseCasesFactory} from 'infrastructure/factories/vital-use-cases.factory';
@@ -21,8 +32,7 @@ export class PatientController {
         const useCase = this.useCasesFactory.syncPatientVitals();
 
         try {
-            const responseModel = await useCase.updateVitals(requestBody);
-            return responseModel;
+            return await useCase.updateVitals(requestBody);
         } catch (error) {
             throw new BadRequestException(error.message);
         }
@@ -39,10 +49,7 @@ export class PatientController {
         const useCase = this.useCasesFactory.getVitals();
 
         try {
-            const responseModel = await useCase.getVitalsByPatient(
-                new GetVitalsDto(query.startDate, query.endDate, userId)
-            );
-            return responseModel;
+            return await useCase.getVitalsByPatient(new GetVitalsDto(query.startDate, query.endDate, userId));
         } catch (error) {
             throw new BadRequestException(error.message);
         }
