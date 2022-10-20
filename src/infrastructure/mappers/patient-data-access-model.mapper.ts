@@ -1,6 +1,6 @@
 import {User} from 'domain/entities/user.entity';
 import {PatientDataAccessStatus, PatientDataAccess} from 'domain/entities/patient-data-access.entity';
-import {PatientDataAccessModel} from 'presentation/models';
+import {PatientDataAccessModel} from 'infrastructure/models';
 import {IPatientDataAccessEntityMapper} from 'app/mappers/patient-data-access-entity.mapper';
 
 export class PatientDataAccessEntityMapper implements IPatientDataAccessEntityMapper {

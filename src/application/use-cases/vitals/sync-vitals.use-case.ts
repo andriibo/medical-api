@@ -1,10 +1,30 @@
-import {SyncVitalDto} from 'domain/dtos/vital/sync-vital.dto';
+import {SyncVitalDto, VitalDto} from 'domain/dtos/request/vital';
 import {IAuthedUserService} from 'app/services/authed-user.service';
+import {IVitalRepository} from 'app/repositories';
+import {SyncVitalsDto as SyncVitalsDtoResponse} from 'domain/dtos/response/vital';
+import {User} from 'domain/entities';
 
 export class SyncVitalsUseCase {
-    constructor(private readonly authedUserService: IAuthedUserService) {}
+    constructor(
+        private readonly authedUserService: IAuthedUserService,
+        private readonly vitalRepository: IVitalRepository,
+    ) {}
 
-    public async getVitals(vitals: SyncVitalDto[]): Promise<void> {
+    public async updateVitals(model: SyncVitalDto): Promise<SyncVitalsDtoResponse> {
+        const user = await this.authedUserService.getUser();
+        const vitalsToBeSaved = await this.filterVitalsToBeSaved(model.vitals, user);
 
+        const savedVitals = await this.vitalRepository.createRange(vitalsToBeSaved, user);
+        return SyncVitalsDtoResponse.fromVitalsList(savedVitals);
+    }
+
+    private async filterVitalsToBeSaved(vitals: VitalDto[], user: User): Promise<VitalDto[]> {
+        const alreadySavedVitals = await this.vitalRepository.getAlreadySavedByUser(
+            user.userId,
+            vitals.map((vital) => vital.timestamp),
+        )
+        const alreadySavedTimestamps = alreadySavedVitals.map((savedVital) => +savedVital.timestamp);
+
+        return vitals.filter((vital) => !alreadySavedTimestamps.includes(vital.timestamp));
     }
 }

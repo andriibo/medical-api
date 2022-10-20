@@ -20,7 +20,7 @@ export class PatientContactListUseCase {
             throw new EntityNotFoundError('Patient Not Found.');
         }
 
-        await this.patientDataAccessSpecification.assertGrantedUserHasAccess(doctor, patient);
+        await this.patientDataAccessSpecification.assertGrantedUserHasAccess(doctor.userId, patient.userId);
 
         const items = await this.emergencyContactRepository.getByUserId(patient.userId);
 

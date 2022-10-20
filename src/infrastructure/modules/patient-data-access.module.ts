@@ -3,7 +3,7 @@ import {PatientController, DoctorController} from 'controllers/patient-data-acce
 import {IUserRepository, IPatientDataAccessRepository} from 'app/repositories';
 import {UserRepository, PatientDataAccessRepository} from 'infrastructure/repositories';
 import {TypeOrmModule} from '@nestjs/typeorm';
-import {PatientDataAccessModel} from 'presentation/models';
+import {PatientDataAccessModel} from 'infrastructure/models';
 import {PatientUseCasesFactory, DoctorUseCasesFactory} from 'infrastructure/factories/patient-data-access';
 import {IPatientDataAccessEntityMapper} from 'app/mappers/patient-data-access-entity.mapper';
 import {PatientDataAccessEntityMapper} from 'infrastructure/mappers/patient-data-access-model.mapper';

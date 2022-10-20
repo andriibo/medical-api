@@ -3,7 +3,7 @@ import {InjectDataSource} from '@nestjs/typeorm';
 import {DataSource} from 'typeorm';
 import {IEmergencyContactRepository} from 'app/repositories';
 import {EmergencyContact} from 'domain/entities';
-import {EmergencyContactModel} from 'presentation/models';
+import {EmergencyContactModel} from 'infrastructure/models';
 
 @Injectable()
 export class EmergencyContactRepository implements IEmergencyContactRepository {

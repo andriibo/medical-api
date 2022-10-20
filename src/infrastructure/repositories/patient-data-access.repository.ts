@@ -3,7 +3,7 @@ import {InjectDataSource} from '@nestjs/typeorm';
 import {DataSource} from 'typeorm';
 import {IPatientDataAccessRepository} from 'app/repositories';
 import {PatientDataAccess} from 'domain/entities';
-import {PatientDataAccessModel} from 'presentation/models';
+import {PatientDataAccessModel} from 'infrastructure/models';
 import {User} from 'domain/entities';
 
 @Injectable()
@@ -22,10 +22,10 @@ export class PatientDataAccessRepository implements IPatientDataAccessRepository
         await this.dataSource.manager.remove(patientDataAccess);
     }
 
-    async getOneByPatientAndGrantedUser(patient: User, grantedUser: User): Promise<PatientDataAccess> {
+    async getOneByPatientUserIdAndGrantedUserId(patientUserId: string, grantedUserId: string): Promise<PatientDataAccess> {
         return await this.dataSource.manager.findOneBy(PatientDataAccessModel, {
-            patientUserId: patient.userId,
-            grantedUserId: grantedUser.userId,
+            patientUserId,
+            grantedUserId,
         });
     }
 
