@@ -16,8 +16,8 @@ export class PatientDataAccessSpecification {
         return grantableRoles.includes(role as UserRole);
     }
 
-    private async getAccess(patient: User, userToGrant: User): Promise<PatientDataAccess> {
-        const dataAccess = await this.patientDataAccessRepository.getOneByPatientAndGrantedUser(patient, userToGrant);
+    private async getAccess(patientUserId: string, userToGrantId: string): Promise<PatientDataAccess> {
+        const dataAccess = await this.patientDataAccessRepository.getOneByPatientUserIdAndGrantedUserId(patientUserId, userToGrantId);
 
         if (dataAccess === null) {
             throw new PatientDataAccessSpecificationError('Access Is Absent.');
@@ -26,9 +26,9 @@ export class PatientDataAccessSpecification {
         return dataAccess;
     }
 
-    private async hasInitiatedAccess(patient: User, userToGrant: User): Promise<boolean> {
+    private async hasInitiatedAccess(patientUserId: string, userToGrantId: string): Promise<boolean> {
         try {
-            await this.getAccess(patient, userToGrant);
+            await this.getAccess(patientUserId, userToGrantId);
         } catch {
             return false;
         }
@@ -43,7 +43,7 @@ export class PatientDataAccessSpecification {
             );
         }
 
-        const hasInitiatedAccess = await this.hasInitiatedAccess(patient, userToGrant);
+        const hasInitiatedAccess = await this.hasInitiatedAccess(patient.userId, userToGrant.userId);
 
         if (hasInitiatedAccess) {
             throw new PatientDataAccessSpecificationError(
@@ -98,8 +98,8 @@ export class PatientDataAccessSpecification {
         }
     }
 
-    async assertGrantedUserHasAccess(grantedUser: User, patient: User): Promise<void> {
-        const dataAccess = await this.getAccess(patient, grantedUser);
+    async assertGrantedUserHasAccess(grantedUserId: string, patientUserId: string): Promise<void> {
+        const dataAccess = await this.getAccess(patientUserId, grantedUserId);
 
         const isAccessStatusApproved = dataAccess.status === PatientDataAccessStatus.Approved;
 
