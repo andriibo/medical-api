@@ -1,4 +1,14 @@
-import {Controller, HttpStatus, Get, Patch, Delete, BadRequestException, Param, ParseUUIDPipe} from '@nestjs/common';
+import {
+    Controller,
+    HttpStatus,
+    Get,
+    Patch,
+    Delete,
+    BadRequestException,
+    Param,
+    ParseUUIDPipe,
+    HttpCode,
+} from '@nestjs/common';
 import {ApiBearerAuth, ApiResponse, ApiTags} from '@nestjs/swagger';
 import {Roles} from 'presentation/guards';
 import {DoctorUseCasesFactory} from 'infrastructure/factories/patient-data-access/doctor-use-cases.factory';
@@ -13,6 +23,7 @@ export class DoctorController {
 
     @Roles('Doctor')
     @Get('data-accesses')
+    @HttpCode(HttpStatus.OK)
     @ApiResponse({status: HttpStatus.OK, type: [DataAccessView]})
     public async getDataAccesses(): Promise<DataAccessDto[]> {
         const useCase = this.doctorUseCasesFactory.createDataAccessListUseCase();
@@ -22,6 +33,9 @@ export class DoctorController {
 
     @Roles('Doctor')
     @Patch('data-access/refuse/:accessId')
+    @HttpCode(HttpStatus.OK)
+    @HttpCode(HttpStatus.BAD_REQUEST)
+    @ApiResponse({status: HttpStatus.OK})
     public async refuseDataAccess(@Param('accessId', ParseUUIDPipe) accessId: string): Promise<void> {
         const useCase = this.doctorUseCasesFactory.createRefuseDataAccessUseCase();
 
@@ -34,6 +48,9 @@ export class DoctorController {
 
     @Roles('Doctor')
     @Patch('data-access/approve/:accessId')
+    @HttpCode(HttpStatus.OK)
+    @HttpCode(HttpStatus.BAD_REQUEST)
+    @ApiResponse({status: HttpStatus.OK})
     public async approveDataAccess(@Param('accessId', ParseUUIDPipe) accessId: string): Promise<void> {
         const useCase = this.doctorUseCasesFactory.createApproveDataAccessUseCase();
 
@@ -46,6 +63,9 @@ export class DoctorController {
 
     @Roles('Doctor')
     @Delete('data-access/:accessId')
+    @HttpCode(HttpStatus.NO_CONTENT)
+    @HttpCode(HttpStatus.BAD_REQUEST)
+    @ApiResponse({status: HttpStatus.NO_CONTENT})
     public async deleteDataAccess(@Param('accessId', ParseUUIDPipe) accessId: string): Promise<void> {
         const useCase = this.doctorUseCasesFactory.createDeleteDataAccessUseCase();
 

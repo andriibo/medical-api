@@ -9,6 +9,7 @@ import {
     Patch,
     Param,
     ParseUUIDPipe,
+    HttpCode,
 } from '@nestjs/common';
 import {ApiBearerAuth, ApiResponse, ApiTags} from '@nestjs/swagger';
 import {Roles} from 'presentation/guards';
@@ -25,6 +26,9 @@ export class PatientController {
 
     @Roles('Patient')
     @Post('my-emergency-contact')
+    @HttpCode(HttpStatus.CREATED)
+    @HttpCode(HttpStatus.BAD_REQUEST)
+    @ApiResponse({status: HttpStatus.CREATED})
     public async createMyEmergencyContact(@Body() requestBody: CreateContactView): Promise<void> {
         const useCase = this.patientUseCasesFactory.createCreateContactUseCase();
 
@@ -37,6 +41,7 @@ export class PatientController {
 
     @Roles('Patient')
     @Get('my-emergency-contacts')
+    @HttpCode(HttpStatus.OK)
     @ApiResponse({status: HttpStatus.OK, type: [ContactView]})
     public async getMyEmergencyContacts(): Promise<ContactDto[]> {
         const useCase = this.patientUseCasesFactory.createContactListUseCase();
@@ -46,6 +51,9 @@ export class PatientController {
 
     @Roles('Patient')
     @Patch('my-emergency-contact/:contactId')
+    @HttpCode(HttpStatus.OK)
+    @HttpCode(HttpStatus.BAD_REQUEST)
+    @ApiResponse({status: HttpStatus.OK})
     public async updateMyEmergencyContact(
         @Param('contactId', ParseUUIDPipe) contactId: string,
         @Body() requestBody: UpdateContactView,
@@ -61,6 +69,9 @@ export class PatientController {
 
     @Roles('Patient')
     @Delete('my-emergency-contact/:contactId')
+    @HttpCode(HttpStatus.NO_CONTENT)
+    @HttpCode(HttpStatus.BAD_REQUEST)
+    @ApiResponse({status: HttpStatus.NO_CONTENT})
     public async deleteMyEmergencyContact(@Param('contactId', ParseUUIDPipe) contactId: string): Promise<void> {
         const useCase = this.patientUseCasesFactory.createDeleteContactUseCase();
 

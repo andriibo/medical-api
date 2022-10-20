@@ -1,4 +1,4 @@
-import {Controller, HttpStatus, Get, Param, ParseUUIDPipe} from '@nestjs/common';
+import {Controller, HttpStatus, Get, Param, ParseUUIDPipe, HttpCode} from '@nestjs/common';
 import {ApiBearerAuth, ApiResponse, ApiTags} from '@nestjs/swagger';
 import {Roles} from 'presentation/guards';
 import {DoctorUseCasesFactory} from 'infrastructure/factories/emergency-contact/doctor-use-cases.factory';
@@ -13,6 +13,7 @@ export class DoctorController {
 
     @Roles('Doctor')
     @Get('patient-emergency-contacts/:patientUserId')
+    @HttpCode(HttpStatus.OK)
     @ApiResponse({status: HttpStatus.OK, type: [ContactView]})
     public async getPatientEmergencyContacts(
         @Param('patientUserId', ParseUUIDPipe) patientUserId: string,

@@ -1,4 +1,4 @@
-import {Controller, Get, Patch, HttpStatus, Body, Param, ParseUUIDPipe} from '@nestjs/common';
+import {Controller, Get, Patch, HttpStatus, Body, Param, ParseUUIDPipe, HttpCode} from '@nestjs/common';
 import {ApiBearerAuth, ApiResponse, ApiTags} from '@nestjs/swagger';
 import {Roles} from 'presentation/guards';
 import {DoctorView} from 'presentation/views/response/user';
@@ -16,6 +16,7 @@ export class DoctorController {
 
     @Roles('Doctor')
     @Get('my-profile')
+    @HttpCode(HttpStatus.OK)
     @ApiResponse({status: HttpStatus.OK, type: DoctorView})
     public async getMyProfile(): Promise<DoctorDto> {
         const useCase = this.doctorUseCasesFactory.createGetDoctorProfileUseCase();
@@ -25,6 +26,7 @@ export class DoctorController {
 
     @Roles('Doctor')
     @Patch('my-profile')
+    @HttpCode(HttpStatus.OK)
     @ApiResponse({status: HttpStatus.OK})
     public async updateMyProfile(@Body() requestBody: UpdateDoctorProfileView): Promise<void> {
         const useCase = this.doctorUseCasesFactory.createUpdateDoctorProfileUseCase();
@@ -34,6 +36,7 @@ export class DoctorController {
 
     @Roles('Doctor')
     @Get('patient-profile/:patientUserId')
+    @HttpCode(HttpStatus.OK)
     @ApiResponse({status: HttpStatus.OK, type: PatientView})
     public async getPatientProfile(@Param('patientUserId', ParseUUIDPipe) patientUserId: string): Promise<PatientDto> {
         const useCase = this.doctorUseCasesFactory.createGetPatientProfileUseCase();

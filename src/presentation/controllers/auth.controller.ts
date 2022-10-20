@@ -1,4 +1,4 @@
-import {Body, Controller, HttpStatus, Post} from '@nestjs/common';
+import {Body, Controller, HttpCode, HttpStatus, Post} from '@nestjs/common';
 import {ApiResponse, ApiTags} from '@nestjs/swagger';
 import {
     ConfirmSignUpUserView,
@@ -16,6 +16,7 @@ export class AuthController {
     constructor(private readonly authUseCasesFactory: AuthUseCasesFactory) {}
 
     @Post('sign-in')
+    @HttpCode(HttpStatus.OK)
     @ApiResponse({status: HttpStatus.OK, type: UserSignedInView})
     public async signIn(@Body() requestBody: SignInUserView): Promise<UserSignedInDto> {
         const useCase = this.authUseCasesFactory.createSignInUseCase();
@@ -24,6 +25,7 @@ export class AuthController {
     }
 
     @Post('sign-up/doctor')
+    @HttpCode(HttpStatus.CREATED)
     @ApiResponse({status: HttpStatus.CREATED})
     public async signUpDoctor(@Body() requestBody: SignUpDoctorView): Promise<void> {
         const useCase = this.authUseCasesFactory.createSignUpUseCase();
@@ -32,6 +34,7 @@ export class AuthController {
     }
 
     @Post('sign-up/patient')
+    @HttpCode(HttpStatus.CREATED)
     @ApiResponse({status: HttpStatus.CREATED})
     public async signUpPatient(@Body() requestBody: SignUpPatientView): Promise<void> {
         const useCase = this.authUseCasesFactory.createSignUpUseCase();
@@ -40,6 +43,7 @@ export class AuthController {
     }
 
     @Post('confirm-sign-up')
+    @HttpCode(HttpStatus.OK)
     @ApiResponse({status: HttpStatus.OK})
     public async confirmSignUp(@Body() requestBody: ConfirmSignUpUserView): Promise<void> {
         const useCase = this.authUseCasesFactory.createConfirmSignUpUseCase();

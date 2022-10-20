@@ -8,6 +8,7 @@ import {
     Delete,
     Param,
     ParseUUIDPipe,
+    HttpCode,
 } from '@nestjs/common';
 import {ApiBearerAuth, ApiResponse, ApiTags} from '@nestjs/swagger';
 import {Roles} from 'presentation/guards';
@@ -24,6 +25,9 @@ export class PatientController {
 
     @Roles('Patient')
     @Post('data-access/initiate')
+    @HttpCode(HttpStatus.CREATED)
+    @HttpCode(HttpStatus.BAD_REQUEST)
+    @ApiResponse({status: HttpStatus.CREATED})
     public async initiateDataAccess(@Body() requestBody: InitiateDataAccessView): Promise<void> {
         const useCase = this.patientUseCasesFactory.createInitiateDataAccessUseCase();
 
@@ -36,6 +40,7 @@ export class PatientController {
 
     @Roles('Patient')
     @Get('data-accesses')
+    @HttpCode(HttpStatus.OK)
     @ApiResponse({status: HttpStatus.OK, type: [DataAccessView]})
     public async getDataAccesses(): Promise<DataAccessDto[]> {
         const useCase = this.patientUseCasesFactory.createDataAccessListUseCase();
@@ -45,6 +50,9 @@ export class PatientController {
 
     @Roles('Patient')
     @Delete('data-access/:accessId')
+    @HttpCode(HttpStatus.NO_CONTENT)
+    @HttpCode(HttpStatus.BAD_REQUEST)
+    @ApiResponse({status: HttpStatus.NO_CONTENT})
     public async deleteDataAccess(@Param('accessId', ParseUUIDPipe) accessId: string): Promise<void> {
         const useCase = this.patientUseCasesFactory.createDeleteDataAccessUseCase();
 
