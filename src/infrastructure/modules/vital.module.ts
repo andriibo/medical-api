@@ -16,7 +16,7 @@ import {PatientDataAccessModule} from './patient-data-access.module';
         {
             provide: IVitalRepository,
             useClass: VitalRepository,
-        }
+        },
     ],
 })
 export class VitalModule {}
