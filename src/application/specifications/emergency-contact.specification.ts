@@ -4,7 +4,7 @@ import {UserRole} from 'domain/entities/user.entity';
 import {EmergencyContactSpecificationError} from 'app/errors/emergency-contact-specification.error';
 
 export class EmergencyContactSpecification {
-    assertUserCanCreateContact(user: User, dto: ContactDto): void {
+    public assertUserCanCreateContact(user: User, dto: ContactDto): void {
         const isUserPatient = user.role === UserRole.Patient;
 
         if (!isUserPatient) {
@@ -12,13 +12,13 @@ export class EmergencyContactSpecification {
         }
     }
 
-    assertUserCanUpdateContact(user: User, contact: EmergencyContact): void {
+    public assertUserCanUpdateContact(user: User, contact: EmergencyContact): void {
         if (!this.isUserOwnerOfContact(user, contact)) {
             throw new EmergencyContactSpecificationError('Update Emergency Contact Not Allowed.');
         }
     }
 
-    assertUserCanDeleteContact(user: User, contact: EmergencyContact): void {
+    public assertUserCanDeleteContact(user: User, contact: EmergencyContact): void {
         if (!this.isUserOwnerOfContact(user, contact)) {
             throw new EmergencyContactSpecificationError('Delete Emergency Contact Not Allowed.');
         }

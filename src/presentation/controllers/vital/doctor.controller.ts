@@ -10,7 +10,7 @@ import {GetVitalsView} from 'presentation/views/response/vital';
 @ApiBearerAuth()
 @ApiTags('Vitals')
 export class DoctorController {
-    constructor(private readonly useCasesFactory: VitalUseCasesFactory) {}
+    public constructor(private readonly useCasesFactory: VitalUseCasesFactory) {}
 
     @Roles('Doctor')
     @Get(':userId/vitals')

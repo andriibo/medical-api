@@ -6,7 +6,7 @@ import {IUserEntityMapper} from 'app/mappers/user-entity.mapper';
 import {IAuthModel} from 'app/models/auth.model';
 
 export class UserModelMapper implements IUserEntityMapper {
-    mapByAuthModelAndCreateDoctorDto(authModel: IAuthModel, dto: CreateDoctorDto): User {
+    public mapByAuthModelAndCreateDoctorDto(authModel: IAuthModel, dto: CreateDoctorDto): User {
         const user = new UserModel();
         user.userId = authModel.getUserId();
         user.email = dto.email;
@@ -25,7 +25,7 @@ export class UserModelMapper implements IUserEntityMapper {
         return user;
     }
 
-    mapByAuthModelAndCreatePatientDto(authModel: IAuthModel, dto: CreatePatientDto): User {
+    public mapByAuthModelAndCreatePatientDto(authModel: IAuthModel, dto: CreatePatientDto): User {
         const user = new UserModel();
         user.userId = authModel.getUserId();
         user.email = dto.email;

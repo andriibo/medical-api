@@ -3,7 +3,7 @@ export class GetVitalsByPatientDto {
 
     public endDate: Date;
 
-    constructor(startDate: Date, endDate: Date) {
+    public constructor(startDate: Date, endDate: Date) {
         this.startDate = startDate;
         this.endDate = endDate;
     }

@@ -3,23 +3,23 @@ import {ContactDto} from 'domain/dtos/response/emergency-contact/contact.dto';
 
 export class ContactView implements ContactDto {
     @ApiProperty()
-    contactId: string;
+    public contactId: string;
 
     @ApiProperty()
-    firstName: string;
+    public firstName: string;
 
     @ApiProperty()
-    lastName: string;
+    public lastName: string;
 
     @ApiProperty()
-    email: string;
+    public email: string;
 
     @ApiProperty()
-    phone: string;
+    public phone: string;
 
     @ApiProperty()
-    relationship: string;
+    public relationship: string;
 
     @ApiProperty()
-    createdAt: string;
+    public createdAt: string;
 }

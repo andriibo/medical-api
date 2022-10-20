@@ -4,7 +4,7 @@ import {UpdateDoctorProfileDto, UpdatePatientProfileDto} from 'domain/dtos/reque
 import {DoctorMetadata, PatientMetadata} from 'domain/entities';
 
 export class UserProfileMapper implements IUserProfileMapper {
-    mapByUpdateDoctorProfileDto(dto: UpdateDoctorProfileDto, user: User, metadata: DoctorMetadata): User {
+    public mapByUpdateDoctorProfileDto(dto: UpdateDoctorProfileDto, user: User, metadata: DoctorMetadata): User {
         user.firstName = dto.firstName;
         user.lastName = dto.lastName;
         user.phone = dto.phone;
@@ -16,7 +16,7 @@ export class UserProfileMapper implements IUserProfileMapper {
         return user;
     }
 
-    mapByUpdatePatientProfileDto(dto: UpdatePatientProfileDto, user: User, metadata: PatientMetadata): User {
+    public mapByUpdatePatientProfileDto(dto: UpdatePatientProfileDto, user: User, metadata: PatientMetadata): User {
         user.firstName = dto.firstName;
         user.lastName = dto.lastName;
         user.phone = dto.phone;

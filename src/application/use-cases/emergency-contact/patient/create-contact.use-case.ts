@@ -6,7 +6,7 @@ import {EmergencyContact, User} from 'domain/entities';
 import {EmergencyContactSpecification} from 'app/specifications/emergency-contact.specification';
 
 export class CreateContactUseCase {
-    constructor(
+    public constructor(
         private readonly authedUserService: IAuthedUserService,
         private readonly emergencyContactRepository: IEmergencyContactRepository,
         private readonly emergencyContactEntityMapper: IEmergencyContactEntityMapper,

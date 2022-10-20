@@ -1,15 +1,15 @@
 import {User} from 'domain/entities';
 
 export class UserDto {
-    userId: string;
+    public userId: string;
 
-    email: string;
+    public email: string;
 
-    firstName: string;
+    public firstName: string;
 
-    lastName: string;
+    public lastName: string;
 
-    static fromUser(user: User): UserDto {
+    public static fromUser(user: User): UserDto {
         const dto = new UserDto();
         dto.userId = user.userId;
         dto.email = user.email;

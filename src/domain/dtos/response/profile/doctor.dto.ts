@@ -12,7 +12,7 @@ export class DoctorDto {
 
     public institution: string;
 
-    static fromUserAndDoctorMetadata(user: User, metadata: DoctorMetadata): DoctorDto {
+    public static fromUserAndDoctorMetadata(user: User, metadata: DoctorMetadata): DoctorDto {
         const dto = new DoctorDto();
         dto.email = user.email;
         dto.firstName = user.firstName;

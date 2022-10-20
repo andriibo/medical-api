@@ -6,17 +6,17 @@ class CLAIMS {
 }
 
 export class TokenClaimsModel implements ITokenClaimsModel {
-    protected constructor(private readonly userId: string, private readonly roles: string[]) {}
+    private constructor(private readonly userId: string, private readonly roles: string[]) {}
 
-    getUserId(): string {
+    public getUserId(): string {
         return this.userId;
     }
 
-    getRoles(): string[] {
+    public getRoles(): string[] {
         return this.roles;
     }
 
-    static fromCognitoResponse(tokenClaims: object): ITokenClaimsModel {
+    public static fromCognitoResponse(tokenClaims: object): ITokenClaimsModel {
         return new TokenClaimsModel(tokenClaims[CLAIMS.USER_ID], tokenClaims[CLAIMS.ROLES]);
     }
 }

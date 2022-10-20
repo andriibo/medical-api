@@ -9,11 +9,11 @@ export class SignUpModel {
         public readonly password: string,
     ) {}
 
-    static fromCreateDoctorDto(dto: CreateDoctorDto): SignUpModel {
+    public static fromCreateDoctorDto(dto: CreateDoctorDto): SignUpModel {
         return new SignUpModel(dto.email, UserRole.Doctor, dto.password);
     }
 
-    static fromCreatePatientDto(dto: CreatePatientDto): SignUpModel {
+    public static fromCreatePatientDto(dto: CreatePatientDto): SignUpModel {
         return new SignUpModel(dto.email, UserRole.Patient, dto.password);
     }
 }

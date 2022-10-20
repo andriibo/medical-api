@@ -18,11 +18,11 @@ export class PatientView extends PatientDto {
     public dob: Date;
 
     @ApiProperty()
-    gender: string;
+    public gender: string;
 
     @ApiProperty()
-    height: number;
+    public height: number;
 
     @ApiProperty()
-    wight: number;
+    public wight: number;
 }

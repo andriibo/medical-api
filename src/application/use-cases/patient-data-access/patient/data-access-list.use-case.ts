@@ -5,7 +5,7 @@ import {DataAccessDto} from 'domain/dtos/response/data-access/data-access.dto';
 import {UserDto} from 'domain/dtos/response/user/user.dto';
 
 export class DataAccessListUseCase {
-    constructor(
+    public constructor(
         private readonly userRepository: IUserRepository,
         private readonly patientDataAccessRepository: IPatientDataAccessRepository,
         private readonly authedUserService: IAuthedUserService,
@@ -22,10 +22,10 @@ export class DataAccessListUseCase {
         users.map((user) => (indexedUsers[user.userId] = user));
 
         return items.map((item) => {
-            const view = DataAccessDto.fromPatientDataAccess(item);
-            view.requestedUser = UserDto.fromUser(indexedUsers[item.grantedUserId]);
+            const dto = DataAccessDto.fromPatientDataAccess(item);
+            dto.requestedUser = UserDto.fromUser(indexedUsers[item.grantedUserId]);
 
-            return view;
+            return dto;
         });
     }
 

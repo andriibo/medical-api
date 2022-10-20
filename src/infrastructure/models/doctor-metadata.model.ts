@@ -5,12 +5,12 @@ import {UserModel} from './user.model';
 @Entity('doctor_metadata')
 export class DoctorMetadataModel implements DoctorMetadata {
     @PrimaryColumn('uuid', {name: 'user_id'})
-    userId: string;
+    public userId: string;
 
     @Column()
-    institution: string;
+    public institution: string;
 
     @OneToOne(() => UserModel)
     @JoinColumn({name: 'user_id', referencedColumnName: 'userId'})
-    user: UserModel;
+    public user: UserModel;
 }

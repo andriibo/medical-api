@@ -4,7 +4,7 @@ import {PatientDataAccessModel} from 'infrastructure/models';
 import {IPatientDataAccessEntityMapper} from 'app/mappers/patient-data-access-entity.mapper';
 
 export class PatientDataAccessEntityMapper implements IPatientDataAccessEntityMapper {
-    mapByPatientAndGrantedUser(patient: User, grantedUser: User): PatientDataAccess {
+    public mapByPatientAndGrantedUser(patient: User, grantedUser: User): PatientDataAccess {
         const access = new PatientDataAccessModel();
         access.patientUserId = patient.userId;
         access.grantedUserId = grantedUser.userId;

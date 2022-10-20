@@ -5,30 +5,30 @@ import {UserModel} from './user.model';
 @Entity('vital')
 export class VitalModel implements Vital {
     @PrimaryGeneratedColumn('uuid', {name: 'vital_id'})
-    vitalId: string;
+    public vitalId: string;
 
     @Column()
-    timestamp: number;
+    public timestamp: number;
 
     @Column()
-    temperature: number;
+    public temperature: number;
 
     @Column()
-    hr: number;
+    public hr: number;
 
     @Column()
-    spo: number;
+    public spo: number;
 
     @Column()
-    rr: number;
+    public rr: number;
 
     @Column()
-    fall: boolean;
+    public fall: boolean;
 
     @Column({name: 'user_id'})
-    userId: string;
+    public userId: string;
 
     @ManyToOne(() => UserModel)
     @JoinColumn({name: 'user_id', referencedColumnName: 'userId'})
-    user: UserModel;
+    public user: UserModel;
 }

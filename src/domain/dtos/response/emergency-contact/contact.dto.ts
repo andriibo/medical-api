@@ -1,21 +1,21 @@
 import {EmergencyContact} from 'domain/entities';
 
 export class ContactDto {
-    contactId: string;
+    public contactId: string;
 
-    firstName: string;
+    public firstName: string;
 
-    lastName: string;
+    public lastName: string;
 
-    email: string;
+    public email: string;
 
-    phone: string;
+    public phone: string;
 
-    relationship: string;
+    public relationship: string;
 
-    createdAt: string;
+    public createdAt: string;
 
-    static fromEmergencyContact(emergencyContact: EmergencyContact): ContactDto {
+    public static fromEmergencyContact(emergencyContact: EmergencyContact): ContactDto {
         const dto = new ContactDto();
         dto.contactId = emergencyContact.contactId;
         dto.firstName = emergencyContact.firstName;

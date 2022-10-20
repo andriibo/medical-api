@@ -7,9 +7,9 @@ import {User} from 'domain/entities';
 
 @Injectable()
 export class UserRepository implements IUserRepository {
-    constructor(@InjectDataSource() private dataSource: DataSource) {}
+    public constructor(@InjectDataSource() private dataSource: DataSource) {}
 
-    async create(entity: UserModel): Promise<void> {
+    public async create(entity: UserModel): Promise<void> {
         const queryRunner = this.dataSource.createQueryRunner();
 
         await queryRunner.connect();
@@ -29,7 +29,7 @@ export class UserRepository implements IUserRepository {
         }
     }
 
-    async updateUserAndMetadata(entity: UserModel): Promise<void> {
+    public async updateUserAndMetadata(entity: UserModel): Promise<void> {
         const queryRunner = this.dataSource.createQueryRunner();
 
         await queryRunner.connect();
@@ -49,15 +49,15 @@ export class UserRepository implements IUserRepository {
         }
     }
 
-    async getOneByUserId(userId: string): Promise<User> {
+    public async getOneByUserId(userId: string): Promise<User> {
         return await this.dataSource.manager.findOneBy(UserModel, {userId});
     }
 
-    async getByUserIds(userIds: string[]): Promise<User[]> {
+    public async getByUserIds(userIds: string[]): Promise<User[]> {
         return await this.dataSource.manager.findBy(UserModel, {userId: In(userIds)});
     }
 
-    async getOneByEmail(email: string): Promise<User> {
+    public async getOneByEmail(email: string): Promise<User> {
         return await this.dataSource.manager.findOneBy(UserModel, {email});
     }
 }

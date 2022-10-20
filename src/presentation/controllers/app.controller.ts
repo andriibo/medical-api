@@ -8,7 +8,7 @@ import {InviteToSignUpView} from 'views/request/invite-to-sign-up.view';
 @Controller()
 @ApiTags('App')
 export class AppController {
-    constructor(@Inject(IMailService) private readonly mailService: IMailService) {}
+    public constructor(@Inject(IMailService) private readonly mailService: IMailService) {}
 
     @Get()
     @HttpCode(HttpStatus.OK)

@@ -5,7 +5,7 @@ import {GetVitalsByDoctorDto, GetVitalsByPatientDto} from 'domain/dtos/request/v
 import {GetVitalsDto as GetVitalsResponseDto} from 'domain/dtos/response/vital/';
 
 export class GetVitalsUseCase {
-    constructor(
+    public constructor(
         private readonly authedUserService: IAuthedUserService,
         private readonly vitalRepository: IVitalRepository,
         private readonly patientDataAccessSpecification: PatientDataAccessSpecification,
@@ -19,9 +19,9 @@ export class GetVitalsUseCase {
     }
 
     public async getVitalsByDoctor(dto: GetVitalsByDoctorDto): Promise<GetVitalsResponseDto> {
-        const user = await this.authedUserService.getUser();
+        const doctor = await this.authedUserService.getUser();
 
-        await this.patientDataAccessSpecification.assertGrantedUserHasAccess(user.userId, dto.userId);
+        await this.patientDataAccessSpecification.assertGrantedUserHasAccess(doctor, dto.userId);
         const vitals = await this.vitalRepository.getByUserForInterval(dto.userId, dto.startDate, dto.endDate);
 
         return GetVitalsResponseDto.fromVitalsList(vitals);

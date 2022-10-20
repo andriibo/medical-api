@@ -7,7 +7,7 @@ import {PatientDataAccessRequestDirection, PatientDataAccess} from 'domain/entit
 import {User} from 'domain/entities';
 
 export class InitiateDataAccessUseCase {
-    constructor(
+    public constructor(
         private readonly userRepository: IUserRepository,
         private readonly patientDataAccessRepository: IPatientDataAccessRepository,
         private readonly authedUserService: IAuthedUserService,

@@ -4,26 +4,26 @@ import {EmergencyContact} from 'domain/entities';
 @Entity('emergency_contact')
 export class EmergencyContactModel implements EmergencyContact {
     @PrimaryGeneratedColumn('uuid', {name: 'contact_id'})
-    contactId: string;
+    public contactId: string;
 
     @Column({name: 'user_id'})
-    userId: string;
+    public userId: string;
 
     @Column({name: 'first_name'})
-    firstName: string;
+    public firstName: string;
 
     @Column({name: 'last_name'})
-    lastName: string;
+    public lastName: string;
 
     @Column()
-    email: string;
+    public email: string;
 
     @Column()
-    phone: string;
+    public phone: string;
 
     @Column()
-    relationship: string;
+    public relationship: string;
 
     @Column({name: 'created_at'})
-    createdAt: string;
+    public createdAt: string;
 }

@@ -6,7 +6,7 @@ import {ConfirmSignUpUserUseCase, SignInUseCase, SignUpUseCase} from 'app/use-ca
 
 @Injectable()
 export class AuthUseCasesFactory {
-    constructor(
+    public constructor(
         @Inject(IAuthService) private readonly authService: IAuthService,
         @Inject(IUserRepository) private readonly userRepository: IUserRepository,
         @Inject(IUserEntityMapper) private readonly userEntityMapper: IUserEntityMapper,

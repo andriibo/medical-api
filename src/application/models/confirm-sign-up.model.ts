@@ -3,7 +3,7 @@ import {ConfirmSignUpUserDto} from 'domain/dtos/request/auth/confirm-sign-up-use
 export class ConfirmSignUpModel {
     private constructor(public readonly userName: string, public readonly code: string) {}
 
-    static fromConfirmSignUpUserDto(dto: ConfirmSignUpUserDto): ConfirmSignUpModel {
+    public static fromConfirmSignUpUserDto(dto: ConfirmSignUpUserDto): ConfirmSignUpModel {
         return new ConfirmSignUpModel(dto.userName, dto.code);
     }
 }

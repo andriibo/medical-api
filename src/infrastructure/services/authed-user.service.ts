@@ -6,12 +6,12 @@ import {REQUEST} from '@nestjs/core';
 
 @Injectable({scope: Scope.REQUEST})
 export class AuthedUserService implements IAuthedUserService {
-    constructor(
+    public constructor(
         @Inject(REQUEST) private readonly request: any,
         @Inject(IUserRepository) private readonly userRepository: IUserRepository,
     ) {}
 
-    async getUser(): Promise<User> {
+    public async getUser(): Promise<User> {
         if (!('tokenClaims' in this.request)) {
             throw new UnauthorizedException();
         }

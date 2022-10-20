@@ -8,40 +8,43 @@ import {User} from 'domain/entities';
 
 @Injectable()
 export class PatientDataAccessRepository implements IPatientDataAccessRepository {
-    constructor(@InjectDataSource() private dataSource: DataSource) {}
+    public constructor(@InjectDataSource() private dataSource: DataSource) {}
 
-    async create(patientDataAccess: PatientDataAccessModel): Promise<void> {
+    public async create(patientDataAccess: PatientDataAccessModel): Promise<void> {
         await this.dataSource.manager.save(patientDataAccess);
     }
 
-    async update(patientDataAccess: PatientDataAccessModel): Promise<void> {
+    public async update(patientDataAccess: PatientDataAccessModel): Promise<void> {
         await this.dataSource.manager.save(patientDataAccess);
     }
 
-    async delete(patientDataAccess: PatientDataAccessModel): Promise<void> {
+    public async delete(patientDataAccess: PatientDataAccessModel): Promise<void> {
         await this.dataSource.manager.remove(patientDataAccess);
     }
 
-    async getOneByPatientUserIdAndGrantedUserId(patientUserId: string, grantedUserId: string): Promise<PatientDataAccess> {
+    public async getOneByPatientUserIdAndGrantedUserId(
+        patientUserId: string,
+        grantedUserId: string,
+    ): Promise<PatientDataAccess> {
         return await this.dataSource.manager.findOneBy(PatientDataAccessModel, {
             patientUserId,
             grantedUserId,
         });
     }
 
-    async getByPatient(patient: User): Promise<PatientDataAccess[]> {
+    public async getByPatient(patient: User): Promise<PatientDataAccess[]> {
         return await this.dataSource.manager.findBy(PatientDataAccessModel, {
             patientUserId: patient.userId,
         });
     }
 
-    async getByGrantedUser(grantedUser: User): Promise<PatientDataAccess[]> {
+    public async getByGrantedUser(grantedUser: User): Promise<PatientDataAccess[]> {
         return await this.dataSource.manager.findBy(PatientDataAccessModel, {
             grantedUserId: grantedUser.userId,
         });
     }
 
-    async getOneByAccessId(accessId: string): Promise<PatientDataAccess> {
+    public async getOneByAccessId(accessId: string): Promise<PatientDataAccess> {
         return await this.dataSource.manager.findOneBy(PatientDataAccessModel, {accessId});
     }
 }

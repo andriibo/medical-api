@@ -4,7 +4,7 @@ import {UpdateDoctorProfileDto} from 'domain/dtos/request/profile/update-doctor-
 import {IUserProfileMapper} from 'app/mappers/user-profile.mapper';
 
 export class UpdateDoctorProfileUseCase {
-    constructor(
+    public constructor(
         private readonly userRepository: IUserRepository,
         private readonly authedUserService: IAuthedUserService,
         private readonly doctorMetadataRepository: IDoctorMetadataRepository,

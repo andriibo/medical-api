@@ -22,7 +22,7 @@ import {ContactDto} from 'domain/dtos/response/emergency-contact/contact.dto';
 @ApiBearerAuth()
 @ApiTags('Emergency Contact')
 export class PatientController {
-    constructor(private readonly patientUseCasesFactory: PatientUseCasesFactory) {}
+    public constructor(private readonly patientUseCasesFactory: PatientUseCasesFactory) {}
 
     @Roles('Patient')
     @Post('my-emergency-contact')

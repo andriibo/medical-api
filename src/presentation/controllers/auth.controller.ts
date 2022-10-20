@@ -13,7 +13,7 @@ import {UserSignedInDto} from 'domain/dtos/response/auth/user-signed-in.dto';
 @Controller()
 @ApiTags('Auth')
 export class AuthController {
-    constructor(private readonly authUseCasesFactory: AuthUseCasesFactory) {}
+    public constructor(private readonly authUseCasesFactory: AuthUseCasesFactory) {}
 
     @Post('sign-in')
     @HttpCode(HttpStatus.OK)

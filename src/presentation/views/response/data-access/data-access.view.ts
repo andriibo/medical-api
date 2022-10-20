@@ -4,17 +4,17 @@ import {UserView} from 'presentation/views/response/user';
 
 export class DataAccessView implements DataAccessDto {
     @ApiProperty()
-    accessId: string;
+    public accessId: string;
 
     @ApiProperty()
-    direction: string;
+    public direction: string;
 
     @ApiProperty()
-    status: string;
+    public status: string;
 
     @ApiProperty()
-    createdAt: string;
+    public createdAt: string;
 
     @ApiProperty()
-    requestedUser: UserView;
+    public requestedUser: UserView;
 }

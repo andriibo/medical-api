@@ -6,7 +6,7 @@ import {GetVitalsUseCase, SyncVitalsUseCase} from 'app/use-cases/vitals';
 
 @Injectable()
 export class VitalUseCasesFactory {
-    constructor(
+    public constructor(
         @Inject(IAuthedUserService) private readonly authedUserService: IAuthedUserService,
         @Inject(IVitalRepository) private readonly vitalRepository: IVitalRepository,
         private readonly patientDataAccessSpecification: PatientDataAccessSpecification,

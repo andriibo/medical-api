@@ -4,28 +4,28 @@ import {User, UserMetadata} from 'domain/entities';
 @Entity('user')
 export class UserModel implements User {
     @PrimaryGeneratedColumn('uuid', {name: 'user_id'})
-    userId: string;
+    public userId: string;
 
     @Column()
-    email: string;
+    public email: string;
 
     @Column({name: 'first_name'})
-    firstName: string;
+    public firstName: string;
 
     @Column({name: 'last_name'})
-    lastName: string;
+    public lastName: string;
 
     @Column()
-    phone: string;
+    public phone: string;
 
     @Column()
-    role: string;
+    public role: string;
 
     @Column({name: 'is_active'})
-    isActive: boolean;
+    public isActive: boolean;
 
     @Column({name: 'created_at'})
-    createdAt: string;
+    public createdAt: string;
 
-    metadata: UserMetadata;
+    public metadata: UserMetadata;
 }

@@ -7,7 +7,7 @@ import {EmergencyContactSpecification} from 'app/specifications/emergency-contac
 import {EntityNotFoundError} from 'app/errors/entity-not-found.error';
 
 export class UpdateContactUseCase {
-    constructor(
+    public constructor(
         private readonly authedUserService: IAuthedUserService,
         private readonly emergencyContactRepository: IEmergencyContactRepository,
         private readonly emergencyContactEntityMapper: IEmergencyContactEntityMapper,

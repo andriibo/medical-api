@@ -10,7 +10,7 @@ import {GetVitalsView, SyncVitalsView as SyncVitalResponseView} from 'presentati
 @ApiBearerAuth()
 @ApiTags('Vitals')
 export class PatientController {
-    constructor(private readonly useCasesFactory: VitalUseCasesFactory) {}
+    public constructor(private readonly useCasesFactory: VitalUseCasesFactory) {}
 
     @Roles('Patient')
     @Post('vitals')

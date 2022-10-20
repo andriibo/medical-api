@@ -5,7 +5,7 @@ import {SyncVitalsDto as SyncVitalsDtoResponse} from 'domain/dtos/response/vital
 import {User} from 'domain/entities';
 
 export class SyncVitalsUseCase {
-    constructor(
+    public constructor(
         private readonly authedUserService: IAuthedUserService,
         private readonly vitalRepository: IVitalRepository,
     ) {}
@@ -22,7 +22,7 @@ export class SyncVitalsUseCase {
         const alreadySavedVitals = await this.vitalRepository.getAlreadySavedByUser(
             user.userId,
             vitals.map((vital) => vital.timestamp),
-        )
+        );
         const alreadySavedTimestamps = alreadySavedVitals.map((savedVital) => +savedVital.timestamp);
 
         return vitals.filter((vital) => !alreadySavedTimestamps.includes(vital.timestamp));

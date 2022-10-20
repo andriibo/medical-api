@@ -3,7 +3,7 @@ import {IAuthedUserService} from 'app/services/authed-user.service';
 import {DoctorDto} from 'domain/dtos/response/profile/doctor.dto';
 
 export class DoctorProfileUseCase {
-    constructor(
+    public constructor(
         private readonly userRepository: IUserRepository,
         private readonly authedUserService: IAuthedUserService,
         private readonly doctorMetadataRepository: IDoctorMetadataRepository,

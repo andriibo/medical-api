@@ -5,7 +5,7 @@ export class GetVitalsByDoctorDto {
 
     public endDate: Date;
 
-    constructor(startDate: Date, endDate: Date, userId: string) {
+    public constructor(startDate: Date, endDate: Date, userId: string) {
         this.startDate = startDate;
         this.endDate = endDate;
         this.userId = userId;

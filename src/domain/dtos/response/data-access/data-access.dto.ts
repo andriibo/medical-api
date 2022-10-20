@@ -2,17 +2,17 @@ import {UserDto} from 'domain/dtos/response/user/user.dto';
 import {PatientDataAccess} from 'domain/entities';
 
 export class DataAccessDto {
-    accessId: string;
+    public accessId: string;
 
-    direction: string;
+    public direction: string;
 
-    status: string;
+    public status: string;
 
-    createdAt: string;
+    public createdAt: string;
 
-    requestedUser: UserDto;
+    public requestedUser: UserDto;
 
-    static fromPatientDataAccess(patientDataAccess: PatientDataAccess): DataAccessDto {
+    public static fromPatientDataAccess(patientDataAccess: PatientDataAccess): DataAccessDto {
         const dto = new DataAccessDto();
         dto.accessId = patientDataAccess.accessId;
         dto.direction = patientDataAccess.direction;

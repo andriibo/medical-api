@@ -4,7 +4,7 @@ import {ContactDto} from 'domain/dtos/request/emergency-contact/contact.dto';
 import {EmergencyContact} from 'domain/entities';
 
 export class EmergencyContactModelMapper implements IEmergencyContactEntityMapper {
-    mapByContactDto(contactDto: ContactDto, contact?: EmergencyContact): EmergencyContact {
+    public mapByContactDto(contactDto: ContactDto, contact?: EmergencyContact): EmergencyContact {
         if (!contact) {
             contact = new EmergencyContactModel();
         }

@@ -6,9 +6,9 @@ import {TokenClaimsModel} from 'infrastructure/aws/token-claims.model';
 
 @Injectable()
 export class AssignUserMiddleware implements NestMiddleware {
-    constructor(@Inject(IAuthService) private readonly authService: IAuthService) {}
+    public constructor(@Inject(IAuthService) private readonly authService: IAuthService) {}
 
-    async use(request: UserRequest, response: Response, next: Function): Promise<any> {
+    public async use(request: UserRequest, response: Response, next: Function): Promise<any> {
         request.tokenClaims = await this.getTokenClaims(request);
         next();
     }

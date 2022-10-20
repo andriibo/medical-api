@@ -15,7 +15,7 @@ export class VitalDto {
 
     public fall: boolean;
 
-    static fromVital(vital: Vital): VitalDto {
+    public static fromVital(vital: Vital): VitalDto {
         const dto = new VitalDto();
         dto.vitalId = vital.vitalId;
         dto.timestamp = vital.timestamp;

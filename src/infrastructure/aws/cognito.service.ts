@@ -32,7 +32,7 @@ export class CognitoService implements IAuthService {
     private readonly config: CognitoProviderConfig;
     private readonly cognitoClient: CognitoIdentityProviderClient;
 
-    constructor(private configService: ConfigService) {
+    public constructor(private configService: ConfigService) {
         this.config = {
             region: configService.get<string>('AWS_COGNITO_REGION'),
             accessKeyId: configService.get<string>('AWS_COGNITO_ACCESS_KEY_ID'),

@@ -1,7 +1,7 @@
 export class UserSignedInDto {
-    token: string;
+    public token: string;
 
-    static fromToken(token: string): UserSignedInDto {
+    public static fromToken(token: string): UserSignedInDto {
         const dto = new UserSignedInDto();
         dto.token = token;
 

@@ -7,9 +7,9 @@ import {VitalModel} from 'infrastructure/models/vital.model';
 
 @Injectable()
 export class VitalRepository implements IVitalRepository {
-    constructor(@InjectDataSource() private dataSource: DataSource) {}
+    public constructor(@InjectDataSource() private dataSource: DataSource) {}
 
-    async createRange(vitals: Vital[], user: User): Promise<Vital[]> {
+    public async createRange(vitals: Vital[], user: User): Promise<Vital[]> {
         const vitalsModel = vitals.map((vital) => {
             const vitalModel = new VitalModel();
             vitalModel.fall = vital.fall;
@@ -27,14 +27,14 @@ export class VitalRepository implements IVitalRepository {
         return savedVitals;
     }
 
-    async getAlreadySavedByUser(userId: string, timestamps: number[]): Promise<Vital[]> {
+    public async getAlreadySavedByUser(userId: string, timestamps: number[]): Promise<Vital[]> {
         return await this.dataSource.manager.findBy(VitalModel, {
             userId: userId,
             timestamp: In(timestamps),
         });
     }
 
-    async getByUserForInterval(userId: string, startDate: Date, endDate: Date): Promise<Vital[]> {
+    public async getByUserForInterval(userId: string, startDate: Date, endDate: Date): Promise<Vital[]> {
         return await this.dataSource.manager.findBy(VitalModel, {
             userId: userId,
             timestamp: Between<number>(this.toTimestamp(startDate), this.toTimestamp(endDate)),

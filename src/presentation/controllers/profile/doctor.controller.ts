@@ -12,7 +12,7 @@ import {UpdateDoctorProfileView} from 'views/request/profile/update-doctor-profi
 @ApiBearerAuth()
 @ApiTags('Profile')
 export class DoctorController {
-    constructor(private readonly doctorUseCasesFactory: DoctorUseCasesFactory) {}
+    public constructor(private readonly doctorUseCasesFactory: DoctorUseCasesFactory) {}
 
     @Roles('Doctor')
     @Get('my-profile')

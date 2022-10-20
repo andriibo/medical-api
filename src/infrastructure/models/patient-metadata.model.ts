@@ -5,21 +5,21 @@ import {UserModel} from './user.model';
 @Entity('patient_metadata')
 export class PatientMetadataModel implements PatientMetadata {
     @PrimaryColumn('uuid', {name: 'user_id'})
-    userId: string;
+    public userId: string;
 
     @Column()
-    dob: Date;
+    public dob: Date;
 
     @Column()
-    gender: string;
+    public gender: string;
 
     @Column()
-    height: number;
+    public height: number;
 
     @Column()
-    wight: number;
+    public wight: number;
 
     @OneToOne(() => UserModel)
     @JoinColumn({name: 'user_id', referencedColumnName: 'userId'})
-    user: UserModel;
+    public user: UserModel;
 }

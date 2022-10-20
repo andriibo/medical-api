@@ -5,7 +5,7 @@ import {PatientDataAccess} from 'domain/entities/patient-data-access.entity';
 import {EntityNotFoundError} from 'app/errors/entity-not-found.error';
 
 export class DeleteDataAccessUseCase {
-    constructor(
+    public constructor(
         private readonly userRepository: IUserRepository,
         private readonly patientDataAccessRepository: IPatientDataAccessRepository,
         private readonly authedUserService: IAuthedUserService,

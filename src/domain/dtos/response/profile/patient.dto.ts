@@ -12,13 +12,13 @@ export class PatientDto {
 
     public dob: Date;
 
-    gender: string;
+    public gender: string;
 
-    height: number;
+    public height: number;
 
-    wight: number;
+    public wight: number;
 
-    static fromUserAndPatientMetadata(user: User, metadata: PatientMetadata): PatientDto {
+    public static fromUserAndPatientMetadata(user: User, metadata: PatientMetadata): PatientDto {
         const dto = new PatientDto();
         dto.email = user.email;
         dto.firstName = user.firstName;

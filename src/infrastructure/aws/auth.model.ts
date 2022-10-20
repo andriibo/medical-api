@@ -5,7 +5,7 @@ import {AuthError} from './auth.error';
 export class AuthModel implements IAuthModel {
     private readonly userId: string;
 
-    constructor(cognitoUser: SignUpResponse) {
+    public constructor(cognitoUser: SignUpResponse) {
         if (typeof cognitoUser.UserSub === 'undefined') {
             throw new AuthError('User ID Is Absent.');
         }
@@ -13,7 +13,7 @@ export class AuthModel implements IAuthModel {
         this.userId = cognitoUser.UserSub;
     }
 
-    getUserId(): string {
+    public getUserId(): string {
         return this.userId;
     }
 }

@@ -9,7 +9,7 @@ import {ContactDto} from 'domain/dtos/response/emergency-contact/contact.dto';
 @ApiBearerAuth()
 @ApiTags('Emergency Contact')
 export class DoctorController {
-    constructor(private readonly doctorUseCasesFactory: DoctorUseCasesFactory) {}
+    public constructor(private readonly doctorUseCasesFactory: DoctorUseCasesFactory) {}
 
     @Roles('Doctor')
     @Get('patient-emergency-contacts/:patientUserId')

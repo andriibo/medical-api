@@ -12,7 +12,7 @@ import {EmergencyContactSpecification} from 'app/specifications/emergency-contac
 
 @Injectable()
 export class PatientUseCasesFactory {
-    constructor(
+    public constructor(
         @Inject(IAuthedUserService) private readonly authedUserService: IAuthedUserService,
         @Inject(IEmergencyContactRepository)
         private readonly emergencyContactRepository: IEmergencyContactRepository,

@@ -7,7 +7,7 @@ import {CreatePatientDto} from 'domain/dtos/request/auth/create-patient.dto';
 import {User} from 'domain/entities';
 
 export class SignUpUseCase {
-    constructor(
+    public constructor(
         private readonly authService: IAuthService,
         private readonly userRepository: IUserRepository,
         private readonly userEntityMapper: IUserEntityMapper,

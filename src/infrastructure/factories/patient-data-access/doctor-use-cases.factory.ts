@@ -11,7 +11,7 @@ import {PatientDataAccessSpecification} from 'app/specifications/patient-data-ac
 
 @Injectable()
 export class DoctorUseCasesFactory {
-    constructor(
+    public constructor(
         @Inject(IUserRepository) private readonly userRepository: IUserRepository,
         @Inject(IPatientDataAccessRepository)
         private readonly patientDataAccessRepository: IPatientDataAccessRepository,

@@ -21,7 +21,7 @@ import {DataAccessDto} from 'domain/dtos/response/data-access/data-access.dto';
 @ApiBearerAuth()
 @ApiTags('Patient Data Access')
 export class PatientController {
-    constructor(private readonly patientUseCasesFactory: PatientUseCasesFactory) {}
+    public constructor(private readonly patientUseCasesFactory: PatientUseCasesFactory) {}
 
     @Roles('Patient')
     @Post('data-access/initiate')

@@ -8,7 +8,7 @@ export interface IPatientDataAccessRepository {
 
     delete(patientDataAccess: PatientDataAccess): Promise<void>;
 
-    getOneByPatientUserIdAndGrantedUserId(patientId: string, grantedUserId: string): Promise<PatientDataAccess>;
+    getOneByPatientUserIdAndGrantedUserId(patientUserId: string, grantedUserId: string): Promise<PatientDataAccess>;
 
     getByPatient(patient: User): Promise<PatientDataAccess[]>;
 

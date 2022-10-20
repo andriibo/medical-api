@@ -4,23 +4,23 @@ import {PatientDataAccess} from 'domain/entities/patient-data-access.entity';
 @Entity('patient_data_access')
 export class PatientDataAccessModel implements PatientDataAccess {
     @PrimaryColumn('uuid', {name: 'access_id'})
-    accessId: string;
+    public accessId: string;
 
     @Column('uuid', {name: 'patient_user_id'})
-    patientUserId: string;
+    public patientUserId: string;
 
     @Column('uuid', {name: 'granted_user_id', nullable: true})
-    grantedUserId?: string;
+    public grantedUserId?: string;
 
     @Column({name: 'granted_user_email', nullable: true})
-    grantedUserEmail?: string;
+    public grantedUserEmail?: string;
 
     @Column()
-    direction: string;
+    public direction: string;
 
     @Column()
-    status: string;
+    public status: string;
 
     @Column({name: 'created_at'})
-    createdAt: string;
+    public createdAt: string;
 }

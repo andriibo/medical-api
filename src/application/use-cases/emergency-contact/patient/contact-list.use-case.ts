@@ -3,7 +3,7 @@ import {IAuthedUserService} from 'app/services/authed-user.service';
 import {ContactDto} from 'domain/dtos/response/emergency-contact/contact.dto';
 
 export class ContactListUseCase {
-    constructor(
+    public constructor(
         private readonly authedUserService: IAuthedUserService,
         private readonly emergencyContactRepository: IEmergencyContactRepository,
     ) {}

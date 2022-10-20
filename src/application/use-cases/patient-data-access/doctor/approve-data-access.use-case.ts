@@ -5,7 +5,7 @@ import {PatientDataAccessStatus, PatientDataAccess} from 'domain/entities/patien
 import {EntityNotFoundError} from 'app/errors/entity-not-found.error';
 
 export class ApproveDataAccessUseCase {
-    constructor(
+    public constructor(
         private readonly userRepository: IUserRepository,
         private readonly patientDataAccessRepository: IPatientDataAccessRepository,
         private readonly authedUserService: IAuthedUserService,

@@ -6,7 +6,7 @@ import {IUserProfileMapper} from 'app/mappers/user-profile.mapper';
 
 @Injectable()
 export class PatientUseCasesFactory {
-    constructor(
+    public constructor(
         @Inject(IUserRepository) private readonly userRepository: IUserRepository,
         @Inject(IAuthedUserService) private readonly authedUserService: IAuthedUserService,
         @Inject(IPatientMetadataRepository) private readonly patientMetadataRepository: IPatientMetadataRepository,

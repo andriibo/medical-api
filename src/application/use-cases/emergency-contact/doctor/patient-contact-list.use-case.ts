@@ -5,7 +5,7 @@ import {PatientDataAccessSpecification} from 'app/specifications/patient-data-ac
 import {EntityNotFoundError} from 'app/errors/entity-not-found.error';
 
 export class PatientContactListUseCase {
-    constructor(
+    public constructor(
         private readonly userRepository: IUserRepository,
         private readonly authedUserService: IAuthedUserService,
         private readonly emergencyContactRepository: IEmergencyContactRepository,
@@ -20,7 +20,7 @@ export class PatientContactListUseCase {
             throw new EntityNotFoundError('Patient Not Found.');
         }
 
-        await this.patientDataAccessSpecification.assertGrantedUserHasAccess(doctor.userId, patient.userId);
+        await this.patientDataAccessSpecification.assertGrantedUserHasAccess(doctor, patient.userId);
 
         const items = await this.emergencyContactRepository.getByUserId(patient.userId);
 

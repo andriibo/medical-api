@@ -10,7 +10,7 @@ import {UpdatePatientProfileView} from 'views/request/profile/update-patient-pro
 @ApiBearerAuth()
 @ApiTags('Profile')
 export class PatientController {
-    constructor(private readonly patientUseCasesFactory: PatientUseCasesFactory) {}
+    public constructor(private readonly patientUseCasesFactory: PatientUseCasesFactory) {}
 
     @Roles('Patient')
     @Get('my-profile')

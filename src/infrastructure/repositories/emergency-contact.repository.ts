@@ -7,25 +7,25 @@ import {EmergencyContactModel} from 'infrastructure/models';
 
 @Injectable()
 export class EmergencyContactRepository implements IEmergencyContactRepository {
-    constructor(@InjectDataSource() private dataSource: DataSource) {}
+    public constructor(@InjectDataSource() private dataSource: DataSource) {}
 
-    async create(emergencyContact: EmergencyContactModel): Promise<void> {
+    public async create(emergencyContact: EmergencyContactModel): Promise<void> {
         await this.dataSource.manager.save(emergencyContact);
     }
 
-    async update(emergencyContact: EmergencyContactModel): Promise<void> {
+    public async update(emergencyContact: EmergencyContactModel): Promise<void> {
         await this.dataSource.manager.save(emergencyContact);
     }
 
-    async delete(emergencyContact: EmergencyContactModel): Promise<void> {
+    public async delete(emergencyContact: EmergencyContactModel): Promise<void> {
         await this.dataSource.manager.remove(emergencyContact);
     }
 
-    async getOneByContactId(contactId: string): Promise<EmergencyContact> {
+    public async getOneByContactId(contactId: string): Promise<EmergencyContact> {
         return await this.dataSource.manager.findOneBy(EmergencyContactModel, {contactId});
     }
 
-    async getByUserId(userId: string): Promise<EmergencyContact[]> {
+    public async getByUserId(userId: string): Promise<EmergencyContact[]> {
         return await this.dataSource.manager.findBy(EmergencyContactModel, {userId});
     }
 }
