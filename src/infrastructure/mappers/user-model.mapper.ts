@@ -2,8 +2,8 @@ import {UserRole, User} from 'domain/entities/user.entity';
 import {CreateDoctorDto} from 'domain/dtos/request/auth/create-doctor.dto';
 import {CreatePatientDto} from 'domain/dtos/request/auth/create-patient.dto';
 import {UserModel, DoctorMetadataModel, PatientMetadataModel} from 'infrastructure/models';
-import {IUserEntityMapper} from 'app/mappers/user-entity.mapper';
-import {IAuthModel} from 'app/models/auth.model';
+import {IUserEntityMapper} from 'app/modules/auth/mappers/user-entity.mapper';
+import {IAuthModel} from 'app/modules/auth/models';
 
 export class UserModelMapper implements IUserEntityMapper {
     public mapByAuthModelAndCreateDoctorDto(authModel: IAuthModel, dto: CreateDoctorDto): User {

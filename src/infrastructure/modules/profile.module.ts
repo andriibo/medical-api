@@ -1,11 +1,12 @@
 import {Module} from '@nestjs/common';
 import {PatientController, DoctorController} from 'controllers/profile';
-import {IUserRepository, IPatientMetadataRepository, IDoctorMetadataRepository} from 'app/repositories';
+import {IUserRepository} from 'app/modules/auth/repositories';
+import {IDoctorMetadataRepository, IPatientMetadataRepository} from 'app/modules/profile/repositories';
 import {UserRepository, PatientMetadataRepository, DoctorMetadataRepository} from 'infrastructure/repositories';
 import {TypeOrmModule} from '@nestjs/typeorm';
 import {UserModel, DoctorMetadataModel, PatientMetadataModel} from 'infrastructure/models';
 import {DoctorUseCasesFactory, PatientUseCasesFactory} from 'infrastructure/factories/profile';
-import {IUserProfileMapper} from 'app/mappers/user-profile.mapper';
+import {IUserProfileMapper} from 'app/modules/profile/mappers/user-profile.mapper';
 import {UserProfileMapper} from 'infrastructure/mappers/user-profile.mapper';
 import {AuthModule, PatientDataAccessModule} from 'infrastructure/modules';
 

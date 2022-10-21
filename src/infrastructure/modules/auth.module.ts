@@ -1,15 +1,15 @@
 import {Module} from '@nestjs/common';
 import {AuthController} from 'controllers/auth.controller';
-import {IUserRepository} from 'app/repositories';
+import {IUserRepository} from 'app/modules/auth/repositories';
 import {UserRepository} from 'infrastructure/repositories/user.repository';
-import {IAuthService} from 'app/services/auth.service';
+import {IAuthService} from 'app/modules/auth/services/auth.service';
 import {CognitoService} from 'infrastructure/aws/cognito.service';
 import {TypeOrmModule} from '@nestjs/typeorm';
 import {UserModel, DoctorMetadataModel, PatientMetadataModel} from 'infrastructure/models';
-import {IUserEntityMapper} from 'app/mappers/user-entity.mapper';
+import {IUserEntityMapper} from 'app/modules/auth/mappers/user-entity.mapper';
 import {UserModelMapper} from 'infrastructure/mappers/user-model.mapper';
 import {AuthUseCasesFactory} from 'infrastructure/factories/auth-use-cases.factory';
-import {IAuthedUserService} from 'app/services/authed-user.service';
+import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service';
 import {AuthedUserService} from 'infrastructure/services/authed-user.service';
 
 @Module({

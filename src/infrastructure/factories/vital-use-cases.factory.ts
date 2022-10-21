@@ -1,8 +1,8 @@
 import {Inject, Injectable} from '@nestjs/common';
-import {IVitalRepository} from 'app/repositories';
-import {IAuthedUserService} from 'app/services/authed-user.service';
-import {PatientDataAccessSpecification} from 'app/specifications/patient-data-access.specification';
-import {GetVitalsUseCase, SyncVitalsUseCase} from 'app/use-cases/vitals';
+import {IVitalRepository} from 'app/modules/vitals/repositories';
+import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service';
+import {PatientDataAccessSpecification} from 'app/modules/patient-data-access/specifications/patient-data-access.specification';
+import {GetVitalsUseCase, SyncVitalsUseCase} from 'app/modules/vitals/use-cases';
 
 @Injectable()
 export class VitalUseCasesFactory {

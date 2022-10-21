@@ -1,7 +1,7 @@
 import {User} from 'domain/entities/user.entity';
 import {PatientDataAccessStatus, PatientDataAccess} from 'domain/entities/patient-data-access.entity';
 import {PatientDataAccessModel} from 'infrastructure/models';
-import {IPatientDataAccessEntityMapper} from 'app/mappers/patient-data-access-entity.mapper';
+import {IPatientDataAccessEntityMapper} from 'app/modules/patient-data-access/mappers/patient-data-access-entity.mapper';
 
 export class PatientDataAccessEntityMapper implements IPatientDataAccessEntityMapper {
     public mapByPatientAndGrantedUser(patient: User, grantedUser: User): PatientDataAccess {

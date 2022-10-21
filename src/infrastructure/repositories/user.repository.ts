@@ -1,7 +1,7 @@
 import {Injectable} from '@nestjs/common';
 import {InjectDataSource} from '@nestjs/typeorm';
 import {DataSource, In} from 'typeorm';
-import {IUserRepository} from 'app/repositories';
+import {IUserRepository} from 'app/modules/auth/repositories';
 import {UserModel} from 'infrastructure/models';
 import {User} from 'domain/entities';
 

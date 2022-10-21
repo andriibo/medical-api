@@ -1,5 +1,5 @@
 import {PatientDataAccess} from 'domain/entities';
-import {IPatientDataAccessEventEmitter} from 'app/event-emitters/patient-data-access.event-emitter';
+import {IPatientDataAccessEventEmitter} from 'app/modules/patient-data-access/event-emitters/patient-data-access.event-emitter';
 import {EventEmitter2} from '@nestjs/event-emitter';
 import {Injectable} from '@nestjs/common';
 

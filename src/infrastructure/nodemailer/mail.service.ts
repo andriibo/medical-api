@@ -1,5 +1,5 @@
 import {MailerService} from '@nestjs-modules/mailer';
-import {IMailService} from 'app/services/mail.service';
+import {IMailService} from 'app/modules/mail/services/mail.service';
 import {Injectable} from '@nestjs/common';
 
 @Injectable()
@@ -10,7 +10,7 @@ export class MailService implements IMailService {
         await this.mailerService.sendMail({
             to: email,
             subject: 'Invite to Sign Up.',
-            text: `This is the URL to Sign Up Form for ${email}.`,
+            text: `You are invited to the Zenzerapp. Please, follow the link: zenzerapp://auth?email=${email}.`,
         });
     }
 }

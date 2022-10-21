@@ -1,5 +1,5 @@
 import {User} from 'domain/entities/user.entity';
-import {IUserProfileMapper} from 'app/mappers/user-profile.mapper';
+import {IUserProfileMapper} from 'app/modules/profile/mappers/user-profile.mapper';
 import {UpdateDoctorProfileDto, UpdatePatientProfileDto} from 'domain/dtos/request/profile';
 import {DoctorMetadata, PatientMetadata} from 'domain/entities';
 

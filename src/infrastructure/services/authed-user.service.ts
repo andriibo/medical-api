@@ -1,7 +1,7 @@
 import {User} from 'domain/entities';
-import {IAuthedUserService} from 'app/services/authed-user.service';
+import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service';
 import {Inject, Injectable, UnauthorizedException, Scope} from '@nestjs/common';
-import {IUserRepository} from 'app/repositories';
+import {IUserRepository} from 'app/modules/auth/repositories';
 import {REQUEST} from '@nestjs/core';
 
 @Injectable({scope: Scope.REQUEST})

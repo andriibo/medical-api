@@ -1,4 +1,4 @@
-import {ITokenClaimsModel} from 'app/models/token-claims.model';
+import {ITokenClaimsModel} from 'app/modules/auth/models';
 
 class CLAIMS {
     public static readonly USER_ID = 'sub';

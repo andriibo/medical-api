@@ -1,14 +1,15 @@
 import {Inject, Injectable} from '@nestjs/common';
+import {IUserRepository} from 'app/modules/auth/repositories';
+import {IDoctorMetadataRepository, IPatientMetadataRepository} from 'app/modules/profile/repositories';
+import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repositories';
 import {
-    IUserRepository,
-    IDoctorMetadataRepository,
-    IPatientMetadataRepository,
-    IPatientDataAccessRepository,
-} from 'app/repositories';
-import {DoctorProfileUseCase, UpdateDoctorProfileUseCase, PatientProfileUseCase} from 'app/use-cases/profile/doctor';
-import {IAuthedUserService} from 'app/services/authed-user.service';
-import {IUserProfileMapper} from 'app/mappers/user-profile.mapper';
-import {PatientDataAccessSpecification} from 'app/specifications/patient-data-access.specification';
+    DoctorProfileUseCase,
+    UpdateDoctorProfileUseCase,
+    PatientProfileUseCase,
+} from 'app/modules/profile/use-cases/doctor';
+import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service';
+import {IUserProfileMapper} from 'app/modules/profile/mappers/user-profile.mapper';
+import {PatientDataAccessSpecification} from 'app/modules/patient-data-access/specifications/patient-data-access.specification';
 
 @Injectable()
 export class DoctorUseCasesFactory {

@@ -1,4 +1,4 @@
-import {IAuthModel} from 'app/models/auth.model';
+import {IAuthModel} from 'app/modules/auth/models';
 import {SignUpResponse} from '@aws-sdk/client-cognito-identity-provider/dist-types/models/models_1';
 import {AuthError} from './auth.error';
 

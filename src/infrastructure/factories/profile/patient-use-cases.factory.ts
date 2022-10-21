@@ -1,8 +1,9 @@
 import {Inject, Injectable} from '@nestjs/common';
-import {IUserRepository, IPatientMetadataRepository} from 'app/repositories';
-import {PatientProfileUseCase, UpdatePatientProfileUseCase} from 'app/use-cases/profile/patient';
-import {IAuthedUserService} from 'app/services/authed-user.service';
-import {IUserProfileMapper} from 'app/mappers/user-profile.mapper';
+import {IUserRepository} from 'app/modules/auth/repositories';
+import {IPatientMetadataRepository} from 'app/modules/profile/repositories';
+import {PatientProfileUseCase, UpdatePatientProfileUseCase} from 'app/modules/profile/use-cases/patient';
+import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service';
+import {IUserProfileMapper} from 'app/modules/profile/mappers/user-profile.mapper';
 
 @Injectable()
 export class PatientUseCasesFactory {

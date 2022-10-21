@@ -1,18 +1,19 @@
 import {Module} from '@nestjs/common';
 import {PatientController, DoctorController} from 'controllers/patient-data-access';
-import {IUserRepository, IPatientDataAccessRepository} from 'app/repositories';
+import {IUserRepository} from 'app/modules/auth/repositories';
+import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repositories';
 import {UserRepository, PatientDataAccessRepository} from 'infrastructure/repositories';
 import {TypeOrmModule} from '@nestjs/typeorm';
 import {PatientDataAccessModel} from 'infrastructure/models';
 import {PatientUseCasesFactory, DoctorUseCasesFactory} from 'infrastructure/factories/patient-data-access';
-import {IPatientDataAccessEntityMapper} from 'app/mappers/patient-data-access-entity.mapper';
+import {IPatientDataAccessEntityMapper} from 'app/modules/patient-data-access/mappers/patient-data-access-entity.mapper';
 import {PatientDataAccessEntityMapper} from 'infrastructure/mappers/patient-data-access-model.mapper';
 import {AuthModule} from 'infrastructure/modules/auth.module';
 import {MailModule} from 'infrastructure/modules/mail.module';
-import {PatientDataAccessSpecification} from 'app/specifications/patient-data-access.specification';
-import {AccessForRegisteredUserService} from 'app/services/access-for-registered-user.service';
-import {AccessForUnregisteredUserService} from 'app/services/access-for-unregistered-user.service';
-import {IPatientDataAccessEventEmitter} from 'app/event-emitters/patient-data-access.event-emitter';
+import {PatientDataAccessSpecification} from 'app/modules/patient-data-access/specifications/patient-data-access.specification';
+import {AccessForRegisteredUserService} from 'app/modules/patient-data-access/services/access-for-registered-user.service';
+import {AccessForUnregisteredUserService} from 'app/modules/patient-data-access/services/access-for-unregistered-user.service';
+import {IPatientDataAccessEventEmitter} from 'app/modules/patient-data-access/event-emitters/patient-data-access.event-emitter';
 import {PatientDataAccessEventEmitter} from 'infrastructure/event-emitters/patient-data-access.event-emitter';
 import {PatientDataAccessListener} from 'infrastructure/listeners/patient-data-access.listener';
 

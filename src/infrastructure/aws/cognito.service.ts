@@ -11,13 +11,12 @@ import {
     AdminDeleteUserCommand,
 } from '@aws-sdk/client-cognito-identity-provider';
 import {ConfigService} from '@nestjs/config';
-import {ConfirmSignUpModel, SignInModel, SignUpModel} from 'app/models';
-import {IAuthService} from 'app/services/auth.service';
+import {ConfirmSignUpModel, SignInModel, SignUpModel, IAuthModel} from 'app/modules/auth/models';
+import {IAuthService} from 'app/modules/auth/services/auth.service';
 import * as jwt from 'jsonwebtoken';
 import * as jwkToBuffer from 'jwk-to-pem';
 import {User} from 'domain/entities/user.entity';
 import {AuthModel} from './auth.model';
-import {IAuthModel} from 'app/models/auth.model';
 
 interface CognitoProviderConfig {
     region: string;

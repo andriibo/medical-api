@@ -1,5 +1,5 @@
 import {PatientDataAccess} from 'domain/entities';
-import {IMailService} from 'app/services/mail.service';
+import {IMailService} from 'app/modules/mail/services/mail.service';
 import {Inject, Injectable} from '@nestjs/common';
 import {OnEvent} from '@nestjs/event-emitter';
 

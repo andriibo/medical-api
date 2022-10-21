@@ -4,11 +4,11 @@ import {
     ContactListUseCase,
     DeleteContactUseCase,
     UpdateContactUseCase,
-} from 'app/use-cases/emergency-contact/patient';
-import {IAuthedUserService} from 'app/services/authed-user.service';
-import {IEmergencyContactRepository} from 'app/repositories';
-import {IEmergencyContactEntityMapper} from 'app/mappers/emergency-contact-entity.mapper';
-import {EmergencyContactSpecification} from 'app/specifications/emergency-contact.specification';
+} from 'app/modules/emergency-contact/use-cases/patient';
+import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service';
+import {IEmergencyContactRepository} from 'app/modules/emergency-contact/repositories';
+import {IEmergencyContactEntityMapper} from 'app/modules/emergency-contact/mappers/emergency-contact-entity.mapper';
+import {EmergencyContactSpecification} from 'app/modules/emergency-contact/specifications/emergency-contact.specification';
 
 @Injectable()
 export class PatientUseCasesFactory {

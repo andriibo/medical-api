@@ -1,5 +1,5 @@
 import {EmergencyContactModel} from 'infrastructure/models';
-import {IEmergencyContactEntityMapper} from 'app/mappers/emergency-contact-entity.mapper';
+import {IEmergencyContactEntityMapper} from 'app/modules/emergency-contact/mappers/emergency-contact-entity.mapper';
 import {ContactDto} from 'domain/dtos/request/emergency-contact/contact.dto';
 import {EmergencyContact} from 'domain/entities';
 

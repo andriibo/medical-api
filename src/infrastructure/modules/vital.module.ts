@@ -1,6 +1,6 @@
 import {Module} from '@nestjs/common';
 import {TypeOrmModule} from '@nestjs/typeorm';
-import {IVitalRepository} from 'app/repositories';
+import {IVitalRepository} from 'app/modules/vitals/repositories';
 import {DoctorController, PatientController} from 'controllers/vital';
 import {VitalUseCasesFactory} from 'infrastructure/factories/vital-use-cases.factory';
 import {VitalModel} from 'infrastructure/models';

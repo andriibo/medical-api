@@ -1,6 +1,6 @@
 import {Inject, Injectable, NestMiddleware} from '@nestjs/common';
-import {ITokenClaimsModel} from 'app/models/token-claims.model';
-import {IAuthService} from 'app/services/auth.service';
+import {ITokenClaimsModel} from 'app/modules/auth/models';
+import {IAuthService} from 'app/modules/auth/services/auth.service';
 import {Request, Response} from 'express';
 import {TokenClaimsModel} from 'infrastructure/aws/token-claims.model';
 

@@ -1,7 +1,7 @@
 import {Injectable} from '@nestjs/common';
 import {InjectDataSource} from '@nestjs/typeorm';
 import {DataSource} from 'typeorm';
-import {IDoctorMetadataRepository} from 'app/repositories';
+import {IDoctorMetadataRepository} from 'app/modules/profile/repositories';
 import {DoctorMetadataModel} from 'infrastructure/models/doctor-metadata.model';
 import {DoctorMetadata} from 'domain/entities';
 

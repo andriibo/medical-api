@@ -2,7 +2,7 @@ import {Injectable} from '@nestjs/common';
 import {InjectDataSource} from '@nestjs/typeorm';
 import {Between, DataSource, In} from 'typeorm';
 import {User, Vital} from 'domain/entities';
-import {IVitalRepository} from 'app/repositories/vital.repository';
+import {IVitalRepository} from 'app/modules/vitals/repositories';
 import {VitalModel} from 'infrastructure/models/vital.model';
 
 @Injectable()

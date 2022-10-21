@@ -1,6 +1,6 @@
 import {Controller, Get, HttpStatus, Post, Body, HttpCode} from '@nestjs/common';
 import {ApiResponse, ApiTags} from '@nestjs/swagger';
-import {IMailService} from 'app/services/mail.service';
+import {IMailService} from 'app/modules/mail/services/mail.service';
 import {Inject, Injectable} from '@nestjs/common';
 import {InviteToSignUpView} from 'views/request/invite-to-sign-up.view';
 

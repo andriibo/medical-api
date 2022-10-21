@@ -1,7 +1,7 @@
 import {Injectable} from '@nestjs/common';
 import {InjectDataSource} from '@nestjs/typeorm';
 import {DataSource} from 'typeorm';
-import {IEmergencyContactRepository} from 'app/repositories';
+import {IEmergencyContactRepository} from 'app/modules/emergency-contact/repositories';
 import {EmergencyContact} from 'domain/entities';
 import {EmergencyContactModel} from 'infrastructure/models';
 
