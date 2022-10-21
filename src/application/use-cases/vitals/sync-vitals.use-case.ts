@@ -20,7 +20,7 @@ export class SyncVitalsUseCase {
 
     private async filterVitalsToBeSaved(vitals: VitalDto[], user: User): Promise<VitalDto[]> {
         const alreadySavedVitals = await this.vitalRepository.getAlreadySavedByUser(
-            user.userId,
+            user.id,
             vitals.map((vital) => vital.timestamp),
         );
         const alreadySavedTimestamps = alreadySavedVitals.map((savedVital) => +savedVital.timestamp);

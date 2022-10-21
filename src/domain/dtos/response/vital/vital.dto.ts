@@ -17,7 +17,7 @@ export class VitalDto {
 
     public static fromVital(vital: Vital): VitalDto {
         const dto = new VitalDto();
-        dto.vitalId = vital.vitalId;
+        dto.vitalId = vital.id;
         dto.timestamp = vital.timestamp;
         dto.temperature = vital.temperature;
         dto.hr = vital.hr;

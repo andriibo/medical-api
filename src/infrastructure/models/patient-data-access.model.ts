@@ -3,8 +3,8 @@ import {PatientDataAccess} from 'domain/entities/patient-data-access.entity';
 
 @Entity('patient_data_access')
 export class PatientDataAccessModel implements PatientDataAccess {
-    @PrimaryColumn('uuid', {name: 'access_id'})
-    public accessId: string;
+    @PrimaryColumn('uuid')
+    public id: string;
 
     @Column('uuid', {name: 'patient_user_id'})
     public patientUserId: string;

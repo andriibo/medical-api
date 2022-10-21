@@ -19,8 +19,8 @@ export class VitalRepository implements IVitalRepository {
             vitalModel.temperature = vital.temperature;
             vitalModel.timestamp = vital.timestamp;
             vitalModel.user = user;
-            vitalModel.userId = user.userId;
-            vitalModel.vitalId = vital.vitalId;
+            vitalModel.userId = user.id;
+            vitalModel.id = vital.id;
             return vitalModel;
         });
         const savedVitals = await this.dataSource.manager.save(vitalsModel);

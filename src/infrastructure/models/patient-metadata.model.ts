@@ -20,6 +20,6 @@ export class PatientMetadataModel implements PatientMetadata {
     public wight: number;
 
     @OneToOne(() => UserModel)
-    @JoinColumn({name: 'user_id', referencedColumnName: 'userId'})
+    @JoinColumn({name: 'user_id', referencedColumnName: 'id'})
     public user: UserModel;
 }

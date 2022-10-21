@@ -3,8 +3,8 @@ import {EmergencyContact} from 'domain/entities';
 
 @Entity('emergency_contact')
 export class EmergencyContactModel implements EmergencyContact {
-    @PrimaryGeneratedColumn('uuid', {name: 'contact_id'})
-    public contactId: string;
+    @PrimaryGeneratedColumn('uuid')
+    public id: string;
 
     @Column({name: 'user_id'})
     public userId: string;

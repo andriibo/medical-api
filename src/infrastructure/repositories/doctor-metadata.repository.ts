@@ -9,7 +9,7 @@ import {DoctorMetadata} from 'domain/entities';
 export class DoctorMetadataRepository implements IDoctorMetadataRepository {
     public constructor(@InjectDataSource() private dataSource: DataSource) {}
 
-    public async getOneByUserId(userId: string): Promise<DoctorMetadata> {
+    public async getOneById(userId: string): Promise<DoctorMetadata> {
         return await this.dataSource.manager.findOneBy(DoctorMetadataModel, {userId});
     }
 }

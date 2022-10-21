@@ -7,7 +7,7 @@ export class createEmergencyContact1665694553884 implements MigrationInterface {
                 name: 'emergency_contact',
                 columns: [
                     {
-                        name: 'contact_id',
+                        name: 'id',
                         type: 'uuid',
                         generationStrategy: 'uuid',
                         isGenerated: true,
@@ -64,7 +64,7 @@ export class createEmergencyContact1665694553884 implements MigrationInterface {
             'emergency_contact',
             new TableForeignKey({
                 columnNames: ['user_id'],
-                referencedColumnNames: ['user_id'],
+                referencedColumnNames: ['id'],
                 referencedTableName: 'user',
                 onDelete: 'CASCADE',
             }),

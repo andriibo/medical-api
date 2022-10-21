@@ -1,7 +1,7 @@
 import {User} from './user.entity';
 
 export interface Vital {
-    vitalId: string;
+    id: string;
 
     timestamp: number;
 

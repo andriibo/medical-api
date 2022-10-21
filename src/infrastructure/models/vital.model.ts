@@ -4,8 +4,8 @@ import {UserModel} from './user.model';
 
 @Entity('vital')
 export class VitalModel implements Vital {
-    @PrimaryGeneratedColumn('uuid', {name: 'vital_id'})
-    public vitalId: string;
+    @PrimaryGeneratedColumn('uuid')
+    public id: string;
 
     @Column()
     public timestamp: number;
@@ -29,6 +29,6 @@ export class VitalModel implements Vital {
     public userId: string;
 
     @ManyToOne(() => UserModel)
-    @JoinColumn({name: 'user_id', referencedColumnName: 'userId'})
+    @JoinColumn({name: 'user_id', referencedColumnName: 'id'})
     public user: UserModel;
 }

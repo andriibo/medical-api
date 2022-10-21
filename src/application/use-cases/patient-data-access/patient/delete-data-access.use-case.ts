@@ -21,7 +21,7 @@ export class DeleteDataAccessUseCase {
     }
 
     private async getDataAccess(accessId: string): Promise<PatientDataAccess> {
-        const dataAccess = await this.patientDataAccessRepository.getOneByAccessId(accessId);
+        const dataAccess = await this.patientDataAccessRepository.getOneById(accessId);
 
         if (dataAccess === null) {
             throw new Error('Access Not Found.');

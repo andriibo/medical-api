@@ -14,15 +14,15 @@ export class PatientContactListUseCase {
 
     public async getList(patientUserId: string): Promise<ContactDto[]> {
         const doctor = await this.authedUserService.getUser();
-        const patient = await this.userRepository.getOneByUserId(patientUserId);
+        const patient = await this.userRepository.getOneById(patientUserId);
 
         if (patient === null) {
             throw new EntityNotFoundError('Patient Not Found.');
         }
 
-        await this.patientDataAccessSpecification.assertGrantedUserHasAccess(doctor, patient.userId);
+        await this.patientDataAccessSpecification.assertGrantedUserHasAccess(doctor, patient.id);
 
-        const items = await this.emergencyContactRepository.getByUserId(patient.userId);
+        const items = await this.emergencyContactRepository.getByUserId(patient.id);
 
         return items.map((item) => ContactDto.fromEmergencyContact(item));
     }

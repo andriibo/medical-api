@@ -10,7 +10,7 @@ export enum PatientDataAccessStatus {
 }
 
 export interface PatientDataAccess {
-    accessId: string;
+    id: string;
 
     patientUserId: string;
 

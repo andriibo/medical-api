@@ -7,7 +7,7 @@ export class createPatientDataAccess1665065053449 implements MigrationInterface 
                 name: 'patient_data_access',
                 columns: [
                     {
-                        name: 'access_id',
+                        name: 'id',
                         type: 'uuid',
                         generationStrategy: 'uuid',
                         isGenerated: true,
@@ -74,7 +74,7 @@ export class createPatientDataAccess1665065053449 implements MigrationInterface 
             'patient_data_access',
             new TableForeignKey({
                 columnNames: ['patient_user_id'],
-                referencedColumnNames: ['user_id'],
+                referencedColumnNames: ['id'],
                 referencedTableName: 'user',
                 onDelete: 'CASCADE',
             }),
@@ -84,7 +84,7 @@ export class createPatientDataAccess1665065053449 implements MigrationInterface 
             'patient_data_access',
             new TableForeignKey({
                 columnNames: ['granted_user_id'],
-                referencedColumnNames: ['user_id'],
+                referencedColumnNames: ['id'],
                 referencedTableName: 'user',
                 onDelete: 'CASCADE',
             }),

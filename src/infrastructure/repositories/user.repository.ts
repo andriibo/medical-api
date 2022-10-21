@@ -49,12 +49,12 @@ export class UserRepository implements IUserRepository {
         }
     }
 
-    public async getOneByUserId(userId: string): Promise<User> {
-        return await this.dataSource.manager.findOneBy(UserModel, {userId});
+    public async getOneById(id: string): Promise<User> {
+        return await this.dataSource.manager.findOneBy(UserModel, {id});
     }
 
-    public async getByUserIds(userIds: string[]): Promise<User[]> {
-        return await this.dataSource.manager.findBy(UserModel, {userId: In(userIds)});
+    public async getByIds(ids: string[]): Promise<User[]> {
+        return await this.dataSource.manager.findBy(UserModel, {id: In(ids)});
     }
 
     public async getOneByEmail(email: string): Promise<User> {

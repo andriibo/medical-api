@@ -13,7 +13,7 @@ export class UpdateDoctorProfileUseCase {
 
     public async updateProfileInfo(dto: UpdateDoctorProfileDto): Promise<void> {
         const user = await this.authedUserService.getUser();
-        const metadata = await this.doctorMetadataRepository.getOneByUserId(user.userId);
+        const metadata = await this.doctorMetadataRepository.getOneById(user.id);
 
         const modifiedUser = this.userProfileMapper.mapByUpdateDoctorProfileDto(dto, user, metadata);
 

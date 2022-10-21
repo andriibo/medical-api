@@ -11,6 +11,6 @@ export class DoctorMetadataModel implements DoctorMetadata {
     public institution: string;
 
     @OneToOne(() => UserModel)
-    @JoinColumn({name: 'user_id', referencedColumnName: 'userId'})
+    @JoinColumn({name: 'user_id', referencedColumnName: 'id'})
     public user: UserModel;
 }

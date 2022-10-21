@@ -25,6 +25,6 @@ export class EmergencyContactSpecification {
     }
 
     private isUserOwnerOfContact(user: User, contact: EmergencyContact): boolean {
-        return user.userId === contact.userId;
+        return user.id === contact.userId;
     }
 }

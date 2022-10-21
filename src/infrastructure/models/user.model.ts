@@ -3,8 +3,8 @@ import {User, UserMetadata} from 'domain/entities';
 
 @Entity('user')
 export class UserModel implements User {
-    @PrimaryGeneratedColumn('uuid', {name: 'user_id'})
-    public userId: string;
+    @PrimaryGeneratedColumn('uuid')
+    public id: string;
 
     @Column()
     public email: string;

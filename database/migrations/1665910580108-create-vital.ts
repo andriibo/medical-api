@@ -1,14 +1,13 @@
 import {MigrationInterface, QueryRunner, Table, TableForeignKey, TableIndex} from 'typeorm';
 
 export class createVital1665910580108 implements MigrationInterface {
-
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.createTable(
             new Table({
                 name: 'vital',
                 columns: [
                     {
-                        name: 'vital_id',
+                        name: 'id',
                         type: 'uuid',
                         generationStrategy: 'uuid',
                         isGenerated: true,
@@ -67,7 +66,7 @@ export class createVital1665910580108 implements MigrationInterface {
             'vital',
             new TableForeignKey({
                 columnNames: ['user_id'],
-                referencedColumnNames: ['user_id'],
+                referencedColumnNames: ['id'],
                 referencedTableName: 'user',
                 onDelete: 'CASCADE',
             }),
@@ -76,7 +75,7 @@ export class createVital1665910580108 implements MigrationInterface {
         await queryRunner.createIndex(
             'vital',
             new TableIndex({
-                columnNames: ['timestamp', 'user_id'],
+                columnNames: ['timestamp', 'id'],
                 isUnique: true,
             }),
         );
@@ -85,5 +84,4 @@ export class createVital1665910580108 implements MigrationInterface {
     public async down(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.dropTable('vital');
     }
-
 }

@@ -11,7 +11,7 @@ export class PatientProfileUseCase {
 
     public async getProfileInfo(): Promise<PatientDto> {
         const user = await this.authedUserService.getUser();
-        const patientMetadata = await this.patientMetadataRepository.getOneByUserId(user.userId);
+        const patientMetadata = await this.patientMetadataRepository.getOneById(user.id);
 
         return PatientDto.fromUserAndPatientMetadata(user, patientMetadata);
     }

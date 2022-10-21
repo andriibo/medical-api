@@ -5,7 +5,7 @@ export enum ContactRelationship {
 }
 
 export interface EmergencyContact {
-    contactId: string;
+    id: string;
 
     userId: string;
 

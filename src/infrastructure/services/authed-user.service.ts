@@ -18,6 +18,6 @@ export class AuthedUserService implements IAuthedUserService {
 
         const {tokenClaims} = this.request;
 
-        return await this.userRepository.getOneByUserId(tokenClaims.getUserId());
+        return await this.userRepository.getOneById(tokenClaims.getUserId());
     }
 }

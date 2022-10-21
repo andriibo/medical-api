@@ -19,7 +19,7 @@ export class DataAccessListUseCase {
         const users = await this.getGrantedUsers(items);
 
         const indexedUsers = {};
-        users.map((user) => (indexedUsers[user.userId] = user));
+        users.map((user) => (indexedUsers[user.id] = user));
 
         return items.map((item) => {
             const dto = DataAccessDto.fromPatientDataAccess(item);
@@ -32,6 +32,6 @@ export class DataAccessListUseCase {
     private async getGrantedUsers(items: PatientDataAccess[]): Promise<User[]> {
         const userIds = items.map((item) => item.grantedUserId);
 
-        return await this.userRepository.getByUserIds(userIds);
+        return await this.userRepository.getByIds(userIds);
     }
 }

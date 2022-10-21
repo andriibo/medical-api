@@ -17,7 +17,7 @@ export class PatientDataAccessSpecification {
             );
         }
 
-        const hasInitiatedAccess = await this.hasInitiatedAccess(patient.userId, userToGrant.userId);
+        const hasInitiatedAccess = await this.hasInitiatedAccess(patient.id, userToGrant.id);
 
         if (hasInitiatedAccess) {
             throw new PatientDataAccessSpecificationError(
@@ -27,7 +27,7 @@ export class PatientDataAccessSpecification {
     }
 
     public async assertGrantedUserCanRefuseAccess(grantedUser: User, dataAccess: PatientDataAccess): Promise<void> {
-        const isUserGranted = dataAccess.grantedUserId === grantedUser.userId;
+        const isUserGranted = dataAccess.grantedUserId === grantedUser.id;
         const isAccessStatusInitiated = dataAccess.status === PatientDataAccessStatus.Initiated;
         const isGrantedUserRequested = dataAccess.direction === PatientDataAccessRequestDirection.FromPatient;
 
@@ -39,7 +39,7 @@ export class PatientDataAccessSpecification {
     }
 
     public async assertGrantedUserCanApproveAccess(grantedUser: User, dataAccess: PatientDataAccess): Promise<void> {
-        const isUserGranted = dataAccess.grantedUserId === grantedUser.userId;
+        const isUserGranted = dataAccess.grantedUserId === grantedUser.id;
         const isAccessStatusInitiated = dataAccess.status === PatientDataAccessStatus.Initiated;
         const isGrantedUserRequested = dataAccess.direction === PatientDataAccessRequestDirection.FromPatient;
 
@@ -51,7 +51,7 @@ export class PatientDataAccessSpecification {
     }
 
     public async assertGrantedUserCanDeleteAccess(grantedUser: User, dataAccess: PatientDataAccess): Promise<void> {
-        const isUserGranted = dataAccess.grantedUserId === grantedUser.userId;
+        const isUserGranted = dataAccess.grantedUserId === grantedUser.id;
         const isAccessStatusApproved = dataAccess.status === PatientDataAccessStatus.Approved;
 
         const isDeleteAllowed = isUserGranted && isAccessStatusApproved;
@@ -62,7 +62,7 @@ export class PatientDataAccessSpecification {
     }
 
     public async assertPatientCanDeleteAccess(patient: User, dataAccess: PatientDataAccess): Promise<void> {
-        const isUserGranted = dataAccess.patientUserId === patient.userId;
+        const isUserGranted = dataAccess.patientUserId === patient.id;
         const isGrantedUserRequested = dataAccess.direction === PatientDataAccessRequestDirection.FromPatient;
 
         const isDeleteAllowed = isUserGranted && isGrantedUserRequested;
@@ -77,7 +77,7 @@ export class PatientDataAccessSpecification {
             throw new PatientDataAccessSpecificationError('Access Is Absent.');
         }
 
-        const dataAccess = await this.getAccess(patientUserId, grantedUser.userId);
+        const dataAccess = await this.getAccess(patientUserId, grantedUser.id);
 
         const isAccessStatusApproved = dataAccess.status === PatientDataAccessStatus.Approved;
 

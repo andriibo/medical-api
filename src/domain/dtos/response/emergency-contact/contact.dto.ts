@@ -17,7 +17,7 @@ export class ContactDto {
 
     public static fromEmergencyContact(emergencyContact: EmergencyContact): ContactDto {
         const dto = new ContactDto();
-        dto.contactId = emergencyContact.contactId;
+        dto.contactId = emergencyContact.id;
         dto.firstName = emergencyContact.firstName;
         dto.lastName = emergencyContact.lastName;
         dto.email = emergencyContact.email;

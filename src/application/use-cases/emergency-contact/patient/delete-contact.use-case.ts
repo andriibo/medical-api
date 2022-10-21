@@ -21,7 +21,7 @@ export class DeleteContactUseCase {
     }
 
     private async getContact(contactId: string): Promise<EmergencyContact> {
-        const contact = await this.emergencyContactRepository.getOneByContactId(contactId);
+        const contact = await this.emergencyContactRepository.getOneById(contactId);
 
         if (contact === null) {
             throw new EntityNotFoundError('Contact Not Found.');

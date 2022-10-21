@@ -14,7 +14,7 @@ export class DataAccessDto {
 
     public static fromPatientDataAccess(patientDataAccess: PatientDataAccess): DataAccessDto {
         const dto = new DataAccessDto();
-        dto.accessId = patientDataAccess.accessId;
+        dto.accessId = patientDataAccess.id;
         dto.direction = patientDataAccess.direction;
         dto.status = patientDataAccess.status;
         dto.createdAt = patientDataAccess.createdAt;

@@ -14,7 +14,7 @@ export interface IPatientDataAccessRepository {
 
     getByGrantedUser(grantedUser: User): Promise<PatientDataAccess[]>;
 
-    getOneByAccessId(accessId: string): Promise<PatientDataAccess>;
+    getOneById(id: string): Promise<PatientDataAccess>;
 }
 
 export const IPatientDataAccessRepository = Symbol('IPatientDataAccessRepository');

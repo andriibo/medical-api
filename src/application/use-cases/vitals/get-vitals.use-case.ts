@@ -13,7 +13,7 @@ export class GetVitalsUseCase {
 
     public async getVitalsByPatient(dto: GetVitalsByPatientDto): Promise<GetVitalsResponseDto> {
         const user = await this.authedUserService.getUser();
-        const vitals = await this.vitalRepository.getByUserForInterval(user.userId, dto.startDate, dto.endDate);
+        const vitals = await this.vitalRepository.getByUserForInterval(user.id, dto.startDate, dto.endDate);
 
         return GetVitalsResponseDto.fromVitalsList(vitals);
     }

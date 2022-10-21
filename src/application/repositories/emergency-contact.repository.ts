@@ -7,7 +7,7 @@ export interface IEmergencyContactRepository {
 
     delete(emergencyContact: EmergencyContact): Promise<void>;
 
-    getOneByContactId(contactId: string): Promise<EmergencyContact>;
+    getOneById(id: string): Promise<EmergencyContact>;
 
     getByUserId(userId: string): Promise<EmergencyContact[]>;
 }

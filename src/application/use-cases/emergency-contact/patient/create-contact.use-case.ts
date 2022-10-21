@@ -25,7 +25,7 @@ export class CreateContactUseCase {
 
     private createEmergencyContact(patient: User, dto: ContactDto): EmergencyContact {
         const emergencyContact = this.emergencyContactEntityMapper.mapByContactDto(dto);
-        emergencyContact.userId = patient.userId;
+        emergencyContact.userId = patient.id;
 
         return emergencyContact;
     }

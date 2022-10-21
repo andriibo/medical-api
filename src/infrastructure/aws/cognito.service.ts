@@ -118,7 +118,7 @@ export class CognitoService implements IAuthService {
     public async deleteUser(user: User): Promise<void> {
         const command = new AdminDeleteUserCommand({
             UserPoolId: this.config.userPoolId,
-            Username: user.userId,
+            Username: user.id,
         });
 
         try {

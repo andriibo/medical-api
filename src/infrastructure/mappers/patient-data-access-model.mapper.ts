@@ -6,8 +6,8 @@ import {IPatientDataAccessEntityMapper} from 'app/mappers/patient-data-access-en
 export class PatientDataAccessEntityMapper implements IPatientDataAccessEntityMapper {
     public mapByPatientAndGrantedUser(patient: User, grantedUser: User): PatientDataAccess {
         const access = new PatientDataAccessModel();
-        access.patientUserId = patient.userId;
-        access.grantedUserId = grantedUser.userId;
+        access.patientUserId = patient.id;
+        access.grantedUserId = grantedUser.id;
         access.status = PatientDataAccessStatus.Initiated;
 
         return access;
