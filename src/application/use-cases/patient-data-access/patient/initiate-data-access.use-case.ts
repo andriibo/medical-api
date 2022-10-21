@@ -1,45 +1,25 @@
-import {IUserRepository, IPatientDataAccessRepository} from 'app/repositories';
+import {IUserRepository} from 'app/repositories';
 import {InitiateDataAccessDto} from 'domain/dtos/request/data-access/initiate-data-access.dto';
 import {IAuthedUserService} from 'app/services/authed-user.service';
-import {IPatientDataAccessEntityMapper} from 'app/mappers/patient-data-access-entity.mapper';
-import {PatientDataAccessSpecification} from 'app/specifications/patient-data-access.specification';
-import {PatientDataAccessRequestDirection, PatientDataAccess} from 'domain/entities/patient-data-access.entity';
-import {User} from 'domain/entities';
+import {AccessForRegisteredUserService} from 'app/services/access-for-registered-user.service';
+import {AccessForUnregisteredUserService} from 'app/services/access-for-unregistered-user.service';
 
 export class InitiateDataAccessUseCase {
     public constructor(
         private readonly userRepository: IUserRepository,
-        private readonly patientDataAccessRepository: IPatientDataAccessRepository,
         private readonly authedUserService: IAuthedUserService,
-        private readonly patientDataAccessEntityMapper: IPatientDataAccessEntityMapper,
-        private readonly patientDataAccessSpecification: PatientDataAccessSpecification,
+        private readonly accessForRegisteredUserService: AccessForRegisteredUserService,
+        private readonly accessForUnregisteredUserService: AccessForUnregisteredUserService,
     ) {}
 
     public async initiateDataAccess(dto: InitiateDataAccessDto): Promise<void> {
         const patient = await this.authedUserService.getUser();
-        const userToGrant = await this.getUserToGrant(dto);
-
-        await this.patientDataAccessSpecification.assertAccessCanBeInitiated(patient, userToGrant);
-
-        const dataAccess = this.createDataAccess(patient, userToGrant);
-
-        await this.patientDataAccessRepository.create(dataAccess);
-    }
-
-    private async getUserToGrant(dto: InitiateDataAccessDto): Promise<User> {
         const userToGrant = await this.userRepository.getOneByEmail(dto.email);
 
         if (userToGrant === null) {
-            throw new Error('No doctor account with specified email address. Try another one.');
+            await this.accessForUnregisteredUserService.initiateDataAccess(patient, dto.email);
+        } else {
+            await this.accessForRegisteredUserService.initiateDataAccess(patient, userToGrant);
         }
-
-        return userToGrant;
-    }
-
-    private createDataAccess(patient: User, userToGrant: User): PatientDataAccess {
-        const dataAccess = this.patientDataAccessEntityMapper.mapByPatientAndGrantedUser(patient, userToGrant);
-        dataAccess.direction = PatientDataAccessRequestDirection.FromPatient;
-
-        return dataAccess;
     }
 }

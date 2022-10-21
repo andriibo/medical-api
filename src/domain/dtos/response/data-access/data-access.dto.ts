@@ -10,7 +10,7 @@ export class DataAccessDto {
 
     public createdAt: string;
 
-    public requestedUser: UserDto;
+    public requestedUser?: UserDto;
 
     public static fromPatientDataAccess(patientDataAccess: PatientDataAccess): DataAccessDto {
         const dto = new DataAccessDto();

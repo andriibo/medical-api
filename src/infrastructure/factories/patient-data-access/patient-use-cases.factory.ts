@@ -6,8 +6,9 @@ import {
     DeleteDataAccessUseCase,
 } from 'app/use-cases/patient-data-access/patient';
 import {IAuthedUserService} from 'app/services/authed-user.service';
-import {IPatientDataAccessEntityMapper} from 'app/mappers/patient-data-access-entity.mapper';
 import {PatientDataAccessSpecification} from 'app/specifications/patient-data-access.specification';
+import {AccessForRegisteredUserService} from 'app/services/access-for-registered-user.service';
+import {AccessForUnregisteredUserService} from 'app/services/access-for-unregistered-user.service';
 
 @Injectable()
 export class PatientUseCasesFactory {
@@ -16,19 +17,20 @@ export class PatientUseCasesFactory {
         @Inject(IPatientDataAccessRepository)
         private readonly patientDataAccessRepository: IPatientDataAccessRepository,
         @Inject(IAuthedUserService) private readonly authedUserService: IAuthedUserService,
-        @Inject(IPatientDataAccessEntityMapper)
-        private readonly patientDataAccessEntityMapper: IPatientDataAccessEntityMapper,
         @Inject(PatientDataAccessSpecification)
         private readonly patientDataAccessSpecification: PatientDataAccessSpecification,
+        @Inject(AccessForRegisteredUserService)
+        private readonly accessForRegisteredUserService: AccessForRegisteredUserService,
+        @Inject(AccessForUnregisteredUserService)
+        private readonly accessForUnregisteredUserService: AccessForUnregisteredUserService,
     ) {}
 
     public createInitiateDataAccessUseCase(): InitiateDataAccessUseCase {
         return new InitiateDataAccessUseCase(
             this.userRepository,
-            this.patientDataAccessRepository,
             this.authedUserService,
-            this.patientDataAccessEntityMapper,
-            this.patientDataAccessSpecification,
+            this.accessForRegisteredUserService,
+            this.accessForUnregisteredUserService,
         );
     }
 

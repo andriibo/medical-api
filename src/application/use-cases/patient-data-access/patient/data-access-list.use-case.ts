@@ -23,14 +23,17 @@ export class DataAccessListUseCase {
 
         return items.map((item) => {
             const dto = DataAccessDto.fromPatientDataAccess(item);
-            dto.requestedUser = UserDto.fromUser(indexedUsers[item.grantedUserId]);
+
+            if (item.grantedUserId in indexedUsers) {
+                dto.requestedUser = UserDto.fromUser(indexedUsers[item.grantedUserId]);
+            }
 
             return dto;
         });
     }
 
     private async getGrantedUsers(items: PatientDataAccess[]): Promise<User[]> {
-        const userIds = items.map((item) => item.grantedUserId);
+        const userIds = items.filter((item) => item.grantedUserId).map((item) => item.grantedUserId);
 
         return await this.userRepository.getByIds(userIds);
     }

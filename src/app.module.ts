@@ -15,6 +15,7 @@ import {
     MailModule,
 } from 'infrastructure/modules';
 import {AssignUserMiddleware} from 'presentation/middlewares/assign-user.middleware';
+import {EventEmitterModule} from '@nestjs/event-emitter';
 
 const GUARDS = [AuthGuard, RolesGuard];
 
@@ -34,6 +35,7 @@ const INTERCEPTORS = [
         ConfigModule.forRoot({
             isGlobal: true,
         }),
+        EventEmitterModule.forRoot(),
         AuthModule,
         VitalModule,
         PatientDataAccessModule,

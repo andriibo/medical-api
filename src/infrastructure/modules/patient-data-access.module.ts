@@ -7,16 +7,25 @@ import {PatientDataAccessModel} from 'infrastructure/models';
 import {PatientUseCasesFactory, DoctorUseCasesFactory} from 'infrastructure/factories/patient-data-access';
 import {IPatientDataAccessEntityMapper} from 'app/mappers/patient-data-access-entity.mapper';
 import {PatientDataAccessEntityMapper} from 'infrastructure/mappers/patient-data-access-model.mapper';
-import {AuthModule} from 'infrastructure/modules';
+import {AuthModule} from 'infrastructure/modules/auth.module';
+import {MailModule} from 'infrastructure/modules/mail.module';
 import {PatientDataAccessSpecification} from 'app/specifications/patient-data-access.specification';
+import {AccessForRegisteredUserService} from 'app/services/access-for-registered-user.service';
+import {AccessForUnregisteredUserService} from 'app/services/access-for-unregistered-user.service';
+import {IPatientDataAccessEventEmitter} from 'app/event-emitters/patient-data-access.event-emitter';
+import {PatientDataAccessEventEmitter} from 'infrastructure/event-emitters/patient-data-access.event-emitter';
+import {PatientDataAccessListener} from 'infrastructure/listeners/patient-data-access.listener';
 
 @Module({
-    imports: [TypeOrmModule.forFeature([PatientDataAccessModel]), AuthModule],
+    imports: [TypeOrmModule.forFeature([PatientDataAccessModel]), AuthModule, MailModule],
     exports: [IPatientDataAccessRepository, PatientDataAccessSpecification],
     controllers: [PatientController, DoctorController],
     providers: [
         PatientUseCasesFactory,
         DoctorUseCasesFactory,
+        AccessForRegisteredUserService,
+        AccessForUnregisteredUserService,
+        PatientDataAccessListener,
         {
             provide: IUserRepository,
             useClass: UserRepository,
@@ -30,11 +39,55 @@ import {PatientDataAccessSpecification} from 'app/specifications/patient-data-ac
             useClass: PatientDataAccessEntityMapper,
         },
         {
+            provide: IPatientDataAccessEventEmitter,
+            useClass: PatientDataAccessEventEmitter,
+        },
+        {
             provide: PatientDataAccessSpecification,
-            useFactory: (patientDataAccessRepository: IPatientDataAccessRepository) => {
-                return new PatientDataAccessSpecification(patientDataAccessRepository);
+            useFactory: (
+                userRepository: IUserRepository,
+                patientDataAccessRepository: IPatientDataAccessRepository,
+            ) => {
+                return new PatientDataAccessSpecification(userRepository, patientDataAccessRepository);
             },
-            inject: [IPatientDataAccessRepository],
+            inject: [IUserRepository, IPatientDataAccessRepository],
+        },
+        {
+            provide: AccessForRegisteredUserService,
+            useFactory: (
+                patientDataAccessRepository: IPatientDataAccessRepository,
+                patientDataAccessEntityMapper: IPatientDataAccessEntityMapper,
+                patientDataAccessSpecification: PatientDataAccessSpecification,
+            ) => {
+                return new AccessForRegisteredUserService(
+                    patientDataAccessRepository,
+                    patientDataAccessEntityMapper,
+                    patientDataAccessSpecification,
+                );
+            },
+            inject: [IPatientDataAccessRepository, IPatientDataAccessEntityMapper, PatientDataAccessSpecification],
+        },
+        {
+            provide: AccessForUnregisteredUserService,
+            useFactory: (
+                patientDataAccessRepository: IPatientDataAccessRepository,
+                patientDataAccessEntityMapper: IPatientDataAccessEntityMapper,
+                patientDataAccessEventEmitter: IPatientDataAccessEventEmitter,
+                patientDataAccessSpecification: PatientDataAccessSpecification,
+            ) => {
+                return new AccessForUnregisteredUserService(
+                    patientDataAccessRepository,
+                    patientDataAccessEntityMapper,
+                    patientDataAccessEventEmitter,
+                    patientDataAccessSpecification,
+                );
+            },
+            inject: [
+                IPatientDataAccessRepository,
+                IPatientDataAccessEntityMapper,
+                IPatientDataAccessEventEmitter,
+                PatientDataAccessSpecification,
+            ],
         },
     ],
 })

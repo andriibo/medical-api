@@ -16,7 +16,7 @@ export interface PatientDataAccess {
 
     grantedUserId?: string;
 
-    grantedUserEmail?: string;
+    grantedEmail?: string;
 
     direction: string;
 

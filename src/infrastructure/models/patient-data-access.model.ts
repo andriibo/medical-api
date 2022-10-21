@@ -12,8 +12,8 @@ export class PatientDataAccessModel implements PatientDataAccess {
     @Column('uuid', {name: 'granted_user_id', nullable: true})
     public grantedUserId?: string;
 
-    @Column({name: 'granted_user_email', nullable: true})
-    public grantedUserEmail?: string;
+    @Column({name: 'granted_email', nullable: true})
+    public grantedEmail?: string;
 
     @Column()
     public direction: string;
