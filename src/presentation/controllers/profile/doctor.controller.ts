@@ -1,4 +1,14 @@
-import {Controller, Get, Patch, HttpStatus, Body, Param, ParseUUIDPipe, HttpCode} from '@nestjs/common';
+import {
+    Controller,
+    Get,
+    Patch,
+    HttpStatus,
+    Body,
+    Param,
+    ParseUUIDPipe,
+    HttpCode,
+    BadRequestException,
+} from '@nestjs/common';
 import {ApiBearerAuth, ApiResponse, ApiTags} from '@nestjs/swagger';
 import {Roles} from 'presentation/guards';
 import {DoctorView} from 'presentation/views/response/user';
@@ -37,10 +47,15 @@ export class DoctorController {
     @Roles('Doctor')
     @Get('patient-profile/:patientUserId')
     @HttpCode(HttpStatus.OK)
+    @HttpCode(HttpStatus.BAD_REQUEST)
     @ApiResponse({status: HttpStatus.OK, type: PatientView})
     public async getPatientProfile(@Param('patientUserId', ParseUUIDPipe) patientUserId: string): Promise<PatientDto> {
         const useCase = this.doctorUseCasesFactory.createGetPatientProfileUseCase();
 
-        return await useCase.getProfileInfo(patientUserId);
+        try {
+            return await useCase.getProfileInfo(patientUserId);
+        } catch (error) {
+            throw new BadRequestException(error.message);
+        }
     }
 }
