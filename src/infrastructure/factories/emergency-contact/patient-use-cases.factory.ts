@@ -18,16 +18,16 @@ export class PatientUseCasesFactory {
         private readonly emergencyContactRepository: IEmergencyContactRepository,
         @Inject(IEmergencyContactEntityMapper)
         private readonly emergencyContactEntityMapper: IEmergencyContactEntityMapper,
+        @Inject(EmergencyContactSpecification)
+        private readonly emergencyContactSpecification: EmergencyContactSpecification,
     ) {}
 
     public createCreateContactUseCase(): CreateContactUseCase {
-        const emergencyContactSpecification = new EmergencyContactSpecification();
-
         return new CreateContactUseCase(
             this.authedUserService,
             this.emergencyContactRepository,
             this.emergencyContactEntityMapper,
-            emergencyContactSpecification,
+            this.emergencyContactSpecification,
         );
     }
 
@@ -36,23 +36,19 @@ export class PatientUseCasesFactory {
     }
 
     public createUpdateContactUseCase(): UpdateContactUseCase {
-        const emergencyContactSpecification = new EmergencyContactSpecification();
-
         return new UpdateContactUseCase(
             this.authedUserService,
             this.emergencyContactRepository,
             this.emergencyContactEntityMapper,
-            emergencyContactSpecification,
+            this.emergencyContactSpecification,
         );
     }
 
     public createDeleteContactUseCase(): DeleteContactUseCase {
-        const emergencyContactSpecification = new EmergencyContactSpecification();
-
         return new DeleteContactUseCase(
             this.authedUserService,
             this.emergencyContactRepository,
-            emergencyContactSpecification,
+            this.emergencyContactSpecification,
         );
     }
 }

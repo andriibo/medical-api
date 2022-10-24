@@ -4,6 +4,8 @@ import {PatientMetadataModel} from './patient-metadata.model';
 import {PatientDataAccessModel} from './patient-data-access.model';
 import {EmergencyContactModel} from './emergency-contact.model';
 import {VitalModel} from './vital.model';
+import {DiagnosisModel} from './diagnosis.model';
+import {PatientDiagnosisModel} from './patient-diagnosis.model';
 
 export {
     UserModel,
@@ -12,4 +14,6 @@ export {
     PatientDataAccessModel,
     EmergencyContactModel,
     VitalModel,
+    DiagnosisModel,
+    PatientDiagnosisModel,
 };

@@ -4,6 +4,8 @@ import {EmergencyContactRepository} from './emergency-contact.repository';
 import {DoctorMetadataRepository} from './doctor-metadata.repository';
 import {PatientMetadataRepository} from './patient-metadata.repository';
 import {VitalRepository} from './vital.repository';
+import {DiagnosisRepository} from './diagnosis.repository';
+import {PatientDiagnosisRepository} from './patient-diagnosis.repository';
 
 export {
     UserRepository,
@@ -12,4 +14,6 @@ export {
     DoctorMetadataRepository,
     PatientMetadataRepository,
     VitalRepository,
+    DiagnosisRepository,
+    PatientDiagnosisRepository,
 };
