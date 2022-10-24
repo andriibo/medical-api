@@ -4,7 +4,7 @@ import {User} from 'domain/entities';
 export interface IPatientDataAccessRepository {
     create(patientDataAccess: PatientDataAccess): Promise<void>;
 
-    update(patientDataAccess: PatientDataAccess): Promise<void>;
+    update(patientDataAccess: PatientDataAccess | PatientDataAccess[]): Promise<void>;
 
     delete(patientDataAccess: PatientDataAccess): Promise<void>;
 
@@ -15,6 +15,8 @@ export interface IPatientDataAccessRepository {
     getByPatient(patient: User): Promise<PatientDataAccess[]>;
 
     getByGrantedUser(grantedUser: User): Promise<PatientDataAccess[]>;
+
+    getByGrantedEmail(grantedEmail: string): Promise<PatientDataAccess[]>;
 
     getOneById(id: string): Promise<PatientDataAccess>;
 }

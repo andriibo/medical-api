@@ -16,6 +16,7 @@ export class RolesGuard implements CanActivate {
 
     public async canActivate(context: ExecutionContext): Promise<boolean> {
         const request: UserRequest = context.switchToHttp().getRequest();
+
         if (request.tokenClaims === null) {
             throw new UnauthorizedException();
         }

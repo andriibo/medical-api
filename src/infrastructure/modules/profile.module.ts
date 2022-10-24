@@ -1,8 +1,7 @@
 import {Module} from '@nestjs/common';
 import {PatientController, DoctorController} from 'controllers/profile';
-import {IUserRepository} from 'app/modules/auth/repositories';
 import {IDoctorMetadataRepository, IPatientMetadataRepository} from 'app/modules/profile/repositories';
-import {UserRepository, PatientMetadataRepository, DoctorMetadataRepository} from 'infrastructure/repositories';
+import {PatientMetadataRepository, DoctorMetadataRepository} from 'infrastructure/repositories';
 import {TypeOrmModule} from '@nestjs/typeorm';
 import {UserModel, DoctorMetadataModel, PatientMetadataModel} from 'infrastructure/models';
 import {DoctorUseCasesFactory, PatientUseCasesFactory} from 'infrastructure/factories/profile';
@@ -20,10 +19,6 @@ import {AuthModule, PatientDataAccessModule} from 'infrastructure/modules';
     providers: [
         DoctorUseCasesFactory,
         PatientUseCasesFactory,
-        {
-            provide: IUserRepository,
-            useClass: UserRepository,
-        },
         {
             provide: IPatientMetadataRepository,
             useClass: PatientMetadataRepository,

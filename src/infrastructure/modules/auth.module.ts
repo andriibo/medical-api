@@ -11,6 +11,8 @@ import {UserModelMapper} from 'infrastructure/mappers/user-model.mapper';
 import {AuthUseCasesFactory} from 'infrastructure/factories/auth-use-cases.factory';
 import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service';
 import {AuthedUserService} from 'infrastructure/services/authed-user.service';
+import {IAuthEventEmitter} from 'app/modules/auth/event-emitters/auth.event-emitter';
+import {AuthEventEmitter} from 'infrastructure/event-emitters/auth.event-emitter';
 
 @Module({
     imports: [TypeOrmModule.forFeature([UserModel, DoctorMetadataModel, PatientMetadataModel])],
@@ -33,6 +35,10 @@ import {AuthedUserService} from 'infrastructure/services/authed-user.service';
         {
             provide: IUserEntityMapper,
             useClass: UserModelMapper,
+        },
+        {
+            provide: IAuthEventEmitter,
+            useClass: AuthEventEmitter,
         },
     ],
 })

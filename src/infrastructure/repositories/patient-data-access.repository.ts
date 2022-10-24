@@ -14,7 +14,7 @@ export class PatientDataAccessRepository implements IPatientDataAccessRepository
         await this.dataSource.manager.save(patientDataAccess);
     }
 
-    public async update(patientDataAccess: PatientDataAccessModel): Promise<void> {
+    public async update(patientDataAccess: PatientDataAccessModel | PatientDataAccessModel[]): Promise<void> {
         await this.dataSource.manager.save(patientDataAccess);
     }
 
@@ -45,6 +45,12 @@ export class PatientDataAccessRepository implements IPatientDataAccessRepository
     public async getByGrantedUser(grantedUser: User): Promise<PatientDataAccess[]> {
         return await this.dataSource.manager.findBy(PatientDataAccessModel, {
             grantedUserId: grantedUser.id,
+        });
+    }
+
+    public async getByGrantedEmail(grantedEmail: string): Promise<PatientDataAccess[]> {
+        return await this.dataSource.manager.findBy(PatientDataAccessModel, {
+            grantedEmail,
         });
     }
 

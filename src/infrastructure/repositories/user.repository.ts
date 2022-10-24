@@ -9,18 +9,20 @@ import {User} from 'domain/entities';
 export class UserRepository implements IUserRepository {
     public constructor(@InjectDataSource() private dataSource: DataSource) {}
 
-    public async create(entity: UserModel): Promise<void> {
+    public async create(entity: UserModel): Promise<User> {
         const queryRunner = this.dataSource.createQueryRunner();
 
         await queryRunner.connect();
         await queryRunner.startTransaction();
 
         try {
-            await queryRunner.manager.save(entity);
+            const persistedEntity = await queryRunner.manager.save(entity);
             await queryRunner.manager.save(entity.metadata);
 
             await queryRunner.commitTransaction();
             await queryRunner.release();
+
+            return persistedEntity;
         } catch (err) {
             await queryRunner.rollbackTransaction();
             await queryRunner.release();
