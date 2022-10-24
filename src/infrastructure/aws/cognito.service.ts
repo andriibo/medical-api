@@ -1,4 +1,4 @@
-import {Injectable, BadRequestException} from '@nestjs/common';
+import {Injectable} from '@nestjs/common';
 import {
     CognitoIdentityProviderClient,
     AdminInitiateAuthCommand,
@@ -17,6 +17,7 @@ import * as jwt from 'jsonwebtoken';
 import * as jwkToBuffer from 'jwk-to-pem';
 import {User} from 'domain/entities/user.entity';
 import {AuthModel} from './auth.model';
+import {AuthServiceError} from 'app/errors';
 
 interface CognitoProviderConfig {
     region: string;
@@ -70,7 +71,7 @@ export class CognitoService implements IAuthService {
             throw new Error(`Auth challenge ${response.ChallengeName} is required.`);
         } catch (error) {
             console.error(error.message);
-            throw new BadRequestException(error.message);
+            throw new AuthServiceError(error.message);
         }
     }
 
@@ -95,7 +96,7 @@ export class CognitoService implements IAuthService {
             return new AuthModel(user);
         } catch (error) {
             console.error(error.message);
-            throw new BadRequestException(error.message);
+            throw new AuthServiceError(error.message);
         }
     }
 
@@ -110,7 +111,7 @@ export class CognitoService implements IAuthService {
             await this.cognitoClient.send(command);
         } catch (error) {
             console.error(error.message);
-            throw new BadRequestException(error.message);
+            throw new AuthServiceError(error.message);
         }
     }
 
@@ -124,7 +125,7 @@ export class CognitoService implements IAuthService {
             await this.cognitoClient.send(command);
         } catch (error) {
             console.log(error.message);
-            throw error;
+            throw new AuthServiceError(error.message);
         }
     }
 
@@ -160,7 +161,7 @@ export class CognitoService implements IAuthService {
             }
 
             console.log(error.message);
-            throw error;
+            throw new AuthServiceError(error.message);
         }
     }
 
@@ -174,7 +175,7 @@ export class CognitoService implements IAuthService {
             await this.cognitoClient.send(command);
         } catch (error) {
             console.log(error.message);
-            throw error;
+            throw new AuthServiceError(error.message);
         }
     }
 
@@ -189,7 +190,7 @@ export class CognitoService implements IAuthService {
             await this.cognitoClient.send(command);
         } catch (error) {
             console.log(error.message);
-            throw error;
+            throw new AuthServiceError(error.message);
         }
     }
 
