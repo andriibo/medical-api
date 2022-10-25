@@ -1,4 +1,4 @@
-import {Injectable, BadRequestException} from '@nestjs/common';
+import {Injectable} from '@nestjs/common';
 import {
     CognitoIdentityProviderClient,
     AdminInitiateAuthCommand,
@@ -9,14 +9,16 @@ import {
     CreateGroupCommand,
     GetGroupCommand,
     AdminDeleteUserCommand,
+    AuthenticationResultType,
 } from '@aws-sdk/client-cognito-identity-provider';
 import {ConfigService} from '@nestjs/config';
-import {ConfirmSignUpModel, SignInModel, SignUpModel, IAuthModel} from 'app/modules/auth/models';
+import {ConfirmSignUpModel, SignInModel, SignUpModel, IAuthModel, AuthResultModel} from 'app/modules/auth/models';
 import {IAuthService} from 'app/modules/auth/services/auth.service';
 import * as jwt from 'jsonwebtoken';
 import * as jwkToBuffer from 'jwk-to-pem';
 import {User} from 'domain/entities/user.entity';
 import {AuthModel} from './auth.model';
+import {AuthServiceError} from 'app/errors';
 
 interface CognitoProviderConfig {
     region: string;
@@ -49,7 +51,7 @@ export class CognitoService implements IAuthService {
         });
     }
 
-    public async signIn(user: SignInModel): Promise<string> {
+    public async signIn(user: SignInModel): Promise<AuthResultModel> {
         const command = new AdminInitiateAuthCommand({
             UserPoolId: this.config.userPoolId,
             ClientId: this.config.clientId,
@@ -64,13 +66,13 @@ export class CognitoService implements IAuthService {
             const response = await this.cognitoClient.send(command);
 
             if (response.ChallengeName == null) {
-                return response.AuthenticationResult?.IdToken;
+                return this.getAuthResult(response.AuthenticationResult);
             }
 
             throw new Error(`Auth challenge ${response.ChallengeName} is required.`);
         } catch (error) {
             console.error(error.message);
-            throw new BadRequestException(error.message);
+            throw new AuthServiceError(error.message);
         }
     }
 
@@ -95,7 +97,7 @@ export class CognitoService implements IAuthService {
             return new AuthModel(user);
         } catch (error) {
             console.error(error.message);
-            throw new BadRequestException(error.message);
+            throw new AuthServiceError(error.message);
         }
     }
 
@@ -110,7 +112,7 @@ export class CognitoService implements IAuthService {
             await this.cognitoClient.send(command);
         } catch (error) {
             console.error(error.message);
-            throw new BadRequestException(error.message);
+            throw new AuthServiceError(error.message);
         }
     }
 
@@ -124,7 +126,7 @@ export class CognitoService implements IAuthService {
             await this.cognitoClient.send(command);
         } catch (error) {
             console.log(error.message);
-            throw error;
+            throw new AuthServiceError(error.message);
         }
     }
 
@@ -145,6 +147,14 @@ export class CognitoService implements IAuthService {
         });
     }
 
+    private getAuthResult(authResult: AuthenticationResultType): AuthResultModel {
+        const authResultModel = new AuthResultModel();
+        authResultModel.token = authResult.IdToken;
+        authResultModel.tokenExpireTime = authResult.ExpiresIn;
+
+        return authResultModel;
+    }
+
     private async isGroupExist(groupName: string): Promise<boolean> {
         const command = new GetGroupCommand({
             GroupName: groupName,
@@ -160,7 +170,7 @@ export class CognitoService implements IAuthService {
             }
 
             console.log(error.message);
-            throw error;
+            throw new AuthServiceError(error.message);
         }
     }
 
@@ -174,7 +184,7 @@ export class CognitoService implements IAuthService {
             await this.cognitoClient.send(command);
         } catch (error) {
             console.log(error.message);
-            throw error;
+            throw new AuthServiceError(error.message);
         }
     }
 
@@ -189,7 +199,7 @@ export class CognitoService implements IAuthService {
             await this.cognitoClient.send(command);
         } catch (error) {
             console.log(error.message);
-            throw error;
+            throw new AuthServiceError(error.message);
         }
     }
 
