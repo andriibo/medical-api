@@ -6,6 +6,6 @@ export class DiagnosisListUseCase {
     public async getList(): Promise<string[]> {
         const items = await this.diagnosisRepository.get();
 
-        return items.map((item) => item.name);
+        return items.map((item) => item.diagnosisName);
     }
 }

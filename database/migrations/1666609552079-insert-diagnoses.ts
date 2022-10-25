@@ -63,7 +63,7 @@ export class insertDiagnoses1666609552079 implements MigrationInterface {
     public async up(queryRunner: QueryRunner): Promise<void> {
         const values = diagnoses.map((diagnosis) => `($$${diagnosis}$$)`);
 
-        await queryRunner.query(`INSERT INTO diagnosis (name) VALUES ${values.join(',')}`);
+        await queryRunner.query(`INSERT INTO diagnosis (diagnosis_name) VALUES ${values.join(',')}`);
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
