@@ -40,5 +40,5 @@ export class UpdatePatientProfileView extends UpdatePatientProfileDto {
     @IsInt()
     @Min(10)
     @Max(200)
-    public wight: number;
+    public weight: number;
 }

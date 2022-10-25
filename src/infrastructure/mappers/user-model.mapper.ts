@@ -40,7 +40,7 @@ export class UserModelMapper implements IUserEntityMapper {
         metadata.dob = dto.dob;
         metadata.gender = dto.gender;
         metadata.height = dto.height;
-        metadata.wight = dto.wight;
+        metadata.weight = dto.weight;
 
         user.metadata = metadata;
 

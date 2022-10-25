@@ -24,5 +24,5 @@ export class PatientView extends PatientDto {
     public height: number;
 
     @ApiProperty()
-    public wight: number;
+    public weight: number;
 }
