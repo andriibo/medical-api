@@ -5,7 +5,7 @@ import {PatientDataAccessSpecification} from 'app/modules/patient-data-access/sp
 export class PatientDiagnosisSpecification {
     public constructor(private readonly patientDataAccessSpecification: PatientDataAccessSpecification) {}
 
-    public async assertUserCanCreateDiagnosis(user: User, patientUserId: string): Promise<void> {
+    public async assertUserCanOperateDiagnosis(user: User, patientUserId: string): Promise<void> {
         if (this.isUserPatientAndOwner(user, patientUserId)) {
             return;
         }

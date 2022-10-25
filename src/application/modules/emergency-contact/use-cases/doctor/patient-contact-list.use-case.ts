@@ -4,6 +4,7 @@ import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service'
 import {ContactDto} from 'domain/dtos/response/emergency-contact/contact.dto';
 import {PatientDataAccessSpecification} from 'app/modules/patient-data-access/specifications/patient-data-access.specification';
 import {EntityNotFoundError} from 'app/errors/entity-not-found.error';
+import {User} from 'domain/entities';
 
 export class PatientContactListUseCase {
     public constructor(
@@ -15,16 +16,22 @@ export class PatientContactListUseCase {
 
     public async getList(patientUserId: string): Promise<ContactDto[]> {
         const doctor = await this.authedUserService.getUser();
-        const patient = await this.userRepository.getOneById(patientUserId);
-
-        if (patient === null) {
-            throw new EntityNotFoundError('Patient Not Found.');
-        }
+        const patient = await this.getPatient(patientUserId);
 
         await this.patientDataAccessSpecification.assertGrantedUserHasAccess(doctor, patient.id);
 
         const items = await this.emergencyContactRepository.getByUserId(patient.id);
 
         return items.map((item) => ContactDto.fromEmergencyContact(item));
+    }
+
+    private async getPatient(patientUserId: string): Promise<User> {
+        const patient = await this.userRepository.getOneById(patientUserId);
+
+        if (patient === null) {
+            throw new EntityNotFoundError('Patient Not Found.');
+        }
+
+        return patient;
     }
 }

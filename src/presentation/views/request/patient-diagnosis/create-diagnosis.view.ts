@@ -1,8 +1,8 @@
 import {ApiProperty} from '@nestjs/swagger';
 import {Length, IsNotEmpty, IsUUID} from 'class-validator';
-import {PatientDiagnosisDto} from 'domain/dtos/request/patient-diagnosis/patient-diagnosis.dto';
+import {DiagnosisDto} from 'domain/dtos/request/patient-diagnosis/diagnosis.dto';
 
-export class CreateDiagnosisView extends PatientDiagnosisDto {
+export class CreateDiagnosisView extends DiagnosisDto {
     @ApiProperty()
     @IsNotEmpty()
     @IsUUID()

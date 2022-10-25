@@ -1,8 +1,8 @@
 import {PatientDiagnosis} from 'domain/entities';
-import {PatientDiagnosisDto} from 'domain/dtos/request/patient-diagnosis/patient-diagnosis.dto';
+import {DiagnosisDto} from 'domain/dtos/request/patient-diagnosis/diagnosis.dto';
 
 export interface IPatientDiagnosisEntityMapper {
-    mapByPatientDiagnosisDto(patientDiagnosisDto: PatientDiagnosisDto): PatientDiagnosis;
+    mapByPatientDiagnosisDto(DiagnosisDto: DiagnosisDto): PatientDiagnosis;
 }
 
 export const IPatientDiagnosisEntityMapper = Symbol('IPatientDiagnosisEntityMapper');

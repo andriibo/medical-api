@@ -14,6 +14,8 @@ import {ApiBearerAuth, ApiResponse, ApiTags} from '@nestjs/swagger';
 import {Roles} from 'presentation/guards';
 import {PatientDiagnosisUseCasesFactory} from 'infrastructure/factories/patient-diagnosis-use-cases.factory';
 import {CreateDiagnosisView} from 'presentation/views/request/patient-diagnosis/create-diagnosis.view';
+import {DiagnosisDto} from 'domain/dtos/response/patient-diagnosis/diagnosis.dto';
+import {DiagnosisView} from 'views/response/patient-diagnosis';
 
 @Controller('patient-diagnosis')
 @ApiBearerAuth()
@@ -39,17 +41,31 @@ export class PatientDiagnosisController {
     @Roles('Doctor', 'Patient')
     @Get(':patientUserId')
     @HttpCode(HttpStatus.OK)
-    @ApiResponse({status: HttpStatus.OK, type: [Object]})
-    public async getPatientDiagnoses(@Param('patientUserId', ParseUUIDPipe) patientUserId: string): Promise<object[]> {
-        return [];
+    @ApiResponse({status: HttpStatus.OK, type: [DiagnosisView]})
+    public async getPatientDiagnoses(
+        @Param('patientUserId', ParseUUIDPipe) patientUserId: string,
+    ): Promise<DiagnosisDto[]> {
+        const useCase = this.patientDiagnosisUseCasesFactory.createDiagnosisListUseCase();
+
+        try {
+            return await useCase.getList(patientUserId);
+        } catch (error) {
+            throw new BadRequestException(error.message);
+        }
     }
 
     @Roles('Doctor', 'Patient')
-    @Delete(':patientDiagnosisId')
+    @Delete(':diagnosisId')
     @HttpCode(HttpStatus.NO_CONTENT)
     @HttpCode(HttpStatus.BAD_REQUEST)
     @ApiResponse({status: HttpStatus.NO_CONTENT})
-    public async deletePatientDiagnoses(
-        @Param('patientDiagnosisId', ParseUUIDPipe) patientDiagnosisId: string,
-    ): Promise<void> {}
+    public async deletePatientDiagnoses(@Param('diagnosisId', ParseUUIDPipe) diagnosisId: string): Promise<void> {
+        const useCase = this.patientDiagnosisUseCasesFactory.createDeleteDiagnosisUseCase();
+
+        try {
+            await useCase.deleteDiagnosis(diagnosisId);
+        } catch (error) {
+            throw new BadRequestException(error.message);
+        }
+    }
 }

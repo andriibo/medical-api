@@ -20,4 +20,8 @@ export class PatientDiagnosisRepository implements IPatientDiagnosisRepository {
     public async getByPatientUserId(patientUserId: string): Promise<PatientDiagnosis[]> {
         return await this.dataSource.manager.findBy(PatientDiagnosisModel, {patientUserId});
     }
+
+    public async getOneById(id: string): Promise<PatientDiagnosis> {
+        return await this.dataSource.manager.findOneBy(PatientDiagnosisModel, {id});
+    }
 }

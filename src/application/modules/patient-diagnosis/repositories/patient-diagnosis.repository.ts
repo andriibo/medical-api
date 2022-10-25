@@ -6,6 +6,8 @@ export interface IPatientDiagnosisRepository {
     delete(patientDiagnosis: PatientDiagnosis): void;
 
     getByPatientUserId(patientUserId: string): Promise<PatientDiagnosis[]>;
+
+    getOneById(id: string): Promise<PatientDiagnosis>;
 }
 
 export const IPatientDiagnosisRepository = Symbol('IPatientDiagnosisRepository');
