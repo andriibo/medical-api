@@ -14,6 +14,7 @@ import {
     ProfileModule,
     MailModule,
     DiagnosisModule,
+    PatientDiagnosisModule,
 } from 'infrastructure/modules';
 import {AssignUserMiddleware} from 'presentation/middlewares/assign-user.middleware';
 import {EventEmitterModule} from '@nestjs/event-emitter';
@@ -44,6 +45,7 @@ const INTERCEPTORS = [
         ProfileModule,
         MailModule,
         DiagnosisModule,
+        PatientDiagnosisModule,
     ],
     exports: [TypeOrmModule],
     controllers: [AppController],

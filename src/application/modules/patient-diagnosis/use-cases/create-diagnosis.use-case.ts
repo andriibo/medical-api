@@ -16,7 +16,7 @@ export class CreateDiagnosisUseCase {
     public async createDiagnosis(dto: PatientDiagnosisDto): Promise<void> {
         const user = await this.authedUserService.getUser();
 
-        this.patientDiagnosisSpecification.assertUserCanCreateContact(user, dto);
+        await this.patientDiagnosisSpecification.assertUserCanCreateDiagnosis(user, dto.patientUserId);
 
         const patientDiagnosis = this.createPatientDiagnosis(user, dto);
 

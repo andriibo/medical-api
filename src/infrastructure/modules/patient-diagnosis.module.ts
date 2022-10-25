@@ -9,13 +9,13 @@ import {IPatientDiagnosisEntityMapper} from 'app/modules/patient-diagnosis/mappe
 import {PatientDiagnosisEntityMapper} from 'infrastructure/mappers/patient-diagnosis-model.mapper';
 import {AuthModule, PatientDataAccessModule} from 'infrastructure/modules';
 import {PatientDiagnosisSpecification} from 'app/modules/patient-diagnosis/specifications/patient-diagnosis.specification';
+import {PatientDataAccessSpecification} from 'app/modules/patient-data-access/specifications/patient-data-access.specification';
 
 @Module({
     imports: [TypeOrmModule.forFeature([PatientDiagnosisModel]), AuthModule, PatientDataAccessModule],
     controllers: [PatientDiagnosisController],
     providers: [
         PatientDiagnosisUseCasesFactory,
-        PatientDiagnosisSpecification,
         {
             provide: IPatientDiagnosisRepository,
             useClass: PatientDiagnosisRepository,
@@ -23,6 +23,13 @@ import {PatientDiagnosisSpecification} from 'app/modules/patient-diagnosis/speci
         {
             provide: IPatientDiagnosisEntityMapper,
             useClass: PatientDiagnosisEntityMapper,
+        },
+        {
+            provide: PatientDiagnosisSpecification,
+            useFactory: (patientDataAccessSpecification: PatientDataAccessSpecification) => {
+                return new PatientDiagnosisSpecification(patientDataAccessSpecification);
+            },
+            inject: [PatientDataAccessSpecification],
         },
     ],
 })
