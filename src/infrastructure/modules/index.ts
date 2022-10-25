@@ -4,5 +4,16 @@ import {PatientDataAccessModule} from './patient-data-access.module';
 import {EmergencyContactModule} from './emergency-contact.module';
 import {ProfileModule} from './profile.module';
 import {MailModule} from './mail.module';
+import {DiagnosisModule} from './diagnosis.module';
+import {PatientDiagnosisModule} from './patient-diagnosis.module';
 
-export {AuthModule, VitalModule, PatientDataAccessModule, EmergencyContactModule, ProfileModule, MailModule};
+export {
+    AuthModule,
+    VitalModule,
+    PatientDataAccessModule,
+    EmergencyContactModule,
+    ProfileModule,
+    MailModule,
+    DiagnosisModule,
+    PatientDiagnosisModule,
+};

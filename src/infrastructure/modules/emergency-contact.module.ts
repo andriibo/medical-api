@@ -8,6 +8,7 @@ import {DoctorUseCasesFactory, PatientUseCasesFactory} from 'infrastructure/fact
 import {IEmergencyContactEntityMapper} from 'app/modules/emergency-contact/mappers/emergency-contact-entity.mapper';
 import {EmergencyContactModelMapper} from 'infrastructure/mappers/emergency-contact-model.mapper';
 import {AuthModule, PatientDataAccessModule} from 'infrastructure/modules';
+import {EmergencyContactSpecification} from 'app/modules/emergency-contact/specifications/emergency-contact.specification';
 
 @Module({
     imports: [TypeOrmModule.forFeature([EmergencyContactModel]), AuthModule, PatientDataAccessModule],
@@ -15,6 +16,7 @@ import {AuthModule, PatientDataAccessModule} from 'infrastructure/modules';
     providers: [
         DoctorUseCasesFactory,
         PatientUseCasesFactory,
+        EmergencyContactSpecification,
         {
             provide: IEmergencyContactRepository,
             useClass: EmergencyContactRepository,
