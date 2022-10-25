@@ -13,7 +13,7 @@ export class CreatePatientDto {
 
     public height: number;
 
-    public wight: number;
+    public weight: number;
 
     public password: string;
 }

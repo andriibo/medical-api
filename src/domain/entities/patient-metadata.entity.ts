@@ -7,5 +7,5 @@ export interface PatientMetadata extends UserMetadata {
 
     height: number;
 
-    wight: number;
+    weight: number;
 }
