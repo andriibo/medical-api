@@ -45,7 +45,7 @@ export class SignUpPatientView extends CreatePatientDto {
     @IsInt()
     @Min(10)
     @Max(200)
-    public wight: number;
+    public weight: number;
 
     @ApiProperty()
     @IsNotEmpty()

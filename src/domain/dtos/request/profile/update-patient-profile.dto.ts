@@ -11,5 +11,5 @@ export class UpdatePatientProfileDto {
 
     public height: number;
 
-    public wight: number;
+    public weight: number;
 }

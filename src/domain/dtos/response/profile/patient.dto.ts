@@ -16,7 +16,7 @@ export class PatientDto {
 
     public height: number;
 
-    public wight: number;
+    public weight: number;
 
     public static fromUserAndPatientMetadata(user: User, metadata: PatientMetadata): PatientDto {
         const dto = new PatientDto();
@@ -27,7 +27,7 @@ export class PatientDto {
         dto.dob = metadata.dob;
         dto.gender = metadata.gender;
         dto.height = metadata.height;
-        dto.wight = metadata.wight;
+        dto.weight = metadata.weight;
 
         return dto;
     }
