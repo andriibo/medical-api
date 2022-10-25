@@ -14,7 +14,7 @@ export class createDiagnosis1666608888384 implements MigrationInterface {
                         isPrimary: true,
                     },
                     {
-                        name: 'name',
+                        name: 'diagnosis_name',
                         type: 'varchar',
                         length: '100',
                         isNullable: false,

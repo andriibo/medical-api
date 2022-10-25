@@ -6,6 +6,6 @@ export class DiagnosisModel implements Diagnosis {
     @PrimaryGeneratedColumn()
     public id: number;
 
-    @Column()
-    public name: string;
+    @Column({name: 'diagnosis_name'})
+    public diagnosisName: string;
 }
