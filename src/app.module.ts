@@ -17,6 +17,15 @@ import {
 import {AssignUserMiddleware} from 'presentation/middlewares/assign-user.middleware';
 import {EventEmitterModule} from '@nestjs/event-emitter';
 
+const APP_MODULES_IMPORT = [
+    AuthModule,
+    VitalModule,
+    PatientDataAccessModule,
+    EmergencyContactModule,
+    ProfileModule,
+    MailModule,
+];
+
 const GUARDS = [AuthGuard, RolesGuard];
 
 const INTERCEPTORS = [
@@ -36,19 +45,11 @@ const INTERCEPTORS = [
             isGlobal: true,
         }),
         EventEmitterModule.forRoot(),
-        AuthModule,
-        VitalModule,
-        PatientDataAccessModule,
-        EmergencyContactModule,
-        ProfileModule,
-        MailModule,
+        ...APP_MODULES_IMPORT,
     ],
     exports: [TypeOrmModule],
     controllers: [AppController],
-    providers: [
-        // ...INTERCEPTORS,
-        ...GUARDS,
-    ],
+    providers: [...INTERCEPTORS, ...GUARDS],
 })
 export class AppModule implements NestModule {
     configure(consumer: MiddlewareConsumer) {
