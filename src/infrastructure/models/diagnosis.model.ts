@@ -1,5 +1,5 @@
 import {Column, Entity, PrimaryGeneratedColumn} from 'typeorm';
-import {Diagnosis} from 'domain/entities/diagnosis.entity';
+import {Diagnosis} from 'domain/entities';
 
 @Entity('diagnosis')
 export class DiagnosisModel implements Diagnosis {

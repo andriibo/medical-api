@@ -3,7 +3,7 @@ import {InjectDataSource} from '@nestjs/typeorm';
 import {DataSource} from 'typeorm';
 import {IDiagnosisRepository} from 'app/modules/diagnosis/repositories';
 import {DiagnosisModel} from 'infrastructure/models';
-import {Diagnosis} from 'domain/entities/diagnosis.entity';
+import {Diagnosis} from 'domain/entities';
 
 @Injectable()
 export class DiagnosisRepository implements IDiagnosisRepository {

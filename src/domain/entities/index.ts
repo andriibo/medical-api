@@ -7,6 +7,7 @@ import {Vital} from './vital.entity';
 import {EmergencyContact} from './emergency-contact.entity';
 import {Diagnosis} from './diagnosis.entity';
 import {PatientDiagnosis} from './patient-diagnosis.entity';
+import {Medication} from './medical.entity';
 
 export {
     User,
@@ -18,4 +19,5 @@ export {
     EmergencyContact,
     Diagnosis,
     PatientDiagnosis,
+    Medication,
 };

@@ -1,6 +1,6 @@
 import {MigrationInterface, QueryRunner, Table} from 'typeorm';
 
-export class createDiagnosis1666608888384 implements MigrationInterface {
+export class createMedication1666700414822 implements MigrationInterface {
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.createTable(
             new Table({
@@ -14,9 +14,14 @@ export class createDiagnosis1666608888384 implements MigrationInterface {
                         isPrimary: true,
                     },
                     {
-                        name: 'medication_name',
+                        name: 'generic_name',
                         type: 'varchar',
                         length: '100',
+                        isNullable: false,
+                    },
+                    {
+                        name: 'brand_names',
+                        type: 'text[]',
                         isNullable: false,
                     },
                 ],

@@ -1,4 +1,4 @@
-import {Diagnosis} from 'domain/entities/diagnosis.entity';
+import {Diagnosis} from 'domain/entities';
 
 export interface IDiagnosisRepository {
     get(): Promise<Diagnosis[]>;

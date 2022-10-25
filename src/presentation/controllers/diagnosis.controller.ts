@@ -2,6 +2,8 @@ import {Controller, HttpStatus, Get, HttpCode} from '@nestjs/common';
 import {ApiBearerAuth, ApiResponse, ApiTags} from '@nestjs/swagger';
 import {Auth} from 'presentation/guards';
 import {DiagnosisUseCasesFactory} from 'infrastructure/factories/diagnosis-use-cases.factory';
+import {DiagnosisView} from 'views/response/diagnosis';
+import {DiagnosisDto} from 'domain/dtos/response/diagnosis/diagnosis.dto';
 
 @Controller('diagnosis')
 @ApiBearerAuth()
@@ -12,8 +14,8 @@ export class DiagnosisController {
     @Auth()
     @Get()
     @HttpCode(HttpStatus.OK)
-    @ApiResponse({status: HttpStatus.OK, type: [String]})
-    public async getDiagnoses(): Promise<string[]> {
+    @ApiResponse({status: HttpStatus.OK, type: [DiagnosisView]})
+    public async getDiagnoses(): Promise<DiagnosisDto[]> {
         const useCase = this.diagnosisUseCasesFactory.createDiagnosisListUseCase();
 
         return await useCase.getList();
