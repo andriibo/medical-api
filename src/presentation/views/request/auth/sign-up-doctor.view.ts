@@ -10,12 +10,12 @@ export class SignUpDoctorView extends CreateDoctorDto {
 
     @ApiProperty()
     @IsNotEmpty()
-    @Length(2, 30)
+    @Length(1, 30)
     public firstName: string;
 
     @ApiProperty()
     @IsNotEmpty()
-    @Length(2, 30)
+    @Length(1, 30)
     public lastName: string;
 
     @ApiProperty()
