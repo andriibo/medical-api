@@ -21,9 +21,6 @@ export class UserModel implements User {
     @Column()
     public role: string;
 
-    @Column({name: 'is_active'})
-    public isActive: boolean;
-
     @Column({name: 'created_at'})
     public createdAt: string;
 
