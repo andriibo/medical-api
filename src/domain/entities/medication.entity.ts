@@ -3,5 +3,5 @@ export interface Medication {
 
     genericName: string;
 
-    brandNames: string;
+    brandNames: string[];
 }

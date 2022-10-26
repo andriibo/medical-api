@@ -6,5 +6,5 @@ export class MedicationView implements MedicationDto {
     public genericName: string;
 
     @ApiProperty()
-    public brandNames: string;
+    public brandNames: string[];
 }

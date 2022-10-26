@@ -7,6 +7,7 @@ import {VitalModel} from './vital.model';
 import {DiagnosisModel} from './diagnosis.model';
 import {PatientDiagnosisModel} from './patient-diagnosis.model';
 import {MedicationModel} from './medication.model';
+import {PatientMedicationModel} from './patient-medication.model';
 
 export {
     UserModel,
@@ -18,4 +19,5 @@ export {
     DiagnosisModel,
     PatientDiagnosisModel,
     MedicationModel,
+    PatientMedicationModel,
 };

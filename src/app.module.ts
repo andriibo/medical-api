@@ -16,6 +16,7 @@ import {
     DiagnosisModule,
     PatientDiagnosisModule,
     MedicationModule,
+    PatientMedicationModule,
 } from 'infrastructure/modules';
 import {AssignUserMiddleware} from 'presentation/middlewares/assign-user.middleware';
 import {EventEmitterModule} from '@nestjs/event-emitter';
@@ -30,6 +31,7 @@ const APP_MODULES_IMPORT = [
     DiagnosisModule,
     PatientDiagnosisModule,
     MedicationModule,
+    PatientMedicationModule,
 ];
 
 const GUARDS = [AuthGuard, RolesGuard];

@@ -7,6 +7,7 @@ import {VitalRepository} from './vital.repository';
 import {DiagnosisRepository} from './diagnosis.repository';
 import {PatientDiagnosisRepository} from './patient-diagnosis.repository';
 import {MedicationRepository} from './medication.repository';
+import {PatientMedicationRepository} from './patient-medication.repository';
 
 export {
     UserRepository,
@@ -18,4 +19,5 @@ export {
     DiagnosisRepository,
     PatientDiagnosisRepository,
     MedicationRepository,
+    PatientMedicationRepository,
 };

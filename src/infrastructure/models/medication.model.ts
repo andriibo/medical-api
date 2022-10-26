@@ -9,6 +9,6 @@ export class MedicationModel implements Medication {
     @Column({name: 'generic_name'})
     public genericName: string;
 
-    @Column({name: 'brand_names'})
-    public brandNames: string;
+    @Column('text', {array: true, name: 'brand_names'})
+    public brandNames: string[];
 }

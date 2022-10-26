@@ -24,7 +24,7 @@ export class CreateDiagnosisUseCase {
     }
 
     private createPatientDiagnosis(createdBy: User, dto: DiagnosisDto): PatientDiagnosis {
-        const patientDiagnosis = this.patientDiagnosisEntityMapper.mapByPatientDiagnosisDto(dto);
+        const patientDiagnosis = this.patientDiagnosisEntityMapper.mapByDiagnosisDto(dto);
         patientDiagnosis.createdBy = createdBy.id;
 
         return patientDiagnosis;

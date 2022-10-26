@@ -7,6 +7,7 @@ import {MailModule} from './mail.module';
 import {DiagnosisModule} from './diagnosis.module';
 import {PatientDiagnosisModule} from './patient-diagnosis.module';
 import {MedicationModule} from './medication.module';
+import {PatientMedicationModule} from './patient-medication.module';
 
 export {
     AuthModule,
@@ -18,4 +19,5 @@ export {
     DiagnosisModule,
     PatientDiagnosisModule,
     MedicationModule,
+    PatientMedicationModule,
 };
