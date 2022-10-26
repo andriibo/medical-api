@@ -19,8 +19,6 @@ export interface User {
 
     role: string;
 
-    isActive: boolean;
-
     createdAt: string;
 
     metadata: UserMetadata;

@@ -14,7 +14,6 @@ export class UserModelMapper implements IUserEntityMapper {
         user.lastName = dto.lastName;
         user.phone = dto.phone;
         user.role = UserRole.Doctor;
-        user.isActive = true;
 
         const metadata = new DoctorMetadataModel();
         metadata.userId = authModel.getUserId();
@@ -33,7 +32,6 @@ export class UserModelMapper implements IUserEntityMapper {
         user.lastName = dto.lastName;
         user.phone = dto.phone;
         user.role = UserRole.Patient;
-        user.isActive = true;
 
         const metadata = new PatientMetadataModel();
         metadata.userId = authModel.getUserId();
