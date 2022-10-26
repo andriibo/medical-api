@@ -15,7 +15,7 @@ export class ErrorsInterceptor implements NestInterceptor {
                 if (err instanceof InfrastructureError) {
                     return throwError(() => new BadRequestException(err.message));
                 }
-                return throwError(() => new BadRequestException(err.message));
+                return throwError(() => err);
             }),
         );
     }
