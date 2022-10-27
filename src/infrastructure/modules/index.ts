@@ -8,6 +8,7 @@ import {DiagnosisModule} from './diagnosis.module';
 import {PatientDiagnosisModule} from './patient-diagnosis.module';
 import {MedicationModule} from './medication.module';
 import {PatientMedicationModule} from './patient-medication.module';
+import {PatientVitalThresholdModule} from './patient-vital-threshold.module';
 
 export {
     AuthModule,
@@ -20,4 +21,5 @@ export {
     PatientDiagnosisModule,
     MedicationModule,
     PatientMedicationModule,
+    PatientVitalThresholdModule,
 };

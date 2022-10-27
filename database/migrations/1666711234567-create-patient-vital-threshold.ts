@@ -1,16 +1,23 @@
 import {MigrationInterface, QueryRunner, Table, TableForeignKey, TableIndex} from 'typeorm';
 
-export class createVitalThreshold1666711234567 implements MigrationInterface {
+export class createPatientVitalThreshold1666711234567 implements MigrationInterface {
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.createTable(
             new Table({
-                name: 'vital_threshold',
+                name: 'patient_vital_threshold',
                 columns: [
                     {
-                        name: 'user_id',
+                        name: 'id',
+                        type: 'uuid',
+                        generationStrategy: 'uuid',
+                        isGenerated: true,
+                        isPrimary: true,
+                    },
+                    {
+                        name: 'patient_user_id',
                         type: 'uuid',
                         isGenerated: false,
-                        isPrimary: true,
+                        isPrimary: false,
                     },
                     {
                         name: 'threshold_name',
@@ -34,7 +41,8 @@ export class createVitalThreshold1666711234567 implements MigrationInterface {
                     },
                     {
                         name: 'value',
-                        type: 'smalldecimal',
+                        type: 'real',
+                        default: 0,
                         isNullable: false,
                     },
                     {
@@ -44,7 +52,7 @@ export class createVitalThreshold1666711234567 implements MigrationInterface {
                         isPrimary: false,
                     },
                     {
-                        name: 'updated_at',
+                        name: 'set_at',
                         type: 'timestamp',
                         isNullable: false,
                     },
@@ -54,9 +62,9 @@ export class createVitalThreshold1666711234567 implements MigrationInterface {
         );
 
         await queryRunner.createForeignKey(
-            'vital_threshold',
+            'patient_vital_threshold',
             new TableForeignKey({
-                columnNames: ['user_id'],
+                columnNames: ['patient_user_id'],
                 referencedColumnNames: ['id'],
                 referencedTableName: 'user',
                 onDelete: 'CASCADE',
@@ -64,7 +72,7 @@ export class createVitalThreshold1666711234567 implements MigrationInterface {
         );
 
         await queryRunner.createForeignKey(
-            'vital_threshold',
+            'patient_vital_threshold',
             new TableForeignKey({
                 columnNames: ['set_by'],
                 referencedColumnNames: ['id'],
@@ -74,17 +82,17 @@ export class createVitalThreshold1666711234567 implements MigrationInterface {
         );
 
         await queryRunner.createIndex(
-            'vital_threshold',
+            'patient_vital_threshold',
             new TableIndex({
-                name: 'IDX_VITAL_THRESHOLD_NAME',
-                columnNames: ['user_id', 'threshold_name'],
+                name: 'IDX_PATIENT_VITAL_THRESHOLD_NAME',
+                columnNames: ['patient_user_id', 'threshold_name'],
                 isUnique: true,
             }),
         );
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.dropIndex('vital_threshold', 'IDX_VITAL_THRESHOLD_NAME');
-        await queryRunner.dropTable('vital_threshold');
+        await queryRunner.dropIndex('patient_vital_threshold', 'IDX_VITAL_THRESHOLD_NAME');
+        await queryRunner.dropTable('patient_vital_threshold');
     }
 }
