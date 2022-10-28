@@ -8,8 +8,8 @@ export class createPatientVitalThreshold1666711234567 implements MigrationInterf
                 columns: [
                     {
                         name: 'id',
-                        type: 'uuid',
-                        generationStrategy: 'uuid',
+                        type: 'int',
+                        generationStrategy: 'increment',
                         isGenerated: true,
                         isPrimary: true,
                     },
@@ -53,7 +53,7 @@ export class createPatientVitalThreshold1666711234567 implements MigrationInterf
                     },
                     {
                         name: 'set_at',
-                        type: 'timestamp',
+                        type: 'int',
                         isNullable: false,
                     },
                 ],

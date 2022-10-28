@@ -1,3 +1,3 @@
-import {UpdateHeartRateUseCase} from './update-vital-threshold.use-case';
+import {UpdateThresholdsUseCase, ThresholdNameToPropNamePair} from './update-thresholds.use-case';
 
-export {UpdateHeartRateUseCase};
+export {UpdateThresholdsUseCase, ThresholdNameToPropNamePair};

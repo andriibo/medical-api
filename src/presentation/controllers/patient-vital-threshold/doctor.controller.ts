@@ -22,7 +22,7 @@ export class DoctorController {
         const useCase = this.doctorUseCasesFactory.createUpdateHeartRateUseCase();
 
         try {
-            await useCase.updateHeartRate(patientUserId, requestBody);
+            await useCase.updateThreshold(patientUserId, requestBody);
         } catch (error) {
             throw new BadRequestException(error.message);
         }

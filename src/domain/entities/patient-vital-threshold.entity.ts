@@ -2,8 +2,8 @@ export enum VitalThresholdName {
     MinHR = 'MinHR',
     MaxHR = 'MaxHR',
     MinTemp = 'MinTemp',
+    MaxTemp = 'MaxTemp',
     MinSpO2 = 'MinSpO2',
-    MaxSpO2 = 'MaxSpO2',
     MinDBP = 'MinDBP',
     MaxDBP = 'MaxDBP',
     MinSBP = 'MinSBP',
@@ -13,7 +13,7 @@ export enum VitalThresholdName {
 }
 
 export interface PatientVitalThreshold {
-    id: string;
+    id: number;
 
     patientUserId: string;
 
@@ -23,5 +23,5 @@ export interface PatientVitalThreshold {
 
     setBy: string;
 
-    setAt: string;
+    setAt: number;
 }

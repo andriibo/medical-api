@@ -3,8 +3,8 @@ import {PatientVitalThreshold} from 'domain/entities';
 
 @Entity('patient_vital_threshold')
 export class PatientVitalThresholdModel implements PatientVitalThreshold {
-    @PrimaryGeneratedColumn('uuid')
-    public id: string;
+    @PrimaryGeneratedColumn()
+    public id: number;
 
     @Column({name: 'patient_user_id'})
     public patientUserId: string;
@@ -19,5 +19,5 @@ export class PatientVitalThresholdModel implements PatientVitalThreshold {
     public setBy: string;
 
     @Column({name: 'set_at'})
-    public setAt: string;
+    public setAt: number;
 }

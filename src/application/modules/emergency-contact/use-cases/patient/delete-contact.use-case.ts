@@ -15,7 +15,7 @@ export class DeleteContactUseCase {
         const user = await this.authedUserService.getUser();
         const contact = await this.getContact(contactId);
 
-        await this.emergencyContactSpecification.assertUserCanDeleteContact(user, contact);
+        this.emergencyContactSpecification.assertUserCanDeleteContact(user, contact);
 
         await this.emergencyContactRepository.delete(contact);
     }
