@@ -6,10 +6,77 @@ import {IPatientVitalThresholdMapper} from 'app/modules/patient-vital-threshold/
 import {getFirstByPropValue} from 'app/support/array.helper';
 import {currentUnixTimestamp} from 'app/support/date.helper';
 
-export interface ThresholdNameToPropNamePair {
-    thresholdName: VitalThresholdName;
+export interface IDtoPropToThresholdNameMap {
     dtoPropName: string;
+    thresholdName: VitalThresholdName;
 }
+
+export const DtoPropToThresholdNameMaps = {
+    bloodPressure: [
+        {
+            thresholdName: VitalThresholdName.MinDBP,
+            dtoPropName: 'minDBP',
+        },
+        {
+            thresholdName: VitalThresholdName.MaxDBP,
+            dtoPropName: 'maxDBP',
+        },
+        {
+            thresholdName: VitalThresholdName.MinSBP,
+            dtoPropName: 'minSBP',
+        },
+        {
+            thresholdName: VitalThresholdName.MaxSBP,
+            dtoPropName: 'maxSBP',
+        },
+    ],
+    heartRate: [
+        {
+            thresholdName: VitalThresholdName.MinHR,
+            dtoPropName: 'min',
+        },
+        {
+            thresholdName: VitalThresholdName.MaxHR,
+            dtoPropName: 'max',
+        },
+    ],
+    meanArterialPressure: [
+        {
+            thresholdName: VitalThresholdName.MinMAP,
+            dtoPropName: 'min',
+        },
+        {
+            thresholdName: VitalThresholdName.MaxMAP,
+            dtoPropName: 'max',
+        },
+    ],
+    oxygenSaturation: [
+        {
+            thresholdName: VitalThresholdName.MinSpO2,
+            dtoPropName: 'min',
+        },
+    ],
+    respirationRate: [
+        {
+            thresholdName: VitalThresholdName.MinRR,
+            dtoPropName: 'min',
+        },
+        {
+            thresholdName: VitalThresholdName.MaxRR,
+            dtoPropName: 'max',
+        },
+    ],
+    temperature: [
+        {
+            thresholdName: VitalThresholdName.MinTemp,
+            dtoPropName: 'min',
+        },
+        {
+            thresholdName: VitalThresholdName.MaxTemp,
+            dtoPropName: 'max',
+        },
+    ],
+};
 
 export class UpdateThresholdsUseCase {
     public constructor(
@@ -17,7 +84,7 @@ export class UpdateThresholdsUseCase {
         private readonly thresholdRepository: IPatientVitalThresholdRepository,
         private readonly thresholdMapper: IPatientVitalThresholdMapper,
         private readonly thresholdSpecification: PatientVitalThresholdSpecification,
-        private readonly thresholdNameToPropNamePairs: ThresholdNameToPropNamePair[],
+        private readonly dtoPropToThresholdNameMap: IDtoPropToThresholdNameMap[],
     ) {}
 
     public async updateThreshold(patientUserId: string, dto: object): Promise<void> {
@@ -27,12 +94,12 @@ export class UpdateThresholdsUseCase {
 
         const thresholds = await this.getPatientThresholds(patientUserId);
 
-        const modifiedThresholds = this.thresholdNameToPropNamePairs.map((pair) => {
-            let threshold = getFirstByPropValue(thresholds, 'thresholdName', pair.thresholdName);
+        const modifiedThresholds = this.dtoPropToThresholdNameMap.map((item) => {
+            let threshold = getFirstByPropValue(thresholds, 'thresholdName', item.thresholdName);
 
-            threshold = this.thresholdMapper.mapByValue(dto[pair.dtoPropName], threshold);
+            threshold = this.thresholdMapper.mapByValue(dto[item.dtoPropName], threshold);
             threshold.patientUserId = patientUserId;
-            threshold.thresholdName = pair.thresholdName;
+            threshold.thresholdName = item.thresholdName;
             threshold.setBy = user.id;
             threshold.setAt = currentUnixTimestamp();
 

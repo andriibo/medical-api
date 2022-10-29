@@ -1,3 +1,7 @@
-import {UpdateThresholdsUseCase, ThresholdNameToPropNamePair} from './update-thresholds.use-case';
+import {
+    UpdateThresholdsUseCase,
+    IDtoPropToThresholdNameMap,
+    DtoPropToThresholdNameMaps,
+} from './update-thresholds.use-case';
 
-export {UpdateThresholdsUseCase, ThresholdNameToPropNamePair};
+export {UpdateThresholdsUseCase, IDtoPropToThresholdNameMap, DtoPropToThresholdNameMaps};

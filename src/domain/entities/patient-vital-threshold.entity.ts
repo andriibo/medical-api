@@ -4,6 +4,8 @@ export enum VitalThresholdName {
     MinTemp = 'MinTemp',
     MaxTemp = 'MaxTemp',
     MinSpO2 = 'MinSpO2',
+    MinRR = 'MinRR',
+    MaxRR = 'MaxRR',
     MinDBP = 'MinDBP',
     MaxDBP = 'MaxDBP',
     MinSBP = 'MinSBP',
