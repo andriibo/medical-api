@@ -20,6 +20,7 @@ import {
 } from 'infrastructure/modules';
 import {AssignUserMiddleware} from 'presentation/middlewares/assign-user.middleware';
 import {EventEmitterModule} from '@nestjs/event-emitter';
+import {SimpleEmailService} from 'infrastructure/aws/ses/simple-email-service.service';
 
 const APP_MODULES_IMPORT = [
     AuthModule,
