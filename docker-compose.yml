@@ -3,6 +3,7 @@ version: '3.8'
 services:
   medical-api:
     container_name: medical.api.dev
+    restart: always
     build:
       context: .
       target: development
@@ -22,6 +23,7 @@ services:
   medical-db:
     container_name: medical.postgres
     image: postgres:14
+    restart: always
     networks:
       - medical-network
     environment:
