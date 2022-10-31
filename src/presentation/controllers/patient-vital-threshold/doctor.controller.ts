@@ -1,4 +1,14 @@
-import {BadRequestException, Body, Controller, HttpCode, HttpStatus, Param, ParseUUIDPipe, Patch} from '@nestjs/common';
+import {
+    BadRequestException,
+    Body,
+    Controller,
+    Get,
+    HttpCode,
+    HttpStatus,
+    Param,
+    ParseUUIDPipe,
+    Patch,
+} from '@nestjs/common';
 import {ApiBearerAuth, ApiResponse, ApiTags} from '@nestjs/swagger';
 import {Roles} from 'presentation/guards';
 import {
@@ -10,12 +20,31 @@ import {
     UpdateMeanArterialPressureView,
 } from 'views/request/patient-vital-threshold';
 import {DoctorUseCasesFactory} from 'infrastructure/factories/patient-vital-threshold/doctor-use-cases.factory';
+import {ThresholdDto} from 'domain/dtos/response/patient-vital-threshold/threshold.dto';
+import {ThresholdView} from 'views/response/patient-vital-threshold/threshold.view';
 
 @Controller('doctor')
 @ApiBearerAuth()
 @ApiTags('Patient Vital Threshold')
 export class DoctorController {
     public constructor(private readonly doctorUseCasesFactory: DoctorUseCasesFactory) {}
+
+    @Roles('Doctor')
+    @Get(':patientUserId')
+    @HttpCode(HttpStatus.OK)
+    @HttpCode(HttpStatus.BAD_REQUEST)
+    @ApiResponse({status: HttpStatus.OK, type: [ThresholdView]})
+    public async getVitalThresholds(
+        @Param('patientUserId', ParseUUIDPipe) patientUserId: string,
+    ): Promise<ThresholdDto[]> {
+        const useCase = this.doctorUseCasesFactory.createPatientVitalThresholdListUseCase();
+
+        try {
+            return await useCase.getList(patientUserId);
+        } catch (error) {
+            throw new BadRequestException(error.message);
+        }
+    }
 
     @Roles('Doctor')
     @Patch('blood-pressure/:patientUserId')

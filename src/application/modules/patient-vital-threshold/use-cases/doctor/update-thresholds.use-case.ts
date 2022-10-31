@@ -90,7 +90,7 @@ export class UpdateThresholdsUseCase {
     public async updateThreshold(patientUserId: string, dto: object): Promise<void> {
         const user = await this.authedUserService.getUser();
 
-        await this.thresholdSpecification.assertUserCanUpdateThreshold(user, patientUserId);
+        await this.thresholdSpecification.assertGrantedUserCanOperateThreshold(user, patientUserId);
 
         const thresholds = await this.getPatientThresholds(patientUserId);
 

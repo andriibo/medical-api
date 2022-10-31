@@ -4,7 +4,7 @@ import {IPatientVitalThresholdRepository} from 'app/modules/patient-vital-thresh
 import {PatientVitalThresholdRepository} from 'infrastructure/repositories';
 import {TypeOrmModule} from '@nestjs/typeorm';
 import {PatientVitalThresholdModel} from 'infrastructure/models';
-import {DoctorUseCasesFactory} from 'infrastructure/factories/patient-vital-threshold';
+import {DoctorUseCasesFactory, PatientUseCasesFactory} from 'infrastructure/factories/patient-vital-threshold';
 import {AuthModule, PatientDataAccessModule} from 'infrastructure/modules';
 import {PatientVitalThresholdSpecification} from 'app/modules/patient-vital-threshold/specifications/patient-vital-threshold.specification';
 import {PatientDataAccessSpecification} from 'app/modules/patient-data-access/specifications/patient-data-access.specification';
@@ -16,6 +16,7 @@ import {PatientVitalThresholdMapper} from 'infrastructure/mappers/patient-vital-
     controllers: [DoctorController, PatientController],
     providers: [
         DoctorUseCasesFactory,
+        PatientUseCasesFactory,
         {
             provide: IPatientVitalThresholdRepository,
             useClass: PatientVitalThresholdRepository,
