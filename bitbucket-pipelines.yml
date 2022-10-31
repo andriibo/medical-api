@@ -34,7 +34,7 @@ definitions:
                 
 pipelines:
   branches:
-    master:
+    dev:
       - step:
           <<: *deploy-to-server
           deployment: Develop
