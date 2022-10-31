@@ -1,8 +1,8 @@
-import {IPatientVitalThresholdMapper} from 'app/modules/patient-vital-threshold/mappers/patient-vital-threshold-entity.mapper';
+import {IPatientVitalThresholdEntityMapper} from 'app/modules/patient-vital-threshold/mappers/patient-vital-threshold-entity.mapper';
 import {PatientVitalThreshold} from 'domain/entities';
 import {PatientVitalThresholdModel} from 'infrastructure/models';
 
-export class PatientVitalThresholdMapper implements IPatientVitalThresholdMapper {
+export class PatientVitalThresholdEntityMapper implements IPatientVitalThresholdEntityMapper {
     mapByValue(value: number, patientVitalThreshold: PatientVitalThreshold | null): PatientVitalThreshold {
         if (patientVitalThreshold === null) {
             patientVitalThreshold = new PatientVitalThresholdModel();

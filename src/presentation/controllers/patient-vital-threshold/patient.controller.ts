@@ -12,7 +12,7 @@ export class PatientController {
     public constructor(private readonly patientUseCasesFactory: PatientUseCasesFactory) {}
 
     @Roles('Patient')
-    @Get()
+    @Get('my-vital-thresholds')
     @HttpCode(HttpStatus.OK)
     @ApiResponse({status: HttpStatus.OK, type: [ThresholdView]})
     public async getVitalThresholds(): Promise<ThresholdDto[]> {

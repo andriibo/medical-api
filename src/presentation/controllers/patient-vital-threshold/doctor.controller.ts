@@ -30,7 +30,7 @@ export class DoctorController {
     public constructor(private readonly doctorUseCasesFactory: DoctorUseCasesFactory) {}
 
     @Roles('Doctor')
-    @Get(':patientUserId')
+    @Get('patient-vital-thresholds/:patientUserId')
     @HttpCode(HttpStatus.OK)
     @HttpCode(HttpStatus.BAD_REQUEST)
     @ApiResponse({status: HttpStatus.OK, type: [ThresholdView]})

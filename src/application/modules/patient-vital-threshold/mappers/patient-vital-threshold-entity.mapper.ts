@@ -1,7 +1,7 @@
 import {PatientVitalThreshold} from 'domain/entities';
 
-export interface IPatientVitalThresholdMapper {
+export interface IPatientVitalThresholdEntityMapper {
     mapByValue(value: number, patientVitalThreshold: PatientVitalThreshold | null): PatientVitalThreshold;
 }
 
-export const IPatientVitalThresholdMapper = Symbol('IPatientVitalThresholdMapper');
+export const IPatientVitalThresholdEntityMapper = Symbol('IPatientVitalThresholdEntityMapper');

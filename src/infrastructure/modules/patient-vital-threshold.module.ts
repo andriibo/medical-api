@@ -8,8 +8,9 @@ import {DoctorUseCasesFactory, PatientUseCasesFactory} from 'infrastructure/fact
 import {AuthModule, PatientDataAccessModule} from 'infrastructure/modules';
 import {PatientVitalThresholdSpecification} from 'app/modules/patient-vital-threshold/specifications/patient-vital-threshold.specification';
 import {PatientDataAccessSpecification} from 'app/modules/patient-data-access/specifications/patient-data-access.specification';
-import {IPatientVitalThresholdMapper} from 'app/modules/patient-vital-threshold/mappers/patient-vital-threshold-entity.mapper';
-import {PatientVitalThresholdMapper} from 'infrastructure/mappers/patient-vital-threshold-model.mapper';
+import {IPatientVitalThresholdEntityMapper} from 'app/modules/patient-vital-threshold/mappers/patient-vital-threshold-entity.mapper';
+import {PatientVitalThresholdEntityMapper} from 'infrastructure/mappers/patient-vital-threshold-model.mapper';
+import {PatientVitalThresholdsDtoMapper} from 'app/modules/patient-vital-threshold/mappers/patient-vital-thresholds-dto.mapper';
 
 @Module({
     imports: [TypeOrmModule.forFeature([PatientVitalThresholdModel]), AuthModule, PatientDataAccessModule],
@@ -17,13 +18,14 @@ import {PatientVitalThresholdMapper} from 'infrastructure/mappers/patient-vital-
     providers: [
         DoctorUseCasesFactory,
         PatientUseCasesFactory,
+        PatientVitalThresholdsDtoMapper,
         {
             provide: IPatientVitalThresholdRepository,
             useClass: PatientVitalThresholdRepository,
         },
         {
-            provide: IPatientVitalThresholdMapper,
-            useClass: PatientVitalThresholdMapper,
+            provide: IPatientVitalThresholdEntityMapper,
+            useClass: PatientVitalThresholdEntityMapper,
         },
         {
             provide: PatientVitalThresholdSpecification,

@@ -2,7 +2,7 @@ import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service'
 import {PatientVitalThreshold, VitalThresholdName} from 'domain/entities/patient-vital-threshold.entity';
 import {IPatientVitalThresholdRepository} from 'app/modules/patient-vital-threshold/repositories';
 import {PatientVitalThresholdSpecification} from 'app/modules/patient-vital-threshold/specifications/patient-vital-threshold.specification';
-import {IPatientVitalThresholdMapper} from 'app/modules/patient-vital-threshold/mappers/patient-vital-threshold-entity.mapper';
+import {IPatientVitalThresholdEntityMapper} from 'app/modules/patient-vital-threshold/mappers/patient-vital-threshold-entity.mapper';
 import {getFirstByPropValue} from 'app/support/array.helper';
 import {currentUnixTimestamp} from 'app/support/date.helper';
 
@@ -82,7 +82,7 @@ export class UpdateThresholdsUseCase {
     public constructor(
         private readonly authedUserService: IAuthedUserService,
         private readonly thresholdRepository: IPatientVitalThresholdRepository,
-        private readonly thresholdMapper: IPatientVitalThresholdMapper,
+        private readonly thresholdMapper: IPatientVitalThresholdEntityMapper,
         private readonly thresholdSpecification: PatientVitalThresholdSpecification,
         private readonly dtoPropToThresholdNameMap: IDtoPropToThresholdNameMap[],
     ) {}
