@@ -42,7 +42,7 @@ export class createPatientMetadata1664466428759 implements MigrationInterface {
             'patient_metadata',
             new TableForeignKey({
                 columnNames: ['user_id'],
-                referencedColumnNames: ['user_id'],
+                referencedColumnNames: ['id'],
                 referencedTableName: 'user',
                 onDelete: 'CASCADE',
             }),
