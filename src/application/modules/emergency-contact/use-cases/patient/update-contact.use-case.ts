@@ -18,7 +18,7 @@ export class UpdateContactUseCase {
         const user = await this.authedUserService.getUser();
         const contact = await this.getContact(contactId);
 
-        await this.emergencyContactSpecification.assertUserCanUpdateContact(user, contact);
+        this.emergencyContactSpecification.assertUserCanUpdateContact(user, contact);
 
         const modifiedContact = this.emergencyContactEntityMapper.mapByContactDto(dto, contact);
 
