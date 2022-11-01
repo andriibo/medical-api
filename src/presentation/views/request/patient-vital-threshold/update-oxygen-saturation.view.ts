@@ -5,7 +5,7 @@ import {MinThresholdDto} from 'domain/dtos/request/patient-vital-threshold/min-t
 export class UpdateOxygenSaturationView extends MinThresholdDto {
     @ApiProperty()
     @IsNotEmpty()
-    @Min(70)
+    @Min(80)
     @Max(100)
     public min: number;
 }
