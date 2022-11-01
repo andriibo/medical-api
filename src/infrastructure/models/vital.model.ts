@@ -1,4 +1,5 @@
 import {Vital} from 'domain/entities';
+import {DecimalTransformer} from 'infrastructure/data-transrormers/decimal.transformer';
 import {Entity, Column, PrimaryGeneratedColumn, JoinColumn, ManyToOne} from 'typeorm';
 import {UserModel} from './user.model';
 
@@ -10,7 +11,7 @@ export class VitalModel implements Vital {
     @Column()
     public timestamp: number;
 
-    @Column()
+    @Column({precision: 4, scale: 2, transformer: new DecimalTransformer()})
     public temperature: number;
 
     @Column()
