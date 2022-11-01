@@ -27,7 +27,7 @@ export class createVital1665910580108 implements MigrationInterface {
                     {
                         name: 'temperature',
                         type: 'decimal',
-                        precision: 4,
+                        precision: 5,
                         scale: 2,
                         isNullable: false,
                     },
