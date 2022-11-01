@@ -26,4 +26,12 @@ export class MailService implements IMailService {
             text: `${patient.firstName} ${patient.lastName} wants to add you as their medical doctor. VIEW REQUEST ${deepLink}.`,
         });
     }
+
+    public async sendNotificationThatUserWasActivated(toEmail: string): Promise<void> {
+        await this.mailerService.sendMail({
+            to: toEmail,
+            subject: 'Welcome to Medical app!',
+            text: 'We are so excited to have you on board.',
+        });
+    }
 }

@@ -7,11 +7,11 @@ import {Injectable} from '@nestjs/common';
 export class PatientDataAccessEventEmitter implements IPatientDataAccessEventEmitter {
     public constructor(private eventEmitter: EventEmitter2) {}
 
-    public async emitAccessForUnregisteredUserInitiated(patient: User, email: string): Promise<void> {
-        await this.eventEmitter.emit('data-access-for-unregistered-user-initiated', patient, email);
+    public async emitAccessForUnregisteredUserInitiated(patient: User, grantedEmail: string): Promise<void> {
+        await this.eventEmitter.emit('data-access-for-unregistered-user-initiated', patient, grantedEmail);
     }
 
-    public async emitAccessForRegisteredUserInitiated(patient: User, email: string): Promise<void> {
-        await this.eventEmitter.emit('data-access-for-registered-user-initiated', patient, email);
+    public async emitAccessForRegisteredUserInitiated(patient: User, grantedEmail: string): Promise<void> {
+        await this.eventEmitter.emit('data-access-for-registered-user-initiated', patient, grantedEmail);
     }
 }

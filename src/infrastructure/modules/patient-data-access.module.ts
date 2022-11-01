@@ -16,7 +16,7 @@ import {AccessForUnregisteredUserService} from 'app/modules/patient-data-access/
 import {AccessToGrantedUserBindingService} from 'app/modules/patient-data-access/services/access-to-granted-user-binding.service';
 import {IPatientDataAccessEventEmitter} from 'app/modules/patient-data-access/event-emitters/patient-data-access.event-emitter';
 import {PatientDataAccessEventEmitter} from 'infrastructure/event-emitters/patient-data-access.event-emitter';
-import {PatientDataAccessListener} from 'infrastructure/listeners/patient-data-access.listener';
+import {PatientDataAccessListener} from 'infrastructure/listeners';
 
 @Module({
     imports: [TypeOrmModule.forFeature([PatientDataAccessModel]), MailModule, AuthModule],

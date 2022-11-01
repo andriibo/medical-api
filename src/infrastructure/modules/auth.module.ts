@@ -13,13 +13,16 @@ import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service'
 import {AuthedUserService} from 'infrastructure/services/authed-user.service';
 import {IAuthEventEmitter} from 'app/modules/auth/event-emitters/auth.event-emitter';
 import {AuthEventEmitter} from 'infrastructure/event-emitters/auth.event-emitter';
+import {AuthListener} from 'infrastructure/listeners';
+import {MailModule} from 'infrastructure/modules/mail.module';
 
 @Module({
-    imports: [TypeOrmModule.forFeature([UserModel, DoctorMetadataModel, PatientMetadataModel])],
+    imports: [TypeOrmModule.forFeature([UserModel, DoctorMetadataModel, PatientMetadataModel]), MailModule],
     exports: [IAuthService, IAuthedUserService, IUserRepository],
     controllers: [AuthController],
     providers: [
         AuthUseCasesFactory,
+        AuthListener,
         {
             provide: IUserRepository,
             useClass: UserRepository,
