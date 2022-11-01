@@ -53,15 +53,22 @@ import {PatientDataAccessListener} from 'infrastructure/listeners/patient-data-a
             useFactory: (
                 patientDataAccessRepository: IPatientDataAccessRepository,
                 patientDataAccessEntityMapper: IPatientDataAccessEntityMapper,
+                patientDataAccessEventEmitter: IPatientDataAccessEventEmitter,
                 patientDataAccessSpecification: PatientDataAccessSpecification,
             ) => {
                 return new AccessForRegisteredUserService(
                     patientDataAccessRepository,
                     patientDataAccessEntityMapper,
+                    patientDataAccessEventEmitter,
                     patientDataAccessSpecification,
                 );
             },
-            inject: [IPatientDataAccessRepository, IPatientDataAccessEntityMapper, PatientDataAccessSpecification],
+            inject: [
+                IPatientDataAccessRepository,
+                IPatientDataAccessEntityMapper,
+                IPatientDataAccessEventEmitter,
+                PatientDataAccessSpecification,
+            ],
         },
         {
             provide: AccessForUnregisteredUserService,

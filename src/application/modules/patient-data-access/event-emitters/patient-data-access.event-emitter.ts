@@ -1,7 +1,9 @@
-import {PatientDataAccess} from 'domain/entities';
+import {User} from 'domain/entities';
 
 export interface IPatientDataAccessEventEmitter {
-    emitAccessForUnregisteredUserInitiated(patientDataAccess: PatientDataAccess): void;
+    emitAccessForUnregisteredUserInitiated(patient: User, email: string): void;
+
+    emitAccessForRegisteredUserInitiated(patient: User, email: string): void;
 }
 
 export const IPatientDataAccessEventEmitter = Symbol('IPatientDataAccessEventEmitter');

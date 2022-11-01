@@ -15,11 +15,4 @@ export class AppController {
     public getHello(): object {
         return {message: 'Hello World!'};
     }
-
-    @Post('invite-to-sign-up')
-    @HttpCode(HttpStatus.OK)
-    @ApiResponse({status: HttpStatus.OK})
-    public async inviteToSignUp(@Body() requestBody: InviteToSignUpView): Promise<void> {
-        await this.mailService.sendInviteToSignUp(requestBody.email);
-    }
 }
