@@ -21,7 +21,7 @@ export class createVital1665910580108 implements MigrationInterface {
                     },
                     {
                         name: 'timestamp',
-                        type: 'bigint',
+                        type: 'int',
                         isNullable: false,
                     },
                     {
