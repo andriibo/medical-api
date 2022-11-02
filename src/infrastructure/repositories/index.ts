@@ -8,6 +8,7 @@ import {DiagnosisRepository} from './diagnosis.repository';
 import {PatientDiagnosisRepository} from './patient-diagnosis.repository';
 import {MedicationRepository} from './medication.repository';
 import {PatientMedicationRepository} from './patient-medication.repository';
+import {PatientVitalThresholdRepository} from './patient-vital-threshold.repository';
 
 export {
     UserRepository,
@@ -20,4 +21,5 @@ export {
     PatientDiagnosisRepository,
     MedicationRepository,
     PatientMedicationRepository,
+    PatientVitalThresholdRepository,
 };

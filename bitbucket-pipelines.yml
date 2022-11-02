@@ -31,10 +31,11 @@ definitions:
                 docker compose up -d
                 docker container prune -f
                 docker image prune -a -f
+                docker exec -it medical.api.dev npm run migration:up
                 
 pipelines:
   branches:
-    master:
+    dev:
       - step:
           <<: *deploy-to-server
           deployment: Develop

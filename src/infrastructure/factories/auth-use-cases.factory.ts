@@ -23,6 +23,6 @@ export class AuthUseCasesFactory {
     }
 
     public createConfirmSignUpUseCase(): ConfirmSignUpUserUseCase {
-        return new ConfirmSignUpUserUseCase(this.authService);
+        return new ConfirmSignUpUserUseCase(this.authService, this.authEventEmitter);
     }
 }
