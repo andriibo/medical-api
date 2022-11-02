@@ -1,5 +1,5 @@
 import {ApiProperty} from '@nestjs/swagger';
-import {Length, IsEmail, IsNotEmpty, ValidateIf} from 'class-validator';
+import {Length, IsEmail, IsNotEmpty, IsOptional} from 'class-validator';
 import {CreateDoctorDto} from 'domain/dtos/request/auth/create-doctor.dto';
 
 export class SignUpDoctorView extends CreateDoctorDto {
@@ -24,7 +24,7 @@ export class SignUpDoctorView extends CreateDoctorDto {
     public phone: string;
 
     @ApiProperty()
-    @ValidateIf((item: SignUpDoctorView) => item.institution !== undefined)
+    @IsOptional()
     @Length(0, 100)
     public institution: string;
 
