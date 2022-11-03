@@ -1,28 +1,20 @@
-import {IUserRepository} from 'app/modules/auth/repositories';
 import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repositories';
 import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service';
-import {PatientDataAccessSpecification} from 'app/modules/patient-data-access/specifications/patient-data-access.specification';
 import {PatientDataAccess} from 'domain/entities/patient-data-access.entity';
-import {IPatientDataAccessEventEmitter} from 'app/modules/patient-data-access/event-emitters/patient-data-access.event-emitter';
+import {DeletePatientDataAccessService} from 'app/modules/patient-data-access/services/delete-patient-data-access.service';
 
 export class DeleteDataAccessUseCase {
     public constructor(
-        private readonly userRepository: IUserRepository,
         private readonly patientDataAccessRepository: IPatientDataAccessRepository,
         private readonly authedUserService: IAuthedUserService,
-        private readonly patientDataAccessSpecification: PatientDataAccessSpecification,
-        private readonly patientDataAccessEventEmitter: IPatientDataAccessEventEmitter,
+        private readonly deletePatientDataAccessService: DeletePatientDataAccessService,
     ) {}
 
     public async deleteDataAccess(accessId: string): Promise<void> {
         const user = await this.authedUserService.getUser();
         const dataAccess = await this.getDataAccess(accessId);
 
-        await this.patientDataAccessSpecification.assertPatientCanDeleteAccess(user, dataAccess);
-
-        await this.patientDataAccessRepository.delete(dataAccess);
-
-        await this.patientDataAccessEventEmitter.emitAccessForDoctorDeleted(user, dataAccess.grantedEmail);
+        await this.deletePatientDataAccessService.deleteDataAccess(user, dataAccess);
     }
 
     private async getDataAccess(accessId: string): Promise<PatientDataAccess> {
