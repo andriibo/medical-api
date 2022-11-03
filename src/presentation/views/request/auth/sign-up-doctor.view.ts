@@ -26,7 +26,7 @@ export class SignUpDoctorView extends CreateDoctorDto {
     @ApiProperty()
     @IsOptional()
     @Length(0, 100)
-    public institution: string;
+    public institution?: string;
 
     @ApiProperty()
     @IsNotEmpty()
