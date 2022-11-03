@@ -4,5 +4,5 @@ export const transportOptions = {
 };
 
 export const mailOptions = {
-    from: '"nest-modules" <modules@nestjs.com>',
+    from: '"no-reply" <no-reply@medical-api.abnk.uk>',
 };

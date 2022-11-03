@@ -1,8 +1,8 @@
 import {User} from 'domain/entities';
-import {IMailService} from 'app/modules/mail/services/mail.service';
 import {Inject, Injectable} from '@nestjs/common';
 import {OnEvent} from '@nestjs/event-emitter';
 import {AccessToGrantedUserBindingService} from 'app/modules/patient-data-access/services/access-to-granted-user-binding.service';
+import {IMailService} from 'app/modules/mail/services/abstract/mail.service';
 
 @Injectable()
 export class PatientDataAccessListener {

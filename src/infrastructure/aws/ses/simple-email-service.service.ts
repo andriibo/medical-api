@@ -1,7 +1,9 @@
 import {Injectable} from '@nestjs/common';
-import {IMailService} from 'app/modules/mail/services/mail.service';
+import {IMailSenderService} from 'app/modules/mail/services/abstract/mail-sender.service';
 import {SendEmailCommand, SESClient} from '@aws-sdk/client-ses';
 import {ConfigService} from '@nestjs/config';
+import {Email} from 'app/modules/mail/models';
+import {mailOptions} from 'config/mail.config';
 
 interface AwsProviderConfig {
     region: string;
@@ -10,7 +12,7 @@ interface AwsProviderConfig {
 }
 
 @Injectable()
-export class SimpleEmailService implements IMailService {
+export class SimpleEmailService implements IMailSenderService {
     private readonly config: AwsProviderConfig;
     private readonly sesClient: SESClient;
 
@@ -30,21 +32,21 @@ export class SimpleEmailService implements IMailService {
         });
     }
 
-    public async sendInviteToSignUp(email: string): Promise<void> {
+    public async sendMail(message: Email): Promise<void> {
         const command = new SendEmailCommand({
-            Source: 'no-reply@medical.com',
+            Source: mailOptions.from,
             Destination: {
-                ToAddresses: [email],
+                ToAddresses: [message.to],
             },
             Message: {
                 Body: {
                     Html: {
-                        Data: `You are invited to the Zenzerapp. Please, follow the link: zenzerapp://auth?email=${email}.`,
+                        Data: message.text,
                         Charset: 'utf8',
                     }
                 },
                 Subject: {
-                    Data: 'Invite to Sign Up.',
+                    Data: message.subject,
                     Charset: 'utf8',
                 },
             }

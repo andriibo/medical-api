@@ -1,4 +1,4 @@
-import {TokenClaimsModel} from 'infrastructure/aws/token-claims.model';
+import {TokenClaimsModel} from 'infrastructure/aws/cognito/token-claims.model';
 import {UserDataSignedInDto} from './user-data-signed-in.dto';
 
 export class UserSignedInDto {
