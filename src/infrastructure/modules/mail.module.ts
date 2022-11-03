@@ -8,11 +8,7 @@ import {IMailService} from 'app/modules/mail/services/abstract/mail.service';
 import {ConfigService} from '@nestjs/config';
 import {MailService} from 'app/modules/mail/services/mail.service';
 import {MailhogService} from 'infrastructure/nodemailer/mail.service';
-
-enum MailServiceConfig {
-    Amazon_SES = 'Amazon_SES',
-    Mailhog = 'Mailhog',
-}
+import {MailServiceConfig} from 'infrastructure/models';
 
 @Module({
     imports: [
