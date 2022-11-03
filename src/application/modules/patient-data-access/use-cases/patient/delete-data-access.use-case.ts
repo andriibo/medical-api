@@ -22,7 +22,7 @@ export class DeleteDataAccessUseCase {
 
         await this.patientDataAccessRepository.delete(dataAccess);
 
-        await this.patientDataAccessEventEmitter.emitAccessForPatientDeleted(user, dataAccess.grantedEmail);
+        await this.patientDataAccessEventEmitter.emitAccessForDoctorDeleted(user, dataAccess.grantedEmail);
     }
 
     private async getDataAccess(accessId: string): Promise<PatientDataAccess> {

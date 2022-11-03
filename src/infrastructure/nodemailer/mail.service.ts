@@ -35,11 +35,19 @@ export class MailService implements IMailService {
         });
     }
 
-    public async sendNotificationThatPatientDataAccessWasDeleted(toEmail: string): Promise<void> {
+    public async sendNotificationThatPatientDataAccessWasDeleted(patient: User, toEmail: string): Promise<void> {
         await this.mailerService.sendMail({
             to: toEmail,
             subject: 'You were removed from list of doctors',
-            text: '<Patient full name> has removed you from the list of their doctors. You no longer have access to the patient account.',
+            text: `${patient.firstName} ${patient.lastName} has removed you from the list of their doctors. You no longer have access to the patient account.`,
+        });
+    }
+
+    public async sendNotificationThatDoctorDataAccessWasDeleted(doctor: User, toEmail: string): Promise<void> {
+        await this.mailerService.sendMail({
+            to: toEmail,
+            subject: 'You were removed from list of patients',
+            text: `${doctor.firstName} ${doctor.lastName} has removed you from the list of their patients and doesn't have access to your account anymore.`,
         });
     }
 }

@@ -27,8 +27,8 @@ export class PatientDataAccessListener {
         await this.accessToGrantedUserBindingService.bindAccessToGrantedUser(doctor);
     }
 
-    @OnEvent('data-access-for-patient-deleted')
-    public async handleAccessForPatientDeleted(patient: User, email: string): Promise<void> {
+    @OnEvent('data-access-for-doctor-deleted')
+    public async handleAccessForDoctorDeleted(patient: User, email: string): Promise<void> {
         await this.mailService.sendNotificationThatPatientDataAccessWasDeleted(patient, email);
     }
 }
