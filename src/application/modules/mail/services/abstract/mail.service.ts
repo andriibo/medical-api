@@ -7,9 +7,9 @@ export interface IMailService {
 
     sendNotificationThatUserWasActivated(toEmail: string): Promise<void>;
 
-    sendNotificationThatPatientDataAccessWasDeleted(patient: User, toEmail: string): Promise<void>;
+    sendNotificationThatPatientDeletedDataAccess(patient: User, toEmail: string): Promise<void>;
 
-    sendNotificationThatDoctorDataAccessWasDeleted(doctor: User, toEmail: string): Promise<void>;
+    sendNotificationThatDoctorDeletedDataAccess(doctor: User, toEmail: string): Promise<void>;
 }
 
 export const IMailService = Symbol('IMailService');

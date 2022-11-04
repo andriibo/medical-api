@@ -27,13 +27,13 @@ export class PatientDataAccessListener {
         await this.accessToGrantedUserBindingService.bindAccessToGrantedUser(doctor);
     }
 
-    @OnEvent('data-access-for-doctor-deleted')
-    public async handleAccessForDoctorDeleted(patient: User, email: string): Promise<void> {
-        await this.mailService.sendNotificationThatPatientDataAccessWasDeleted(patient, email);
+    @OnEvent('data-access-deleted-by-patient')
+    public async handleAccessDeletedByPatient(patient: User, email: string): Promise<void> {
+        await this.mailService.sendNotificationThatPatientDeletedDataAccess(patient, email);
     }
 
-    @OnEvent('data-access-for-patient-deleted')
-    public async handleAccessForPatientDeleted(doctor: User, email: string): Promise<void> {
-        await this.mailService.sendNotificationThatDoctorDataAccessWasDeleted(doctor, email);
+    @OnEvent('data-access-deleted-by-doctor')
+    public async handleAccessDeletedByDoctor(doctor: User, email: string): Promise<void> {
+        await this.mailService.sendNotificationThatDoctorDeletedDataAccess(doctor, email);
     }
 }

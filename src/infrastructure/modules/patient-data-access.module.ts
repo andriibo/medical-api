@@ -17,9 +17,8 @@ import {AccessToGrantedUserBindingService} from 'app/modules/patient-data-access
 import {IPatientDataAccessEventEmitter} from 'app/modules/patient-data-access/event-emitters/patient-data-access.event-emitter';
 import {PatientDataAccessEventEmitter} from 'infrastructure/event-emitters/patient-data-access.event-emitter';
 import {PatientDataAccessListener} from 'infrastructure/listeners';
-import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service';
-import {DeletePatientDataAccessForPatientService} from 'app/modules/patient-data-access/services/delete-patient-data-access-for-patient.service';
-import {DeletePatientDataAccessForDoctorService} from 'app/modules/patient-data-access/services/delete-patient-data-access-for-doctor.service';
+import {DeleteDataAccessByPatientService} from 'app/modules/patient-data-access/services/delete-data-access-by-patient.service';
+import {DeleteDataAccessByDoctorService} from 'app/modules/patient-data-access/services/delete-data-access-by-doctor.service';
 
 @Module({
     imports: [TypeOrmModule.forFeature([PatientDataAccessModel]), MailModule, AuthModule],
@@ -103,54 +102,34 @@ import {DeletePatientDataAccessForDoctorService} from 'app/modules/patient-data-
             inject: [IPatientDataAccessRepository],
         },
         {
-            provide: DeletePatientDataAccessForPatientService,
+            provide: DeleteDataAccessByPatientService,
             useFactory: (
-                userRepository: IUserRepository,
                 patientDataAccessRepository: IPatientDataAccessRepository,
-                authedUserService: IAuthedUserService,
                 patientDataAccessSpecification: PatientDataAccessSpecification,
                 patientDataAccessEventEmitter: IPatientDataAccessEventEmitter,
             ) => {
-                return new DeletePatientDataAccessForPatientService(
-                    userRepository,
+                return new DeleteDataAccessByPatientService(
                     patientDataAccessRepository,
-                    authedUserService,
                     patientDataAccessSpecification,
                     patientDataAccessEventEmitter,
                 );
             },
-            inject: [
-                IUserRepository,
-                IPatientDataAccessRepository,
-                IAuthedUserService,
-                PatientDataAccessSpecification,
-                IPatientDataAccessEventEmitter,
-            ],
+            inject: [IPatientDataAccessRepository, PatientDataAccessSpecification, IPatientDataAccessEventEmitter],
         },
         {
-            provide: DeletePatientDataAccessForDoctorService,
+            provide: DeleteDataAccessByDoctorService,
             useFactory: (
-                userRepository: IUserRepository,
                 patientDataAccessRepository: IPatientDataAccessRepository,
-                authedUserService: IAuthedUserService,
                 patientDataAccessSpecification: PatientDataAccessSpecification,
                 patientDataAccessEventEmitter: IPatientDataAccessEventEmitter,
             ) => {
-                return new DeletePatientDataAccessForDoctorService(
-                    userRepository,
+                return new DeleteDataAccessByDoctorService(
                     patientDataAccessRepository,
-                    authedUserService,
                     patientDataAccessSpecification,
                     patientDataAccessEventEmitter,
                 );
             },
-            inject: [
-                IUserRepository,
-                IPatientDataAccessRepository,
-                IAuthedUserService,
-                PatientDataAccessSpecification,
-                IPatientDataAccessEventEmitter,
-            ],
+            inject: [IPatientDataAccessRepository, PatientDataAccessSpecification, IPatientDataAccessEventEmitter],
         },
     ],
 })

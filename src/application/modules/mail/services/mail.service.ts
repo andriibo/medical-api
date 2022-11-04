@@ -40,7 +40,7 @@ export class MailService implements IMailService {
         await this.mailerService.sendMail(mail);
     }
 
-    public async sendNotificationThatPatientDataAccessWasDeleted(patient: User, toEmail: string): Promise<void> {
+    public async sendNotificationThatPatientDeletedDataAccess(patient: User, toEmail: string): Promise<void> {
         const mail: Email = {
             to: toEmail,
             subject: 'You were removed from list of doctors',
@@ -50,7 +50,7 @@ export class MailService implements IMailService {
         await this.mailerService.sendMail(mail);
     }
 
-    public async sendNotificationThatDoctorDataAccessWasDeleted(doctor: User, toEmail: string): Promise<void> {
+    public async sendNotificationThatDoctorDeletedDataAccess(doctor: User, toEmail: string): Promise<void> {
         const mail: Email = {
             to: toEmail,
             subject: 'You were removed from list of patients',

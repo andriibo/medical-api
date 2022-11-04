@@ -5,9 +5,9 @@ export interface IPatientDataAccessEventEmitter {
 
     emitAccessForRegisteredUserInitiated(patient: User, grantedEmail: string): void;
 
-    emitAccessForDoctorDeleted(patient: User, grantedEmail: string): void;
+    emitAccessDeletedByPatient(patient: User, grantedEmail: string): void;
 
-    emitAccessForPatientDeleted(doctor: User, grantedEmail: string): void;
+    emitAccessDeletedByDoctor(doctor: User, grantedEmail: string): void;
 }
 
 export const IPatientDataAccessEventEmitter = Symbol('IPatientDataAccessEventEmitter');
