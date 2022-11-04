@@ -1,7 +1,7 @@
 import {ApiProperty} from '@nestjs/swagger';
 import {IsInt, Length, IsEmail, Min, Max, IsNotEmpty, IsIn, MinDate, MaxDate, IsDate} from 'class-validator';
 import {CreatePatientDto} from 'domain/dtos/request/auth/create-patient.dto';
-import {Type} from 'class-transformer';
+import {Transform} from 'class-transformer';
 
 export class SignUpPatientView extends CreatePatientDto {
     @ApiProperty({maxLength: 100})
@@ -25,7 +25,7 @@ export class SignUpPatientView extends CreatePatientDto {
     public phone: string;
 
     @ApiProperty()
-    @Type(() => Date)
+    @Transform(({value}) => new Date(value))
     @IsNotEmpty()
     @IsDate()
     @MinDate(new Date(1930, 0, 1))
