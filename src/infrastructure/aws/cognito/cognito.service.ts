@@ -35,9 +35,9 @@ export class CognitoService implements IAuthService {
 
     public constructor(private configService: ConfigService) {
         this.config = {
-            region: configService.get<string>('AWS_COGNITO_REGION'),
-            accessKeyId: configService.get<string>('AWS_COGNITO_ACCESS_KEY_ID'),
-            secretAccessKey: configService.get<string>('AWS_COGNITO_SECRET_ACCESS_KEY'),
+            region: configService.get<string>('AWS_REGION'),
+            accessKeyId: configService.get<string>('AWS_ACCESS_KEY_ID'),
+            secretAccessKey: configService.get<string>('AWS_SECRET_ACCESS_KEY'),
             userPoolId: configService.get<string>('AWS_COGNITO_USER_POOL_ID'),
             clientId: configService.get<string>('AWS_COGNITO_CLIENT_ID'),
         };

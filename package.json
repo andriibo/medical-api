@@ -25,6 +25,7 @@
   },
   "dependencies": {
     "@aws-sdk/client-cognito-identity-provider": "^3.179.0",
+    "@aws-sdk/client-ses": "^3.197.0",
     "@nestjs-modules/mailer": "^1.8.1",
     "@nestjs/common": "^9.0.0",
     "@nestjs/config": "^2.2.0",

@@ -2,7 +2,7 @@ import {Inject, Injectable, NestMiddleware} from '@nestjs/common';
 import {ITokenClaimsModel} from 'app/modules/auth/models';
 import {IAuthService} from 'app/modules/auth/services/auth.service';
 import {Request, Response} from 'express';
-import {TokenClaimsModel} from 'infrastructure/aws/token-claims.model';
+import {TokenClaimsModel} from 'infrastructure/aws/cognito/token-claims.model';
 
 @Injectable()
 export class AssignUserMiddleware implements NestMiddleware {

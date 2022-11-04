@@ -3,7 +3,7 @@ import {AuthController} from 'controllers/auth.controller';
 import {IUserRepository} from 'app/modules/auth/repositories';
 import {UserRepository} from 'infrastructure/repositories/user.repository';
 import {IAuthService} from 'app/modules/auth/services/auth.service';
-import {CognitoService} from 'infrastructure/aws/cognito.service';
+import {CognitoService} from 'infrastructure/aws/cognito/cognito.service';
 import {TypeOrmModule} from '@nestjs/typeorm';
 import {UserModel, DoctorMetadataModel, PatientMetadataModel} from 'infrastructure/models';
 import {IUserEntityMapper} from 'app/modules/auth/mappers/user-entity.mapper';
