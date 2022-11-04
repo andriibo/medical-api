@@ -4,13 +4,13 @@ import {BloodPressureThresholdDto} from 'domain/dtos/request/patient-vital-thres
 import {IsGreaterThan} from 'infrastructure/validators/is-greater-than';
 
 export class UpdateBloodPressureView extends BloodPressureThresholdDto {
-    @ApiProperty()
+    @ApiProperty({minimum: 60, maximum: 80})
     @IsNotEmpty()
     @Min(60)
     @Max(80)
     public minDBP: number;
 
-    @ApiProperty()
+    @ApiProperty({minimum: 60, maximum: 80})
     @IsNotEmpty()
     @Min(60)
     @Max(80)
@@ -19,13 +19,13 @@ export class UpdateBloodPressureView extends BloodPressureThresholdDto {
     })
     public maxDBP: number;
 
-    @ApiProperty()
+    @ApiProperty({minimum: 100, maximum: 130})
     @IsNotEmpty()
     @Min(100)
     @Max(130)
     public minSBP: number;
 
-    @ApiProperty()
+    @ApiProperty({minimum: 100, maximum: 130})
     @IsNotEmpty()
     @Min(100)
     @Max(130)

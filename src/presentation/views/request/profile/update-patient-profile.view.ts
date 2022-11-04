@@ -3,17 +3,17 @@ import {Length, IsNotEmpty, IsDateString, IsIn, IsInt, Min, Max} from 'class-val
 import {UpdatePatientProfileDto} from 'domain/dtos/request/profile/update-patient-profile.dto';
 
 export class UpdatePatientProfileView extends UpdatePatientProfileDto {
-    @ApiProperty()
+    @ApiProperty({minLength: 2, maxLength: 30})
     @IsNotEmpty()
     @Length(2, 30)
     public firstName: string;
 
-    @ApiProperty()
+    @ApiProperty({minLength: 2, maxLength: 30})
     @IsNotEmpty()
     @Length(2, 30)
     public lastName: string;
 
-    @ApiProperty()
+    @ApiProperty({minLength: 11, maxLength: 11})
     @IsNotEmpty()
     @Length(11, 11)
     public phone: string;
@@ -23,19 +23,19 @@ export class UpdatePatientProfileView extends UpdatePatientProfileDto {
     @IsDateString()
     public dob: Date;
 
-    @ApiProperty()
+    @ApiProperty({enum: ['Male', 'Female', 'Other']})
     @IsNotEmpty()
     @IsIn(['Male', 'Female', 'Other'])
     public gender: string;
 
-    @ApiProperty()
+    @ApiProperty({minimum: 50, maximum: 250})
     @IsNotEmpty()
     @IsInt()
     @Min(50)
     @Max(250)
     public height: number;
 
-    @ApiProperty()
+    @ApiProperty({minimum: 10, maximum: 200})
     @IsNotEmpty()
     @IsInt()
     @Min(10)

@@ -8,7 +8,7 @@ export class CreateDiagnosisView extends DiagnosisDto {
     @IsUUID()
     public patientUserId: string;
 
-    @ApiProperty()
+    @ApiProperty({minLength: 2, maxLength: 100})
     @IsNotEmpty()
     @Length(2, 100)
     public diagnosisName: string;

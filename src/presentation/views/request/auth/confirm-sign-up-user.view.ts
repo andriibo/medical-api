@@ -1,11 +1,12 @@
 import {ApiProperty} from '@nestjs/swagger';
 import {ConfirmSignUpUserDto} from 'domain/dtos/request/auth/confirm-sign-up-user.dto';
-import {IsEmail, IsNotEmpty} from 'class-validator';
+import {IsEmail, IsNotEmpty, MaxLength} from 'class-validator';
 
 export class ConfirmSignUpUserView extends ConfirmSignUpUserDto {
-    @ApiProperty()
+    @ApiProperty({maxLength: 100})
     @IsNotEmpty()
     @IsEmail()
+    @MaxLength(100)
     public userName: string;
 
     @ApiProperty()
