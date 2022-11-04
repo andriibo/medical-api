@@ -1,7 +1,7 @@
-import {IMailService} from 'app/modules/mail/services/mail.service';
 import {Inject, Injectable} from '@nestjs/common';
 import {OnEvent} from '@nestjs/event-emitter';
 import {ConfirmSignUpUserDto} from 'domain/dtos/request/auth/confirm-sign-up-user.dto';
+import {IMailService} from 'app/modules/mail/services/abstract/mail.service';
 
 @Injectable()
 export class AuthListener {

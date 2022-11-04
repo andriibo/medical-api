@@ -9,6 +9,7 @@ import {PatientDiagnosisModel} from './patient-diagnosis.model';
 import {MedicationModel} from './medication.model';
 import {PatientMedicationModel} from './patient-medication.model';
 import {PatientVitalThresholdModel} from './patient-vital-threshold.model';
+import {MailServiceConfig} from './mail-service-config.enum';
 
 export {
     UserModel,
@@ -22,4 +23,5 @@ export {
     MedicationModel,
     PatientMedicationModel,
     PatientVitalThresholdModel,
+    MailServiceConfig,
 };
