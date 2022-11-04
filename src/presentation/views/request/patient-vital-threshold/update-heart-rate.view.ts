@@ -4,13 +4,13 @@ import {MinMaxThresholdDto} from 'domain/dtos/request/patient-vital-threshold/mi
 import {IsGreaterThan} from 'infrastructure/validators/is-greater-than';
 
 export class UpdateHeartRateView extends MinMaxThresholdDto {
-    @ApiProperty()
+    @ApiProperty({minimum: 40, maximum: 100})
     @IsNotEmpty()
     @Min(40)
     @Max(100)
     public min: number;
 
-    @ApiProperty()
+    @ApiProperty({minimum: 40, maximum: 100})
     @IsNotEmpty()
     @Min(40)
     @Max(100)
