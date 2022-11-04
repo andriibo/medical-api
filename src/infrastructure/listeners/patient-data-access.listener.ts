@@ -31,4 +31,9 @@ export class PatientDataAccessListener {
     public async handleAccessForDoctorDeleted(patient: User, email: string): Promise<void> {
         await this.mailService.sendNotificationThatPatientDataAccessWasDeleted(patient, email);
     }
+
+    @OnEvent('data-access-for-patient-deleted')
+    public async handleAccessForPatientDeleted(doctor: User, email: string): Promise<void> {
+        await this.mailService.sendNotificationThatDoctorDataAccessWasDeleted(doctor, email);
+    }
 }
