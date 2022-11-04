@@ -1,25 +1,21 @@
-import {IUserRepository} from 'app/modules/auth/repositories';
 import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repositories';
 import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service';
-import {PatientDataAccessSpecification} from 'app/modules/patient-data-access/specifications/patient-data-access.specification';
 import {PatientDataAccess} from 'domain/entities/patient-data-access.entity';
 import {EntityNotFoundError} from 'app/errors/entity-not-found.error';
+import {DeleteDataAccessByDoctorService} from 'app/modules/patient-data-access/services/delete-data-access-by-doctor.service';
 
 export class DeleteDataAccessUseCase {
     public constructor(
-        private readonly userRepository: IUserRepository,
         private readonly patientDataAccessRepository: IPatientDataAccessRepository,
         private readonly authedUserService: IAuthedUserService,
-        private readonly patientDataAccessSpecification: PatientDataAccessSpecification,
+        private readonly deleteDataAccessByDoctorService: DeleteDataAccessByDoctorService,
     ) {}
 
     public async deleteDataAccess(accessId: string): Promise<void> {
         const user = await this.authedUserService.getUser();
         const dataAccess = await this.getDataAccess(accessId);
 
-        await this.patientDataAccessSpecification.assertGrantedUserCanDeleteAccess(user, dataAccess);
-
-        await this.patientDataAccessRepository.delete(dataAccess);
+        await this.deleteDataAccessByDoctorService.deleteDataAccess(user, dataAccess);
     }
 
     private async getDataAccess(accessId: string): Promise<PatientDataAccess> {

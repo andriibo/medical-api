@@ -17,6 +17,8 @@ import {AccessToGrantedUserBindingService} from 'app/modules/patient-data-access
 import {IPatientDataAccessEventEmitter} from 'app/modules/patient-data-access/event-emitters/patient-data-access.event-emitter';
 import {PatientDataAccessEventEmitter} from 'infrastructure/event-emitters/patient-data-access.event-emitter';
 import {PatientDataAccessListener} from 'infrastructure/listeners';
+import {DeleteDataAccessByPatientService} from 'app/modules/patient-data-access/services/delete-data-access-by-patient.service';
+import {DeleteDataAccessByDoctorService} from 'app/modules/patient-data-access/services/delete-data-access-by-doctor.service';
 
 @Module({
     imports: [TypeOrmModule.forFeature([PatientDataAccessModel]), MailModule, AuthModule],
@@ -98,6 +100,36 @@ import {PatientDataAccessListener} from 'infrastructure/listeners';
                 return new AccessToGrantedUserBindingService(patientDataAccessRepository);
             },
             inject: [IPatientDataAccessRepository],
+        },
+        {
+            provide: DeleteDataAccessByPatientService,
+            useFactory: (
+                patientDataAccessRepository: IPatientDataAccessRepository,
+                patientDataAccessSpecification: PatientDataAccessSpecification,
+                patientDataAccessEventEmitter: IPatientDataAccessEventEmitter,
+            ) => {
+                return new DeleteDataAccessByPatientService(
+                    patientDataAccessRepository,
+                    patientDataAccessSpecification,
+                    patientDataAccessEventEmitter,
+                );
+            },
+            inject: [IPatientDataAccessRepository, PatientDataAccessSpecification, IPatientDataAccessEventEmitter],
+        },
+        {
+            provide: DeleteDataAccessByDoctorService,
+            useFactory: (
+                patientDataAccessRepository: IPatientDataAccessRepository,
+                patientDataAccessSpecification: PatientDataAccessSpecification,
+                patientDataAccessEventEmitter: IPatientDataAccessEventEmitter,
+            ) => {
+                return new DeleteDataAccessByDoctorService(
+                    patientDataAccessRepository,
+                    patientDataAccessSpecification,
+                    patientDataAccessEventEmitter,
+                );
+            },
+            inject: [IPatientDataAccessRepository, PatientDataAccessSpecification, IPatientDataAccessEventEmitter],
         },
     ],
 })
