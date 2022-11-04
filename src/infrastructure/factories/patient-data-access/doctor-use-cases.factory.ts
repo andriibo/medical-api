@@ -9,7 +9,7 @@ import {
 } from 'app/modules/patient-data-access/use-cases/doctor';
 import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service';
 import {PatientDataAccessSpecification} from 'app/modules/patient-data-access/specifications/patient-data-access.specification';
-import {DeleteDoctorDataAccessService} from 'app/modules/patient-data-access/services/delete-doctor-data-access.service';
+import {DeletePatientDataAccessForPatientService} from 'app/modules/patient-data-access/services/delete-patient-data-access-for-patient.service';
 
 @Injectable()
 export class DoctorUseCasesFactory {
@@ -20,8 +20,8 @@ export class DoctorUseCasesFactory {
         @Inject(IAuthedUserService) private readonly authedUserService: IAuthedUserService,
         @Inject(PatientDataAccessSpecification)
         private readonly patientDataAccessSpecification: PatientDataAccessSpecification,
-        @Inject(DeleteDoctorDataAccessService)
-        private readonly deleteDoctorDataAccessService: DeleteDoctorDataAccessService,
+        @Inject(DeletePatientDataAccessForPatientService)
+        private readonly deletePatientDataAccessForPatientService: DeletePatientDataAccessForPatientService,
     ) {}
 
     public createDataAccessListUseCase(): DataAccessListUseCase {
@@ -50,7 +50,7 @@ export class DoctorUseCasesFactory {
         return new DeleteDataAccessUseCase(
             this.patientDataAccessRepository,
             this.authedUserService,
-            this.deleteDoctorDataAccessService,
+            this.deletePatientDataAccessForPatientService,
         );
     }
 }

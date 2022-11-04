@@ -5,7 +5,7 @@ import {IUserRepository} from 'app/modules/auth/repositories';
 import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service';
 import {IPatientDataAccessEventEmitter} from 'app/modules/patient-data-access/event-emitters/patient-data-access.event-emitter';
 
-export class DeleteDoctorDataAccessService {
+export class DeletePatientDataAccessForDoctorService {
     public constructor(
         private readonly userRepository: IUserRepository,
         private readonly patientDataAccessRepository: IPatientDataAccessRepository,
@@ -14,11 +14,9 @@ export class DeleteDoctorDataAccessService {
         private readonly patientDataAccessEventEmitter: IPatientDataAccessEventEmitter,
     ) {}
 
-    public async deleteDataAccess(user: User, dataAccess: PatientDataAccess): Promise<void> {
-        await this.patientDataAccessSpecification.assertGrantedUserCanDeleteAccess(user, dataAccess);
-
+    public async deleteDataAccess(doctor: User, dataAccess: PatientDataAccess): Promise<void> {
+        await this.patientDataAccessSpecification.assertPatientCanDeleteAccess(doctor, dataAccess);
         await this.patientDataAccessRepository.delete(dataAccess);
-
-        await this.patientDataAccessEventEmitter.emitAccessForDoctorDeleted(user, dataAccess.grantedEmail);
+        await this.patientDataAccessEventEmitter.emitAccessForPatientDeleted(doctor, dataAccess.grantedEmail);
     }
 }
