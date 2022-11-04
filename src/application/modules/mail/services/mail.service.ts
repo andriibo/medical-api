@@ -1,12 +1,10 @@
 import {IMailSenderService} from 'app/modules/mail/services/abstract/mail-sender.service';
-import {Inject, Injectable} from '@nestjs/common';
 import {User} from 'domain/entities';
-import {IMailService} from './abstract/mail.service';
+import {IMailService} from 'app/modules/mail/services/abstract/mail.service';
 import {Email} from 'app/modules/mail/models';
 
-@Injectable()
 export class MailService implements IMailService {
-    public constructor(@Inject(IMailSenderService) private mailerService: IMailSenderService) {}
+    public constructor(private mailerService: IMailSenderService) {}
 
     public async sendInviteToSignUp(patient: User, toEmail: string): Promise<void> {
         const deepLink = `zenzerapp://auth?email=${toEmail}`;

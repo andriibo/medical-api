@@ -36,7 +36,10 @@ import {MailServiceConfig} from 'infrastructure/models';
         },
         {
             provide: IMailService,
-            useClass: MailService,
+            useFactory: (mailSenderService: IMailSenderService) => {
+                return new MailService(mailSenderService);
+            },
+            inject: [IMailSenderService],
         },
     ],
 })

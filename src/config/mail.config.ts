@@ -4,5 +4,5 @@ export const transportOptions = {
 };
 
 export const mailOptions = {
-    from: '"no-reply" <no-reply@medical-api.abnk.uk>',
+    from: `"no-reply" <no-reply@${process.env.MAIL_FROM_DOMAIN}>`,
 };
