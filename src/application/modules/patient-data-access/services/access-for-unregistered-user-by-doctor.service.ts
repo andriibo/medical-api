@@ -5,7 +5,7 @@ import {PatientDataAccessSpecification} from 'app/modules/patient-data-access/sp
 import {PatientDataAccessRequestDirection} from 'domain/entities/patient-data-access.entity';
 import {IPatientDataAccessEventEmitter} from 'app/modules/patient-data-access/event-emitters/patient-data-access.event-emitter';
 
-export class AccessForRegisteredUserService {
+export class AccessForUnregisteredUserByDoctorService {
     public constructor(
         private readonly patientDataAccessRepository: IPatientDataAccessRepository,
         private readonly patientDataAccessEntityMapper: IPatientDataAccessEntityMapper,
@@ -13,19 +13,19 @@ export class AccessForRegisteredUserService {
         private readonly patientDataAccessSpecification: PatientDataAccessSpecification,
     ) {}
 
-    public async initiateDataAccess(patient: User, userToGrant: User): Promise<void> {
-        await this.patientDataAccessSpecification.assertPatientCanGiveAccessForUser(patient, userToGrant);
+    public async initiateDataAccess(doctor: User, email: string): Promise<void> {
+        await this.patientDataAccessSpecification.assertPatientCanGiveAccessForEmail(doctor, email);
 
-        const dataAccess = this.createDataAccess(patient, userToGrant);
+        const dataAccess = this.createDataAccess(doctor, email);
 
         await this.patientDataAccessRepository.create(dataAccess);
 
-        await this.patientDataAccessEventEmitter.emitAccessForRegisteredUserInitiated(patient, userToGrant.email);
+        await this.patientDataAccessEventEmitter.emitAccessForUnregisteredUserInitiatedByDoctor(doctor, email);
     }
 
-    private createDataAccess(patient: User, userToGrant: User): PatientDataAccess {
-        const dataAccess = this.patientDataAccessEntityMapper.mapByPatientAndGrantedUser(patient, userToGrant);
-        dataAccess.direction = PatientDataAccessRequestDirection.FromPatient;
+    private createDataAccess(patient: User, email: string): PatientDataAccess {
+        const dataAccess = this.patientDataAccessEntityMapper.mapByPatientAndGrantedEmail(patient, email);
+        dataAccess.direction = PatientDataAccessRequestDirection.ToPatient;
 
         return dataAccess;
     }
