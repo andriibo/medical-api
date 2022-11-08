@@ -6,7 +6,7 @@ import {Email} from 'app/modules/mail/models';
 export class MailService implements IMailService {
     public constructor(private mailerService: IMailSenderService) {}
 
-    public async sendInviteToSignUpByPatient(patient: User, toEmail: string): Promise<void> {
+    public async sendInviteToSignUpFromPatientToDoctor(patient: User, toEmail: string): Promise<void> {
         const deepLink = `zenzerapp://auth?email=${toEmail}`;
 
         const mail: Email = {
@@ -18,7 +18,7 @@ export class MailService implements IMailService {
         await this.mailerService.sendMail(mail);
     }
 
-    public async sendInviteToSignUpByDoctor(doctor: User, toEmail: string): Promise<void> {
+    public async sendInviteToSignUpFromDoctorToPatient(doctor: User, toEmail: string): Promise<void> {
         const deepLink = `zenzerapp://auth?email=${toEmail}`;
 
         const mail: Email = {

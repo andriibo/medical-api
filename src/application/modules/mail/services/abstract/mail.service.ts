@@ -1,9 +1,9 @@
 import {User} from 'domain/entities';
 
 export interface IMailService {
-    sendInviteToSignUpByPatient(patient: User, toEmail: string): Promise<void>;
+    sendInviteToSignUpFromPatientToDoctor(patient: User, toEmail: string): Promise<void>;
 
-    sendInviteToSignUpByDoctor(patient: User, toEmail: string): Promise<void>;
+    sendInviteToSignUpFromDoctorToPatient(patient: User, toEmail: string): Promise<void>;
 
     sendNotificationThatPatientDataAccessWasInitiatedByPatient(patient: User, toEmail: string): Promise<void>;
 

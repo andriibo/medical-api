@@ -9,8 +9,8 @@ import {
 import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service';
 import {PatientDataAccessSpecification} from 'app/modules/patient-data-access/specifications/patient-data-access.specification';
 import {DeleteDataAccessByPatientService} from 'app/modules/patient-data-access/services/delete-data-access-by-patient.service';
-import {AccessForRegisteredUserByPatientService} from 'app/modules/patient-data-access/services/access-for-registered-user-by-patient.service';
-import {AccessForUnregisteredUserByPatientService} from 'app/modules/patient-data-access/services/access-for-unregistered-user-by-patient.service';
+import {AccessToRegisteredDoctorService} from 'app/modules/patient-data-access/services/access-to-registered-doctor.service';
+import {AccessToUnregisteredPatientService} from 'app/modules/patient-data-access/services/access-to-unregistered-patient.service';
 
 @Injectable()
 export class PatientUseCasesFactory {
@@ -21,10 +21,10 @@ export class PatientUseCasesFactory {
         @Inject(IAuthedUserService) private readonly authedUserService: IAuthedUserService,
         @Inject(PatientDataAccessSpecification)
         private readonly patientDataAccessSpecification: PatientDataAccessSpecification,
-        @Inject(AccessForRegisteredUserByPatientService)
-        private readonly accessForRegisteredUserByPatientService: AccessForRegisteredUserByPatientService,
-        @Inject(AccessForUnregisteredUserByPatientService)
-        private readonly accessForUnregisteredUserByPatientService: AccessForUnregisteredUserByPatientService,
+        @Inject(AccessToRegisteredDoctorService)
+        private readonly accessToRegisteredDoctorService: AccessToRegisteredDoctorService,
+        @Inject(AccessToUnregisteredPatientService)
+        private readonly accessToUnregisteredPatientService: AccessToUnregisteredPatientService,
         @Inject(DeleteDataAccessByPatientService)
         private readonly deleteDataAccessByPatientService: DeleteDataAccessByPatientService,
     ) {}
@@ -33,8 +33,8 @@ export class PatientUseCasesFactory {
         return new InitiateDataAccessUseCase(
             this.userRepository,
             this.authedUserService,
-            this.accessForRegisteredUserByPatientService,
-            this.accessForUnregisteredUserByPatientService,
+            this.accessToRegisteredDoctorService,
+            this.accessToUnregisteredPatientService,
         );
     }
 

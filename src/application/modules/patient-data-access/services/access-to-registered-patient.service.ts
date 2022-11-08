@@ -5,7 +5,7 @@ import {PatientDataAccessSpecification} from 'app/modules/patient-data-access/sp
 import {PatientDataAccessRequestDirection} from 'domain/entities/patient-data-access.entity';
 import {IPatientDataAccessEventEmitter} from 'app/modules/patient-data-access/event-emitters/patient-data-access.event-emitter';
 
-export class AccessForRegisteredUserByDoctorService {
+export class AccessToRegisteredPatientService {
     public constructor(
         private readonly patientDataAccessRepository: IPatientDataAccessRepository,
         private readonly patientDataAccessEntityMapper: IPatientDataAccessEntityMapper,
@@ -20,7 +20,7 @@ export class AccessForRegisteredUserByDoctorService {
 
         await this.patientDataAccessRepository.create(dataAccess);
 
-        await this.patientDataAccessEventEmitter.emitAccessForRegisteredUserInitiatedByDoctor(
+        await this.patientDataAccessEventEmitter.emitDoctorInitiatedAccessToRegisteredPatient(
             doctor,
             userToGrant.email,
         );

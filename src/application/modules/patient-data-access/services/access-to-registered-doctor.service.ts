@@ -5,7 +5,7 @@ import {PatientDataAccessSpecification} from 'app/modules/patient-data-access/sp
 import {PatientDataAccessRequestDirection} from 'domain/entities/patient-data-access.entity';
 import {IPatientDataAccessEventEmitter} from 'app/modules/patient-data-access/event-emitters/patient-data-access.event-emitter';
 
-export class AccessForUnregisteredUserByPatientService {
+export class AccessToRegisteredDoctorService {
     public constructor(
         private readonly patientDataAccessRepository: IPatientDataAccessRepository,
         private readonly patientDataAccessEntityMapper: IPatientDataAccessEntityMapper,
@@ -13,18 +13,18 @@ export class AccessForUnregisteredUserByPatientService {
         private readonly patientDataAccessSpecification: PatientDataAccessSpecification,
     ) {}
 
-    public async initiateDataAccess(patient: User, email: string): Promise<void> {
-        await this.patientDataAccessSpecification.assertPatientCanGiveAccessForEmail(patient, email);
+    public async initiateDataAccess(patient: User, userToGrant: User): Promise<void> {
+        await this.patientDataAccessSpecification.assertPatientCanGiveAccessForUser(patient, userToGrant);
 
-        const dataAccess = this.createDataAccess(patient, email);
+        const dataAccess = this.createDataAccess(patient, userToGrant);
 
         await this.patientDataAccessRepository.create(dataAccess);
 
-        await this.patientDataAccessEventEmitter.emitAccessForUnregisteredUserInitiatedByPatient(patient, email);
+        await this.patientDataAccessEventEmitter.emitPatientInitiatedAccessForRegisteredDoctor(patient, userToGrant.email);
     }
 
-    private createDataAccess(patient: User, email: string): PatientDataAccess {
-        const dataAccess = this.patientDataAccessEntityMapper.mapByPatientAndGrantedEmail(patient, email);
+    private createDataAccess(patient: User, userToGrant: User): PatientDataAccess {
+        const dataAccess = this.patientDataAccessEntityMapper.mapByPatientAndGrantedUser(patient, userToGrant);
         dataAccess.direction = PatientDataAccessRequestDirection.FromPatient;
 
         return dataAccess;

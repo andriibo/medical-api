@@ -1,15 +1,15 @@
 import {IUserRepository} from 'app/modules/auth/repositories';
 import {InitiateDataAccessDto} from 'domain/dtos/request/data-access/initiate-data-access.dto';
 import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service';
-import {AccessForRegisteredUserByPatientService} from 'app/modules/patient-data-access/services/access-for-registered-user-by-patient.service';
-import {AccessForUnregisteredUserByPatientService} from 'app/modules/patient-data-access/services/access-for-unregistered-user-by-patient.service';
+import {AccessToRegisteredDoctorService} from 'app/modules/patient-data-access/services/access-to-registered-doctor.service';
+import {AccessToUnregisteredPatientService} from 'app/modules/patient-data-access/services/access-to-unregistered-patient.service';
 
 export class InitiateDataAccessUseCase {
     public constructor(
         private readonly userRepository: IUserRepository,
         private readonly authedUserService: IAuthedUserService,
-        private readonly accessForRegisteredUserByPatientService: AccessForRegisteredUserByPatientService,
-        private readonly accessForUnregisteredUserByPatientService: AccessForUnregisteredUserByPatientService,
+        private readonly accessToRegisteredDoctorService: AccessToRegisteredDoctorService,
+        private readonly accessToUnregisteredPatientService: AccessToUnregisteredPatientService,
     ) {}
 
     public async initiateDataAccess(dto: InitiateDataAccessDto): Promise<void> {
@@ -17,9 +17,9 @@ export class InitiateDataAccessUseCase {
         const userToGrant = await this.userRepository.getOneByEmail(dto.email);
 
         if (userToGrant === null) {
-            await this.accessForUnregisteredUserByPatientService.initiateDataAccess(patient, dto.email);
+            await this.accessToUnregisteredPatientService.initiateDataAccess(patient, dto.email);
         } else {
-            await this.accessForRegisteredUserByPatientService.initiateDataAccess(patient, userToGrant);
+            await this.accessToRegisteredDoctorService.initiateDataAccess(patient, userToGrant);
         }
     }
 }

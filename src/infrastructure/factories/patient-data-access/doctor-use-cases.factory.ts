@@ -11,7 +11,7 @@ import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service'
 import {PatientDataAccessSpecification} from 'app/modules/patient-data-access/specifications/patient-data-access.specification';
 import {DeleteDataAccessByDoctorService} from 'app/modules/patient-data-access/services/delete-data-access-by-doctor.service';
 import {InitiateDataAccessUseCase} from 'app/modules/patient-data-access/use-cases/doctor/initiate-data-access.use-case';
-import {AccessForRegisteredUserByDoctorService} from 'app/modules/patient-data-access/services/access-for-registered-user-by-doctor.service';
+import {AccessToRegisteredPatientService} from 'app/modules/patient-data-access/services/access-to-registered-patient.service';
 
 @Injectable()
 export class DoctorUseCasesFactory {
@@ -24,15 +24,15 @@ export class DoctorUseCasesFactory {
         private readonly patientDataAccessSpecification: PatientDataAccessSpecification,
         @Inject(DeleteDataAccessByDoctorService)
         private readonly deleteDataAccessByDoctorService: DeleteDataAccessByDoctorService,
-        @Inject(AccessForRegisteredUserByDoctorService)
-        private readonly accessForRegisteredUserByDoctorService: AccessForRegisteredUserByDoctorService,
+        @Inject(AccessToRegisteredPatientService)
+        private readonly accessToRegisteredPatientService: AccessToRegisteredPatientService,
     ) {}
 
     public createInitiateDataAccessUseCase(): InitiateDataAccessUseCase {
         return new InitiateDataAccessUseCase(
             this.userRepository,
             this.authedUserService,
-            this.accessForRegisteredUserByDoctorService,
+            this.accessToRegisteredPatientService,
         );
     }
 
