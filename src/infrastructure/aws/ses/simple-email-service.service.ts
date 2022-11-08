@@ -4,6 +4,7 @@ import {SendEmailCommand, SESClient} from '@aws-sdk/client-ses';
 import {ConfigService} from '@nestjs/config';
 import {Email} from 'app/modules/mail/models';
 import {mailOptions} from 'config/mail.config';
+import {InfrastructureError} from 'app/errors';
 
 interface AwsProviderConfig {
     region: string;
@@ -52,6 +53,11 @@ export class SimpleEmailService implements IMailSenderService {
             }
         });
 
-        await this.sesClient.send(command);
+        try {
+            await this.sesClient.send(command);
+        } catch (error) {
+            console.log(error.message);
+            throw new InfrastructureError('Email not sent, please contact support');
+        }
     }
 }
