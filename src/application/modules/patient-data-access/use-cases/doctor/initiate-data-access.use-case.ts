@@ -2,7 +2,6 @@ import {IUserRepository} from 'app/modules/auth/repositories';
 import {InitiateDataAccessDto} from 'domain/dtos/request/data-access/initiate-data-access.dto';
 import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service';
 import {AccessForRegisteredUserByDoctorService} from 'app/modules/patient-data-access/services/access-for-registered-user-by-doctor.service';
-import {BadRequestException} from '@nestjs/common';
 
 export class InitiateDataAccessUseCase {
     public constructor(
@@ -16,7 +15,7 @@ export class InitiateDataAccessUseCase {
         const userToGrant = await this.userRepository.getOneByEmail(dto.email);
 
         if (userToGrant === null) {
-            throw new BadRequestException('Unregistered user.');
+            throw new Error('Unregistered user.');
         }
 
         await this.accessForRegisteredUserByDoctorService.initiateDataAccess(doctor, userToGrant);
