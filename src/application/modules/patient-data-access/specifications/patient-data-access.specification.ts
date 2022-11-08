@@ -56,8 +56,20 @@ export class PatientDataAccessSpecification {
         }
     }
 
-    public async assertGrantedUserCanApproveAccess(grantedUser: User, dataAccess: PatientDataAccess): Promise<void> {
-        const isUserGranted = dataAccess.grantedUserId === grantedUser.id;
+    public async assertPatientCanApproveAccess(patient: User, dataAccess: PatientDataAccess): Promise<void> {
+        const isUserGranted = dataAccess.grantedUserId === patient.id;
+        const isAccessStatusInitiated = dataAccess.status === PatientDataAccessStatus.Initiated;
+        const isGrantedUserRequested = dataAccess.direction === PatientDataAccessRequestDirection.ToPatient;
+
+        const isApproveAllowed = isUserGranted && isAccessStatusInitiated && isGrantedUserRequested;
+
+        if (!isApproveAllowed) {
+            throw new PatientDataAccessSpecificationError('Approval Not Allowed.');
+        }
+    }
+
+    public async assertDoctorCanApproveAccess(doctor: User, dataAccess: PatientDataAccess): Promise<void> {
+        const isUserGranted = dataAccess.grantedUserId === doctor.id;
         const isAccessStatusInitiated = dataAccess.status === PatientDataAccessStatus.Initiated;
         const isGrantedUserRequested = dataAccess.direction === PatientDataAccessRequestDirection.FromPatient;
 

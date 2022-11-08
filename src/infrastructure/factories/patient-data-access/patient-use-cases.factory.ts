@@ -10,9 +10,8 @@ import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service'
 import {PatientDataAccessSpecification} from 'app/modules/patient-data-access/specifications/patient-data-access.specification';
 import {AccessForRegisteredUserService} from 'app/modules/patient-data-access/services/access-for-registered-user.service';
 import {AccessForUnregisteredUserService} from 'app/modules/patient-data-access/services/access-for-unregistered-user.service';
-import {
-    DeleteDataAccessByPatientService
-} from "app/modules/patient-data-access/services/delete-data-access-by-patient.service";
+import {DeleteDataAccessByPatientService} from 'app/modules/patient-data-access/services/delete-data-access-by-patient.service';
+import {ApproveDataAccessUseCase} from 'app/modules/patient-data-access/use-cases/patient/approve-data-access.use-case';
 
 @Injectable()
 export class PatientUseCasesFactory {
@@ -37,6 +36,15 @@ export class PatientUseCasesFactory {
             this.authedUserService,
             this.accessForRegisteredUserService,
             this.accessForUnregisteredUserService,
+        );
+    }
+
+    public createApproveDataAccessUseCase(): ApproveDataAccessUseCase {
+        return new ApproveDataAccessUseCase(
+            this.userRepository,
+            this.patientDataAccessRepository,
+            this.authedUserService,
+            this.patientDataAccessSpecification,
         );
     }
 

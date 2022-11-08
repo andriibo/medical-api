@@ -8,7 +8,7 @@ import {
     Delete,
     Param,
     ParseUUIDPipe,
-    HttpCode,
+    HttpCode, Patch,
 } from '@nestjs/common';
 import {ApiBearerAuth, ApiResponse, ApiTags} from '@nestjs/swagger';
 import {Roles} from 'presentation/guards';
@@ -33,6 +33,21 @@ export class PatientController {
 
         try {
             await useCase.initiateDataAccess(requestBody);
+        } catch (error) {
+            throw new BadRequestException(error.message);
+        }
+    }
+
+    @Roles('Patient')
+    @Patch('data-access/approve/:accessId')
+    @HttpCode(HttpStatus.OK)
+    @HttpCode(HttpStatus.BAD_REQUEST)
+    @ApiResponse({status: HttpStatus.OK})
+    public async approveDataAccess(@Param('accessId', ParseUUIDPipe) accessId: string): Promise<void> {
+        const useCase = this.patientUseCasesFactory.createApproveDataAccessUseCase();
+
+        try {
+            await useCase.approveDataAccess(accessId);
         } catch (error) {
             throw new BadRequestException(error.message);
         }

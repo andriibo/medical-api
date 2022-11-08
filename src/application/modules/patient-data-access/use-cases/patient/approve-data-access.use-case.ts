@@ -17,7 +17,7 @@ export class ApproveDataAccessUseCase {
         const user = await this.authedUserService.getUser();
         const dataAccess = await this.getDataAccess(accessId);
 
-        await this.patientDataAccessSpecification.assertDoctorCanApproveAccess(user, dataAccess);
+        await this.patientDataAccessSpecification.assertPatientCanApproveAccess(user, dataAccess);
 
         dataAccess.status = PatientDataAccessStatus.Approved;
 
