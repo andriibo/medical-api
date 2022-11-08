@@ -3,7 +3,7 @@ import {User} from 'domain/entities';
 export interface IMailService {
     sendInviteToSignUpFromPatientToDoctor(patient: User, toEmail: string): Promise<void>;
 
-    sendInviteToSignUpFromDoctorToPatient(patient: User, toEmail: string): Promise<void>;
+    sendInviteToSignUpFromDoctorToPatient(doctor: User, toEmail: string): Promise<void>;
 
     sendNotificationThatPatientDataAccessWasInitiatedByPatient(patient: User, toEmail: string): Promise<void>;
 

@@ -11,7 +11,7 @@ import {PatientDataAccessEntityMapper} from 'infrastructure/mappers/patient-data
 import {AuthModule} from 'infrastructure/modules/auth.module';
 import {MailModule} from 'infrastructure/modules/mail.module';
 import {PatientDataAccessSpecification} from 'app/modules/patient-data-access/specifications/patient-data-access.specification';
-import {AccessToRegisteredDoctorService} from 'app/modules/patient-data-access/services/access-to-registered-doctor.service';
+import {AccessForRegisteredDoctorService} from 'app/modules/patient-data-access/services/access-for-registered-doctor.service';
 import {AccessToUnregisteredPatientService} from 'app/modules/patient-data-access/services/access-to-unregistered-patient.service';
 import {AccessToGrantedUserBindingService} from 'app/modules/patient-data-access/services/access-to-granted-user-binding.service';
 import {IPatientDataAccessEventEmitter} from 'app/modules/patient-data-access/event-emitters/patient-data-access.event-emitter';
@@ -52,14 +52,14 @@ import {AccessToRegisteredPatientService} from 'app/modules/patient-data-access/
             inject: [IUserRepository, IPatientDataAccessRepository],
         },
         {
-            provide: AccessToRegisteredDoctorService,
+            provide: AccessForRegisteredDoctorService,
             useFactory: (
                 patientDataAccessRepository: IPatientDataAccessRepository,
                 patientDataAccessEntityMapper: IPatientDataAccessEntityMapper,
                 patientDataAccessEventEmitter: IPatientDataAccessEventEmitter,
                 patientDataAccessSpecification: PatientDataAccessSpecification,
             ) => {
-                return new AccessToRegisteredDoctorService(
+                return new AccessForRegisteredDoctorService(
                     patientDataAccessRepository,
                     patientDataAccessEntityMapper,
                     patientDataAccessEventEmitter,

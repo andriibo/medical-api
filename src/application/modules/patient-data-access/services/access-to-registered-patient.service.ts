@@ -13,15 +13,15 @@ export class AccessToRegisteredPatientService {
         private readonly patientDataAccessSpecification: PatientDataAccessSpecification,
     ) {}
 
-    public async initiateDataAccess(doctor: User, userToGrant: User): Promise<void> {
-        await this.patientDataAccessSpecification.assertPatientCanGiveAccessForUser(doctor, userToGrant);
+    public async initiateDataAccess(patient: User, userToGrant: User): Promise<void> {
+        await this.patientDataAccessSpecification.assertPatientCanGiveAccessForUser(patient, userToGrant);
 
-        const dataAccess = this.createDataAccess(doctor, userToGrant);
+        const dataAccess = this.createDataAccess(patient, userToGrant);
 
         await this.patientDataAccessRepository.create(dataAccess);
 
         await this.patientDataAccessEventEmitter.emitDoctorInitiatedAccessToRegisteredPatient(
-            doctor,
+            patient,
             userToGrant.email,
         );
     }

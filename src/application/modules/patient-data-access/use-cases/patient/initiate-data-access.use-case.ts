@@ -1,14 +1,14 @@
 import {IUserRepository} from 'app/modules/auth/repositories';
 import {InitiateDataAccessDto} from 'domain/dtos/request/data-access/initiate-data-access.dto';
 import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service';
-import {AccessToRegisteredDoctorService} from 'app/modules/patient-data-access/services/access-to-registered-doctor.service';
+import {AccessForRegisteredDoctorService} from 'app/modules/patient-data-access/services/access-for-registered-doctor.service';
 import {AccessToUnregisteredPatientService} from 'app/modules/patient-data-access/services/access-to-unregistered-patient.service';
 
 export class InitiateDataAccessUseCase {
     public constructor(
         private readonly userRepository: IUserRepository,
         private readonly authedUserService: IAuthedUserService,
-        private readonly accessToRegisteredDoctorService: AccessToRegisteredDoctorService,
+        private readonly accessForRegisteredDoctorService: AccessForRegisteredDoctorService,
         private readonly accessToUnregisteredPatientService: AccessToUnregisteredPatientService,
     ) {}
 
@@ -19,7 +19,7 @@ export class InitiateDataAccessUseCase {
         if (userToGrant === null) {
             await this.accessToUnregisteredPatientService.initiateDataAccess(patient, dto.email);
         } else {
-            await this.accessToRegisteredDoctorService.initiateDataAccess(patient, userToGrant);
+            await this.accessForRegisteredDoctorService.initiateDataAccess(patient, userToGrant);
         }
     }
 }
