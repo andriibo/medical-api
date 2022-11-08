@@ -44,10 +44,22 @@ export class PatientDataAccessSpecification {
         }
     }
 
-    public async assertGrantedUserCanRefuseAccess(grantedUser: User, dataAccess: PatientDataAccess): Promise<void> {
-        const isUserGranted = dataAccess.grantedUserId === grantedUser.id;
+    public async assertPatientCanRefuseAccess(patient: User, dataAccess: PatientDataAccess): Promise<void> {
+        const isUserGranted = dataAccess.grantedUserId === patient.id;
         const isAccessStatusInitiated = dataAccess.status === PatientDataAccessStatus.Initiated;
         const isGrantedUserRequested = dataAccess.direction === PatientDataAccessRequestDirection.FromPatient;
+
+        const isRefuseAllowed = isUserGranted && isAccessStatusInitiated && isGrantedUserRequested;
+
+        if (!isRefuseAllowed) {
+            throw new PatientDataAccessSpecificationError('Refuse Not Allowed.');
+        }
+    }
+
+    public async assertDoctorCanRefuseAccess(doctor: User, dataAccess: PatientDataAccess): Promise<void> {
+        const isUserGranted = dataAccess.grantedUserId === doctor.id;
+        const isAccessStatusInitiated = dataAccess.status === PatientDataAccessStatus.Initiated;
+        const isGrantedUserRequested = dataAccess.direction === PatientDataAccessRequestDirection.ToPatient;
 
         const isRefuseAllowed = isUserGranted && isAccessStatusInitiated && isGrantedUserRequested;
 
