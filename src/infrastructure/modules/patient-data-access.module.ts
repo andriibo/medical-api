@@ -20,7 +20,6 @@ import {PatientDataAccessListener} from 'infrastructure/listeners';
 import {DeleteDataAccessByPatientService} from 'app/modules/patient-data-access/services/delete-data-access-by-patient.service';
 import {DeleteDataAccessByDoctorService} from 'app/modules/patient-data-access/services/delete-data-access-by-doctor.service';
 import {AccessForRegisteredUserByDoctorService} from 'app/modules/patient-data-access/services/access-for-registered-user-by-doctor.service';
-import {AccessForUnregisteredUserByDoctorService} from 'app/modules/patient-data-access/services/access-for-unregistered-user-by-doctor.service';
 
 @Module({
     imports: [TypeOrmModule.forFeature([PatientDataAccessModel]), MailModule, AuthModule],
@@ -105,28 +104,6 @@ import {AccessForUnregisteredUserByDoctorService} from 'app/modules/patient-data
                 patientDataAccessSpecification: PatientDataAccessSpecification,
             ) => {
                 return new AccessForUnregisteredUserByPatientService(
-                    patientDataAccessRepository,
-                    patientDataAccessEntityMapper,
-                    patientDataAccessEventEmitter,
-                    patientDataAccessSpecification,
-                );
-            },
-            inject: [
-                IPatientDataAccessRepository,
-                IPatientDataAccessEntityMapper,
-                IPatientDataAccessEventEmitter,
-                PatientDataAccessSpecification,
-            ],
-        },
-        {
-            provide: AccessForUnregisteredUserByDoctorService,
-            useFactory: (
-                patientDataAccessRepository: IPatientDataAccessRepository,
-                patientDataAccessEntityMapper: IPatientDataAccessEntityMapper,
-                patientDataAccessEventEmitter: IPatientDataAccessEventEmitter,
-                patientDataAccessSpecification: PatientDataAccessSpecification,
-            ) => {
-                return new AccessForUnregisteredUserByDoctorService(
                     patientDataAccessRepository,
                     patientDataAccessEntityMapper,
                     patientDataAccessEventEmitter,
