@@ -21,6 +21,7 @@ import {
 } from 'infrastructure/modules';
 import {AssignUserMiddleware} from 'presentation/middlewares/assign-user.middleware';
 import {EventEmitterModule} from '@nestjs/event-emitter';
+import {EventsModule} from './events/events.module';
 
 const APP_MODULES_IMPORT = [
     AuthModule,
@@ -55,6 +56,7 @@ const INTERCEPTORS = [
             isGlobal: true,
         }),
         EventEmitterModule.forRoot(),
+        EventsModule,
         ...APP_MODULES_IMPORT,
     ],
     exports: [TypeOrmModule],

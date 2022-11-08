@@ -12,6 +12,7 @@ services:
       - /usr/src/app/node_modules
     ports:
       - ${SERVER_PORT}:${SERVER_PORT}
+      - 3001:3001
       - 9229:9229
     command: npm run start:debug
     env_file:
@@ -45,20 +46,20 @@ services:
       - medical-db
     networks:
       - medical-network
-  mailhog:
-    image: mailhog/mailhog:latest
-    container_name: medical.mailhog
-    restart: always
-    environment:
-      - MH_STORAGE=maildir
-      - MH_MAILDIR_PATH=maildir
-    volumes:
-      - ./mailhog:/home/mailhog
-    ports:
-      - ${MAIL_SMTP_PORT}:1025
-      - ${MAIL_WEB_PORT}:8025
-    networks:
-      - medical-network
+#  mailhog:
+#    image: mailhog/mailhog:latest
+#    container_name: medical.mailhog
+#    restart: always
+#    environment:
+#      - MH_STORAGE=maildir
+#      - MH_MAILDIR_PATH=maildir
+#    volumes:
+#      - ./mailhog:/home/mailhog
+#    ports:
+#      - ${MAIL_SMTP_PORT}:1025
+#      - ${MAIL_WEB_PORT}:8025
+#    networks:
+#      - medical-network
 networks:
   medical-network:
 volumes:
