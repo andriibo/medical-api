@@ -10,9 +10,25 @@ import {
     GetGroupCommand,
     AdminDeleteUserCommand,
     AuthenticationResultType,
+    ForgotPasswordCommand,
+    ConfirmForgotPasswordCommand,
+    ResendConfirmationCodeCommand,
+    ChangePasswordCommand,
+    UpdateUserAttributesCommand,
+    VerifyUserAttributeCommand,
 } from '@aws-sdk/client-cognito-identity-provider';
 import {ConfigService} from '@nestjs/config';
-import {ConfirmSignUpModel, SignInModel, SignUpModel, IAuthModel, AuthResultModel} from 'app/modules/auth/models';
+import {
+    ConfirmSignUpModel,
+    SignInModel,
+    SignUpModel,
+    IAuthModel,
+    AuthResultModel,
+    ChangeEmailModel,
+    ChangePasswordModel,
+    ConfirmForgotPasswordModel,
+    ConfirmChangeEmailModel,
+} from 'app/modules/auth/models';
 import {IAuthService} from 'app/modules/auth/services/auth.service';
 import * as jwt from 'jsonwebtoken';
 import * as jwkToBuffer from 'jwk-to-pem';
@@ -116,6 +132,20 @@ export class CognitoService implements IAuthService {
         }
     }
 
+    public async resendConfirmSignUpCode(userName: string): Promise<void> {
+        const command = new ResendConfirmationCodeCommand({
+            Username: userName,
+            ClientId: this.config.clientId,
+        });
+
+        try {
+            await this.cognitoClient.send(command);
+        } catch (error) {
+            console.error(error.message);
+            throw new AuthServiceError(error.message);
+        }
+    }
+
     public async deleteUser(user: User): Promise<void> {
         const command = new AdminDeleteUserCommand({
             UserPoolId: this.config.userPoolId,
@@ -134,7 +164,7 @@ export class CognitoService implements IAuthService {
         const tokenISS = `https://cognito-idp.${this.config.region}.amazonaws.com/${this.config.userPoolId}`;
         const response = await fetch(`${tokenISS}/.well-known/jwks.json`);
         const userPoolJwk = await response.json();
-        const pem = jwkToBuffer(userPoolJwk.keys[0]);
+        const pem = jwkToBuffer(userPoolJwk.keys[USER_POOL_JWK.ID_TOKEN]);
 
         return await new Promise((resolve, reject) => {
             jwt.verify(token, pem, {algorithms: ['RS256']}, (err, decodedToken) => {
@@ -145,6 +175,87 @@ export class CognitoService implements IAuthService {
                 }
             });
         });
+    }
+
+    public async forgotPassword(userName: string): Promise<string> {
+        const command = new ForgotPasswordCommand({
+            ClientId: this.config.clientId,
+            Username: userName,
+        });
+
+        try {
+            const response = await this.cognitoClient.send(command);
+
+            return `Confirmation code was send to ${response.CodeDeliveryDetails.Destination}`;
+        } catch (error) {
+            console.error(error.message);
+            throw new AuthServiceError(error.message);
+        }
+    }
+
+    public async confirmForgotPassword(confirmForgotPasswordModel: ConfirmForgotPasswordModel): Promise<void> {
+        const command = new ConfirmForgotPasswordCommand({
+            ClientId: this.config.clientId,
+            Username: confirmForgotPasswordModel.userName,
+            ConfirmationCode: confirmForgotPasswordModel.code,
+            Password: confirmForgotPasswordModel.password,
+        });
+
+        try {
+            await this.cognitoClient.send(command);
+        } catch (error) {
+            console.error(error.message);
+            throw new AuthServiceError(error.message);
+        }
+    }
+
+    public async changePassword(changePasswordModel: ChangePasswordModel): Promise<void> {
+        const command = new ChangePasswordCommand({
+            AccessToken: changePasswordModel.accessToken,
+            PreviousPassword: changePasswordModel.currentPassword,
+            ProposedPassword: changePasswordModel.newPassword,
+        });
+
+        try {
+            await this.cognitoClient.send(command);
+        } catch (error) {
+            console.error(error.message);
+            throw new AuthServiceError(error.message);
+        }
+    }
+
+    public async changeEmail(changeEmailModel: ChangeEmailModel): Promise<void> {
+        const command = new UpdateUserAttributesCommand({
+            AccessToken: changeEmailModel.accessToken,
+            UserAttributes: [
+                {
+                    Name: USER_ATTRIBUTES.EMIAL,
+                    Value: changeEmailModel.newEmail,
+                }
+            ],
+        });
+
+        try {
+            await this.cognitoClient.send(command);
+        } catch (error) {
+            console.error(error.message);
+            throw new AuthServiceError(error.message);
+        }
+    }
+
+    public async confirmChangeEmail(confirmChangeEmailModel: ConfirmChangeEmailModel): Promise<void> {
+        const command = new VerifyUserAttributeCommand({
+            AccessToken: confirmChangeEmailModel.accessToken,
+            AttributeName: USER_ATTRIBUTES.EMIAL,
+            Code: confirmChangeEmailModel.code,
+        });
+
+        try {
+            await this.cognitoClient.send(command);
+        } catch (error) {
+            console.error(error.message);
+            throw new AuthServiceError(error.message);
+        }
     }
 
     private getAuthResult(authResult: AuthenticationResultType): AuthResultModel {
@@ -227,7 +338,9 @@ export class CognitoService implements IAuthService {
     }
 
     private isTokenAudienceValid(decodedToken): boolean {
-        return decodedToken.aud === this.config.clientId;
+        return decodedToken.token_use == 'access'
+            ? decodedToken.client_id === this.config.clientId
+            : decodedToken.aud === this.config.clientId;
     }
 
     private isTokenIssuerValid(decodedToken, tokenISS): boolean {
@@ -237,7 +350,13 @@ export class CognitoService implements IAuthService {
 
 class USER_ATTRIBUTES {
     public static readonly USER_NAME = 'USERNAME';
+    public static readonly EMIAL = 'email';
     public static readonly PASSWORD = 'PASSWORD';
 
     public static readonly UPDATED_AT = 'updated_at';
+}
+
+class USER_POOL_JWK {
+    public static readonly AUTH_TOKEN = 1;
+    public static readonly ID_TOKEN = 0;
 }
