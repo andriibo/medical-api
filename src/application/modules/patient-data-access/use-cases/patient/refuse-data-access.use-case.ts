@@ -17,7 +17,7 @@ export class RefuseDataAccessUseCase {
         const user = await this.authedUserService.getUser();
         const dataAccess = await this.getDataAccess(accessId);
 
-        await this.patientDataAccessSpecification.assertDoctorCanRefuseAccess(user, dataAccess);
+        await this.patientDataAccessSpecification.assertPatientCanRefuseAccess(user, dataAccess);
 
         dataAccess.status = PatientDataAccessStatus.Refused;
 
