@@ -8,6 +8,7 @@ import {ChangeEmailModel} from './change-email.model';
 import {ChangePasswordModel} from './change-password.model';
 import {ConfirmForgotPasswordModel} from './confirm-forgot-password.model';
 import {ConfirmChangeEmailModel} from './confirm-change-email.model';
+import {ForgotPasswordResponseModel} from './forgot-password-result.model';
 
 export {
     ConfirmSignUpModel,
@@ -20,4 +21,5 @@ export {
     ChangePasswordModel,
     ConfirmForgotPasswordModel,
     ConfirmChangeEmailModel,
+    ForgotPasswordResponseModel,
 };

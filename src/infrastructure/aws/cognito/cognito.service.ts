@@ -16,6 +16,7 @@ import {
     ChangePasswordCommand,
     UpdateUserAttributesCommand,
     VerifyUserAttributeCommand,
+    ForgotPasswordResponse,
 } from '@aws-sdk/client-cognito-identity-provider';
 import {ConfigService} from '@nestjs/config';
 import {
@@ -28,6 +29,7 @@ import {
     ChangePasswordModel,
     ConfirmForgotPasswordModel,
     ConfirmChangeEmailModel,
+    ForgotPasswordResponseModel,
 } from 'app/modules/auth/models';
 import {IAuthService} from 'app/modules/auth/services/auth.service';
 import * as jwt from 'jsonwebtoken';
@@ -177,7 +179,7 @@ export class CognitoService implements IAuthService {
         });
     }
 
-    public async forgotPassword(userName: string): Promise<string> {
+    public async forgotPassword(userName: string): Promise<ForgotPasswordResponseModel> {
         const command = new ForgotPasswordCommand({
             ClientId: this.config.clientId,
             Username: userName,
@@ -186,7 +188,7 @@ export class CognitoService implements IAuthService {
         try {
             const response = await this.cognitoClient.send(command);
 
-            return `Confirmation code was send to ${response.CodeDeliveryDetails.Destination} if it registered in the system.`;
+            return this.getForgotPasswordResult(response);
         } catch (error) {
             console.error(error.message);
             throw new AuthServiceError(error.message);
@@ -266,6 +268,14 @@ export class CognitoService implements IAuthService {
         return authResultModel;
     }
 
+    private getForgotPasswordResult(forgotPasswordResponse: ForgotPasswordResponse): ForgotPasswordResponseModel {
+        return {
+            destination: forgotPasswordResponse?.CodeDeliveryDetails?.Destination,
+            attributeName: forgotPasswordResponse?.CodeDeliveryDetails?.AttributeName,
+            deliveryMedium: forgotPasswordResponse?.CodeDeliveryDetails?.DeliveryMedium,
+        };
+    }
+
     private async isGroupExist(groupName: string): Promise<boolean> {
         const command = new GetGroupCommand({
             GroupName: groupName,
@@ -338,7 +348,7 @@ export class CognitoService implements IAuthService {
     }
 
     private isTokenAudienceValid(decodedToken): boolean {
-        return decodedToken.token_use == 'access'
+        return decodedToken.token_use === 'access'
             ? decodedToken.client_id === this.config.clientId
             : decodedToken.aud === this.config.clientId;
     }

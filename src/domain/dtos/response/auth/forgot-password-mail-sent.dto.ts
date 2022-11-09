@@ -1,9 +1,15 @@
-export class ForgotPasswordMailSentDto {
-    public message: string;
+import {ForgotPasswordResponseModel} from 'app/modules/auth/models';
 
-    public static fromResponse(responseMessage: string): ForgotPasswordMailSentDto {
+export class ForgotPasswordMailSentDto {
+    public attributeName: string;
+    public deliveryMedium: string;
+    public destination: string;
+
+    public static fromResponse(response: ForgotPasswordResponseModel): ForgotPasswordMailSentDto {
         const dto = new ForgotPasswordMailSentDto();
-        dto.message = responseMessage;
+        dto.attributeName = response.attributeName;
+        dto.deliveryMedium = response.deliveryMedium;
+        dto.destination = response.destination;
 
         return dto;
     }

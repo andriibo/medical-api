@@ -3,5 +3,11 @@ import {ForgotPasswordMailSentDto} from 'domain/dtos/response/auth/forgot-passwo
 
 export class ForgotPasswordResponseView extends ForgotPasswordMailSentDto {
     @ApiProperty()
-    public message: string;
+    public attributeName: string;
+
+    @ApiProperty()
+    public deliveryMedium: string;
+
+    @ApiProperty()
+    public destination: string;
 }
