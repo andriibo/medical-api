@@ -44,10 +44,10 @@ export class PatientDataAccessSpecification {
         }
     }
 
-    public async assertPatientCanRefuseAccess(doctor: User, dataAccess: PatientDataAccess): Promise<void> {
-        const isUserGranted = dataAccess.grantedUserId === doctor.id;
+    public async assertGrantedUserCanRefuseAccess(grantedUser: User, dataAccess: PatientDataAccess): Promise<void> {
+        const isUserGranted = dataAccess.grantedUserId === grantedUser.id;
         const isAccessStatusInitiated = dataAccess.status === PatientDataAccessStatus.Initiated;
-        const isGrantedUserRequested = dataAccess.direction === PatientDataAccessRequestDirection.ToPatient;
+        const isGrantedUserRequested = dataAccess.direction === PatientDataAccessRequestDirection.FromPatient;
 
         const isRefuseAllowed = isUserGranted && isAccessStatusInitiated && isGrantedUserRequested;
 
@@ -56,12 +56,12 @@ export class PatientDataAccessSpecification {
         }
     }
 
-    public async assertDoctorCanRefuseAccess(patient: User, dataAccess: PatientDataAccess): Promise<void> {
-        const isUserGranted = dataAccess.grantedUserId === patient.id;
+    public async assertPatientCanRefuseAccess(patient: User, dataAccess: PatientDataAccess): Promise<void> {
+        const isPatient = dataAccess.patientUserId === patient.id;
         const isAccessStatusInitiated = dataAccess.status === PatientDataAccessStatus.Initiated;
-        const isGrantedUserRequested = dataAccess.direction === PatientDataAccessRequestDirection.FromPatient;
+        const isPatientRequested = dataAccess.direction === PatientDataAccessRequestDirection.ToPatient;
 
-        const isRefuseAllowed = isUserGranted && isAccessStatusInitiated && isGrantedUserRequested;
+        const isRefuseAllowed = isPatient && isAccessStatusInitiated && isPatientRequested;
 
         if (!isRefuseAllowed) {
             throw new PatientDataAccessSpecificationError('Refuse Not Allowed.');

@@ -41,7 +41,6 @@ export class PatientUseCasesFactory {
 
     public createRefuseDataAccessUseCase(): RefuseDataAccessUseCase {
         return new RefuseDataAccessUseCase(
-            this.userRepository,
             this.patientDataAccessRepository,
             this.authedUserService,
             this.patientDataAccessSpecification,

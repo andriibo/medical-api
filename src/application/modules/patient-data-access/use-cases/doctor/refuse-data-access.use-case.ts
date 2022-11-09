@@ -1,4 +1,3 @@
-import {IUserRepository} from 'app/modules/auth/repositories';
 import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repositories';
 import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service';
 import {PatientDataAccessSpecification} from 'app/modules/patient-data-access/specifications/patient-data-access.specification';
@@ -7,7 +6,6 @@ import {EntityNotFoundError} from 'app/errors/entity-not-found.error';
 
 export class RefuseDataAccessUseCase {
     public constructor(
-        private readonly userRepository: IUserRepository,
         private readonly patientDataAccessRepository: IPatientDataAccessRepository,
         private readonly authedUserService: IAuthedUserService,
         private readonly patientDataAccessSpecification: PatientDataAccessSpecification,
@@ -17,7 +15,7 @@ export class RefuseDataAccessUseCase {
         const user = await this.authedUserService.getUser();
         const dataAccess = await this.getDataAccess(accessId);
 
-        await this.patientDataAccessSpecification.assertDoctorCanRefuseAccess(user, dataAccess);
+        await this.patientDataAccessSpecification.assertGrantedUserCanRefuseAccess(user, dataAccess);
 
         dataAccess.status = PatientDataAccessStatus.Refused;
 
