@@ -186,7 +186,7 @@ export class CognitoService implements IAuthService {
         try {
             const response = await this.cognitoClient.send(command);
 
-            return `Confirmation code was send to ${response.CodeDeliveryDetails.Destination}`;
+            return `Confirmation code was send to ${response.CodeDeliveryDetails.Destination} if it registered in the system.`;
         } catch (error) {
             console.error(error.message);
             throw new AuthServiceError(error.message);
