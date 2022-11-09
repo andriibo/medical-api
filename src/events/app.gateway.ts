@@ -13,27 +13,28 @@ import {Socket, Server} from 'socket.io';
     cors: {
         origin: '*',
     },
-    namespace: '/chat',
+    namespace: '/current-vitals',
 })
 export class AppGateway implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect {
     @WebSocketServer() server: Server;
     private logger: Logger = new Logger('AppGateway');
 
-    @SubscribeMessage('msgToServer')
+    @SubscribeMessage('messageToServer')
     public handleMessage(client: Socket, payload: any): void {
-        this.server.in(payload.room).emit('msgToClient', payload);
+        this.server.in(payload.room).emit('messageToClient', payload);
     }
 
     @SubscribeMessage('joinRoom')
-    public joinRoom(client: Socket, room: string): void {
-        client.join(room);
-        client.emit('joinedRoom', room);
+    public joinRoom(client: Socket, payload: any): void {
+        if ('fromRoom' in payload) {
+            client.leave(payload.fromRoom);
+        }
+        client.join(payload.toRoom);
     }
 
     @SubscribeMessage('leaveRoom')
     public leaveRoom(client: Socket, room: string): void {
         client.leave(room);
-        client.emit('leftRoom', room);
     }
 
     public afterInit(client: Server): void {

@@ -1,21 +1,19 @@
 const app = new Vue({
     el: '#app',
     data: {
-        title: 'NestJS Chat Real Time',
+        title: 'Patient Vitals Generator.',
         name: '',
         text: '',
-        selected: 'general',
+        selected: 'patientA',
         messages: [],
         socket: null,
         activeRoom: '',
         rooms: {
-            general: false,
-            roomA: false,
-            roomB: false,
-            roomC: false,
-            roomD: false,
+            patientA: false,
+            patientB: false,
+            patientC: false,
         },
-        listRooms: ['general', 'roomA', 'roomB', 'roomC', 'roomD'],
+        listRooms: ['patientA', 'patientB', 'patientC'],
     },
     methods: {
         onChange(event) {
@@ -23,7 +21,6 @@ const app = new Vue({
             this.activeRoom = event.target.value;
             this.socket.emit('joinRoom', this.activeRoom);
         },
-
         sendMessage() {
             if (this.validateInput()) {
                 const message = {
@@ -56,9 +53,8 @@ const app = new Vue({
     },
     created() {
         this.activeRoom = this.selected;
-        this.socket = io('http://localhost:3001/chat');
+        this.socket = io('http://localhost:3001/current-vitals');
         this.socket.on('msgToClient', (message) => {
-            console.log(message);
             this.receivedMessage(message);
         });
 
