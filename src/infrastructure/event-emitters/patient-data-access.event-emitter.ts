@@ -7,12 +7,20 @@ import {Injectable} from '@nestjs/common';
 export class PatientDataAccessEventEmitter implements IPatientDataAccessEventEmitter {
     public constructor(private eventEmitter: EventEmitter2) {}
 
-    public async emitAccessForUnregisteredUserInitiated(patient: User, grantedEmail: string): Promise<void> {
-        await this.eventEmitter.emit('data-access-for-unregistered-user-initiated', patient, grantedEmail);
+    public async emitPatientInitiatedAccessForUnregisteredDoctor(patient: User, grantedEmail: string): Promise<void> {
+        await this.eventEmitter.emit('patient-initiated-data-access-for-unregistered-doctor', patient, grantedEmail);
     }
 
-    public async emitAccessForRegisteredUserInitiated(patient: User, grantedEmail: string): Promise<void> {
-        await this.eventEmitter.emit('data-access-for-registered-user-initiated', patient, grantedEmail);
+    public async emitDoctorInitiatedAccessToUnregisteredPatient(doctor: User, patientEmail: string): Promise<void> {
+        await this.eventEmitter.emit('doctor-initiated-data-access-to-unregistered-patient', doctor, patientEmail);
+    }
+
+    public async emitPatientInitiatedAccessForRegisteredDoctor(patient: User, grantedEmail: string): Promise<void> {
+        await this.eventEmitter.emit('patient-initiated-data-access-for-registered-doctor', patient, grantedEmail);
+    }
+
+    public async emitDoctorInitiatedAccessToRegisteredPatient(doctor: User, grantedEmail: string): Promise<void> {
+        await this.eventEmitter.emit('doctor-initiated-data-access-to-registered-patient', doctor, grantedEmail);
     }
 
     public async emitAccessDeletedByPatient(patient: User, grantedEmail: string): Promise<void> {

@@ -12,14 +12,24 @@ export class PatientDataAccessListener {
         private accessToGrantedUserBindingService: AccessToGrantedUserBindingService,
     ) {}
 
-    @OnEvent('data-access-for-unregistered-user-initiated')
-    public async handleAccessForUnregisteredUserInitiated(patient: User, email: string): Promise<void> {
-        await this.mailService.sendInviteToSignUp(patient, email);
+    @OnEvent('patient-initiated-data-access-for-unregistered-doctor')
+    public async handleAccessForUnregisteredUserInitiatedByPatient(patient: User, email: string): Promise<void> {
+        await this.mailService.sendInviteToSignUpFromPatientToDoctor(patient, email);
     }
 
-    @OnEvent('data-access-for-registered-user-initiated')
-    public async handleAccessForRegisteredUserInitiated(patient: User, email: string): Promise<void> {
-        await this.mailService.sendNotificationThatPatientDataAccessWasInitiated(patient, email);
+    @OnEvent('doctor-initiated-data-access-to-unregistered-patient')
+    public async handleAccessForUnregisteredUserInitiatedByDoctor(doctor: User, email: string): Promise<void> {
+        await this.mailService.sendInviteToSignUpFromDoctorToPatient(doctor, email);
+    }
+
+    @OnEvent('patient-initiated-data-access-for-registered-doctor')
+    public async handleAccessForRegisteredUserInitiatedByPatient(patient: User, email: string): Promise<void> {
+        await this.mailService.sendNotificationThatPatientDataAccessWasInitiatedByPatient(patient, email);
+    }
+
+    @OnEvent('doctor-initiated-data-access-to-registered-patient')
+    public async handleAccessForRegisteredUserInitiatedByDoctor(doctor: User, email: string): Promise<void> {
+        await this.mailService.sendNotificationThatPatientDataAccessWasInitiatedByDoctor(doctor, email);
     }
 
     @OnEvent('doctor-created')

@@ -5,8 +5,10 @@ import {
     SignInUserView,
     SignUpDoctorView,
     SignUpPatientView,
+    ForgotPasswordView,
+    ConfirmForgotPasswordView,
 } from 'presentation/views/request/auth';
-import {UserSignedInView} from 'presentation/views/response/auth';
+import {ForgotPasswordResponseView, UserSignedInView} from 'presentation/views/response/auth';
 import {AuthUseCasesFactory} from 'infrastructure/factories/auth-use-cases.factory';
 import {UserSignedInDto} from 'domain/dtos/response/auth/user-signed-in.dto';
 
@@ -49,5 +51,23 @@ export class AuthController {
         const useCase = this.authUseCasesFactory.createConfirmSignUpUseCase();
 
         await useCase.confirmSignUpUser(requestBody);
+    }
+
+    @Post('forgot-password')
+    @HttpCode(HttpStatus.OK)
+    @ApiResponse({status: HttpStatus.OK, type: ForgotPasswordResponseView})
+    public async forgotPassword(@Body() requestBody: ForgotPasswordView): Promise<ForgotPasswordResponseView> {
+        const useCase = this.authUseCasesFactory.createForgotPasswordUseCase();
+
+        return await useCase.initiateForgotPasswordProcess(requestBody);
+    }
+
+    @Post('forgot-password/confirm')
+    @HttpCode(HttpStatus.OK)
+    @ApiResponse({status: HttpStatus.OK})
+    public async confirmForgotPassword(@Body() requestBody: ConfirmForgotPasswordView): Promise<void> {
+        const useCase = this.authUseCasesFactory.createForgotPasswordUseCase();
+
+        await useCase.confirmForgotPassword(requestBody);
     }
 }
