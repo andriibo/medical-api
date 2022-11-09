@@ -134,9 +134,9 @@ export class CognitoService implements IAuthService {
         }
     }
 
-    public async resendConfirmSignUpCode(userName: string): Promise<void> {
+    public async resendConfirmSignUpCode(email: string): Promise<void> {
         const command = new ResendConfirmationCodeCommand({
-            Username: userName,
+            Username: email,
             ClientId: this.config.clientId,
         });
 
@@ -198,7 +198,7 @@ export class CognitoService implements IAuthService {
     public async confirmForgotPassword(confirmForgotPasswordModel: ConfirmForgotPasswordModel): Promise<void> {
         const command = new ConfirmForgotPasswordCommand({
             ClientId: this.config.clientId,
-            Username: confirmForgotPasswordModel.userName,
+            Username: confirmForgotPasswordModel.email,
             ConfirmationCode: confirmForgotPasswordModel.code,
             Password: confirmForgotPasswordModel.password,
         });
@@ -233,7 +233,7 @@ export class CognitoService implements IAuthService {
                 {
                     Name: USER_ATTRIBUTES.EMIAL,
                     Value: changeEmailModel.newEmail,
-                }
+                },
             ],
         });
 

@@ -15,7 +15,7 @@ export class ForgotPasswordUseCase {
 
     public async confirmForgotPassword(dto: ConfirmForgotPasswordDto): Promise<void> {
         const confirmForgotPasswordModel: ConfirmForgotPasswordModel = {
-            userName: dto.email,
+            email: dto.email,
             code: dto.code,
             password: dto.newPassword,
         };
