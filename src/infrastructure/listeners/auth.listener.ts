@@ -9,6 +9,6 @@ export class AuthListener {
 
     @OnEvent('user-activated')
     public async handleUserActivated(dto: ConfirmSignUpUserDto): Promise<void> {
-        await this.mailService.sendNotificationThatUserWasActivated(dto.userName);
+        await this.mailService.sendNotificationThatUserWasActivated(dto.email);
     }
 }

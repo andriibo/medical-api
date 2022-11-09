@@ -4,7 +4,7 @@ import {UserRole} from 'domain/entities/user.entity';
 
 export class SignUpModel {
     private constructor(
-        public readonly userName: string,
+        public readonly email: string,
         public readonly role: string,
         public readonly password: string,
     ) {}

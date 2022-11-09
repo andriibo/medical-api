@@ -1,5 +1,5 @@
 export class ConfirmSignUpUserDto {
-    public userName: string;
+    public email: string;
 
     public code: string;
 }
