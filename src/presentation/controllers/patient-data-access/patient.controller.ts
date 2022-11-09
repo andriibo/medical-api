@@ -8,7 +8,8 @@ import {
     Delete,
     Param,
     ParseUUIDPipe,
-    HttpCode, Patch,
+    HttpCode,
+    Patch,
 } from '@nestjs/common';
 import {ApiBearerAuth, ApiResponse, ApiTags} from '@nestjs/swagger';
 import {Roles} from 'presentation/guards';
