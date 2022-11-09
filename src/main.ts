@@ -20,6 +20,10 @@ async function bootstrap() {
     app.useGlobalPipes(new ValidationPipe());
 
     await app.listen(process.env.SERVER_PORT || 3000);
+
+    process.on('unhandledRejection', (error) => {
+        console.log(error);
+    });
 }
 
 bootstrap();
