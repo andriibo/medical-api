@@ -50,7 +50,6 @@ export class DoctorUseCasesFactory {
 
     public createApproveDataAccessUseCase(): ApproveDataAccessUseCase {
         return new ApproveDataAccessUseCase(
-            this.userRepository,
             this.patientDataAccessRepository,
             this.authedUserService,
             this.patientDataAccessSpecification,

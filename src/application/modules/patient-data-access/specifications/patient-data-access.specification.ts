@@ -80,6 +80,18 @@ export class PatientDataAccessSpecification {
         }
     }
 
+    public async assertPatientCanApproveAccess(patient: User, dataAccess: PatientDataAccess): Promise<void> {
+        const isPatient = dataAccess.patientUserId === patient.id;
+        const isAccessStatusInitiated = dataAccess.status === PatientDataAccessStatus.Initiated;
+        const isPatientRequested = dataAccess.direction === PatientDataAccessRequestDirection.ToPatient;
+
+        const isApproveAllowed = isPatient && isAccessStatusInitiated && isPatientRequested;
+
+        if (!isApproveAllowed) {
+            throw new PatientDataAccessSpecificationError('Approval Not Allowed.');
+        }
+    }
+
     public async assertGrantedUserCanDeleteAccess(grantedUser: User, dataAccess: PatientDataAccess): Promise<void> {
         const isUserGranted = dataAccess.grantedUserId === grantedUser.id;
         const isAccessStatusApproved = dataAccess.status === PatientDataAccessStatus.Approved;

@@ -7,7 +7,7 @@ export class SignInUserView extends AuthUserDto {
     @IsNotEmpty()
     @IsEmail()
     @MaxLength(100)
-    public userName: string;
+    public email: string;
 
     @ApiProperty({minLength: 8})
     @IsNotEmpty()

@@ -75,7 +75,7 @@ export class CognitoService implements IAuthService {
             ClientId: this.config.clientId,
             AuthFlow: AuthFlowType.ADMIN_USER_PASSWORD_AUTH,
             AuthParameters: {
-                [USER_ATTRIBUTES.USER_NAME]: user.userName,
+                [USER_ATTRIBUTES.USER_NAME]: user.email,
                 [USER_ATTRIBUTES.PASSWORD]: user.password,
             },
         });
@@ -96,7 +96,7 @@ export class CognitoService implements IAuthService {
 
     public async signUp(signUpModel: SignUpModel): Promise<IAuthModel> {
         const command = new SignUpCommand({
-            Username: signUpModel.userName,
+            Username: signUpModel.email,
             Password: signUpModel.password,
             ClientId: this.config.clientId,
             UserAttributes: [
@@ -121,7 +121,7 @@ export class CognitoService implements IAuthService {
 
     public async confirmSignUp(user: ConfirmSignUpModel): Promise<void> {
         const command = new ConfirmSignUpCommand({
-            Username: user.userName,
+            Username: user.email,
             ConfirmationCode: user.code,
             ClientId: this.config.clientId,
         });
@@ -134,9 +134,9 @@ export class CognitoService implements IAuthService {
         }
     }
 
-    public async resendConfirmSignUpCode(userName: string): Promise<void> {
+    public async resendConfirmSignUpCode(email: string): Promise<void> {
         const command = new ResendConfirmationCodeCommand({
-            Username: userName,
+            Username: email,
             ClientId: this.config.clientId,
         });
 
@@ -198,7 +198,7 @@ export class CognitoService implements IAuthService {
     public async confirmForgotPassword(confirmForgotPasswordModel: ConfirmForgotPasswordModel): Promise<void> {
         const command = new ConfirmForgotPasswordCommand({
             ClientId: this.config.clientId,
-            Username: confirmForgotPasswordModel.userName,
+            Username: confirmForgotPasswordModel.email,
             ConfirmationCode: confirmForgotPasswordModel.code,
             Password: confirmForgotPasswordModel.password,
         });
@@ -233,7 +233,7 @@ export class CognitoService implements IAuthService {
                 {
                     Name: USER_ATTRIBUTES.EMIAL,
                     Value: changeEmailModel.newEmail,
-                }
+                },
             ],
         });
 
@@ -309,9 +309,9 @@ export class CognitoService implements IAuthService {
         }
     }
 
-    private async addUserToGroup(userName: string, groupName: string): Promise<void> {
+    private async addUserToGroup(email: string, groupName: string): Promise<void> {
         const command = new AdminAddUserToGroupCommand({
-            Username: userName,
+            Username: email,
             GroupName: groupName,
             UserPoolId: this.config.userPoolId,
         });
@@ -330,7 +330,7 @@ export class CognitoService implements IAuthService {
             await this.createUserGroup(signUpModel.role);
         }
 
-        await this.addUserToGroup(signUpModel.userName, signUpModel.role);
+        await this.addUserToGroup(signUpModel.email, signUpModel.role);
     }
 
     private isTokenValid(decodedToken, tokenISS): boolean {

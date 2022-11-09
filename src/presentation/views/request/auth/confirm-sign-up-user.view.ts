@@ -7,7 +7,7 @@ export class ConfirmSignUpUserView extends ConfirmSignUpUserDto {
     @IsNotEmpty()
     @IsEmail()
     @MaxLength(100)
-    public userName: string;
+    public email: string;
 
     @ApiProperty()
     @IsNotEmpty()
