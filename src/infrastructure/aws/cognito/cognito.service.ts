@@ -75,7 +75,7 @@ export class CognitoService implements IAuthService {
             ClientId: this.config.clientId,
             AuthFlow: AuthFlowType.ADMIN_USER_PASSWORD_AUTH,
             AuthParameters: {
-                [USER_ATTRIBUTES.USER_NAME]: user.userName,
+                [USER_ATTRIBUTES.USER_NAME]: user.email,
                 [USER_ATTRIBUTES.PASSWORD]: user.password,
             },
         });
