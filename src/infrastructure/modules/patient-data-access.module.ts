@@ -12,7 +12,6 @@ import {AuthModule} from 'infrastructure/modules/auth.module';
 import {MailModule} from 'infrastructure/modules/mail.module';
 import {PatientDataAccessSpecification} from 'app/modules/patient-data-access/specifications/patient-data-access.specification';
 import {AccessForRegisteredDoctorService} from 'app/modules/patient-data-access/services/access-for-registered-doctor.service';
-import {AccessToUnregisteredPatientService} from 'app/modules/patient-data-access/services/access-to-unregistered-patient.service';
 import {AccessToGrantedUserBindingService} from 'app/modules/patient-data-access/services/access-to-granted-user-binding.service';
 import {IPatientDataAccessEventEmitter} from 'app/modules/patient-data-access/event-emitters/patient-data-access.event-emitter';
 import {PatientDataAccessEventEmitter} from 'infrastructure/event-emitters/patient-data-access.event-emitter';
@@ -20,6 +19,7 @@ import {PatientDataAccessListener} from 'infrastructure/listeners';
 import {DeleteDataAccessByPatientService} from 'app/modules/patient-data-access/services/delete-data-access-by-patient.service';
 import {DeleteDataAccessByDoctorService} from 'app/modules/patient-data-access/services/delete-data-access-by-doctor.service';
 import {AccessToRegisteredPatientService} from 'app/modules/patient-data-access/services/access-to-registered-patient.service';
+import {AccessForUnregisteredDoctorService} from 'app/modules/patient-data-access/services/access-for-unregistered-doctor.service';
 
 @Module({
     imports: [TypeOrmModule.forFeature([PatientDataAccessModel]), MailModule, AuthModule],
@@ -74,14 +74,14 @@ import {AccessToRegisteredPatientService} from 'app/modules/patient-data-access/
             ],
         },
         {
-            provide: AccessToRegisteredPatientService,
+            provide: AccessForUnregisteredDoctorService,
             useFactory: (
                 patientDataAccessRepository: IPatientDataAccessRepository,
                 patientDataAccessEntityMapper: IPatientDataAccessEntityMapper,
                 patientDataAccessEventEmitter: IPatientDataAccessEventEmitter,
                 patientDataAccessSpecification: PatientDataAccessSpecification,
             ) => {
-                return new AccessToRegisteredPatientService(
+                return new AccessForUnregisteredDoctorService(
                     patientDataAccessRepository,
                     patientDataAccessEntityMapper,
                     patientDataAccessEventEmitter,
@@ -96,14 +96,14 @@ import {AccessToRegisteredPatientService} from 'app/modules/patient-data-access/
             ],
         },
         {
-            provide: AccessToUnregisteredPatientService,
+            provide: AccessToRegisteredPatientService,
             useFactory: (
                 patientDataAccessRepository: IPatientDataAccessRepository,
                 patientDataAccessEntityMapper: IPatientDataAccessEntityMapper,
                 patientDataAccessEventEmitter: IPatientDataAccessEventEmitter,
                 patientDataAccessSpecification: PatientDataAccessSpecification,
             ) => {
-                return new AccessToUnregisteredPatientService(
+                return new AccessToRegisteredPatientService(
                     patientDataAccessRepository,
                     patientDataAccessEntityMapper,
                     patientDataAccessEventEmitter,

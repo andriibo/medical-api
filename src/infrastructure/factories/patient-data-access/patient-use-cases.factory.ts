@@ -9,9 +9,8 @@ import {
 import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service';
 import {PatientDataAccessSpecification} from 'app/modules/patient-data-access/specifications/patient-data-access.specification';
 import {DeleteDataAccessByPatientService} from 'app/modules/patient-data-access/services/delete-data-access-by-patient.service';
+import {AccessForUnregisteredDoctorService} from 'app/modules/patient-data-access/services/access-for-unregistered-doctor.service';
 import {AccessForRegisteredDoctorService} from 'app/modules/patient-data-access/services/access-for-registered-doctor.service';
-import {AccessToUnregisteredPatientService} from 'app/modules/patient-data-access/services/access-to-unregistered-patient.service';
-import {AccessToRegisteredPatientService} from 'app/modules/patient-data-access/services/access-to-registered-patient.service';
 
 @Injectable()
 export class PatientUseCasesFactory {
@@ -23,9 +22,9 @@ export class PatientUseCasesFactory {
         @Inject(PatientDataAccessSpecification)
         private readonly patientDataAccessSpecification: PatientDataAccessSpecification,
         @Inject(AccessForRegisteredDoctorService)
-        private readonly accessToRegisteredPatientService: AccessToRegisteredPatientService,
-        @Inject(AccessToUnregisteredPatientService)
-        private readonly accessToUnregisteredPatientService: AccessToUnregisteredPatientService,
+        private readonly accessForRegisteredDoctorService: AccessForRegisteredDoctorService,
+        @Inject(AccessForUnregisteredDoctorService)
+        private readonly accessForUnregisteredDoctorService: AccessForUnregisteredDoctorService,
         @Inject(DeleteDataAccessByPatientService)
         private readonly deleteDataAccessByPatientService: DeleteDataAccessByPatientService,
     ) {}
@@ -34,8 +33,8 @@ export class PatientUseCasesFactory {
         return new InitiateDataAccessUseCase(
             this.userRepository,
             this.authedUserService,
-            this.accessToRegisteredPatientService,
-            this.accessToUnregisteredPatientService,
+            this.accessForRegisteredDoctorService,
+            this.accessForUnregisteredDoctorService,
         );
     }
 
