@@ -12,6 +12,7 @@ import {ApproveDataAccessUseCase} from 'app/modules/patient-data-access/use-case
 import {DeleteDataAccessByPatientService} from 'app/modules/patient-data-access/services/delete-data-access-by-patient.service';
 import {AccessForUnregisteredDoctorService} from 'app/modules/patient-data-access/services/access-for-unregistered-doctor.service';
 import {AccessForRegisteredDoctorService} from 'app/modules/patient-data-access/services/access-for-registered-doctor.service';
+import {RefuseDataAccessUseCase} from 'app/modules/patient-data-access/use-cases/patient/refuse-data-access.use-case';
 
 @Injectable()
 export class PatientUseCasesFactory {
@@ -36,6 +37,14 @@ export class PatientUseCasesFactory {
             this.authedUserService,
             this.accessForRegisteredDoctorService,
             this.accessForUnregisteredDoctorService,
+        );
+    }
+
+    public createRefuseDataAccessUseCase(): RefuseDataAccessUseCase {
+        return new RefuseDataAccessUseCase(
+            this.patientDataAccessRepository,
+            this.authedUserService,
+            this.patientDataAccessSpecification,
         );
     }
 
