@@ -121,7 +121,7 @@ export class CognitoService implements IAuthService {
 
     public async confirmSignUp(user: ConfirmSignUpModel): Promise<void> {
         const command = new ConfirmSignUpCommand({
-            Username: user.userName,
+            Username: user.email,
             ConfirmationCode: user.code,
             ClientId: this.config.clientId,
         });
