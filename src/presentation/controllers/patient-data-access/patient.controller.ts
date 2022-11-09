@@ -55,6 +55,21 @@ export class PatientController {
     }
 
     @Roles('Patient')
+    @Patch('data-access/approve/:accessId')
+    @HttpCode(HttpStatus.OK)
+    @HttpCode(HttpStatus.BAD_REQUEST)
+    @ApiResponse({status: HttpStatus.OK})
+    public async approveDataAccess(@Param('accessId', ParseUUIDPipe) accessId: string): Promise<void> {
+        const useCase = this.patientUseCasesFactory.createApproveDataAccessUseCase();
+
+        try {
+            await useCase.approveDataAccess(accessId);
+        } catch (error) {
+            throw new BadRequestException(error.message);
+        }
+    }
+
+    @Roles('Patient')
     @Get('data-accesses')
     @HttpCode(HttpStatus.OK)
     @ApiResponse({status: HttpStatus.OK, type: [DataAccessView]})

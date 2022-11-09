@@ -8,6 +8,7 @@ import {
 } from 'app/modules/patient-data-access/use-cases/patient';
 import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service';
 import {PatientDataAccessSpecification} from 'app/modules/patient-data-access/specifications/patient-data-access.specification';
+import {ApproveDataAccessUseCase} from 'app/modules/patient-data-access/use-cases/patient/approve-data-access.use-case';
 import {DeleteDataAccessByPatientService} from 'app/modules/patient-data-access/services/delete-data-access-by-patient.service';
 import {AccessForUnregisteredDoctorService} from 'app/modules/patient-data-access/services/access-for-unregistered-doctor.service';
 import {AccessForRegisteredDoctorService} from 'app/modules/patient-data-access/services/access-for-registered-doctor.service';
@@ -41,6 +42,14 @@ export class PatientUseCasesFactory {
 
     public createRefuseDataAccessUseCase(): RefuseDataAccessUseCase {
         return new RefuseDataAccessUseCase(
+            this.patientDataAccessRepository,
+            this.authedUserService,
+            this.patientDataAccessSpecification,
+        );
+    }
+
+    public createApproveDataAccessUseCase(): ApproveDataAccessUseCase {
+        return new ApproveDataAccessUseCase(
             this.patientDataAccessRepository,
             this.authedUserService,
             this.patientDataAccessSpecification,
