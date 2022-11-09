@@ -96,7 +96,7 @@ export class CognitoService implements IAuthService {
 
     public async signUp(signUpModel: SignUpModel): Promise<IAuthModel> {
         const command = new SignUpCommand({
-            Username: signUpModel.userName,
+            Username: signUpModel.email,
             Password: signUpModel.password,
             ClientId: this.config.clientId,
             UserAttributes: [
@@ -309,9 +309,9 @@ export class CognitoService implements IAuthService {
         }
     }
 
-    private async addUserToGroup(userName: string, groupName: string): Promise<void> {
+    private async addUserToGroup(email: string, groupName: string): Promise<void> {
         const command = new AdminAddUserToGroupCommand({
-            Username: userName,
+            Username: email,
             GroupName: groupName,
             UserPoolId: this.config.userPoolId,
         });
@@ -330,7 +330,7 @@ export class CognitoService implements IAuthService {
             await this.createUserGroup(signUpModel.role);
         }
 
-        await this.addUserToGroup(signUpModel.userName, signUpModel.role);
+        await this.addUserToGroup(signUpModel.email, signUpModel.role);
     }
 
     private isTokenValid(decodedToken, tokenISS): boolean {
