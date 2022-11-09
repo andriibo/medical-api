@@ -26,8 +26,8 @@ export class AccessToRegisteredPatientService {
         );
     }
 
-    private createDataAccess(doctor: User, userToGrant: User): PatientDataAccess {
-        const dataAccess = this.patientDataAccessEntityMapper.mapByPatientAndGrantedUser(doctor, userToGrant);
+    private createDataAccess(patient: User, userToGrant: User): PatientDataAccess {
+        const dataAccess = this.patientDataAccessEntityMapper.mapByPatientAndGrantedUser(patient, userToGrant);
         dataAccess.direction = PatientDataAccessRequestDirection.ToPatient;
 
         return dataAccess;
