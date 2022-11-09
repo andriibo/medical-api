@@ -1,12 +1,13 @@
 const app = new Vue({
     el: '#app',
     data: {
-        title: 'Patient Vitals Generator.',
+        title: 'Vitals Supplier.',
         hr: false,
         temp: false,
         vitals: [],
         socket: null,
         interval: null,
+        selectedPatient: 'A',
         activePatient: 'A',
         listPatients: ['A', 'B', 'C'],
         vitalRanges: {
@@ -16,16 +17,12 @@ const app = new Vue({
         sendingStarted: false,
     },
     methods: {
-        onChange(event) {
+        onChange() {
             this.stopSendingVitals();
 
-            const prevPatient = this.activePatient;
-            this.activePatient = event.target.value;
-
-            this.socket.emit('joinRoom', {
-                toRoom: this.activePatient,
-                fromRoom: prevPatient,
-            });
+            this.socket.emit('leaveRoom', this.activePatient);
+            this.activePatient = this.selectedPatient;
+            this.socket.emit('joinRoom', this.activePatient);
 
             this.vitals = [];
         },
@@ -85,9 +82,7 @@ const app = new Vue({
         });
 
         this.socket.on('connect', () => {
-            this.socket.emit('joinRoom', {
-                toRoom: this.activePatient,
-            });
+            this.socket.emit('joinRoom', this.activePatient);
         });
     },
 });

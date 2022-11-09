@@ -25,16 +25,15 @@ export class AppGateway implements OnGatewayInit, OnGatewayConnection, OnGateway
     }
 
     @SubscribeMessage('joinRoom')
-    public joinRoom(client: Socket, payload: any): void {
-        if ('fromRoom' in payload) {
-            client.leave(payload.fromRoom);
-        }
-        client.join(payload.toRoom);
+    public joinRoom(client: Socket, room: string): void {
+        client.join(room);
+        this.logger.log(`Client ${client.id} joined the room ${room}`);
     }
 
     @SubscribeMessage('leaveRoom')
     public leaveRoom(client: Socket, room: string): void {
         client.leave(room);
+        this.logger.log(`Client ${client.id} left the room ${room}`);
     }
 
     public afterInit(client: Server): void {
