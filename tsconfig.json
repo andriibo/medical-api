@@ -28,7 +28,7 @@
       "root/*": ["*"],
       "src/*": ["src/*"],
       "views/*": ["src/presentation/views/*"],
-      "tests/*": ["src/test/*"]
+      "tests/*": ["test/*"],
     }
   }
 }

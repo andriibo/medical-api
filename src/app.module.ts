@@ -18,9 +18,12 @@ import {
     MedicationModule,
     PatientMedicationModule,
     PatientVitalThresholdModule,
+    WebsocketModule,
 } from 'infrastructure/modules';
 import {AssignUserMiddleware} from 'presentation/middlewares/assign-user.middleware';
 import {EventEmitterModule} from '@nestjs/event-emitter';
+import {ServeStaticModule} from '@nestjs/serve-static';
+import {join} from 'path';
 
 const APP_MODULES_IMPORT = [
     AuthModule,
@@ -34,6 +37,7 @@ const APP_MODULES_IMPORT = [
     MedicationModule,
     PatientMedicationModule,
     PatientVitalThresholdModule,
+    WebsocketModule,
 ];
 
 const GUARDS = [AuthGuard, RolesGuard];
@@ -55,6 +59,11 @@ const INTERCEPTORS = [
             isGlobal: true,
         }),
         EventEmitterModule.forRoot(),
+        ServeStaticModule.forRoot({
+            serveRoot: '/static',
+            rootPath: join(__dirname, '..', 'static'),
+            // exclude: ['/api*'],
+        }),
         ...APP_MODULES_IMPORT,
     ],
     exports: [TypeOrmModule],
