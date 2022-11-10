@@ -7,7 +7,6 @@
       "**/*.html",
       "**/*.js",
       "**/*.css"
-    ],
-    "watchAssets": true
+    ]
   }
 }

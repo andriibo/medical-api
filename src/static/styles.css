@@ -10,3 +10,23 @@
 button {
     cursor: pointer;
 }
+
+.checkbox {
+    display: block;
+    margin: 0;
+    padding: 0 0 0 18px;
+    font-weight: normal;
+}
+
+.checkbox label {
+    font-weight: normal;
+    display: inline-block;
+    vertical-align: top;
+    margin: 0;
+    text-transform: none;
+    min-height: 15px;
+}
+
+.checkbox input[type=checkbox] {
+    margin: 0 0 0 -18px;
+}

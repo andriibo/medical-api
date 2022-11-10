@@ -9,6 +9,7 @@ import {PatientDiagnosisModule} from './patient-diagnosis.module';
 import {MedicationModule} from './medication.module';
 import {PatientMedicationModule} from './patient-medication.module';
 import {PatientVitalThresholdModule} from './patient-vital-threshold.module';
+import {WebsocketModule} from './websocket.module';
 
 export {
     AuthModule,
@@ -22,4 +23,5 @@ export {
     MedicationModule,
     PatientMedicationModule,
     PatientVitalThresholdModule,
+    WebsocketModule,
 };

@@ -2,37 +2,44 @@ const app = new Vue({
     el: '#app',
     data: {
         title: 'Vitals Receiver.',
-        vitals: [],
+        messages: [],
         socket: null,
         selectedPatient: '',
         activePatient: '',
-        listPatients: ['A', 'B', 'C'],
-        showingStarted: false,
+        readingStarted: false,
     },
     methods: {
-        onChange() {
-            this.stopShowingVitals();
+        onChangePatient() {
+            this.stopReadingMessages();
 
             this.activePatient = this.selectedPatient;
 
-            this.vitals = [];
+            this.messages = [];
         },
-        showVitals() {
+        startReadingMessages() {
+            if (!this.validateInputs()) {
+                alert('Input Player Id.');
+                return;
+            }
+
             this.socket.emit('joinRoom', this.activePatient);
-            this.showingStarted = true;
+            this.readingStarted = true;
         },
-        stopShowingVitals() {
+        stopReadingMessages() {
             if (this.activePatient.length > 0) {
                 this.socket.emit('leaveRoom', this.activePatient);
             }
-            this.showingStarted = false;
+            this.readingStarted = false;
         },
         receivedMessage(message) {
-            message.vitals.map((vitals) => this.vitals.push(vitals));
+            this.messages.push(message);
+        },
+        validateInputs() {
+            return this.activePatient.length > 0;
         },
     },
     created() {
-        this.socket = io('http://localhost:3001/current-vitals');
+        this.socket = initSocket();
         this.socket.on('messageToClient', (message) => {
             this.receivedMessage(message);
         });

@@ -13,9 +13,9 @@ import {Socket, Server} from 'socket.io';
     cors: {
         origin: '*',
     },
-    namespace: '/current-vitals',
+    namespace: '/ws/current-vitals',
 })
-export class AppGateway implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect {
+export class VitalsGateway implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect {
     @WebSocketServer() server: Server;
     private logger: Logger = new Logger('AppGateway');
 

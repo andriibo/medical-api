@@ -18,10 +18,10 @@ import {
     MedicationModule,
     PatientMedicationModule,
     PatientVitalThresholdModule,
+    WebsocketModule,
 } from 'infrastructure/modules';
 import {AssignUserMiddleware} from 'presentation/middlewares/assign-user.middleware';
 import {EventEmitterModule} from '@nestjs/event-emitter';
-import {EventsModule} from './events/events.module';
 import {ServeStaticModule} from '@nestjs/serve-static';
 import {join} from 'path';
 
@@ -37,6 +37,7 @@ const APP_MODULES_IMPORT = [
     MedicationModule,
     PatientMedicationModule,
     PatientVitalThresholdModule,
+    WebsocketModule,
 ];
 
 const GUARDS = [AuthGuard, RolesGuard];
@@ -63,7 +64,6 @@ const INTERCEPTORS = [
             rootPath: join(__dirname, '..', 'static'),
             // exclude: ['/api*'],
         }),
-        EventsModule,
         ...APP_MODULES_IMPORT,
     ],
     exports: [TypeOrmModule],
