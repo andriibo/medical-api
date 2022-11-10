@@ -179,10 +179,10 @@ export class CognitoService implements IAuthService {
         });
     }
 
-    public async forgotPassword(userName: string): Promise<ForgotPasswordResponseModel> {
+    public async forgotPassword(email: string): Promise<ForgotPasswordResponseModel> {
         const command = new ForgotPasswordCommand({
             ClientId: this.config.clientId,
-            Username: userName,
+            Username: email,
         });
 
         try {

@@ -16,10 +16,10 @@ export interface IAuthService {
     signIn(user: SignInModel): Promise<AuthResultModel>;
     signUp(signUpModel: SignUpModel): Promise<IAuthModel>;
     confirmSignUp(user: ConfirmSignUpModel): Promise<void>;
-    resendConfirmSignUpCode(userName: string): Promise<void>;
+    resendConfirmSignUpCode(email: string): Promise<void>;
     getTokenClaims(token: string): Promise<string[]>;
     deleteUser(user: User): Promise<void>;
-    forgotPassword(userName: string): Promise<ForgotPasswordResponseModel>;
+    forgotPassword(email: string): Promise<ForgotPasswordResponseModel>;
     confirmForgotPassword(confirmForgotPasswordModel: ConfirmForgotPasswordModel): Promise<void>;
     changePassword(changePasswordModel: ChangePasswordModel): Promise<void>;
     changeEmail(changeEmailModel: ChangeEmailModel): Promise<void>;
