@@ -5,10 +5,10 @@ export class UserDataSignedInDto {
     public email: string;
     public roles: string[];
 
-    public static fromTokenClaimsModel(tokenClaims: ITokenClaimsModel): UserDataSignedInDto {
+    public static fromTokenClaimsModel(tokenClaims: ITokenClaimsModel, email: string): UserDataSignedInDto {
         const dto = new UserDataSignedInDto();
         dto.id = tokenClaims.getUserId();
-        dto.email = tokenClaims.getUserEmail();
+        dto.email = email;
         dto.roles = tokenClaims.getRoles();
 
         return dto;

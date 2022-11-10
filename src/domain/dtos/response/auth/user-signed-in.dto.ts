@@ -6,13 +6,13 @@ export class UserSignedInDto {
     public tokenExpireTime: Date;
     public user: UserDataSignedInDto;
 
-    public static fromAuthResponse(token: string, tokenClaims: object): UserSignedInDto {
+    public static fromAuthResponse(token: string, tokenClaims: object, email: string): UserSignedInDto {
         const tokenClaimsModel = TokenClaimsModel.fromCognitoResponse(tokenClaims);
 
         const dto = new UserSignedInDto();
         dto.token = token;
         dto.tokenExpireTime = tokenClaimsModel.getTokenExpireTime();
-        dto.user = UserDataSignedInDto.fromTokenClaimsModel(tokenClaimsModel);
+        dto.user = UserDataSignedInDto.fromTokenClaimsModel(tokenClaimsModel, email);
 
         return dto;
     }

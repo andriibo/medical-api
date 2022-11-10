@@ -1,5 +1,5 @@
-import {Body, Controller, HttpCode, HttpStatus, Post} from '@nestjs/common';
-import {ApiResponse, ApiTags} from '@nestjs/swagger';
+import {Body, Controller, HttpCode, HttpStatus, Post, Req} from '@nestjs/common';
+import {ApiBearerAuth, ApiResponse, ApiTags} from '@nestjs/swagger';
 import {
     ConfirmSignUpUserView,
     SignInUserView,
@@ -7,10 +7,16 @@ import {
     SignUpPatientView,
     ForgotPasswordView,
     ConfirmForgotPasswordView,
+    ChangeEmailView,
+    ConfirmChangeEmailView,
 } from 'presentation/views/request/auth';
-import {ForgotPasswordResponseView, UserSignedInView} from 'presentation/views/response/auth';
+import {ChangeEmailResponseView, ForgotPasswordResponseView, UserSignedInView} from 'presentation/views/response/auth';
 import {AuthUseCasesFactory} from 'infrastructure/factories/auth-use-cases.factory';
 import {UserSignedInDto} from 'domain/dtos/response/auth/user-signed-in.dto';
+import {UserRequest} from 'presentation/middlewares/assign-user.middleware';
+import {Auth} from 'presentation/guards';
+import {ChangeEmailDto} from 'domain/dtos/request/auth/change-email.dto';
+import {ConfirmChangeEmailDto} from 'domain/dtos/request/auth/confirm-change-email.dto';
 
 @Controller()
 @ApiTags('Auth')
@@ -69,5 +75,27 @@ export class AuthController {
         const useCase = this.authUseCasesFactory.createForgotPasswordUseCase();
 
         await useCase.confirmForgotPassword(requestBody);
+    }
+
+    @Auth()
+    @ApiBearerAuth()
+    @Post('change-email')
+    @HttpCode(HttpStatus.OK)
+    @ApiResponse({status: HttpStatus.OK})
+    public async changeEmail(@Req() request: UserRequest, @Body() requestBody: ChangeEmailView): Promise<ChangeEmailResponseView> {
+        const useCase = this.authUseCasesFactory.createChangeEmailUseCase();
+
+        return await useCase.changeEmail(new ChangeEmailDto(requestBody.email, request.user.token));
+    }
+
+    @Auth()
+    @ApiBearerAuth()
+    @Post('change-email/confirm')
+    @HttpCode(HttpStatus.OK)
+    @ApiResponse({status: HttpStatus.OK})
+    public async confirmChangeEmail(@Req() request: UserRequest, @Body() requestBody: ConfirmChangeEmailView): Promise<void> {
+        const useCase = this.authUseCasesFactory.createChangeEmailUseCase();
+
+        await useCase.confirmChangeEmail(new ConfirmChangeEmailDto(requestBody.code, request.user.token));
     }
 }

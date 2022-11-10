@@ -8,11 +8,11 @@ export class SignInUseCase {
 
     public async signInUser(dto: AuthUserDto): Promise<UserSignedInDto> {
         const authResult = await this.authService.signIn(SignInModel.fromAuthUserDto(dto));
-        return await this.getSignedInUser(authResult);
+        return await this.getSignedInUser(authResult, dto);
     }
 
-    private async getSignedInUser(authResult: AuthResultModel): Promise<UserSignedInDto> {
+    private async getSignedInUser(authResult: AuthResultModel, signInDto: AuthUserDto): Promise<UserSignedInDto> {
         const tokenClaims = await this.authService.getTokenClaims(authResult.token);
-        return UserSignedInDto.fromAuthResponse(authResult.token, tokenClaims);
+        return UserSignedInDto.fromAuthResponse(authResult.token, tokenClaims, signInDto.email);
     }
 }
