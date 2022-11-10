@@ -11,7 +11,7 @@ export class DeleteDataAccessByPatientService {
     ) {}
 
     public async deleteDataAccess(patient: User, dataAccess: PatientDataAccess): Promise<void> {
-        await this.patientDataAccessSpecification.assertGrantedUserCanDeleteAccess(patient, dataAccess);
+        await this.patientDataAccessSpecification.assertPatientCanDeleteAccess(patient, dataAccess);
         await this.patientDataAccessRepository.delete(dataAccess);
         await this.patientDataAccessEventEmitter.emitAccessDeletedByPatient(patient, dataAccess.grantedEmail);
     }
