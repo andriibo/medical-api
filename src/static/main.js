@@ -1,3 +1,3 @@
 function initSocket() {
-    return io('http://localhost:3001/ws/current-vitals');
+    return io(`${location.protocol}//${location.hostname}:${location.port}/ws/current-vitals`);
 }
