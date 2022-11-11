@@ -81,7 +81,10 @@ export class AuthController {
     @Post('change-email')
     @HttpCode(HttpStatus.OK)
     @ApiResponse({status: HttpStatus.OK})
-    public async changeEmail(@Req() request: UserRequest, @Body() requestBody: ChangeEmailView): Promise<ChangeEmailResponseView> {
+    public async changeEmail(
+        @Req() request: UserRequest,
+        @Body() requestBody: ChangeEmailView,
+    ): Promise<ChangeEmailResponseView> {
         const useCase = this.authUseCasesFactory.createChangeEmailUseCase();
 
         return await useCase.changeEmail(new ChangeEmailDto(requestBody.email, request.user.token));
@@ -92,7 +95,10 @@ export class AuthController {
     @Post('change-email/confirm')
     @HttpCode(HttpStatus.OK)
     @ApiResponse({status: HttpStatus.OK})
-    public async confirmChangeEmail(@Req() request: UserRequest, @Body() requestBody: ConfirmChangeEmailView): Promise<void> {
+    public async confirmChangeEmail(
+        @Req() request: UserRequest,
+        @Body() requestBody: ConfirmChangeEmailView,
+    ): Promise<void> {
         const useCase = this.authUseCasesFactory.createChangeEmailUseCase();
 
         await useCase.confirmChangeEmail(new ConfirmChangeEmailDto(requestBody.code, request.user.token));

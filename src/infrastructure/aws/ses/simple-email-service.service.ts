@@ -44,13 +44,13 @@ export class SimpleEmailService implements IMailSenderService {
                     Html: {
                         Data: message.text,
                         Charset: 'utf8',
-                    }
+                    },
                 },
                 Subject: {
                     Data: message.subject,
                     Charset: 'utf8',
                 },
-            }
+            },
         });
 
         try {

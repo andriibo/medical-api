@@ -2,7 +2,7 @@ import {PipeTransform, Injectable} from '@nestjs/common';
 import {SyncVitalDto} from 'domain/dtos/request/vital';
 
 @Injectable()
-export class VitalNormalizationPipe implements PipeTransform<SyncVitalDto, SyncVitalDto> { 
+export class VitalNormalizationPipe implements PipeTransform<SyncVitalDto, SyncVitalDto> {
     public transform(model: SyncVitalDto) {
         model.vitals.forEach((vital) => {
             vital.hr = this.normilizeValue(vital.hr, 0, 250);
