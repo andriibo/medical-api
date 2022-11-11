@@ -1,4 +1,5 @@
 import {ChangeEmailView} from './change-email.view';
+import {ChangePasswordView} from './change-password.view';
 import {ConfirmChangeEmailView} from './confirm-change-email.view';
 import {ConfirmForgotPasswordView} from './confirm-forgot-password.view';
 import {ConfirmSignUpUserView} from './confirm-sign-up-user.view';
@@ -16,4 +17,5 @@ export {
     ForgotPasswordView,
     ChangeEmailView,
     ConfirmChangeEmailView,
+    ChangePasswordView,
 };
