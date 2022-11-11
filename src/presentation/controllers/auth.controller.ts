@@ -9,6 +9,7 @@ import {
     ConfirmForgotPasswordView,
     ChangeEmailView,
     ConfirmChangeEmailView,
+    ChangePasswordView,
 } from 'presentation/views/request/auth';
 import {ChangeEmailResponseView, ForgotPasswordResponseView, UserSignedInView} from 'presentation/views/response/auth';
 import {AuthUseCasesFactory} from 'infrastructure/factories/auth-use-cases.factory';
@@ -16,6 +17,7 @@ import {UserRequest} from 'presentation/middlewares/assign-user.middleware';
 import {Auth} from 'presentation/guards';
 import {ChangeEmailDto} from 'domain/dtos/request/auth/change-email.dto';
 import {ConfirmChangeEmailDto} from 'domain/dtos/request/auth/confirm-change-email.dto';
+import {ChangePasswordDto} from 'domain/dtos/request/auth/change-password.dto';
 
 @Controller()
 @ApiTags('Auth')
@@ -96,5 +98,18 @@ export class AuthController {
         const useCase = this.authUseCasesFactory.createChangeEmailUseCase();
 
         await useCase.confirmChangeEmail(new ConfirmChangeEmailDto(requestBody.code, request.user.token));
+    }
+
+    @Auth()
+    @ApiBearerAuth()
+    @Post('change-password')
+    @HttpCode(HttpStatus.OK)
+    @ApiResponse({status: HttpStatus.OK})
+    public async changePassword(@Req() request: UserRequest, @Body() requestBody: ChangePasswordView): Promise<void> {
+        const useCase = this.authUseCasesFactory.createChangePasswordUseCase();
+
+        return await useCase.changePassword(
+            new ChangePasswordDto(requestBody.currentPassword, requestBody.newPassword, request.user.token),
+        );
     }
 }
