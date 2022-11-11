@@ -9,7 +9,8 @@ import {IUserProfileMapper} from 'app/modules/profile/mappers/user-profile.mappe
 import {UserProfileMapper} from 'infrastructure/mappers/user-profile.mapper';
 import {AuthModule, PatientDataAccessModule} from 'infrastructure/modules';
 import {ConfigService} from '@nestjs/config';
-import {UploadAvatarService} from 'app/modules/profile/services/upload-avatar.service';
+import {IUploadAvatarService} from 'app/modules/profile/services/upload-avatar.service';
+import {UploadAvatarService} from 'infrastructure/services/upload-avatar.service';
 
 @Module({
     imports: [
@@ -34,7 +35,8 @@ import {UploadAvatarService} from 'app/modules/profile/services/upload-avatar.se
             useClass: UserProfileMapper,
         },
         {
-            provide: UploadAvatarService,
+            provide: IUploadAvatarService,
+            useClass: UploadAvatarService,
             useFactory: (configService: ConfigService) => {
                 return new UploadAvatarService(configService);
             },

@@ -1,12 +1,12 @@
 import {IUserRepository} from 'app/modules/auth/repositories';
 import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service';
-import {UploadAvatarService} from 'app/modules/profile/services/upload-avatar.service';
+import {IUploadAvatarService} from 'app/modules/profile/services/upload-avatar.service';
 
 export class UploadAvatarPatientProfileUseCase {
     public constructor(
         private readonly userRepository: IUserRepository,
         private readonly authedUserService: IAuthedUserService,
-        private readonly uploadAvatarService: UploadAvatarService,
+        private readonly uploadAvatarService: IUploadAvatarService,
     ) {}
 
     public async uploadAvatarProfile(imageBuffer: Buffer, name: string): Promise<void> {
