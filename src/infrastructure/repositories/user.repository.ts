@@ -51,21 +51,14 @@ export class UserRepository implements IUserRepository {
         }
     }
 
-    public async updateAvatar(userId: string, avatar: string): Promise<void> {
+    public async updateAvatar(entity: User): Promise<void> {
         const queryRunner = this.dataSource.createQueryRunner();
 
         await queryRunner.connect();
         await queryRunner.startTransaction();
 
         try {
-            await queryRunner.manager.update(
-                UserModel,
-                {
-                    id: userId,
-                },
-                {avatar: avatar},
-            );
-
+            await queryRunner.manager.save(entity);
             await queryRunner.commitTransaction();
             await queryRunner.release();
         } catch (err) {

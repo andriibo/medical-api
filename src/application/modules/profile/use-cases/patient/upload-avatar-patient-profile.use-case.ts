@@ -12,7 +12,8 @@ export class UploadAvatarPatientProfileUseCase {
     public async uploadAvatarProfile(imageBuffer: Buffer, name: string): Promise<void> {
         const user = await this.authedUserService.getUser();
         const filename = await this.uploadAvatarService.uploadFile(user, imageBuffer, name);
+        user.avatar = filename;
 
-        await this.userRepository.updateAvatar(user.id, filename);
+        await this.userRepository.updateAvatar(user);
     }
 }
