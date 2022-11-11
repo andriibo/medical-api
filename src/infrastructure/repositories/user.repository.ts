@@ -51,6 +51,31 @@ export class UserRepository implements IUserRepository {
         }
     }
 
+    public async updateAvatar(userId: string, avatar: string): Promise<void> {
+        const queryRunner = this.dataSource.createQueryRunner();
+
+        await queryRunner.connect();
+        await queryRunner.startTransaction();
+
+        try {
+            await queryRunner.manager.update(
+                UserModel,
+                {
+                    id: userId,
+                },
+                {avatar: avatar},
+            );
+
+            await queryRunner.commitTransaction();
+            await queryRunner.release();
+        } catch (err) {
+            await queryRunner.rollbackTransaction();
+            await queryRunner.release();
+
+            throw err;
+        }
+    }
+
     public async getOneById(id: string): Promise<User> {
         return await this.dataSource.manager.findOneBy(UserModel, {id});
     }

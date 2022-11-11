@@ -5,6 +5,8 @@ export interface IUserRepository {
 
     updateUserAndMetadata(entity: User): Promise<void>;
 
+    updateAvatar(userId: string, avatar: string): Promise<void>;
+
     getOneById(userId: string): Promise<User>;
 
     getByIds(userIds: string[]): Promise<User[]>;
