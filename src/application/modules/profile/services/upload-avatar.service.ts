@@ -1,13 +1,17 @@
 import {S3} from 'aws-sdk';
 import {ConfigService} from '@nestjs/config';
 import {v4 as uuidv4} from 'uuid';
-import {IFileService} from 'app/modules/profile/services/abstract/file.service';
 import {Inject} from '@nestjs/common';
+import {User} from 'domain/entities';
 
-export class FileService implements IFileService {
+export class UploadAvatarService {
     public constructor(@Inject(ConfigService) private readonly configService: ConfigService) {}
 
-    public async uploadPublicFile(dataBuffer: Buffer, name: string): Promise<string> {
+    public async uploadFile(user: User, dataBuffer: Buffer, name: string): Promise<string> {
+        if (user.avatar) {
+            await this.deleteFile(user.avatar);
+        }
+
         const s3 = new S3();
         const filename = `${uuidv4()}-${name}`;
         const filePath = this.getAvatarFilePath(filename);
@@ -22,7 +26,7 @@ export class FileService implements IFileService {
         return filename;
     }
 
-    public async deletePublicFile(filename: string): Promise<void> {
+    private async deleteFile(filename: string): Promise<void> {
         const s3 = new S3();
         const filePath = this.getAvatarFilePath(filename);
         await s3

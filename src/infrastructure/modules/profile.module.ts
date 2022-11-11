@@ -8,9 +8,8 @@ import {DoctorUseCasesFactory, PatientUseCasesFactory} from 'infrastructure/fact
 import {IUserProfileMapper} from 'app/modules/profile/mappers/user-profile.mapper';
 import {UserProfileMapper} from 'infrastructure/mappers/user-profile.mapper';
 import {AuthModule, PatientDataAccessModule} from 'infrastructure/modules';
-import {IFileService} from 'app/modules/profile/services/abstract/file.service';
-import {FileService} from 'app/modules/profile/services/file.service';
 import {ConfigService} from '@nestjs/config';
+import {UploadAvatarService} from 'app/modules/profile/services/upload-avatar.service';
 
 @Module({
     imports: [
@@ -35,10 +34,9 @@ import {ConfigService} from '@nestjs/config';
             useClass: UserProfileMapper,
         },
         {
-            provide: IFileService,
-            useClass: FileService,
+            provide: UploadAvatarService,
             useFactory: (configService: ConfigService) => {
-                return new FileService(configService);
+                return new UploadAvatarService(configService);
             },
             inject: [ConfigService],
         },
