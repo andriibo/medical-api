@@ -9,6 +9,8 @@ import {ChangePasswordModel} from './change-password.model';
 import {ConfirmForgotPasswordModel} from './confirm-forgot-password.model';
 import {ConfirmChangeEmailModel} from './confirm-change-email.model';
 import {ForgotPasswordResponseModel} from './forgot-password-result.model';
+import {IRequestUserModel} from './request-user.model';
+import {ChangeEmailResponseModel} from './change-email-result.model';
 
 export {
     ConfirmSignUpModel,
@@ -16,10 +18,12 @@ export {
     SignInModel,
     IAuthModel,
     ITokenClaimsModel,
+    IRequestUserModel,
     AuthResultModel,
     ChangeEmailModel,
     ChangePasswordModel,
     ConfirmForgotPasswordModel,
     ConfirmChangeEmailModel,
     ForgotPasswordResponseModel,
+    ChangeEmailResponseModel,
 };

@@ -17,11 +17,11 @@ export class RolesGuard implements CanActivate {
     public async canActivate(context: ExecutionContext): Promise<boolean> {
         const request: UserRequest = context.switchToHttp().getRequest();
 
-        if (request.tokenClaims === null) {
+        if (request.user === null || request.user.tokenClaims === null) {
             throw new UnauthorizedException();
         }
 
-        const userRoles: string[] = request.tokenClaims.getRoles();
+        const userRoles: string[] = request.user.tokenClaims.getRoles();
         const roles = this.reflector.get<string[]>('roles', context.getHandler());
         if (!roles) {
             return true;

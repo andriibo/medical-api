@@ -7,6 +7,7 @@ import {
     ForgotPasswordUseCase,
     SignInUseCase,
     SignUpUseCase,
+    ChangeEmailUseCase,
 } from 'app/modules/auth/use-cases';
 import {IAuthEventEmitter} from 'app/modules/auth/event-emitters/auth.event-emitter';
 
@@ -33,5 +34,9 @@ export class AuthUseCasesFactory {
 
     public createForgotPasswordUseCase(): ForgotPasswordUseCase {
         return new ForgotPasswordUseCase(this.authService);
+    }
+
+    public createChangeEmailUseCase(): ChangeEmailUseCase {
+        return new ChangeEmailUseCase(this.authService);
     }
 }

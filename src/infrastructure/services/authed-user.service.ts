@@ -12,11 +12,11 @@ export class AuthedUserService implements IAuthedUserService {
     ) {}
 
     public async getUser(): Promise<User> {
-        if (!('tokenClaims' in this.request)) {
+        if (!('tokenClaims' in this.request.user)) {
             throw new UnauthorizedException();
         }
 
-        const {tokenClaims} = this.request;
+        const {tokenClaims} = this.request.user;
 
         return await this.userRepository.getOneById(tokenClaims.getUserId());
     }

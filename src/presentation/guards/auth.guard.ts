@@ -5,7 +5,7 @@ import {UserRequest} from 'presentation/middlewares/assign-user.middleware';
 export class AuthGuard implements CanActivate {
     public async canActivate(context: ExecutionContext): Promise<boolean> {
         const request: UserRequest = context.switchToHttp().getRequest();
-        if (request.tokenClaims === null) {
+        if (request.user === null || request.user.tokenClaims === null) {
             throw new UnauthorizedException();
         }
 
