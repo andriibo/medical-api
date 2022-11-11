@@ -6,8 +6,5 @@ export class UserDataSignedInView extends UserDataSignedInDto {
     public id: string;
 
     @ApiProperty()
-    public email: string;
-
-    @ApiProperty()
     public roles: string[];
 }

@@ -1,5 +1,5 @@
 import {Inject, Injectable, NestMiddleware} from '@nestjs/common';
-import {ITokenClaimsModel} from 'app/modules/auth/models';
+import {IRequestUserModel} from 'app/modules/auth/models';
 import {IAuthService} from 'app/modules/auth/services/auth.service';
 import {Request, Response} from 'express';
 import {TokenClaimsModel} from 'infrastructure/aws/cognito/token-claims.model';
@@ -10,17 +10,20 @@ export class AssignUserMiddleware implements NestMiddleware {
     public constructor(@Inject(IAuthService) private readonly authService: IAuthService) {}
 
     public async use(request: UserRequest, response: Response, next: Function): Promise<any> {
-        request.tokenClaims = await this.getTokenClaims(request);
+        request.user = await this.getTokenClaims(request);
         next();
     }
 
-    private async getTokenClaims(request: any): Promise<ITokenClaimsModel> {
+    private async getTokenClaims(request: any): Promise<IRequestUserModel> {
         const token: string = this.extractToken(request);
 
         try {
             const tokenClaims = await this.authService.getTokenClaims(token);
 
-            return TokenClaimsModel.fromCognitoResponse(tokenClaims);
+            return {
+                token,
+                tokenClaims: TokenClaimsModel.fromCognitoResponse(tokenClaims),
+            };
         } catch {
             return null;
         }
@@ -39,7 +42,7 @@ export class AssignUserMiddleware implements NestMiddleware {
 
 //TODO: Need to move it to a folder with shared models
 export interface UserRequest extends Request {
-    tokenClaims: Nullable<ITokenClaimsModel>;
+    user: Nullable<IRequestUserModel>;
 }
 
 type Nullable<T> = T | null;

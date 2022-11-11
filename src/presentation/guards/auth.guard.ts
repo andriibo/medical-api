@@ -6,7 +6,7 @@ import {isNullOrUndefined} from 'app/support/type.helper';
 export class AuthGuard implements CanActivate {
     public async canActivate(context: ExecutionContext): Promise<boolean> {
         const request: UserRequest = context.switchToHttp().getRequest();
-        if (isNullOrUndefined(request.tokenClaims)) {
+        if (isNullOrUndefined(request.user) || isNullOrUndefined(request.user.tokenClaims)) {
             throw new UnauthorizedException();
         }
 

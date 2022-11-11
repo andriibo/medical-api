@@ -6,7 +6,7 @@ export class UserSignedInDto {
     public tokenExpireTime: Date;
     public user: UserDataSignedInDto;
 
-    public static fromAuthResponse(token: string, tokenClaims: object): UserSignedInDto {
+    public static fromTokenData(token: string, tokenClaims: object): UserSignedInDto {
         const tokenClaimsModel = TokenClaimsModel.fromCognitoResponse(tokenClaims);
 
         const dto = new UserSignedInDto();

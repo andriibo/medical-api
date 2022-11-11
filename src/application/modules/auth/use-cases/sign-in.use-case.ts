@@ -13,6 +13,6 @@ export class SignInUseCase {
 
     private async getSignedInUser(authResult: AuthResultModel): Promise<UserSignedInDto> {
         const tokenClaims = await this.authService.getTokenClaims(authResult.token);
-        return UserSignedInDto.fromAuthResponse(authResult.token, tokenClaims);
+        return UserSignedInDto.fromTokenData(authResult.token, tokenClaims);
     }
 }

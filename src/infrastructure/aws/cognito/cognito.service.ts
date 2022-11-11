@@ -17,6 +17,7 @@ import {
     UpdateUserAttributesCommand,
     VerifyUserAttributeCommand,
     ForgotPasswordResponse,
+    UpdateUserAttributesResponse,
 } from '@aws-sdk/client-cognito-identity-provider';
 import {ConfigService} from '@nestjs/config';
 import {
@@ -30,6 +31,7 @@ import {
     ConfirmForgotPasswordModel,
     ConfirmChangeEmailModel,
     ForgotPasswordResponseModel,
+    ChangeEmailResponseModel,
 } from 'app/modules/auth/models';
 import {IAuthService} from 'app/modules/auth/services/auth.service';
 import * as jwt from 'jsonwebtoken';
@@ -166,7 +168,7 @@ export class CognitoService implements IAuthService {
         const tokenISS = `https://cognito-idp.${this.config.region}.amazonaws.com/${this.config.userPoolId}`;
         const response = await fetch(`${tokenISS}/.well-known/jwks.json`);
         const userPoolJwk = await response.json();
-        const pem = jwkToBuffer(userPoolJwk.keys[USER_POOL_JWK.ID_TOKEN]);
+        const pem = jwkToBuffer(userPoolJwk.keys[USER_POOL_JWK.AUTH_TOKEN]);
 
         return await new Promise((resolve, reject) => {
             jwt.verify(token, pem, {algorithms: ['RS256']}, (err, decodedToken) => {
@@ -226,7 +228,7 @@ export class CognitoService implements IAuthService {
         }
     }
 
-    public async changeEmail(changeEmailModel: ChangeEmailModel): Promise<void> {
+    public async changeEmail(changeEmailModel: ChangeEmailModel): Promise<ChangeEmailResponseModel> {
         const command = new UpdateUserAttributesCommand({
             AccessToken: changeEmailModel.accessToken,
             UserAttributes: [
@@ -238,7 +240,9 @@ export class CognitoService implements IAuthService {
         });
 
         try {
-            await this.cognitoClient.send(command);
+            const response = await this.cognitoClient.send(command);
+
+            return this.getChangeEmailResult(response);
         } catch (error) {
             console.error(error.message);
             throw new AuthServiceError(error.message);
@@ -262,7 +266,7 @@ export class CognitoService implements IAuthService {
 
     private getAuthResult(authResult: AuthenticationResultType): AuthResultModel {
         const authResultModel = new AuthResultModel();
-        authResultModel.token = authResult.IdToken;
+        authResultModel.token = authResult.AccessToken;
         authResultModel.tokenExpireTime = authResult.ExpiresIn;
 
         return authResultModel;
@@ -273,6 +277,16 @@ export class CognitoService implements IAuthService {
             destination: forgotPasswordResponse?.CodeDeliveryDetails?.Destination,
             attributeName: forgotPasswordResponse?.CodeDeliveryDetails?.AttributeName,
             deliveryMedium: forgotPasswordResponse?.CodeDeliveryDetails?.DeliveryMedium,
+        };
+    }
+
+    private getChangeEmailResult(updateUserAttributesResponse: UpdateUserAttributesResponse): ChangeEmailResponseModel {
+        const emailDeliveryDetails = updateUserAttributesResponse?.CodeDeliveryDetailsList?.pop();
+
+        return {
+            destination: emailDeliveryDetails?.Destination,
+            attributeName: emailDeliveryDetails?.AttributeName,
+            deliveryMedium: emailDeliveryDetails?.DeliveryMedium,
         };
     }
 
