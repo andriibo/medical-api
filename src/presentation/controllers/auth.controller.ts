@@ -12,7 +12,6 @@ import {
 } from 'presentation/views/request/auth';
 import {ChangeEmailResponseView, ForgotPasswordResponseView, UserSignedInView} from 'presentation/views/response/auth';
 import {AuthUseCasesFactory} from 'infrastructure/factories/auth-use-cases.factory';
-import {UserSignedInDto} from 'domain/dtos/response/auth/user-signed-in.dto';
 import {UserRequest} from 'presentation/middlewares/assign-user.middleware';
 import {Auth} from 'presentation/guards';
 import {ChangeEmailDto} from 'domain/dtos/request/auth/change-email.dto';
@@ -26,7 +25,7 @@ export class AuthController {
     @Post('sign-in')
     @HttpCode(HttpStatus.OK)
     @ApiResponse({status: HttpStatus.OK, type: UserSignedInView})
-    public async signIn(@Body() requestBody: SignInUserView): Promise<UserSignedInDto> {
+    public async signIn(@Body() requestBody: SignInUserView): Promise<UserSignedInView> {
         const useCase = this.authUseCasesFactory.createSignInUseCase();
 
         return await useCase.signInUser(requestBody);
