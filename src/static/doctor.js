@@ -4,44 +4,71 @@ const app = new Vue({
         title: 'Vitals Receiver.',
         messages: [],
         socket: null,
+        accessToken: '',
         selectedPatient: '',
         activePatient: '',
         readingStarted: false,
+        isConnectedToWebsocket: false,
     },
     methods: {
-        onChangePatient() {
+        connectToWebsocket() {
+            if (!this.accessToken.length) {
+                alert('Input Access Token.');
+                return;
+            }
+
+            this.socket = initSocket(this.accessToken);
+            this.socket.on('messageToClient', (message) => {
+                this.receivedMessage(message);
+            });
+            this.socket.on('exception', (error) => {
+                alert(error.message);
+                console.error(error);
+            });
+            this.socket.on('joinedRoom', (message) => {
+                console.log('joinedRoom', message);
+                this.messages = [];
+                this.readingStarted = true;
+            });
+
+            this.isConnectedToWebsocket = true;
+        },
+        disconnectFromWebsocket() {
             this.stopReadingMessages();
 
-            this.activePatient = this.selectedPatient;
+            if (this.socket !== null) {
+                this.socket.disconnect();
+            }
 
             this.messages = [];
+            this.readingStarted = false;
+            this.isConnectedToWebsocket = false;
         },
         startReadingMessages() {
-            if (!this.validateInputs()) {
+            this.stopReadingMessages();
+
+            if (!this.selectedPatient) {
                 alert('Input Player Id.');
                 return;
             }
 
+            if (this.activePatient.length > 0) {
+                this.socket.emit('leaveRoom', this.activePatient);
+            }
+
+            this.activePatient = this.selectedPatient;
             this.socket.emit('joinRoom', this.activePatient);
-            this.readingStarted = true;
         },
         stopReadingMessages() {
             if (this.activePatient.length > 0) {
                 this.socket.emit('leaveRoom', this.activePatient);
             }
+
+            this.messages = [];
             this.readingStarted = false;
         },
         receivedMessage(message) {
             this.messages.push(message);
         },
-        validateInputs() {
-            return this.activePatient.length > 0;
-        },
-    },
-    created() {
-        this.socket = initSocket();
-        this.socket.on('messageToClient', (message) => {
-            this.receivedMessage(message);
-        });
     },
 });

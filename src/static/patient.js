@@ -5,6 +5,7 @@ const app = new Vue({
         messages: [],
         socket: null,
         interval: null,
+        accessToken: '',
         selectedPatient: '',
         activePatient: '',
         vitals: {
@@ -18,20 +19,71 @@ const app = new Vue({
             },
         },
         sendingStarted: false,
+        isConnectedToWebsocket: false,
+        isJointedToRoom: false,
     },
     methods: {
-        onChangePatient() {
+        connectToWebsocket() {
+            if (!this.accessToken.length) {
+                alert('Input Access Token.');
+                return;
+            }
+
+            this.socket = initSocket(this.accessToken);
+            this.socket.on('messageToClient', (message) => {
+                this.receivedMessage(message);
+            });
+            this.socket.on('exception', (error) => {
+                alert(error.message);
+                console.error(error);
+            });
+            this.socket.on('joinedRoom', (message) => {
+                console.log('joinedRoom', message);
+                this.messages = [];
+                this.isJointedToRoom = true;
+            });
+
+            this.isConnectedToWebsocket = true;
+        },
+        disconnectFromWebsocket() {
             this.stopSendingMessages();
 
-            this.socket.emit('leaveRoom', this.activePatient);
-            this.activePatient = this.selectedPatient;
-            this.socket.emit('joinRoom', this.activePatient);
+            if (this.socket !== null) {
+                this.socket.disconnect();
+            }
 
             this.messages = [];
+            this.isJointedToRoom = false;
+            this.isConnectedToWebsocket = false;
+        },
+        joinRoom() {
+            this.stopSendingMessages();
+
+            if (!this.selectedPatient) {
+                alert('Input Player Id.');
+                return;
+            }
+
+            if (this.activePatient.length > 0) {
+                this.socket.emit('leaveRoom', this.activePatient);
+            }
+
+            this.activePatient = this.selectedPatient;
+            this.socket.emit('joinRoom', this.activePatient);
+        },
+        leaveRoom() {
+            this.stopSendingMessages();
+
+            if (this.activePatient.length > 0) {
+                this.socket.emit('leaveRoom', this.activePatient);
+            }
+
+            this.messages = [];
+            this.isJointedToRoom = false;
         },
         startSendingMessages() {
             if (!this.validateInputs()) {
-                alert('Input Player Id and check at least one vital.');
+                alert('Check at least one vital.');
                 return;
             }
             console.log('Start Sending...');
@@ -61,23 +113,19 @@ const app = new Vue({
                 this.interval = null;
                 console.log('Sending stopped.');
             }
+
+            this.messages = [];
             this.sendingStarted = false;
         },
         receivedMessage(message) {
             this.messages.push(message);
         },
         validateInputs() {
-            return this.activePatient.length > 0 && (this.vitals.hr.isActive || this.vitals.temp.isActive);
+            return this.vitals.hr.isActive || this.vitals.temp.isActive;
         },
         getRandomFloat(min, max) {
             const value = Math.random() * (max - min) + min;
             return parseFloat(value).toFixed(1) * 1;
         },
-    },
-    created() {
-        this.socket = initSocket();
-        this.socket.on('messageToClient', (message) => {
-            this.receivedMessage(message);
-        });
     },
 });

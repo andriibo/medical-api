@@ -1,42 +1,15 @@
-import {Inject, Injectable, NestMiddleware} from '@nestjs/common';
+import {Injectable, NestMiddleware} from '@nestjs/common';
 import {IRequestUserModel} from 'app/modules/auth/models';
-import {IAuthService} from 'app/modules/auth/services/auth.service';
 import {Request, Response} from 'express';
-import {TokenClaimsModel} from 'infrastructure/aws/cognito/token-claims.model';
-import {isNullOrUndefined} from 'app/support/type.helper';
+import {RequestUserService} from 'infrastructure/services/request-user.service';
 
 @Injectable()
 export class AssignUserMiddleware implements NestMiddleware {
-    public constructor(@Inject(IAuthService) private readonly authService: IAuthService) {}
+    public constructor(private readonly requestUserService: RequestUserService) {}
 
     public async use(request: UserRequest, response: Response, next: Function): Promise<any> {
-        request.user = await this.getTokenClaims(request);
+        request.user = await this.requestUserService.getUserDataByHttpHeaders(request.headers);
         next();
-    }
-
-    private async getTokenClaims(request: any): Promise<IRequestUserModel> {
-        const token: string = this.extractToken(request);
-
-        try {
-            const tokenClaims = await this.authService.getTokenClaims(token);
-
-            return {
-                token,
-                tokenClaims: TokenClaimsModel.fromCognitoResponse(tokenClaims),
-            };
-        } catch {
-            return null;
-        }
-    }
-
-    private extractToken(request: any): string {
-        const token: string = request.headers?.authorization?.replace('Bearer ', '');
-
-        if (isNullOrUndefined(token)) {
-            return '';
-        }
-
-        return token;
     }
 }
 

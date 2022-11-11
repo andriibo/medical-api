@@ -19,12 +19,35 @@
         <div class="col-md-6 offset-md-3 col-sm-12">
             <h1 class="text-center">{{ title }}</h1>
             <br>
-            <div id="vitals">
-                <label for="patient">Patient ID:</label>
-                <input type="text" v-model="selectedPatient" id="patient" class="form-control"
-                       v-on:blur="onChangePatient()"
-                       placeholder="Enter patient Id...">
+            <div>
+                <label for="patient">Access token:</label>
+                <input type="text" v-model="accessToken" id="accessToken" class="form-control" placeholder="Enter access token...">
                 <br>
+                <button v-if="!isConnectedToWebsocket" id="connect" class="btn btn-success" @click.prevent="connectToWebsocket">
+                    Connect to Websocket
+                </button>
+                <button v-if="isConnectedToWebsocket" id="disconnect" class="btn" @click.prevent="disconnectFromWebsocket">
+                    Disconnect from Websocket
+                </button>
+            </div>
+            <br>
+            <div v-if="isConnectedToWebsocket">
+                <div v-if="!isJointedToRoom">
+                    <label for="patient">Patient ID:</label>
+                    <input type="text" v-model="selectedPatient" id="patient" class="form-control" placeholder="Enter patient Id...">
+                    <br>
+                    <button id="joinRoom" class="btn btn-success" @click.prevent="joinRoom">
+                        Join Room
+                    </button>
+                </div>
+                <div v-if="isJointedToRoom">
+                    <button id="leaveRoom" class="btn" @click.prevent="leaveRoom">
+                        Leave Room {{activePatient}}
+                    </button>
+                </div>
+            </div>
+            <br>
+            <div v-if="isConnectedToWebsocket && isJointedToRoom" id="vitals">
                 <div class="checkbox">
                     <label for="hr">
                         <input type="checkbox" v-model="vitals.hr.isActive" id="hr">

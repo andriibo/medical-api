@@ -11,6 +11,7 @@ import {UserModelMapper} from 'infrastructure/mappers/user-model.mapper';
 import {AuthUseCasesFactory} from 'infrastructure/factories/auth-use-cases.factory';
 import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service';
 import {AuthedUserService} from 'infrastructure/services/authed-user.service';
+import {RequestUserService} from 'infrastructure/services/request-user.service';
 import {IAuthEventEmitter} from 'app/modules/auth/event-emitters/auth.event-emitter';
 import {AuthEventEmitter} from 'infrastructure/event-emitters/auth.event-emitter';
 import {AuthListener} from 'infrastructure/listeners';
@@ -18,11 +19,12 @@ import {MailModule} from 'infrastructure/modules/mail.module';
 
 @Module({
     imports: [TypeOrmModule.forFeature([UserModel, DoctorMetadataModel, PatientMetadataModel]), MailModule],
-    exports: [IAuthService, IAuthedUserService, IUserRepository],
+    exports: [IAuthService, IAuthedUserService, IUserRepository, RequestUserService],
     controllers: [AuthController],
     providers: [
         AuthUseCasesFactory,
         AuthListener,
+        RequestUserService,
         {
             provide: IUserRepository,
             useClass: UserRepository,

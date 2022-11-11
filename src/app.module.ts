@@ -72,6 +72,6 @@ const INTERCEPTORS = [
 })
 export class AppModule implements NestModule {
     configure(consumer: MiddlewareConsumer) {
-        consumer.apply(AssignUserMiddleware).forRoutes({path: '*', method: RequestMethod.ALL});
+        consumer.apply(AssignUserMiddleware).exclude('static/(.*)').forRoutes({path: '*', method: RequestMethod.ALL});
     }
 }

@@ -9,6 +9,7 @@ import {
 import {Logger} from '@nestjs/common';
 import {Socket, Server} from 'socket.io';
 import {WsAuth} from 'presentation/guards';
+import {MessageDto} from './message.dto';
 
 @WebSocketGateway({
     cors: {
@@ -37,6 +38,7 @@ export class VitalsGateway implements OnGatewayInit, OnGatewayConnection, OnGate
     public joinRoom(client: Socket, room: string): void {
         client.join(room);
         this.logger.log(`Client ${client.id} joined the room ${room}`);
+        client.emit('joinedRoom', room);
     }
 
     @SubscribeMessage('leaveRoom')
@@ -46,7 +48,7 @@ export class VitalsGateway implements OnGatewayInit, OnGatewayConnection, OnGate
     }
 
     @SubscribeMessage('messageToServer')
-    public handleMessage(client: Socket, payload: any): void {
+    public handleMessage(client: Socket, payload: MessageDto): void {
         this.server.in(payload.room).emit('messageToClient', payload);
     }
 }

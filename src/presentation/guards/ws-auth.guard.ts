@@ -1,40 +1,27 @@
-import {ExecutionContext, UseGuards, CanActivate, Inject, UnauthorizedException} from '@nestjs/common';
-import {Handshake} from 'socket.io/dist/socket';
+import {ExecutionContext, UseGuards, CanActivate, UnauthorizedException, Injectable} from '@nestjs/common';
+import {WsException} from '@nestjs/websockets';
 import {isNullOrUndefined} from 'app/support/type.helper';
-import {IAuthService} from 'app/modules/auth/services/auth.service';
-import {ITokenClaimsModel} from 'app/modules/auth/models';
-import {TokenClaimsModel} from 'infrastructure/aws/cognito/token-claims.model';
+import {RequestUserService} from 'infrastructure/services/request-user.service';
+import {IncomingHttpHeaders} from 'http';
 
+@Injectable()
 export class WsAuthGuard implements CanActivate {
-    public constructor(@Inject(IAuthService) private readonly authService: IAuthService) {}
+    public constructor(private readonly requestUserService: RequestUserService) {}
 
     public async canActivate(context: ExecutionContext): Promise<boolean> {
-        const tokenClaims: ITokenClaimsModel = await this.getTokenClaims(context);
-        console.log('tokenClaims', tokenClaims);
-        if (isNullOrUndefined(tokenClaims)) {
-            throw new UnauthorizedException();
+        const headers = this.extractHttpHeaders(context);
+
+        const requestUser = await this.requestUserService.getUserDataByHttpHeaders(headers);
+
+        if (isNullOrUndefined(requestUser)) {
+            throw new WsException(new UnauthorizedException());
         }
 
         return true;
     }
 
-    private async getTokenClaims(context: ExecutionContext): Promise<ITokenClaimsModel> {
-        const token: string = this.extractToken(context);
-
-        try {
-            const tokenClaims = await this.authService.getTokenClaims(token);
-
-            return TokenClaimsModel.fromCognitoResponse(tokenClaims);
-        } catch {
-            return null;
-        }
-    }
-
-    private extractToken(context: ExecutionContext): string {
-        const request: Handshake = context.switchToWs().getClient().handshake;
-        const token: string = request.headers?.authorization?.replace('Bearer ', '');
-
-        return isNullOrUndefined(token) ? '' : token;
+    private extractHttpHeaders(context: ExecutionContext): IncomingHttpHeaders {
+        return context.switchToWs().getClient().handshake.headers;
     }
 }
 
