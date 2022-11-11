@@ -3,6 +3,7 @@ import {ITokenClaimsModel} from 'app/modules/auth/models';
 import {IAuthService} from 'app/modules/auth/services/auth.service';
 import {Request, Response} from 'express';
 import {TokenClaimsModel} from 'infrastructure/aws/cognito/token-claims.model';
+import {isNullOrUndefined} from 'app/support/type.helper';
 
 @Injectable()
 export class AssignUserMiddleware implements NestMiddleware {
@@ -28,15 +29,11 @@ export class AssignUserMiddleware implements NestMiddleware {
     private extractToken(request: any): string {
         const token: string = request.headers?.authorization?.replace('Bearer ', '');
 
-        if (this.isNullOrUndefined(token)) {
+        if (isNullOrUndefined(token)) {
             return '';
         }
 
         return token;
-    }
-
-    private isNullOrUndefined(value: string): boolean {
-        return value === null || value === undefined;
     }
 }
 

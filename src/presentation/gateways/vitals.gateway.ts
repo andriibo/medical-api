@@ -8,6 +8,7 @@ import {
 } from '@nestjs/websockets';
 import {Logger} from '@nestjs/common';
 import {Socket, Server} from 'socket.io';
+import {WsAuth} from 'presentation/guards';
 
 @WebSocketGateway({
     cors: {
@@ -19,11 +20,19 @@ export class VitalsGateway implements OnGatewayInit, OnGatewayConnection, OnGate
     @WebSocketServer() server: Server;
     private logger: Logger = new Logger('AppGateway');
 
-    @SubscribeMessage('messageToServer')
-    public handleMessage(client: Socket, payload: any): void {
-        this.server.in(payload.room).emit('messageToClient', payload);
+    public afterInit(client: Server): void {
+        return this.logger.log('Init');
     }
 
+    public handleConnection(client: Socket): void {
+        return this.logger.log(`Client connected: ${client.id}`);
+    }
+
+    public handleDisconnect(client: Socket): void {
+        return this.logger.log(`Client disconnected: ${client.id}`);
+    }
+
+    @WsAuth()
     @SubscribeMessage('joinRoom')
     public joinRoom(client: Socket, room: string): void {
         client.join(room);
@@ -36,15 +45,8 @@ export class VitalsGateway implements OnGatewayInit, OnGatewayConnection, OnGate
         this.logger.log(`Client ${client.id} left the room ${room}`);
     }
 
-    public afterInit(client: Server): void {
-        return this.logger.log('Init');
-    }
-
-    public handleDisconnect(client: Socket): void {
-        return this.logger.log(`Client disconnected: ${client.id}`);
-    }
-
-    public handleConnection(client: Socket): void {
-        return this.logger.log(`Client connected: ${client.id}`);
+    @SubscribeMessage('messageToServer')
+    public handleMessage(client: Socket, payload: any): void {
+        this.server.in(payload.room).emit('messageToClient', payload);
     }
 }

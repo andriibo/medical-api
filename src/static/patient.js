@@ -79,9 +79,5 @@ const app = new Vue({
         this.socket.on('messageToClient', (message) => {
             this.receivedMessage(message);
         });
-
-        this.socket.on('connect', () => {
-            this.socket.emit('joinRoom', this.activePatient);
-        });
     },
 });

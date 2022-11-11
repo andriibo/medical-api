@@ -9,6 +9,7 @@ import {
 } from '@nestjs/common';
 import {Reflector} from '@nestjs/core';
 import {UserRequest} from 'presentation/middlewares/assign-user.middleware';
+import {isNullOrUndefined} from 'app/support/type.helper';
 
 @Injectable()
 export class RolesGuard implements CanActivate {
@@ -17,7 +18,7 @@ export class RolesGuard implements CanActivate {
     public async canActivate(context: ExecutionContext): Promise<boolean> {
         const request: UserRequest = context.switchToHttp().getRequest();
 
-        if (request.tokenClaims === null) {
+        if (isNullOrUndefined(request.tokenClaims)) {
             throw new UnauthorizedException();
         }
 
