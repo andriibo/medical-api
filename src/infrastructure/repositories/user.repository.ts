@@ -52,21 +52,7 @@ export class UserRepository implements IUserRepository {
     }
 
     public async updateAvatar(entity: User): Promise<void> {
-        const queryRunner = this.dataSource.createQueryRunner();
-
-        await queryRunner.connect();
-        await queryRunner.startTransaction();
-
-        try {
-            await queryRunner.manager.save(entity);
-            await queryRunner.commitTransaction();
-            await queryRunner.release();
-        } catch (err) {
-            await queryRunner.rollbackTransaction();
-            await queryRunner.release();
-
-            throw err;
-        }
+        await this.dataSource.manager.save(entity);
     }
 
     public async getOneById(id: string): Promise<User> {
