@@ -1,15 +1,18 @@
 import {
     Body,
     Controller,
+    FileTypeValidator,
     Get,
     HttpCode,
     HttpStatus,
+    MaxFileSizeValidator,
+    ParseFilePipe,
     Patch,
     Post,
     UploadedFile,
     UseInterceptors,
 } from '@nestjs/common';
-import {ApiBearerAuth, ApiConsumes, ApiResponse, ApiTags} from '@nestjs/swagger';
+import {ApiBadRequestResponse, ApiBearerAuth, ApiConsumes, ApiResponse, ApiTags} from '@nestjs/swagger';
 import {Roles} from 'presentation/guards';
 import {PatientView} from 'presentation/views/response/user';
 import {PatientUseCasesFactory} from 'infrastructure/factories/profile';
@@ -49,9 +52,18 @@ export class PatientController {
     @Post('avatar-upload')
     @ApiConsumes('multipart/form-data')
     @HttpCode(HttpStatus.OK)
-    @ApiResponse({status: HttpStatus.OK})
+    @ApiResponse({status: HttpStatus.OK, description: "OK."})
+    @ApiBadRequestResponse({description: "Bad request."})
     @UseInterceptors(FileInterceptor('file'))
-    public async uploadAvatar(@Body() requestBody: UploadAvatarProfileView, @UploadedFile() file: Express.Multer.File) {
+    public async uploadAvatar(
+        @Body() requestBody: UploadAvatarProfileView,
+        @UploadedFile(new ParseFilePipe({
+            validators: [
+                new MaxFileSizeValidator({ maxSize: 1024000 }),
+                new FileTypeValidator({ fileType: 'png|jpeg|gif|webp' }),
+            ],
+        })) file: Express.Multer.File
+    ) {
         const useCase = this.patientUseCasesFactory.uploadAvatarPatientProfileUseCase();
 
         await useCase.uploadAvatarProfile(file.buffer, file.originalname);
