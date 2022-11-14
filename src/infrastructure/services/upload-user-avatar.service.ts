@@ -3,18 +3,18 @@ import {ConfigService} from '@nestjs/config';
 import {v4 as uuidv4} from 'uuid';
 import {Inject} from '@nestjs/common';
 import {User} from 'domain/entities';
-import {IUploadAvatarService} from 'app/modules/profile/services/upload-avatar.service';
+import {IUploadUserAvatarService} from 'app/modules/profile/services/upload-user-avatar.service';
 
-export class UploadAvatarService implements IUploadAvatarService {
+export class UploadUserAvatarService implements IUploadUserAvatarService {
     public constructor(@Inject(ConfigService) private readonly configService: ConfigService) {}
 
-    public async uploadFile(user: User, dataBuffer: Buffer, name: string): Promise<string> {
+    public async uploadFile(user: User, dataBuffer: Buffer): Promise<string> {
         if (user.avatar) {
             await this.deleteFile(user.avatar);
         }
 
         const s3 = new S3();
-        const filename = `${uuidv4()}-${name}`;
+        const filename = `${uuidv4()}`;
         const filePath = this.getAvatarFilePath(filename);
         await s3
             .upload({

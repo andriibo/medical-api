@@ -1,22 +1,22 @@
 import {Inject, Injectable} from '@nestjs/common';
 import {IUserRepository} from 'app/modules/auth/repositories';
 import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service';
-import {IUploadAvatarService} from 'app/modules/profile/services/upload-avatar.service';
-import {UploadAvatarProfileUseCase} from 'app/modules/profile/use-cases/upload-avatar-profile.use-case';
+import {IUploadUserAvatarService} from 'app/modules/profile/services/upload-user-avatar.service';
+import {UploadUserAvatarUseCase} from 'app/modules/profile/use-cases/upload-user-avatar.use-case';
 
 @Injectable()
-export class UploadAvatarProfileUseCasesFactory {
+export class UserAvatarUseCasesFactory {
     public constructor(
         @Inject(IUserRepository) private readonly userRepository: IUserRepository,
         @Inject(IAuthedUserService) private readonly authedUserService: IAuthedUserService,
-        @Inject(IUploadAvatarService) private readonly uploadAvatarService: IUploadAvatarService,
+        @Inject(IUploadUserAvatarService) private readonly uploadUserAvatarService: IUploadUserAvatarService,
     ) {}
 
-    public uploadAvatarProfileUseCase(): UploadAvatarProfileUseCase {
-        return new UploadAvatarProfileUseCase(
+    public uploadUserAvatarUseCase(): UploadUserAvatarUseCase {
+        return new UploadUserAvatarUseCase(
             this.userRepository,
             this.authedUserService,
-            this.uploadAvatarService,
+            this.uploadUserAvatarService,
         );
     }
 }
