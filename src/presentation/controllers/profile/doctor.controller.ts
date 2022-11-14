@@ -8,8 +8,11 @@ import {
     ParseUUIDPipe,
     HttpCode,
     BadRequestException,
+    Post,
+    UseInterceptors,
+    UploadedFile,
 } from '@nestjs/common';
-import {ApiBearerAuth, ApiResponse, ApiTags} from '@nestjs/swagger';
+import {ApiBearerAuth, ApiConsumes, ApiResponse, ApiTags} from '@nestjs/swagger';
 import {Roles} from 'presentation/guards';
 import {DoctorView} from 'presentation/views/response/user';
 import {PatientView} from 'presentation/views/response/user';
@@ -17,6 +20,9 @@ import {DoctorUseCasesFactory} from 'infrastructure/factories/profile';
 import {DoctorDto} from 'domain/dtos/response/profile/doctor.dto';
 import {PatientDto} from 'domain/dtos/response/profile/patient.dto';
 import {UpdateDoctorProfileView} from 'views/request/profile/update-doctor-profile.view';
+import {FileInterceptor} from "@nestjs/platform-express";
+import {UploadAvatarProfileView} from "views/request/profile/upload-avatar-profile.view";
+import {Express} from "express";
 
 @Controller('doctor')
 @ApiBearerAuth()
@@ -57,5 +63,17 @@ export class DoctorController {
         } catch (error) {
             throw new BadRequestException(error.message);
         }
+    }
+
+    @Roles('Doctor')
+    @Post('avatar-upload')
+    @ApiConsumes('multipart/form-data')
+    @HttpCode(HttpStatus.OK)
+    @ApiResponse({status: HttpStatus.OK})
+    @UseInterceptors(FileInterceptor('file'))
+    public async uploadAvatar(@Body() requestBody: UploadAvatarProfileView, @UploadedFile() file: Express.Multer.File) {
+        const useCase = this.doctorUseCasesFactory.uploadAvatarPatientProfileUseCase();
+
+        await useCase.uploadAvatarProfile(file.buffer, file.originalname);
     }
 }
