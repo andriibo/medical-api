@@ -2,7 +2,7 @@ import {IUserRepository} from 'app/modules/auth/repositories';
 import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service';
 import {IUploadAvatarService} from 'app/modules/profile/services/upload-avatar.service';
 
-export class UploadAvatarDoctorProfileUseCase {
+export class UploadAvatarProfileUseCase {
     public constructor(
         private readonly userRepository: IUserRepository,
         private readonly authedUserService: IAuthedUserService,

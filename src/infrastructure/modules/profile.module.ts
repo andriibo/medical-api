@@ -11,6 +11,7 @@ import {AuthModule, PatientDataAccessModule} from 'infrastructure/modules';
 import {ConfigService} from '@nestjs/config';
 import {IUploadAvatarService} from 'app/modules/profile/services/upload-avatar.service';
 import {UploadAvatarService} from 'infrastructure/services/upload-avatar.service';
+import {UploadAvatarProfileUseCasesFactory} from 'infrastructure/factories/upload-avatar-profile-use-cases.factory';
 
 @Module({
     imports: [
@@ -22,6 +23,7 @@ import {UploadAvatarService} from 'infrastructure/services/upload-avatar.service
     providers: [
         DoctorUseCasesFactory,
         PatientUseCasesFactory,
+        UploadAvatarProfileUseCasesFactory,
         {
             provide: IPatientMetadataRepository,
             useClass: PatientMetadataRepository,

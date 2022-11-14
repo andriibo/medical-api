@@ -23,12 +23,16 @@ import {UpdateDoctorProfileView} from 'views/request/profile/update-doctor-profi
 import {FileInterceptor} from '@nestjs/platform-express';
 import {UploadAvatarProfileView} from 'views/request/profile/upload-avatar-profile.view';
 import {Express} from 'express';
+import {UploadAvatarProfileUseCasesFactory} from "infrastructure/factories/upload-avatar-profile-use-cases.factory";
 
 @Controller('doctor')
 @ApiBearerAuth()
 @ApiTags('Profile')
 export class DoctorController {
-    public constructor(private readonly doctorUseCasesFactory: DoctorUseCasesFactory) {}
+    public constructor(
+        private readonly doctorUseCasesFactory: DoctorUseCasesFactory,
+        private readonly uploadAvatarProfileUseCasesFactory: UploadAvatarProfileUseCasesFactory,
+    ) {}
 
     @Roles('Doctor')
     @Get('my-profile')
@@ -72,7 +76,7 @@ export class DoctorController {
     @ApiResponse({status: HttpStatus.OK})
     @UseInterceptors(FileInterceptor('file'))
     public async uploadAvatar(@Body() requestBody: UploadAvatarProfileView, @UploadedFile() file: Express.Multer.File) {
-        const useCase = this.doctorUseCasesFactory.uploadAvatarDoctorProfileUseCase();
+        const useCase = this.uploadAvatarProfileUseCasesFactory.uploadAvatarProfileUseCase();
 
         await useCase.uploadAvatarProfile(file.buffer, file.originalname);
     }

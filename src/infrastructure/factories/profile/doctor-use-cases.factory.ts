@@ -10,7 +10,6 @@ import {
 import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service';
 import {IUserProfileMapper} from 'app/modules/profile/mappers/user-profile.mapper';
 import {PatientDataAccessSpecification} from 'app/modules/patient-data-access/specifications/patient-data-access.specification';
-import {UploadAvatarDoctorProfileUseCase} from 'app/modules/profile/use-cases/doctor/upload-avatar-doctor-profile.use-case';
 import {IUploadAvatarService} from 'app/modules/profile/services/upload-avatar.service';
 
 @Injectable()
@@ -47,14 +46,6 @@ export class DoctorUseCasesFactory {
             this.authedUserService,
             this.patientMetadataRepository,
             this.patientDataAccessSpecification,
-        );
-    }
-
-    public uploadAvatarDoctorProfileUseCase(): UploadAvatarDoctorProfileUseCase {
-        return new UploadAvatarDoctorProfileUseCase(
-            this.userRepository,
-            this.authedUserService,
-            this.uploadAvatarService,
         );
     }
 }
