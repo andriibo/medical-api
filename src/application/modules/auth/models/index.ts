@@ -11,6 +11,7 @@ import {ConfirmChangeEmailModel} from './confirm-change-email.model';
 import {ForgotPasswordResponseModel} from './forgot-password-result.model';
 import {IRequestUserModel} from './request-user.model';
 import {ChangeEmailResponseModel} from './change-email-result.model';
+import {ResendConfirmationCodeResultModel} from './resend-confirmation-code-result.model';
 
 export {
     ConfirmSignUpModel,
@@ -26,4 +27,5 @@ export {
     ConfirmChangeEmailModel,
     ForgotPasswordResponseModel,
     ChangeEmailResponseModel,
+    ResendConfirmationCodeResultModel,
 };
