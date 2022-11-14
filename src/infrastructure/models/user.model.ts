@@ -24,5 +24,8 @@ export class UserModel implements User {
     @Column({name: 'created_at'})
     public createdAt: string;
 
+    @Column()
+    public avatar?: string;
+
     public metadata: UserMetadata;
 }

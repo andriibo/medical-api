@@ -51,6 +51,10 @@ export class UserRepository implements IUserRepository {
         }
     }
 
+    public async updateAvatar(entity: User): Promise<void> {
+        await this.dataSource.manager.save(entity);
+    }
+
     public async getOneById(id: string): Promise<User> {
         return await this.dataSource.manager.findOneBy(UserModel, {id});
     }

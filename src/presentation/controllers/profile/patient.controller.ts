@@ -1,10 +1,23 @@
-import {Body, Controller, Get, HttpCode, HttpStatus, Patch} from '@nestjs/common';
-import {ApiBearerAuth, ApiResponse, ApiTags} from '@nestjs/swagger';
+import {
+    Body,
+    Controller,
+    Get,
+    HttpCode,
+    HttpStatus,
+    Patch,
+    Post,
+    UploadedFile,
+    UseInterceptors,
+} from '@nestjs/common';
+import {ApiBearerAuth, ApiConsumes, ApiResponse, ApiTags} from '@nestjs/swagger';
 import {Roles} from 'presentation/guards';
 import {PatientView} from 'presentation/views/response/user';
 import {PatientUseCasesFactory} from 'infrastructure/factories/profile';
 import {PatientDto} from 'domain/dtos/response/profile/patient.dto';
 import {UpdatePatientProfileView} from 'views/request/profile/update-patient-profile.view';
+import {FileInterceptor} from '@nestjs/platform-express';
+import {Express} from 'express';
+import {UploadAvatarProfileView} from 'views/request/profile/upload-avatar-profile.view';
 
 @Controller('patient')
 @ApiBearerAuth()
@@ -30,5 +43,17 @@ export class PatientController {
         const useCase = this.patientUseCasesFactory.createUpdatePatientProfileUseCase();
 
         await useCase.updateProfileInfo(requestBody);
+    }
+
+    @Roles('Patient')
+    @Post('avatar-upload')
+    @ApiConsumes('multipart/form-data')
+    @HttpCode(HttpStatus.OK)
+    @ApiResponse({status: HttpStatus.OK})
+    @UseInterceptors(FileInterceptor('file'))
+    public async uploadAvatar(@Body() requestBody: UploadAvatarProfileView, @UploadedFile() file: Express.Multer.File) {
+        const useCase = this.patientUseCasesFactory.uploadAvatarPatientProfileUseCase();
+
+        await useCase.uploadAvatarProfile(file.buffer, file.originalname);
     }
 }
