@@ -18,6 +18,7 @@ import {
     VerifyUserAttributeCommand,
     ForgotPasswordResponse,
     UpdateUserAttributesResponse,
+    ResendConfirmationCodeResponse,
 } from '@aws-sdk/client-cognito-identity-provider';
 import {ConfigService} from '@nestjs/config';
 import {
@@ -32,6 +33,7 @@ import {
     ConfirmChangeEmailModel,
     ForgotPasswordResponseModel,
     ChangeEmailResponseModel,
+    ResendConfirmationCodeResultModel,
 } from 'app/modules/auth/models';
 import {IAuthService} from 'app/modules/auth/services/auth.service';
 import * as jwt from 'jsonwebtoken';
@@ -136,14 +138,16 @@ export class CognitoService implements IAuthService {
         }
     }
 
-    public async resendConfirmSignUpCode(email: string): Promise<void> {
+    public async resendConfirmSignUpCode(email: string): Promise<ResendConfirmationCodeResultModel> {
         const command = new ResendConfirmationCodeCommand({
             Username: email,
             ClientId: this.config.clientId,
         });
 
         try {
-            await this.cognitoClient.send(command);
+            const response = await this.cognitoClient.send(command);
+
+            return this.getResendCodeResult(response);
         } catch (error) {
             console.error(error.message);
             throw new AuthServiceError(error.message);
@@ -282,6 +286,16 @@ export class CognitoService implements IAuthService {
 
     private getChangeEmailResult(updateUserAttributesResponse: UpdateUserAttributesResponse): ChangeEmailResponseModel {
         const emailDeliveryDetails = updateUserAttributesResponse?.CodeDeliveryDetailsList?.pop();
+
+        return {
+            destination: emailDeliveryDetails?.Destination,
+            attributeName: emailDeliveryDetails?.AttributeName,
+            deliveryMedium: emailDeliveryDetails?.DeliveryMedium,
+        };
+    }
+
+    private getResendCodeResult(resendConfirmationCodeResponse: ResendConfirmationCodeResponse): ResendConfirmationCodeResultModel {
+        const emailDeliveryDetails = resendConfirmationCodeResponse?.CodeDeliveryDetails;
 
         return {
             destination: emailDeliveryDetails?.Destination,

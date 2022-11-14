@@ -9,6 +9,7 @@ import {
     ConfirmChangeEmailModel,
     ForgotPasswordResponseModel,
     ChangeEmailResponseModel,
+    ResendConfirmationCodeResultModel,
 } from 'app/modules/auth/models';
 import {User} from 'domain/entities';
 import {AuthResultModel} from 'app/modules/auth/models';
@@ -17,7 +18,7 @@ export interface IAuthService {
     signIn(user: SignInModel): Promise<AuthResultModel>;
     signUp(signUpModel: SignUpModel): Promise<IAuthModel>;
     confirmSignUp(user: ConfirmSignUpModel): Promise<void>;
-    resendConfirmSignUpCode(email: string): Promise<void>;
+    resendConfirmSignUpCode(email: string): Promise<ResendConfirmationCodeResultModel>;
     getTokenClaims(token: string): Promise<string[]>;
     deleteUser(user: User): Promise<void>;
     forgotPassword(email: string): Promise<ForgotPasswordResponseModel>;
