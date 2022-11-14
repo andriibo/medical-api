@@ -72,7 +72,7 @@ export class DoctorController {
     @ApiResponse({status: HttpStatus.OK})
     @UseInterceptors(FileInterceptor('file'))
     public async uploadAvatar(@Body() requestBody: UploadAvatarProfileView, @UploadedFile() file: Express.Multer.File) {
-        const useCase = this.doctorUseCasesFactory.uploadAvatarPatientProfileUseCase();
+        const useCase = this.doctorUseCasesFactory.uploadAvatarDoctorProfileUseCase();
 
         await useCase.uploadAvatarProfile(file.buffer, file.originalname);
     }
