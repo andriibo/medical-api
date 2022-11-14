@@ -10,8 +10,14 @@ import {
     ChangeEmailView,
     ConfirmChangeEmailView,
     ChangePasswordView,
+    ResendSignUpCodeView,
 } from 'presentation/views/request/auth';
-import {ChangeEmailResponseView, ForgotPasswordResponseView, UserSignedInView} from 'presentation/views/response/auth';
+import {
+    ChangeEmailResponseView,
+    ForgotPasswordResponseView,
+    ResendSignUpCodeResponseView,
+    UserSignedInView,
+} from 'presentation/views/response/auth';
 import {AuthUseCasesFactory} from 'infrastructure/factories/auth-use-cases.factory';
 import {UserRequest} from 'presentation/middlewares/assign-user.middleware';
 import {Auth} from 'presentation/guards';
@@ -117,5 +123,14 @@ export class AuthController {
         return await useCase.changePassword(
             new ChangePasswordDto(requestBody.currentPassword, requestBody.newPassword, request.user.token),
         );
+    }
+
+    @Post('sign-up/resend-code')
+    @HttpCode(HttpStatus.OK)
+    @ApiResponse({status: HttpStatus.OK, type: ResendSignUpCodeResponseView})
+    public async resendSignUpCode(@Body() requestBody: ResendSignUpCodeView): Promise<ResendSignUpCodeResponseView> {
+        const useCase = this.authUseCasesFactory.createResendSignUpCodeUseCase();
+
+        return await useCase.resendCode(requestBody);
     }
 }
