@@ -8,7 +8,7 @@ import {
 } from '@nestjs/websockets';
 import {Logger} from '@nestjs/common';
 import {Socket, Server} from 'socket.io';
-import {WsAuth} from 'presentation/guards';
+import {WsAuth, WsRoles} from 'presentation/guards';
 import {MessageDto} from './message.dto';
 
 @WebSocketGateway({
@@ -33,7 +33,7 @@ export class VitalsGateway implements OnGatewayInit, OnGatewayConnection, OnGate
         return this.logger.log(`Client disconnected: ${client.id}`);
     }
 
-    @WsAuth()
+    @WsRoles('Doctor')
     @SubscribeMessage('joinRoom')
     public joinRoom(client: Socket, room: string): void {
         client.join(room);
@@ -47,6 +47,7 @@ export class VitalsGateway implements OnGatewayInit, OnGatewayConnection, OnGate
         this.logger.log(`Client ${client.id} left the room ${room}`);
     }
 
+    @WsRoles('Patient')
     @SubscribeMessage('messageToServer')
     public handleMessage(client: Socket, payload: MessageDto): void {
         this.server.in(payload.room).emit('messageToClient', payload);

@@ -31,23 +31,10 @@
                 </button>
             </div>
             <br>
-            <div v-if="isConnectedToWebsocket">
-                <div v-if="!isJointedToRoom">
-                    <label for="patient">Patient ID:</label>
-                    <input type="text" v-model="selectedPatient" id="patient" class="form-control" placeholder="Enter patient Id...">
-                    <br>
-                    <button id="joinRoom" class="btn btn-success" @click.prevent="joinRoom">
-                        Join Room
-                    </button>
-                </div>
-                <div v-if="isJointedToRoom">
-                    <button id="leaveRoom" class="btn" @click.prevent="leaveRoom">
-                        Leave Room {{activePatient}}
-                    </button>
-                </div>
-            </div>
-            <br>
-            <div v-if="isConnectedToWebsocket && isJointedToRoom" id="vitals">
+            <div v-if="isConnectedToWebsocket" id="vitals">
+                <label for="patient">Patient ID:</label>
+                <input type="text" v-model="selectedPatient" id="patient" class="form-control" placeholder="Enter patient Id...">
+                <br>
                 <div class="checkbox">
                     <label for="hr">
                         <input type="checkbox" v-model="vitals.hr.isActive" id="hr">

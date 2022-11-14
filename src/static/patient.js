@@ -20,7 +20,6 @@ const app = new Vue({
         },
         sendingStarted: false,
         isConnectedToWebsocket: false,
-        isJointedToRoom: false,
     },
     methods: {
         connectToWebsocket() {
@@ -30,17 +29,11 @@ const app = new Vue({
             }
 
             this.socket = initSocket(this.accessToken);
-            this.socket.on('messageToClient', (message) => {
-                this.receivedMessage(message);
-            });
+
             this.socket.on('exception', (error) => {
+                this.stopSendingMessages();
                 alert(error.message);
                 console.error(error);
-            });
-            this.socket.on('joinedRoom', (message) => {
-                console.log('joinedRoom', message);
-                this.messages = [];
-                this.isJointedToRoom = true;
             });
 
             this.isConnectedToWebsocket = true;
@@ -52,34 +45,7 @@ const app = new Vue({
                 this.socket.disconnect();
             }
 
-            this.messages = [];
-            this.isJointedToRoom = false;
             this.isConnectedToWebsocket = false;
-        },
-        joinRoom() {
-            this.stopSendingMessages();
-
-            if (!this.selectedPatient) {
-                alert('Input Player Id.');
-                return;
-            }
-
-            if (this.activePatient.length > 0) {
-                this.socket.emit('leaveRoom', this.activePatient);
-            }
-
-            this.activePatient = this.selectedPatient;
-            this.socket.emit('joinRoom', this.activePatient);
-        },
-        leaveRoom() {
-            this.stopSendingMessages();
-
-            if (this.activePatient.length > 0) {
-                this.socket.emit('leaveRoom', this.activePatient);
-            }
-
-            this.messages = [];
-            this.isJointedToRoom = false;
         },
         startSendingMessages() {
             if (!this.validateInputs()) {
@@ -92,7 +58,7 @@ const app = new Vue({
             this.interval = setInterval(
                 function () {
                     const message = {
-                        room: this.activePatient,
+                        room: this.selectedPatient,
                         data: {},
                     };
                     Object.keys(this.vitals).map((vital) => {
@@ -103,6 +69,7 @@ const app = new Vue({
                     });
 
                     this.socket.emit('messageToServer', message);
+                    this.messages.push(message);
                 }.bind(this),
                 2000,
             );
@@ -117,11 +84,8 @@ const app = new Vue({
             this.messages = [];
             this.sendingStarted = false;
         },
-        receivedMessage(message) {
-            this.messages.push(message);
-        },
         validateInputs() {
-            return this.vitals.hr.isActive || this.vitals.temp.isActive;
+            return this.selectedPatient.length > 0 && (this.vitals.hr.isActive || this.vitals.temp.isActive);
         },
         getRandomFloat(min, max) {
             const value = Math.random() * (max - min) + min;
