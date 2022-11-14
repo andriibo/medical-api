@@ -20,9 +20,9 @@ import {DoctorUseCasesFactory} from 'infrastructure/factories/profile';
 import {DoctorDto} from 'domain/dtos/response/profile/doctor.dto';
 import {PatientDto} from 'domain/dtos/response/profile/patient.dto';
 import {UpdateDoctorProfileView} from 'views/request/profile/update-doctor-profile.view';
-import {FileInterceptor} from "@nestjs/platform-express";
-import {UploadAvatarProfileView} from "views/request/profile/upload-avatar-profile.view";
-import {Express} from "express";
+import {FileInterceptor} from '@nestjs/platform-express';
+import {UploadAvatarProfileView} from 'views/request/profile/upload-avatar-profile.view';
+import {Express} from 'express';
 
 @Controller('doctor')
 @ApiBearerAuth()

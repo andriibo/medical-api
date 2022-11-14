@@ -10,8 +10,8 @@ import {
 import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service';
 import {IUserProfileMapper} from 'app/modules/profile/mappers/user-profile.mapper';
 import {PatientDataAccessSpecification} from 'app/modules/patient-data-access/specifications/patient-data-access.specification';
-import {UploadAvatarPatientProfileUseCase} from "app/modules/profile/use-cases/patient/upload-avatar-patient-profile.use-case";
-import {IUploadAvatarService} from "app/modules/profile/services/upload-avatar.service";
+import {UploadAvatarPatientProfileUseCase} from 'app/modules/profile/use-cases/patient/upload-avatar-patient-profile.use-case';
+import {IUploadAvatarService} from 'app/modules/profile/services/upload-avatar.service';
 
 @Injectable()
 export class DoctorUseCasesFactory {
