@@ -8,8 +8,8 @@ import {
 } from '@nestjs/websockets';
 import {Logger} from '@nestjs/common';
 import {Socket, Server} from 'socket.io';
-import {WsAuth, WsRoles} from 'presentation/guards';
-import {MessageDto} from './message.dto';
+import {WsRoles, WsPatientDataAccess} from 'presentation/guards';
+import {PatientMessageDto, PatientRoomDto} from 'domain/dtos/gateway';
 
 @WebSocketGateway({
     cors: {
@@ -33,23 +33,23 @@ export class VitalsGateway implements OnGatewayInit, OnGatewayConnection, OnGate
         return this.logger.log(`Client disconnected: ${client.id}`);
     }
 
-    @WsRoles('Doctor')
+    @WsPatientDataAccess({onlyRoles: ['Doctor']})
     @SubscribeMessage('joinRoom')
-    public joinRoom(client: Socket, room: string): void {
-        client.join(room);
-        this.logger.log(`Client ${client.id} joined the room ${room}`);
-        client.emit('joinedRoom', room);
+    public joinRoom(client: Socket, patientRoomDto: PatientRoomDto): void {
+        client.join(patientRoomDto.patientUserId);
+        this.logger.log(`Client ${client.id} joined the room ${patientRoomDto.patientUserId}`);
+        client.emit('joinedRoom', patientRoomDto.patientUserId);
     }
 
     @SubscribeMessage('leaveRoom')
-    public leaveRoom(client: Socket, room: string): void {
-        client.leave(room);
-        this.logger.log(`Client ${client.id} left the room ${room}`);
+    public leaveRoom(client: Socket, patientRoomDto: PatientRoomDto): void {
+        client.leave(patientRoomDto.patientUserId);
+        this.logger.log(`Client ${client.id} left the room ${patientRoomDto.patientUserId}`);
     }
 
     @WsRoles('Patient')
     @SubscribeMessage('messageToServer')
-    public handleMessage(client: Socket, payload: MessageDto): void {
-        this.server.in(payload.room).emit('messageToClient', payload);
+    public handleMessage(client: Socket, payload: PatientMessageDto): void {
+        this.server.in(payload.patientUserId).emit('messageToClient', payload);
     }
 }

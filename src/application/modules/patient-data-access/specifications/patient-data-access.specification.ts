@@ -119,7 +119,11 @@ export class PatientDataAccessSpecification {
             throw new PatientDataAccessSpecificationError('Access Is Absent.');
         }
 
-        const dataAccess = await this.getAccessByPatientUserIdAndGrantedUserId(patientUserId, grantedUser.id);
+        await this.assertGrantedUserIdHasAccess(grantedUser.id, patientUserId);
+    }
+
+    public async assertGrantedUserIdHasAccess(grantedUserId: string, patientUserId: string): Promise<void> {
+        const dataAccess = await this.getAccessByPatientUserIdAndGrantedUserId(patientUserId, grantedUserId);
 
         const isAccessStatusApproved = dataAccess.status === PatientDataAccessStatus.Approved;
 

@@ -52,17 +52,20 @@ export class PatientController {
     @Post('avatar-upload')
     @ApiConsumes('multipart/form-data')
     @HttpCode(HttpStatus.OK)
-    @ApiResponse({status: HttpStatus.OK, description: "OK."})
-    @ApiBadRequestResponse({description: "Bad request."})
+    @ApiResponse({status: HttpStatus.OK, description: 'OK.'})
+    @ApiBadRequestResponse({description: 'Bad request.'})
     @UseInterceptors(FileInterceptor('file'))
     public async uploadAvatar(
         @Body() requestBody: UploadAvatarProfileView,
-        @UploadedFile(new ParseFilePipe({
-            validators: [
-                new MaxFileSizeValidator({ maxSize: 1024000 }),
-                new FileTypeValidator({ fileType: 'png|jpeg|gif|webp' }),
-            ],
-        })) file: Express.Multer.File
+        @UploadedFile(
+            new ParseFilePipe({
+                validators: [
+                    new MaxFileSizeValidator({maxSize: 1024000}),
+                    new FileTypeValidator({fileType: 'png|jpeg|gif|webp'}),
+                ],
+            }),
+        )
+        file: Express.Multer.File,
     ) {
         const useCase = this.patientUseCasesFactory.uploadAvatarPatientProfileUseCase();
 

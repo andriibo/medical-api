@@ -36,10 +36,10 @@ export class SignUpUseCase {
     private async createUser(user: User): Promise<User> {
         try {
             return await this.userRepository.create(user);
-        } catch (err) {
+        } catch (error) {
             await this.authService.deleteUser(user);
 
-            throw err;
+            throw error;
         }
     }
 }
