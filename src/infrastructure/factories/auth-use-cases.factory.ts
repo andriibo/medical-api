@@ -9,6 +9,7 @@ import {
     SignUpUseCase,
     ChangeEmailUseCase,
     ChangePasswordUseCase,
+    ResendSignUpCodeUseCase,
 } from 'app/modules/auth/use-cases';
 import {IAuthEventEmitter} from 'app/modules/auth/event-emitters/auth.event-emitter';
 
@@ -31,6 +32,10 @@ export class AuthUseCasesFactory {
 
     public createConfirmSignUpUseCase(): ConfirmSignUpUserUseCase {
         return new ConfirmSignUpUserUseCase(this.authService, this.authEventEmitter);
+    }
+
+    public createResendSignUpCodeUseCase(): ResendSignUpCodeUseCase {
+        return new ResendSignUpCodeUseCase(this.authService);
     }
 
     public createForgotPasswordUseCase(): ForgotPasswordUseCase {
