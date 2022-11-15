@@ -9,12 +9,11 @@ import {IUserProfileMapper} from 'app/modules/profile/mappers/user-profile.mappe
 import {UserProfileMapper} from 'infrastructure/mappers/user-profile.mapper';
 import {AuthModule, PatientDataAccessModule} from 'infrastructure/modules';
 import {ConfigService} from '@nestjs/config';
-import {IUploadUserAvatarService} from 'app/modules/profile/services/upload-user-avatar.service';
-import {UploadUserAvatarService} from 'infrastructure/services/upload-user-avatar.service';
 import {UserAvatarUseCasesFactory} from 'infrastructure/factories/user-avatar-use-cases.factory';
 import {AvatarController} from 'controllers/profile/avatar.controller';
 import {IAWSFileUrlService} from 'app/modules/profile/services/aws-file-url.service';
 import {AWSFileUrlService} from 'infrastructure/services/aws-file-url.service';
+import {S3Service} from 'infrastructure/aws/s3/s3.service';
 
 @Module({
     imports: [
@@ -40,10 +39,9 @@ import {AWSFileUrlService} from 'infrastructure/services/aws-file-url.service';
             useClass: UserProfileMapper,
         },
         {
-            provide: IUploadUserAvatarService,
-            useClass: UploadUserAvatarService,
+            provide: S3Service,
             useFactory: (configService: ConfigService) => {
-                return new UploadUserAvatarService(configService);
+                return new S3Service(configService);
             },
             inject: [ConfigService],
         },
