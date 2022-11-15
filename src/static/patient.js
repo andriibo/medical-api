@@ -58,7 +58,7 @@ const app = new Vue({
             this.interval = setInterval(
                 function () {
                     const message = {
-                        room: this.selectedPatient,
+                        patientUserId: this.selectedPatient,
                         data: {},
                     };
                     Object.keys(this.vitals).map((vital) => {

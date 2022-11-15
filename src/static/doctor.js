@@ -53,15 +53,15 @@ const app = new Vue({
             }
 
             if (this.activePatient.length > 0) {
-                this.socket.emit('leaveRoom', this.activePatient);
+                this.socket.emit('leaveRoom', this.createRoomMessage(this.activePatient));
             }
 
             this.activePatient = this.selectedPatient;
-            this.socket.emit('joinRoom', this.activePatient);
+            this.socket.emit('joinRoom', this.createRoomMessage(this.activePatient));
         },
         stopReadingMessages() {
             if (this.activePatient.length > 0) {
-                this.socket.emit('leaveRoom', this.activePatient);
+                this.socket.emit('leaveRoom', this.createRoomMessage(this.activePatient));
             }
 
             this.messages = [];
@@ -69,6 +69,9 @@ const app = new Vue({
         },
         receivedMessage(message) {
             this.messages.push(message);
+        },
+        createRoomMessage(room) {
+            return {patientUserId: room};
         },
     },
 });

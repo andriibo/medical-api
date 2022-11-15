@@ -10,7 +10,6 @@ import {
 import {WsException} from '@nestjs/websockets';
 import {isNullOrUndefined} from 'app/support/type.helper';
 import {RequestUserService} from 'infrastructure/services/request-user.service';
-import {IncomingHttpHeaders} from 'http';
 import {Reflector} from '@nestjs/core';
 import {IRequestUserModel} from 'app/modules/auth/models';
 
@@ -39,7 +38,7 @@ export class WsRolesGuard implements CanActivate {
     }
 
     private async getRequestUser(context: ExecutionContext): Promise<IRequestUserModel> {
-        const headers = this.extractHttpHeaders(context);
+        const headers = context.switchToWs().getClient().handshake.headers;
 
         const requestUser = await this.requestUserService.getUserDataByHttpHeaders(headers);
 
@@ -48,10 +47,6 @@ export class WsRolesGuard implements CanActivate {
         }
 
         return requestUser;
-    }
-
-    private extractHttpHeaders(context: ExecutionContext): IncomingHttpHeaders {
-        return context.switchToWs().getClient().handshake.headers;
     }
 }
 
