@@ -10,21 +10,21 @@ import {
     ParseUUIDPipe,
     HttpCode,
 } from '@nestjs/common';
-import {ApiBearerAuth, ApiResponse, ApiTags} from '@nestjs/swagger';
+import {ApiBearerAuth, ApiOperation, ApiResponse, ApiTags} from '@nestjs/swagger';
 import {Roles} from 'presentation/guards';
 import {PatientDiagnosisUseCasesFactory} from 'infrastructure/factories/patient-diagnosis-use-cases.factory';
 import {CreateDiagnosisView} from 'presentation/views/request/patient-diagnosis/create-diagnosis.view';
 import {DiagnosisDto} from 'domain/dtos/response/patient-diagnosis/diagnosis.dto';
 import {DiagnosisView} from 'views/response/patient-diagnosis';
 
-@Controller('patient-diagnosis')
+@Controller()
 @ApiBearerAuth()
 @ApiTags('Patient Diagnosis')
 export class PatientDiagnosisController {
     public constructor(private readonly patientDiagnosisUseCasesFactory: PatientDiagnosisUseCasesFactory) {}
 
     @Roles('Doctor', 'Patient')
-    @Post()
+    @Post('patient-diagnosis')
     @HttpCode(HttpStatus.CREATED)
     @HttpCode(HttpStatus.BAD_REQUEST)
     @ApiResponse({status: HttpStatus.CREATED})
@@ -39,7 +39,21 @@ export class PatientDiagnosisController {
     }
 
     @Roles('Doctor', 'Patient')
-    @Get(':patientUserId')
+    @Get('patient-diagnosis/:patientUserId')
+    @HttpCode(HttpStatus.OK)
+    @ApiOperation({
+        deprecated: true,
+        summary: 'Deprecated endpoint. Use GET "/patient-diagnoses/{patientUserId}" instead.',
+    })
+    @ApiResponse({status: HttpStatus.OK, type: [DiagnosisView]})
+    public async getPatientDiagnosesDeprecated(
+        @Param('patientUserId', ParseUUIDPipe) patientUserId: string,
+    ): Promise<DiagnosisDto[]> {
+        return await this.getPatientDiagnoses(patientUserId);
+    }
+
+    @Roles('Doctor', 'Patient')
+    @Get('patient-diagnoses/:patientUserId')
     @HttpCode(HttpStatus.OK)
     @ApiResponse({status: HttpStatus.OK, type: [DiagnosisView]})
     public async getPatientDiagnoses(
@@ -55,7 +69,7 @@ export class PatientDiagnosisController {
     }
 
     @Roles('Doctor', 'Patient')
-    @Delete(':diagnosisId')
+    @Delete('patient-diagnosis/:diagnosisId')
     @HttpCode(HttpStatus.NO_CONTENT)
     @HttpCode(HttpStatus.BAD_REQUEST)
     @ApiResponse({status: HttpStatus.NO_CONTENT})

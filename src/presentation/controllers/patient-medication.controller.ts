@@ -10,21 +10,21 @@ import {
     ParseUUIDPipe,
     HttpCode,
 } from '@nestjs/common';
-import {ApiBearerAuth, ApiResponse, ApiTags} from '@nestjs/swagger';
+import {ApiBearerAuth, ApiOperation, ApiResponse, ApiTags} from '@nestjs/swagger';
 import {Roles} from 'presentation/guards';
 import {PatientMedicationUseCasesFactory} from 'infrastructure/factories/patient-medication-use-cases.factory';
 import {CreateMedicationView} from 'presentation/views/request/patient-medication/create-medication.view';
 import {MedicationDto} from 'domain/dtos/response/patient-medication/medication.dto';
 import {MedicationView} from 'views/response/patient-medication';
 
-@Controller('patient-medication')
+@Controller()
 @ApiBearerAuth()
 @ApiTags('Patient Medication')
 export class PatientMedicationController {
     public constructor(private readonly patientMedicationUseCasesFactory: PatientMedicationUseCasesFactory) {}
 
     @Roles('Doctor', 'Patient')
-    @Post()
+    @Post('patient-medication')
     @HttpCode(HttpStatus.CREATED)
     @HttpCode(HttpStatus.BAD_REQUEST)
     @ApiResponse({status: HttpStatus.CREATED})
@@ -39,10 +39,24 @@ export class PatientMedicationController {
     }
 
     @Roles('Doctor', 'Patient')
-    @Get(':patientUserId')
+    @Get('patient-medication/:patientUserId')
+    @HttpCode(HttpStatus.OK)
+    @ApiOperation({
+        deprecated: true,
+        summary: 'Deprecated endpoint. Use GET "/patient-medications/{patientUserId}" instead.',
+    })
+    @ApiResponse({status: HttpStatus.OK, type: [MedicationView]})
+    public async getPatientMedicationsDeprecated(
+        @Param('patientUserId', ParseUUIDPipe) patientUserId: string,
+    ): Promise<MedicationDto[]> {
+        return await this.getPatientMedications(patientUserId);
+    }
+
+    @Roles('Doctor', 'Patient')
+    @Get('patient-medications/:patientUserId')
     @HttpCode(HttpStatus.OK)
     @ApiResponse({status: HttpStatus.OK, type: [MedicationView]})
-    public async getPatientDiagnoses(
+    public async getPatientMedications(
         @Param('patientUserId', ParseUUIDPipe) patientUserId: string,
     ): Promise<MedicationDto[]> {
         const useCase = this.patientMedicationUseCasesFactory.createMedicationListUseCase();
@@ -55,11 +69,11 @@ export class PatientMedicationController {
     }
 
     @Roles('Doctor', 'Patient')
-    @Delete(':medicationId')
+    @Delete('patient-medication/:medicationId')
     @HttpCode(HttpStatus.NO_CONTENT)
     @HttpCode(HttpStatus.BAD_REQUEST)
     @ApiResponse({status: HttpStatus.NO_CONTENT})
-    public async deletePatientDiagnoses(@Param('medicationId', ParseUUIDPipe) medicationId: string): Promise<void> {
+    public async deletePatientMedication(@Param('medicationId', ParseUUIDPipe) medicationId: string): Promise<void> {
         const useCase = this.patientMedicationUseCasesFactory.createDeleteMedicationUseCase();
 
         try {
