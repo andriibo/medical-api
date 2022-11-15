@@ -7,14 +7,14 @@ async function bootstrap() {
     const app = await NestFactory.create(AppModule);
     // app.setGlobalPrefix('api');
 
-    const configApi = new DocumentBuilder()
+    const config = new DocumentBuilder()
         .setTitle('Medical API')
         .setDescription('The Medical API description')
         .setVersion('1.0')
         .addBearerAuth()
         .build();
 
-    const document = SwaggerModule.createDocument(app, configApi);
+    const document = SwaggerModule.createDocument(app, config);
 
     SwaggerModule.setup('api', app, document);
 
