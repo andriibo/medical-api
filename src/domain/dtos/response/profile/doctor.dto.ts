@@ -12,6 +12,8 @@ export class DoctorDto {
 
     public institution: string;
 
+    public avatar: string;
+
     public static fromUserAndDoctorMetadata(user: User, metadata: DoctorMetadata): DoctorDto {
         const dto = new DoctorDto();
         dto.email = user.email;
@@ -19,6 +21,7 @@ export class DoctorDto {
         dto.lastName = user.lastName;
         dto.phone = user.phone;
         dto.institution = metadata.institution;
+        dto.avatar = user.avatar;
 
         return dto;
     }

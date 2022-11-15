@@ -18,6 +18,8 @@ export class PatientDto {
 
     public weight: number;
 
+    public avatar: string;
+
     public static fromUserAndPatientMetadata(user: User, metadata: PatientMetadata): PatientDto {
         const dto = new PatientDto();
         dto.email = user.email;
@@ -28,6 +30,7 @@ export class PatientDto {
         dto.gender = metadata.gender;
         dto.height = metadata.height;
         dto.weight = metadata.weight;
+        dto.avatar = user.avatar;
 
         return dto;
     }

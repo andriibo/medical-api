@@ -1,11 +1,4 @@
-import {
-    Body,
-    Controller,
-    Get,
-    HttpCode,
-    HttpStatus,
-    Patch,
-} from '@nestjs/common';
+import {Body, Controller, Get, HttpCode, HttpStatus, Patch} from '@nestjs/common';
 import {ApiBearerAuth, ApiResponse, ApiTags} from '@nestjs/swagger';
 import {Roles} from 'presentation/guards';
 import {PatientView} from 'presentation/views/response/user';

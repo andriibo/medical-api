@@ -1,25 +1,25 @@
 import {S3} from 'aws-sdk';
 import {ConfigService} from '@nestjs/config';
-import {v4 as uuidv4} from 'uuid';
 import {Inject} from '@nestjs/common';
 import {User} from 'domain/entities';
 import {IUploadUserAvatarService} from 'app/modules/profile/services/upload-user-avatar.service';
+import {Express} from 'express';
+import * as mime from 'mime-types';
 
 export class UploadUserAvatarService implements IUploadUserAvatarService {
     public constructor(@Inject(ConfigService) private readonly configService: ConfigService) {}
 
-    public async uploadFile(user: User, dataBuffer: Buffer): Promise<string> {
+    public async uploadFile(user: User, file: Express.Multer.File): Promise<string> {
         if (user.avatar) {
             await this.deleteFile(user.avatar);
         }
-
         const s3 = new S3();
-        const filename = `${uuidv4()}`;
+        const filename = Date.now() + '.' + mime.extension(file.mimetype);
         const filePath = this.getAvatarFilePath(filename);
         await s3
             .upload({
                 Bucket: this.configService.get<string>('AWS_PUBLIC_BUCKET_NAME'),
-                Body: dataBuffer,
+                Body: file.buffer,
                 Key: filePath,
             })
             .promise();

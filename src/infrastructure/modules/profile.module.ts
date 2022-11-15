@@ -12,7 +12,9 @@ import {ConfigService} from '@nestjs/config';
 import {IUploadUserAvatarService} from 'app/modules/profile/services/upload-user-avatar.service';
 import {UploadUserAvatarService} from 'infrastructure/services/upload-user-avatar.service';
 import {UserAvatarUseCasesFactory} from 'infrastructure/factories/user-avatar-use-cases.factory';
-import {AvatarController} from "controllers/profile/avatar.controller";
+import {AvatarController} from 'controllers/profile/avatar.controller';
+import {IAWSFileUrlService} from 'app/modules/profile/services/aws-file-url.service';
+import {AWSFileUrlService} from 'infrastructure/services/aws-file-url.service';
 
 @Module({
     imports: [
@@ -42,6 +44,14 @@ import {AvatarController} from "controllers/profile/avatar.controller";
             useClass: UploadUserAvatarService,
             useFactory: (configService: ConfigService) => {
                 return new UploadUserAvatarService(configService);
+            },
+            inject: [ConfigService],
+        },
+        {
+            provide: IAWSFileUrlService,
+            useClass: AWSFileUrlService,
+            useFactory: (configService: ConfigService) => {
+                return new AWSFileUrlService(configService);
             },
             inject: [ConfigService],
         },

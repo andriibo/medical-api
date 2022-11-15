@@ -1,6 +1,7 @@
 import {IUserRepository} from 'app/modules/auth/repositories';
 import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service';
 import {IUploadUserAvatarService} from 'app/modules/profile/services/upload-user-avatar.service';
+import {Express} from 'express';
 
 export class UploadUserAvatarUseCase {
     public constructor(
@@ -9,9 +10,9 @@ export class UploadUserAvatarUseCase {
         private readonly uploadUserAvatarService: IUploadUserAvatarService,
     ) {}
 
-    public async uploadAvatarProfile(imageBuffer: Buffer): Promise<void> {
+    public async uploadAvatarProfile(file: Express.Multer.File): Promise<void> {
         const user = await this.authedUserService.getUser();
-        const filename = await this.uploadUserAvatarService.uploadFile(user, imageBuffer);
+        const filename = await this.uploadUserAvatarService.uploadFile(user, file);
         user.avatar = filename;
 
         await this.userRepository.updateAvatar(user);
