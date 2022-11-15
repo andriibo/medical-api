@@ -9,8 +9,10 @@ import {IUserProfileMapper} from 'app/modules/profile/mappers/user-profile.mappe
 import {UserProfileMapper} from 'infrastructure/mappers/user-profile.mapper';
 import {AuthModule, PatientDataAccessModule} from 'infrastructure/modules';
 import {ConfigService} from '@nestjs/config';
-import {IUploadAvatarService} from 'app/modules/profile/services/upload-avatar.service';
-import {UploadAvatarService} from 'infrastructure/services/upload-avatar.service';
+import {IUploadUserAvatarService} from 'app/modules/profile/services/upload-user-avatar.service';
+import {UploadUserAvatarService} from 'infrastructure/services/upload-user-avatar.service';
+import {UserAvatarUseCasesFactory} from 'infrastructure/factories/user-avatar-use-cases.factory';
+import {AvatarController} from "controllers/profile/avatar.controller";
 
 @Module({
     imports: [
@@ -18,10 +20,11 @@ import {UploadAvatarService} from 'infrastructure/services/upload-avatar.service
         AuthModule,
         PatientDataAccessModule,
     ],
-    controllers: [PatientController, DoctorController],
+    controllers: [PatientController, DoctorController, AvatarController],
     providers: [
         DoctorUseCasesFactory,
         PatientUseCasesFactory,
+        UserAvatarUseCasesFactory,
         {
             provide: IPatientMetadataRepository,
             useClass: PatientMetadataRepository,
@@ -35,10 +38,10 @@ import {UploadAvatarService} from 'infrastructure/services/upload-avatar.service
             useClass: UserProfileMapper,
         },
         {
-            provide: IUploadAvatarService,
-            useClass: UploadAvatarService,
+            provide: IUploadUserAvatarService,
+            useClass: UploadUserAvatarService,
             useFactory: (configService: ConfigService) => {
-                return new UploadAvatarService(configService);
+                return new UploadUserAvatarService(configService);
             },
             inject: [ConfigService],
         },
