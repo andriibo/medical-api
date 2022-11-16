@@ -1,8 +1,7 @@
 import {S3} from 'aws-sdk';
 import {ConfigService} from '@nestjs/config';
 import {User} from 'domain/entities';
-import {Express} from 'express';
-import {IUserAvatarService} from 'app/modules/profile/services/s3.service';
+import {IUserAvatarService} from 'app/modules/profile/services/user-avatar.service';
 import {Inject, Injectable} from '@nestjs/common';
 import {IFileNameService} from 'app/modules/profile/services/file-name.service';
 
@@ -23,17 +22,17 @@ export class S3Service implements IUserAvatarService {
         });
     }
 
-    public async uploadFile(user: User, file: Express.Multer.File): Promise<string> {
+    public async uploadFile(user: User, dataBuffer: Buffer, mimetype: string): Promise<string> {
         if (user.avatar) {
             await this.deleteFile(user.avatar);
         }
 
-        const filename = this.fileNameService.createNameToUserAvatar(file);
+        const filename = this.fileNameService.createNameToUserAvatar(mimetype);
         const filePath = this.getAvatarFilePath(filename);
         await this.s3Client
             .upload({
                 Bucket: this.configService.get<string>('AWS_PUBLIC_BUCKET_NAME'),
-                Body: file.buffer,
+                Body: dataBuffer,
                 Key: filePath,
             })
             .promise();

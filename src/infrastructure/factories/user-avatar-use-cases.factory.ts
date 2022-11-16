@@ -2,7 +2,7 @@ import {Inject, Injectable} from '@nestjs/common';
 import {IUserRepository} from 'app/modules/auth/repositories';
 import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service';
 import {UploadUserAvatarUseCase} from 'app/modules/profile/use-cases/upload-user-avatar.use-case';
-import {IUserAvatarService} from 'app/modules/profile/services/s3.service';
+import {IUserAvatarService} from 'app/modules/profile/services/user-avatar.service';
 
 @Injectable()
 export class UserAvatarUseCasesFactory {

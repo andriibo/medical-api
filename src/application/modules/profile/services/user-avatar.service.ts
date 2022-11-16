@@ -1,8 +1,7 @@
 import {User} from 'domain/entities';
-import {Express} from 'express';
 
 export interface IUserAvatarService {
-    uploadFile(user: User, file: Express.Multer.File): Promise<string>;
+    uploadFile(user: User, dataBuffer: Buffer, mimetype: string): Promise<string>;
 }
 
 export const IUserAvatarService = Symbol('IUserAvatarService');

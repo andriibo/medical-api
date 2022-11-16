@@ -19,6 +19,6 @@ export class AvatarController {
     public async uploadAvatar(@Body() requestBody: UploadAvatarProfileView, @UploadedFile() file: Express.Multer.File) {
         const useCase = this.userAvatarUseCasesFactory.uploadUserAvatarUseCase();
 
-        await useCase.uploadAvatarProfile(file);
+        await useCase.uploadAvatarProfile(file.buffer, file.mimetype);
     }
 }
