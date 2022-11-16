@@ -1,7 +1,6 @@
-import {User} from 'domain/entities';
-
 export interface IUserAvatarService {
-    uploadFile(user: User, dataBuffer: Buffer, mimetype: string): Promise<string>;
+    uploadFile(dataBuffer: Buffer, filename: string): Promise<string>;
+    deleteFile(filename: string): Promise<void>;
 }
 
 export const IUserAvatarService = Symbol('IUserAvatarService');

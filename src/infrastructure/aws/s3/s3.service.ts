@@ -1,6 +1,5 @@
 import {S3} from 'aws-sdk';
 import {ConfigService} from '@nestjs/config';
-import {User} from 'domain/entities';
 import {IUserAvatarService} from 'app/modules/profile/services/user-avatar.service';
 import {Inject, Injectable} from '@nestjs/common';
 import {IFileNameService} from 'app/modules/profile/services/file-name.service';
@@ -15,19 +14,12 @@ export class S3Service implements IUserAvatarService {
     ) {
         this.s3Client = new S3({
             region: configService.get<string>('AWS_REGION'),
-            credentials: {
-                accessKeyId: configService.get<string>('AWS_ACCESS_KEY_ID'),
-                secretAccessKey: configService.get<string>('AWS_SECRET_ACCESS_KEY'),
-            },
+            accessKeyId: configService.get<string>('AWS_ACCESS_KEY_ID'),
+            secretAccessKey: configService.get<string>('AWS_SECRET_ACCESS_KEY'),
         });
     }
 
-    public async uploadFile(user: User, dataBuffer: Buffer, mimetype: string): Promise<string> {
-        if (user.avatar) {
-            await this.deleteFile(user.avatar);
-        }
-
-        const filename = this.fileNameService.createNameToUserAvatar(mimetype);
+    public async uploadFile(dataBuffer: Buffer, filename: string): Promise<string> {
         const filePath = this.getAvatarFilePath(filename);
         await this.s3Client
             .upload({
@@ -40,10 +32,9 @@ export class S3Service implements IUserAvatarService {
         return filename;
     }
 
-    private async deleteFile(filename: string): Promise<void> {
-        const s3 = new S3();
+    public async deleteFile(filename: string): Promise<void> {
         const filePath = this.getAvatarFilePath(filename);
-        await s3
+        await this.s3Client
             .deleteObject({
                 Bucket: this.configService.get<string>('AWS_PUBLIC_BUCKET_NAME'),
                 Key: filePath,
