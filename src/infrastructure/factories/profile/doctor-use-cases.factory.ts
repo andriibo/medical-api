@@ -10,7 +10,7 @@ import {
 import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service';
 import {IUserProfileMapper} from 'app/modules/profile/mappers/user-profile.mapper';
 import {PatientDataAccessSpecification} from 'app/modules/patient-data-access/specifications/patient-data-access.specification';
-import {IAWSFileUrlService} from 'app/modules/profile/services/aws-file-url.service';
+import {IFileUrlService} from 'app/modules/profile/services/file-url.service';
 
 @Injectable()
 export class DoctorUseCasesFactory {
@@ -24,7 +24,7 @@ export class DoctorUseCasesFactory {
         private readonly patientDataAccessRepository: IPatientDataAccessRepository,
         @Inject(PatientDataAccessSpecification)
         private readonly patientDataAccessSpecification: PatientDataAccessSpecification,
-        @Inject(IAWSFileUrlService) private readonly awsFileUrlService: IAWSFileUrlService,
+        @Inject(IFileUrlService) private readonly fileUrlService: IFileUrlService,
     ) {}
 
     public createGetDoctorProfileUseCase(): DoctorProfileUseCase {
@@ -32,7 +32,7 @@ export class DoctorUseCasesFactory {
             this.userRepository,
             this.authedUserService,
             this.doctorMetadataRepository,
-            this.awsFileUrlService,
+            this.fileUrlService,
         );
     }
 

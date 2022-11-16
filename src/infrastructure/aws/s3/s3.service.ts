@@ -2,15 +2,18 @@ import {S3} from 'aws-sdk';
 import {ConfigService} from '@nestjs/config';
 import {User} from 'domain/entities';
 import {Express} from 'express';
-import * as mime from 'mime-types';
 import {IUserAvatarService} from 'app/modules/profile/services/s3.service';
-import {Injectable} from '@nestjs/common';
+import {Inject, Injectable} from '@nestjs/common';
+import {IFileNameService} from 'app/modules/profile/services/file-name.service';
 
 @Injectable()
 export class S3Service implements IUserAvatarService {
     private readonly s3Client: S3;
 
-    public constructor(private configService: ConfigService) {
+    public constructor(
+        private configService: ConfigService,
+        @Inject(IFileNameService) private fileNameService: IFileNameService,
+    ) {
         this.s3Client = new S3({
             region: configService.get<string>('AWS_REGION'),
             credentials: {
@@ -25,7 +28,7 @@ export class S3Service implements IUserAvatarService {
             await this.deleteFile(user.avatar);
         }
 
-        const filename = Date.now() + '.' + mime.extension(file.mimetype);
+        const filename = this.fileNameService.createNameToUserAvatar(file);
         const filePath = this.getAvatarFilePath(filename);
         await this.s3Client
             .upload({
