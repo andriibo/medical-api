@@ -8,12 +8,12 @@ import {DoctorUseCasesFactory, PatientUseCasesFactory} from 'infrastructure/fact
 import {IUserProfileMapper} from 'app/modules/profile/mappers/user-profile.mapper';
 import {UserProfileMapper} from 'infrastructure/mappers/user-profile.mapper';
 import {AuthModule, PatientDataAccessModule} from 'infrastructure/modules';
-import {ConfigService} from '@nestjs/config';
 import {UserAvatarUseCasesFactory} from 'infrastructure/factories/user-avatar-use-cases.factory';
 import {AvatarController} from 'controllers/profile/avatar.controller';
 import {IAWSFileUrlService} from 'app/modules/profile/services/aws-file-url.service';
 import {AWSFileUrlService} from 'infrastructure/services/aws-file-url.service';
 import {S3Service} from 'infrastructure/aws/s3/s3.service';
+import {IUserAvatarService} from 'app/modules/profile/services/s3.service';
 
 @Module({
     imports: [
@@ -39,19 +39,12 @@ import {S3Service} from 'infrastructure/aws/s3/s3.service';
             useClass: UserProfileMapper,
         },
         {
-            provide: S3Service,
-            useFactory: (configService: ConfigService) => {
-                return new S3Service(configService);
-            },
-            inject: [ConfigService],
+            provide: IUserAvatarService,
+            useClass: S3Service,
         },
         {
             provide: IAWSFileUrlService,
             useClass: AWSFileUrlService,
-            useFactory: (configService: ConfigService) => {
-                return new AWSFileUrlService(configService);
-            },
-            inject: [ConfigService],
         },
     ],
 })

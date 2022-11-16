@@ -3,8 +3,11 @@ import {ConfigService} from '@nestjs/config';
 import {User} from 'domain/entities';
 import {Express} from 'express';
 import * as mime from 'mime-types';
+import {IUserAvatarService} from 'app/modules/profile/services/s3.service';
+import {Injectable} from '@nestjs/common';
 
-export class S3Service {
+@Injectable()
+export class S3Service implements IUserAvatarService {
     private readonly s3Client: S3;
 
     public constructor(private configService: ConfigService) {

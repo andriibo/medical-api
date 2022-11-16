@@ -1,9 +1,10 @@
 import {ConfigService} from '@nestjs/config';
-import {Inject} from '@nestjs/common';
+import {Injectable} from '@nestjs/common';
 import {IAWSFileUrlService} from 'app/modules/profile/services/aws-file-url.service';
 
+@Injectable()
 export class AWSFileUrlService implements IAWSFileUrlService {
-    public constructor(@Inject(ConfigService) private readonly configService: ConfigService) {}
+    public constructor(private readonly configService: ConfigService) {}
 
     public generateFileUrl(avatar: string | null): string {
         const filename = avatar !== null ? avatar : 'default-avatar.png';
