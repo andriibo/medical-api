@@ -16,4 +16,7 @@ export class DoctorView extends DoctorDto {
 
     @ApiProperty()
     public institution: string;
+
+    @ApiProperty()
+    public avatar: string;
 }

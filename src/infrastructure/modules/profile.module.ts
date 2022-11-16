@@ -8,11 +8,14 @@ import {DoctorUseCasesFactory, PatientUseCasesFactory} from 'infrastructure/fact
 import {IUserProfileMapper} from 'app/modules/profile/mappers/user-profile.mapper';
 import {UserProfileMapper} from 'infrastructure/mappers/user-profile.mapper';
 import {AuthModule, PatientDataAccessModule} from 'infrastructure/modules';
-import {ConfigService} from '@nestjs/config';
-import {IUploadUserAvatarService} from 'app/modules/profile/services/upload-user-avatar.service';
-import {UploadUserAvatarService} from 'infrastructure/services/upload-user-avatar.service';
 import {UserAvatarUseCasesFactory} from 'infrastructure/factories/user-avatar-use-cases.factory';
-import {AvatarController} from "controllers/profile/avatar.controller";
+import {AvatarController} from 'controllers/profile/avatar.controller';
+import {IFileUrlService} from 'app/modules/profile/services/file-url.service';
+import {FileUrlService} from 'infrastructure/services/file-url.service';
+import {S3Service} from 'infrastructure/aws/s3/s3.service';
+import {IUserAvatarService} from 'app/modules/profile/services/user-avatar.service';
+import {IFileNameService} from 'app/modules/profile/services/file-name.service';
+import {FileNameService} from 'infrastructure/services/file-name.service';
 
 @Module({
     imports: [
@@ -38,12 +41,16 @@ import {AvatarController} from "controllers/profile/avatar.controller";
             useClass: UserProfileMapper,
         },
         {
-            provide: IUploadUserAvatarService,
-            useClass: UploadUserAvatarService,
-            useFactory: (configService: ConfigService) => {
-                return new UploadUserAvatarService(configService);
-            },
-            inject: [ConfigService],
+            provide: IUserAvatarService,
+            useClass: S3Service,
+        },
+        {
+            provide: IFileUrlService,
+            useClass: FileUrlService,
+        },
+        {
+            provide: IFileNameService,
+            useClass: FileNameService,
         },
     ],
 })

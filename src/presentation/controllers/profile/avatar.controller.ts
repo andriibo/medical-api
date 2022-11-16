@@ -1,17 +1,9 @@
-import {
-    Controller,
-    HttpStatus,
-    Body,
-    HttpCode,
-    Post,
-    UseInterceptors,
-    UploadedFile,
-} from '@nestjs/common';
+import {Controller, HttpStatus, Body, HttpCode, Post, UseInterceptors, UploadedFile} from '@nestjs/common';
 import {ApiBearerAuth, ApiConsumes, ApiResponse, ApiTags} from '@nestjs/swagger';
 import {FileInterceptor} from '@nestjs/platform-express';
 import {UploadAvatarProfileView} from 'views/request/profile/upload-avatar-profile.view';
 import {Express} from 'express';
-import {UserAvatarUseCasesFactory} from "infrastructure/factories/user-avatar-use-cases.factory";
+import {UserAvatarUseCasesFactory} from 'infrastructure/factories/user-avatar-use-cases.factory';
 
 @Controller('avatar')
 @ApiBearerAuth()
@@ -27,6 +19,6 @@ export class AvatarController {
     public async uploadAvatar(@Body() requestBody: UploadAvatarProfileView, @UploadedFile() file: Express.Multer.File) {
         const useCase = this.userAvatarUseCasesFactory.uploadUserAvatarUseCase();
 
-        await useCase.uploadAvatarProfile(file.buffer);
+        await useCase.uploadAvatarProfile(file.buffer, file.mimetype);
     }
 }
