@@ -18,6 +18,10 @@ export class InitiateDataAccessUseCase {
             throw new Error('Unregistered user.');
         }
 
-        await this.accessToRegisteredPatientService.initiateDataAccess(doctor, userToGrant);
+        if (userToGrant === null) {
+            await this.accessForUnregisteredPatientService.initiateDataAccess(doctor, dto.email);
+        } else {
+            await this.accessToRegisteredPatientService.initiateDataAccess(doctor, userToGrant);
+        }
     }
 }
