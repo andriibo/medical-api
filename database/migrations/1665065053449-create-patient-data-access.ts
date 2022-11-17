@@ -16,7 +16,7 @@ export class createPatientDataAccess1665065053449 implements MigrationInterface 
                     {
                         name: 'patient_user_id',
                         type: 'uuid',
-                        isNullable: false,
+                        isNullable: true,
                     },
                     {
                         name: 'granted_user_id',
@@ -25,6 +25,12 @@ export class createPatientDataAccess1665065053449 implements MigrationInterface 
                     },
                     {
                         name: 'granted_user_email',
+                        type: 'varchar',
+                        length: '100',
+                        isNullable: true,
+                    },
+                    {
+                        name: 'patient_email',
                         type: 'varchar',
                         length: '100',
                         isNullable: true,
