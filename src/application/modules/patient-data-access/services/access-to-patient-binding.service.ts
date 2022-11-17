@@ -5,7 +5,7 @@ export class AccessToPatientBindingService {
     public constructor(private readonly patientDataAccessRepository: IPatientDataAccessRepository) {}
 
     public async bindAccessToPatient(patient: User): Promise<void> {
-        const items = await this.patientDataAccessRepository.getByGrantedEmail(patient.email);
+        const items = await this.patientDataAccessRepository.getByPatientEmail(patient.email);
 
         if (!items.length) {
             return;

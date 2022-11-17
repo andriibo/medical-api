@@ -54,6 +54,12 @@ export class PatientDataAccessRepository implements IPatientDataAccessRepository
         });
     }
 
+    public async getByPatientEmail(patientEmail: string): Promise<PatientDataAccess[]> {
+        return await this.dataSource.manager.findBy(PatientDataAccessModel, {
+            patientEmail,
+        });
+    }
+
     public async getOneById(id: string): Promise<PatientDataAccess> {
         return await this.dataSource.manager.findOneBy(PatientDataAccessModel, {id});
     }
