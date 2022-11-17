@@ -12,11 +12,13 @@ export enum PatientDataAccessStatus {
 export interface PatientDataAccess {
     id: string;
 
-    patientUserId: string;
+    patientUserId?: string;
 
     grantedUserId?: string;
 
     grantedEmail?: string;
+
+    patientEmail?: string;
 
     direction: string;
 

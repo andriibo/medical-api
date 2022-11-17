@@ -24,7 +24,7 @@ export class AccessToUnregisteredPatientService {
     }
 
     private createDataAccess(doctor: User, email: string): PatientDataAccess {
-        const dataAccess = this.patientDataAccessEntityMapper.mapByPatientAndGrantedEmail(doctor, email);
+        const dataAccess = this.patientDataAccessEntityMapper.mapByGrantedUserAndPatientEmail(doctor, email);
         dataAccess.direction = PatientDataAccessRequestDirection.ToPatient;
 
         return dataAccess;
