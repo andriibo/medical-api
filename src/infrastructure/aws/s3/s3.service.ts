@@ -19,8 +19,9 @@ export class S3Service implements IUserAvatarService {
         });
     }
 
-    public async uploadFile(dataBuffer: Buffer, filename: string): Promise<string> {
+    public async uploadFile(dataBuffer: Buffer, filename: string): Promise<void> {
         const filePath = this.getAvatarFilePath(filename);
+
         await this.s3Client
             .upload({
                 Bucket: this.configService.get<string>('AWS_PUBLIC_BUCKET_NAME'),
@@ -28,12 +29,11 @@ export class S3Service implements IUserAvatarService {
                 Key: filePath,
             })
             .promise();
-
-        return filename;
     }
 
     public async deleteFile(filename: string): Promise<void> {
         const filePath = this.getAvatarFilePath(filename);
+
         await this.s3Client
             .deleteObject({
                 Bucket: this.configService.get<string>('AWS_PUBLIC_BUCKET_NAME'),

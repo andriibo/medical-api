@@ -13,12 +13,15 @@ export class UploadUserAvatarUseCase {
 
     public async uploadAvatarProfile(dataBuffer: Buffer, mimetype: string): Promise<void> {
         const user = await this.authedUserService.getUser();
-        if (user.avatar) {
-            await this.userAvatarService.deleteFile(user.avatar);
-        }
-        const filename = this.fileNameService.createNameToUserAvatar(mimetype);
-        user.avatar = await this.userAvatarService.uploadFile(dataBuffer, filename);
+        const avatarToDelete = user.avatar;
 
+        user.avatar = this.fileNameService.createNameToUserAvatar(mimetype);
+
+        await this.userAvatarService.uploadFile(dataBuffer, user.avatar);
         await this.userRepository.updateAvatar(user);
+
+        if (avatarToDelete !== null) {
+            await this.userAvatarService.deleteFile(avatarToDelete);
+        }
     }
 }

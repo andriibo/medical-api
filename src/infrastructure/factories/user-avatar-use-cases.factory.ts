@@ -14,7 +14,7 @@ export class UserAvatarUseCasesFactory {
         @Inject(IFileNameService) private readonly fileNameService: IFileNameService,
     ) {}
 
-    public uploadUserAvatarUseCase(): UploadUserAvatarUseCase {
+    public createUploadUserAvatarUseCase(): UploadUserAvatarUseCase {
         return new UploadUserAvatarUseCase(
             this.userRepository,
             this.authedUserService,

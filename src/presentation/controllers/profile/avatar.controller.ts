@@ -17,7 +17,7 @@ export class AvatarController {
     @ApiResponse({status: HttpStatus.OK})
     @UseInterceptors(FileInterceptor('file'))
     public async uploadAvatar(@Body() requestBody: UploadAvatarProfileView, @UploadedFile() file: Express.Multer.File) {
-        const useCase = this.userAvatarUseCasesFactory.uploadUserAvatarUseCase();
+        const useCase = this.userAvatarUseCasesFactory.createUploadUserAvatarUseCase();
 
         await useCase.uploadAvatarProfile(file.buffer, file.mimetype);
     }
