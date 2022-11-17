@@ -94,10 +94,10 @@ export class PatientDataAccessSpecification {
 
     public async assertGrantedUserCanDeleteAccess(grantedUser: User, dataAccess: PatientDataAccess): Promise<void> {
         const isUserGranted = dataAccess.grantedUserId === grantedUser.id;
-        const isGrantedUserRequested = dataAccess.direction === PatientDataAccessRequestDirection.ToPatient;
+        const isPatientRequested = dataAccess.direction === PatientDataAccessRequestDirection.ToPatient;
         const isAccessStatusApproved = dataAccess.status === PatientDataAccessStatus.Approved;
 
-        const isDeleteAllowed = isUserGranted && (isGrantedUserRequested || isAccessStatusApproved);
+        const isDeleteAllowed = isUserGranted && (isPatientRequested || isAccessStatusApproved);
 
         if (!isDeleteAllowed) {
             throw new PatientDataAccessSpecificationError('Delete Not Allowed.');
@@ -106,10 +106,10 @@ export class PatientDataAccessSpecification {
 
     public async assertPatientCanDeleteAccess(patient: User, dataAccess: PatientDataAccess): Promise<void> {
         const isUserGranted = dataAccess.patientUserId === patient.id;
-        const isPatientRequested = dataAccess.direction === PatientDataAccessRequestDirection.FromPatient;
+        const isGrantedUserRequested = dataAccess.direction === PatientDataAccessRequestDirection.FromPatient;
         const isAccessStatusApproved = dataAccess.status === PatientDataAccessStatus.Approved;
 
-        const isDeleteAllowed = isUserGranted && (isPatientRequested || isAccessStatusApproved);
+        const isDeleteAllowed = isUserGranted && (isGrantedUserRequested || isAccessStatusApproved);
 
         if (!isDeleteAllowed) {
             throw new PatientDataAccessSpecificationError('Delete Not Allowed.');
