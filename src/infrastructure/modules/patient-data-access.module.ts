@@ -21,6 +21,7 @@ import {DeleteDataAccessByDoctorService} from 'app/modules/patient-data-access/s
 import {AccessToRegisteredPatientService} from 'app/modules/patient-data-access/services/access-to-registered-patient.service';
 import {AccessForUnregisteredDoctorService} from 'app/modules/patient-data-access/services/access-for-unregistered-doctor.service';
 import {AccessToUnregisteredPatientService} from 'app/modules/patient-data-access/services/access-to-unregistered-patient.service';
+import {AccessToPatientBindingService} from 'app/modules/patient-data-access/services/access-to-patient-binding.service';
 
 @Module({
     imports: [TypeOrmModule.forFeature([PatientDataAccessModel]), MailModule, AuthModule],
@@ -144,6 +145,13 @@ import {AccessToUnregisteredPatientService} from 'app/modules/patient-data-acces
             provide: AccessToGrantedUserBindingService,
             useFactory: (patientDataAccessRepository: IPatientDataAccessRepository) => {
                 return new AccessToGrantedUserBindingService(patientDataAccessRepository);
+            },
+            inject: [IPatientDataAccessRepository],
+        },
+        {
+            provide: AccessToPatientBindingService,
+            useFactory: (patientDataAccessRepository: IPatientDataAccessRepository) => {
+                return new AccessToPatientBindingService(patientDataAccessRepository);
             },
             inject: [IPatientDataAccessRepository],
         },

@@ -30,7 +30,9 @@ export class SignUpUseCase {
 
         const user = this.userEntityMapper.mapByAuthModelAndCreatePatientDto(authModel, dto);
 
-        await this.createUser(user);
+        const createdUser = await this.createUser(user);
+
+        await this.authEventEmitter.emitPatientCreated(createdUser);
     }
 
     private async createUser(user: User): Promise<User> {

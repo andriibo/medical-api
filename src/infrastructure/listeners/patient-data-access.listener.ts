@@ -3,6 +3,7 @@ import {Inject, Injectable} from '@nestjs/common';
 import {OnEvent} from '@nestjs/event-emitter';
 import {AccessToGrantedUserBindingService} from 'app/modules/patient-data-access/services/access-to-granted-user-binding.service';
 import {IMailService} from 'app/modules/mail/services/abstract/mail.service';
+import {AccessToPatientBindingService} from 'app/modules/patient-data-access/services/access-to-patient-binding.service';
 
 @Injectable()
 export class PatientDataAccessListener {
@@ -10,6 +11,8 @@ export class PatientDataAccessListener {
         @Inject(IMailService) private mailService: IMailService,
         @Inject(AccessToGrantedUserBindingService)
         private accessToGrantedUserBindingService: AccessToGrantedUserBindingService,
+        @Inject(AccessToPatientBindingService)
+        private accessToPatientBindingService: AccessToPatientBindingService,
     ) {}
 
     @OnEvent('patient-initiated-data-access-for-unregistered-doctor')
@@ -35,6 +38,11 @@ export class PatientDataAccessListener {
     @OnEvent('doctor-created')
     public async handleDoctorCreated(doctor: User): Promise<void> {
         await this.accessToGrantedUserBindingService.bindAccessToGrantedUser(doctor);
+    }
+
+    @OnEvent('patient-created')
+    public async handlePatientCreated(patient: User): Promise<void> {
+        await this.accessToPatientBindingService.bindAccessToPatient(patient);
     }
 
     @OnEvent('data-access-deleted-by-patient')

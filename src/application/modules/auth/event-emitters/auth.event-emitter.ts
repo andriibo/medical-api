@@ -4,6 +4,8 @@ import {ConfirmSignUpUserDto} from 'domain/dtos/request/auth/confirm-sign-up-use
 export interface IAuthEventEmitter {
     emitDoctorCreated(doctor: User): void;
 
+    emitPatientCreated(patient: User): void;
+
     emitUserActivated(dto: ConfirmSignUpUserDto): void;
 }
 
