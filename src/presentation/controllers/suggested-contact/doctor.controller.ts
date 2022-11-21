@@ -1,4 +1,4 @@
-import {Controller, HttpStatus, HttpCode, BadRequestException, Post, Body} from '@nestjs/common';
+import {Controller, HttpStatus, BadRequestException, Post, Body} from '@nestjs/common';
 import {
     ApiBadRequestResponse,
     ApiBearerAuth,
@@ -20,7 +20,6 @@ export class DoctorController {
 
     @Roles('Doctor')
     @Post('suggested-contacts')
-    @HttpCode(HttpStatus.CREATED)
     @ApiResponse({status: HttpStatus.CREATED, description: 'Created.'})
     @ApiBadRequestResponse({description: 'Bad request.'})
     @ApiUnauthorizedResponse({description: 'Unauthorized.'})

@@ -1,8 +1,8 @@
 import {ApiProperty} from '@nestjs/swagger';
 import {Length, IsEmail, IsNotEmpty, IsIn, MaxLength} from 'class-validator';
-import {ContactDto} from 'domain/dtos/request/emergency-contact/contact.dto';
+import {SuggestedContactDto} from 'domain/dtos/request/suggested-contact/suggested-contact.dto';
 
-export class CreateSuggestedContactView extends ContactDto {
+export class CreateSuggestedContactView extends SuggestedContactDto {
     @ApiProperty()
     @IsNotEmpty()
     public patientUserId: string;

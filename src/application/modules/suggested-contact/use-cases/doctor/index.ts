@@ -1,3 +1,3 @@
-import {CreateSuggestedContactUseCase} from './create-contact.use-case';
+import {CreateSuggestedContactUseCase} from './create-suggested-contact.use-case';
 
 export {CreateSuggestedContactUseCase};
