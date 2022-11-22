@@ -36,7 +36,7 @@ export class DoctorController {
     }
 
     @Roles('Doctor')
-    @Delete('suggested-contact/:accessId')
+    @Delete('suggested-contact/:contactId')
     @ApiResponse({status: HttpStatus.NO_CONTENT, description: 'No content.'})
     @ApiBadRequestResponse({description: 'Bad request.'})
     @ApiUnauthorizedResponse({description: 'Unauthorized.'})

@@ -11,9 +11,9 @@ export class DeleteSuggestedContactUseCase {
         private readonly deleteSuggestedContactByDoctorService: DeleteSuggestedContactByDoctorService,
     ) {}
 
-    public async deleteSuggestedContact(accessId: string): Promise<void> {
+    public async deleteSuggestedContact(contactId: string): Promise<void> {
         const user = await this.authedUserService.getUser();
-        const dataAccess = await this.getSuggestedContact(accessId);
+        const dataAccess = await this.getSuggestedContact(contactId);
 
         await this.deleteSuggestedContactByDoctorService.deleteSuggestedContact(user, dataAccess);
     }
