@@ -186,22 +186,6 @@ export class PatientDataAccessSpecification {
         return dataAccess;
     }
 
-    private async getAccessByGrantedUserIdAndPatientUserId(
-        grantedUserId: string,
-        patientUserId: string,
-    ): Promise<PatientDataAccess> {
-        const dataAccess = await this.patientDataAccessRepository.getOneByPatientUserIdAndGrantedUserId(
-            patientUserId,
-            grantedUserId,
-        );
-
-        if (dataAccess === null) {
-            throw new PatientDataAccessSpecificationError('Access Is Absent.');
-        }
-
-        return dataAccess;
-    }
-
     private async getAccessByPatientUserIdAndGrantedEmail(
         patientUserId: string,
         grantedEmail: string,
@@ -240,19 +224,6 @@ export class PatientDataAccessSpecification {
     ): Promise<boolean> {
         try {
             await this.getAccessByPatientUserIdAndGrantedUserId(patientUserId, grantedUserId);
-        } catch {
-            return false;
-        }
-
-        return true;
-    }
-
-    private async hasAccessByGrantedUserIdAndPatientUserId(
-        grantedUserId: string,
-        patientUserId: string,
-    ): Promise<boolean> {
-        try {
-            await this.getAccessByGrantedUserIdAndPatientUserId(grantedUserId, patientUserId);
         } catch {
             return false;
         }
