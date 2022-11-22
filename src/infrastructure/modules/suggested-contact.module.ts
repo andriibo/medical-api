@@ -4,7 +4,6 @@ import {TypeOrmModule} from '@nestjs/typeorm';
 import {DoctorUseCasesFactory} from 'infrastructure/factories/suggested-contact';
 import {AuthModule} from 'infrastructure/modules';
 import {SuggestedContactModel} from 'infrastructure/models/suggested-contact.model';
-import {SuggestedContactSpecification} from 'app/modules/suggested-contact/specifications/suggested-contact.specification';
 import {ISuggestedContactRepository} from 'app/modules/suggested-contact/repositories';
 import {SuggestedContactRepository} from 'infrastructure/repositories/suggested-contact.repository';
 import {ISuggestedContactEntityMapper} from 'app/modules/suggested-contact/mappers/suggested-contact-entity.mapper';
@@ -16,7 +15,6 @@ import {PatientDataAccessSpecification} from 'app/modules/patient-data-access/sp
     controllers: [DoctorController],
     providers: [
         DoctorUseCasesFactory,
-        SuggestedContactSpecification,
         PatientDataAccessSpecification,
         {
             provide: ISuggestedContactRepository,
