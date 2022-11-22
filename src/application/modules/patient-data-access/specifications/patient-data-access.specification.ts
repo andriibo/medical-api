@@ -14,7 +14,7 @@ export class PatientDataAccessSpecification {
         private readonly patientDataAccessRepository: IPatientDataAccessRepository,
     ) {}
 
-    public async assertPatientCanGiveAccessForGrantedUser(patient: User, userToGrant: User): Promise<void> {
+    public async assertPatientCanGiveAccessForUser(patient: User, userToGrant: User): Promise<void> {
         if (!this.isUserRoleGrantable(userToGrant.role)) {
             throw new PatientDataAccessSpecificationError(
                 'No doctor account with specified email address. Try another one.',
@@ -31,12 +31,6 @@ export class PatientDataAccessSpecification {
     }
 
     public async assertGrantedUserCanGiveAccessForPatient(grantedUser: User, patient: User): Promise<void> {
-        if (this.isUserRoleGrantable(patient.role)) {
-            throw new PatientDataAccessSpecificationError(
-                'No patient account with specified email address. Try another one.',
-            );
-        }
-
         const hasAccess = await this.hasAccessByPatientUserIdAndGrantedUserId(patient.id, grantedUser.id);
 
         if (hasAccess) {
