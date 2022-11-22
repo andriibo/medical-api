@@ -5,14 +5,11 @@ import {PatientDataAccessSpecificationError} from 'app/modules/patient-data-acce
 export class SuggestedContactSpecification {
     public constructor(private readonly patientDataAccessSpecification: PatientDataAccessSpecification) {}
 
-    public async assertGrantedUserCanCreateSuggestedContact(grantedUser: User, patientUserId: string): Promise<void> {
-        await this.patientDataAccessSpecification.assertGrantedUserHasAccess(grantedUser, patientUserId);
+    public async assertUserCanCreateContact(user: User, patientUserId: string): Promise<void> {
+        await this.patientDataAccessSpecification.assertGrantedUserHasAccess(user, patientUserId);
     }
 
-    public async assertGrantedUserCanDeleteSuggestedContact(
-        grantedUser: User,
-        suggestedContact: SuggestedContact,
-    ): Promise<void> {
+    public async assertUserCanDeleteContact(grantedUser: User, suggestedContact: SuggestedContact): Promise<void> {
         const isSuggestedBy = suggestedContact.suggestedBy === grantedUser.id;
 
         if (!isSuggestedBy) {

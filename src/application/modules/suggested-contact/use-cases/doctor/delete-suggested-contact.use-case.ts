@@ -18,8 +18,8 @@ export class DeleteSuggestedContactUseCase {
         await this.deleteSuggestedContactByDoctorService.deleteSuggestedContact(user, dataAccess);
     }
 
-    private async getSuggestedContact(accessId: string): Promise<SuggestedContact> {
-        const suggestedContact = await this.suggestedContactRepository.getOneById(accessId);
+    private async getSuggestedContact(contactId: string): Promise<SuggestedContact> {
+        const suggestedContact = await this.suggestedContactRepository.getOneById(contactId);
 
         if (suggestedContact === null) {
             throw new EntityNotFoundError('Suggested Contact Not Found.');

@@ -17,7 +17,7 @@ export class CreateSuggestedContactUseCase {
     public async createSuggestedContact(dto: SuggestedContactDto): Promise<void> {
         const user = await this.authedUserService.getUser();
 
-        await this.suggestedContactSpecification.assertGrantedUserCanCreateSuggestedContact(user, dto.patientUserId);
+        await this.suggestedContactSpecification.assertUserCanCreateContact(user, dto.patientUserId);
 
         const suggestedContact = this.createContact(user, dto);
 
