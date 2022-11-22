@@ -14,7 +14,7 @@ export class AccessToUnregisteredPatientService {
     ) {}
 
     public async initiateDataAccess(doctor: User, patientEmail: string): Promise<void> {
-        await this.patientDataAccessSpecification.assertGrantedUserCanGiveAccessForPatientEmail(doctor, patientEmail);
+        await this.patientDataAccessSpecification.assertUserCanGiveAccessToPatientEmail(doctor, patientEmail);
 
         const dataAccess = this.createDataAccess(doctor, patientEmail);
 

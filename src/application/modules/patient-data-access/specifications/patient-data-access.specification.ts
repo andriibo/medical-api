@@ -30,7 +30,7 @@ export class PatientDataAccessSpecification {
         }
     }
 
-    public async assertGrantedUserCanGiveAccessForPatient(grantedUser: User, patient: User): Promise<void> {
+    public async assertUserCanGiveAccessToPatient(grantedUser: User, patient: User): Promise<void> {
         const hasAccess = await this.hasAccessByPatientUserIdAndGrantedUserId(patient.id, grantedUser.id);
 
         if (hasAccess) {
@@ -54,7 +54,7 @@ export class PatientDataAccessSpecification {
         }
     }
 
-    public async assertGrantedUserCanGiveAccessForPatientEmail(grantedUser: User, patientEmail: string): Promise<void> {
+    public async assertUserCanGiveAccessToPatientEmail(grantedUser: User, patientEmail: string): Promise<void> {
         const patient = await this.userRepository.getOneByEmail(patientEmail);
 
         if (patient !== null) {
