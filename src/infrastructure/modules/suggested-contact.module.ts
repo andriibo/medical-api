@@ -9,6 +9,7 @@ import {ISuggestedContactRepository} from 'app/modules/suggested-contact/reposit
 import {SuggestedContactRepository} from 'infrastructure/repositories/suggested-contact.repository';
 import {ISuggestedContactEntityMapper} from 'app/modules/suggested-contact/mappers/suggested-contact-entity.mapper';
 import {SuggestedContactModelMapper} from 'infrastructure/mappers/suggested-contact-model.mapper';
+import {PatientDataAccessSpecification} from 'app/modules/patient-data-access/specifications/patient-data-access.specification';
 
 @Module({
     imports: [TypeOrmModule.forFeature([SuggestedContactModel]), AuthModule],
@@ -16,6 +17,7 @@ import {SuggestedContactModelMapper} from 'infrastructure/mappers/suggested-cont
     providers: [
         DoctorUseCasesFactory,
         SuggestedContactSpecification,
+        PatientDataAccessSpecification,
         {
             provide: ISuggestedContactRepository,
             useClass: SuggestedContactRepository,

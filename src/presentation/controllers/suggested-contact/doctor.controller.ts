@@ -19,7 +19,7 @@ export class DoctorController {
     public constructor(private readonly doctorUseCasesFactory: DoctorUseCasesFactory) {}
 
     @Roles('Doctor')
-    @Post('suggested-contacts')
+    @Post('suggested-contact')
     @ApiResponse({status: HttpStatus.CREATED, description: 'Created.'})
     @ApiBadRequestResponse({description: 'Bad request.'})
     @ApiUnauthorizedResponse({description: 'Unauthorized.'})

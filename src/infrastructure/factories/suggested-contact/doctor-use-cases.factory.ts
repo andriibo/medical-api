@@ -4,6 +4,7 @@ import {ISuggestedContactRepository} from 'app/modules/suggested-contact/reposit
 import {CreateSuggestedContactUseCase} from 'app/modules/suggested-contact/use-cases/doctor';
 import {SuggestedContactSpecification} from 'app/modules/suggested-contact/specifications/suggested-contact.specification';
 import {ISuggestedContactEntityMapper} from 'app/modules/suggested-contact/mappers/suggested-contact-entity.mapper';
+import {PatientDataAccessSpecification} from 'app/modules/patient-data-access/specifications/patient-data-access.specification';
 
 @Injectable()
 export class DoctorUseCasesFactory {
@@ -15,6 +16,8 @@ export class DoctorUseCasesFactory {
         private readonly suggestedContactEntityMapper: ISuggestedContactEntityMapper,
         @Inject(SuggestedContactSpecification)
         private readonly suggestedContactSpecification: SuggestedContactSpecification,
+        @Inject(PatientDataAccessSpecification)
+        private readonly patientDataAccessSpecification: PatientDataAccessSpecification,
     ) {}
 
     public createSuggestedContactUseCase(): CreateSuggestedContactUseCase {
@@ -23,6 +26,7 @@ export class DoctorUseCasesFactory {
             this.suggestedContactRepository,
             this.suggestedContactEntityMapper,
             this.suggestedContactSpecification,
+            this.patientDataAccessSpecification,
         );
     }
 }

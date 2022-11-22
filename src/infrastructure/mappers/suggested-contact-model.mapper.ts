@@ -4,14 +4,8 @@ import {SuggestedContact} from 'domain/entities/suggested-contact.entity';
 import {SuggestedContactModel} from 'infrastructure/models/suggested-contact.model';
 
 export class SuggestedContactModelMapper implements ISuggestedContactEntityMapper {
-    public mapBySuggestedContactDto(
-        suggestedContactDto: SuggestedContactDto,
-        suggestedContact?: SuggestedContact,
-    ): SuggestedContact {
-        if (!suggestedContact) {
-            suggestedContact = new SuggestedContactModel();
-        }
-
+    public mapBySuggestedContactDto(suggestedContactDto: SuggestedContactDto): SuggestedContact {
+        const suggestedContact = new SuggestedContactModel();
         suggestedContact.patientUserId = suggestedContactDto.patientUserId;
         suggestedContact.firstName = suggestedContactDto.firstName;
         suggestedContact.lastName = suggestedContactDto.lastName;
