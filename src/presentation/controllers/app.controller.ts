@@ -6,8 +6,6 @@ import {Injectable} from '@nestjs/common';
 @Controller()
 @ApiTags('App')
 export class AppController {
-    public constructor() {}
-
     @Get()
     @HttpCode(HttpStatus.OK)
     public getHello(): object {

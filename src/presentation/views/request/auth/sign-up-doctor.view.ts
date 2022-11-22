@@ -1,5 +1,5 @@
 import {ApiProperty} from '@nestjs/swagger';
-import {Length, IsEmail, IsNotEmpty, IsOptional, MinLength, MaxLength} from 'class-validator';
+import {Length, IsEmail, IsNotEmpty, IsOptional, MaxLength} from 'class-validator';
 import {CreateDoctorDto} from 'domain/dtos/request/auth/create-doctor.dto';
 
 export class SignUpDoctorView extends CreateDoctorDto {

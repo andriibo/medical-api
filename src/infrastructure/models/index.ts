@@ -3,6 +3,7 @@ import {DoctorMetadataModel} from './doctor-metadata.model';
 import {PatientMetadataModel} from './patient-metadata.model';
 import {PatientDataAccessModel} from './patient-data-access.model';
 import {EmergencyContactModel} from './emergency-contact.model';
+import {SuggestedContactModel} from './suggested-contact.model';
 import {VitalModel} from './vital.model';
 import {DiagnosisModel} from './diagnosis.model';
 import {PatientDiagnosisModel} from './patient-diagnosis.model';
@@ -17,6 +18,7 @@ export {
     PatientMetadataModel,
     PatientDataAccessModel,
     EmergencyContactModel,
+    SuggestedContactModel,
     VitalModel,
     DiagnosisModel,
     PatientDiagnosisModel,
