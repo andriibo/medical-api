@@ -4,20 +4,20 @@ import {SuggestedContactDto} from 'domain/dtos/request/suggested-contact/suggest
 import {SuggestedContact} from 'domain/entities/suggested-contact.entity';
 import {ISuggestedContactRepository} from 'app/modules/suggested-contact/repositories/suggested-contact.repository';
 import {ISuggestedContactEntityMapper} from 'app/modules/suggested-contact/mappers/suggested-contact-entity.mapper';
-import {PatientDataAccessSpecification} from 'app/modules/patient-data-access/specifications/patient-data-access.specification';
+import {SuggestedContactSpecification} from 'app/modules/suggested-contact/specifications/suggested-contact.specification';
 
 export class CreateSuggestedContactUseCase {
     public constructor(
         private readonly authedUserService: IAuthedUserService,
         private readonly suggestedContactRepository: ISuggestedContactRepository,
         private readonly suggestedContactEntityMapper: ISuggestedContactEntityMapper,
-        private readonly patientDataAccessSpecification: PatientDataAccessSpecification,
+        private readonly suggestedContactSpecification: SuggestedContactSpecification,
     ) {}
 
     public async createSuggestedContact(dto: SuggestedContactDto): Promise<void> {
         const user = await this.authedUserService.getUser();
 
-        await this.patientDataAccessSpecification.assertGrantedUserHasAccess(user, dto.patientUserId);
+        await this.suggestedContactSpecification.assertUserCanCreateSuggestedContact(user, dto.patientUserId);
 
         const suggestedContact = this.createContact(user, dto);
 
