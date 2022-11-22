@@ -1,6 +1,6 @@
 import {SuggestedContact, User} from 'domain/entities';
 import {PatientDataAccessSpecification} from 'app/modules/patient-data-access/specifications/patient-data-access.specification';
-import {PatientDataAccessSpecificationError} from 'app/modules/patient-data-access/errors';
+import {SuggestedContactSpecificationError} from 'app/modules/suggested-contact/errors';
 
 export class SuggestedContactSpecification {
     public constructor(private readonly patientDataAccessSpecification: PatientDataAccessSpecification) {}
@@ -13,7 +13,7 @@ export class SuggestedContactSpecification {
         const isSuggestedBy = suggestedContact.suggestedBy === grantedUser.id;
 
         if (!isSuggestedBy) {
-            throw new PatientDataAccessSpecificationError('Delete Not Allowed.');
+            throw new SuggestedContactSpecificationError('Delete Not Allowed.');
         }
     }
 }
