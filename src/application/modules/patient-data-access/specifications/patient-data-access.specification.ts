@@ -14,7 +14,7 @@ export class PatientDataAccessSpecification {
         private readonly patientDataAccessRepository: IPatientDataAccessRepository,
     ) {}
 
-    public async assertPatientCanGiveAccessForUser(patient: User, userToGrant: User): Promise<void> {
+    public async assertPatientCanGiveAccessForGrantedUser(patient: User, userToGrant: User): Promise<void> {
         if (!this.isUserRoleGrantable(userToGrant.role)) {
             throw new PatientDataAccessSpecificationError(
                 'No doctor account with specified email address. Try another one.',
@@ -30,14 +30,44 @@ export class PatientDataAccessSpecification {
         }
     }
 
-    public async assertPatientCanGiveAccessForEmail(patient: User, email: string): Promise<void> {
-        const userToGrant = await this.userRepository.getOneByEmail(email);
+    public async assertGrantedUserCanGiveAccessForPatient(grantedUser: User, patient: User): Promise<void> {
+        if (this.isUserRoleGrantable(patient.role)) {
+            throw new PatientDataAccessSpecificationError(
+                'No patient account with specified email address. Try another one.',
+            );
+        }
+
+        const hasAccess = await this.hasAccessByPatientUserIdAndGrantedUserId(patient.id, grantedUser.id);
+
+        if (hasAccess) {
+            throw new PatientDataAccessSpecificationError(
+                'Patient with specified email address has been already invited.',
+            );
+        }
+    }
+
+    public async assertPatientCanGiveAccessForGrantedEmail(patient: User, grantedEmail: string): Promise<void> {
+        const userToGrant = await this.userRepository.getOneByEmail(grantedEmail);
 
         if (userToGrant !== null) {
             throw new PatientDataAccessSpecificationError('Email address has been already invited.');
         }
 
-        const hasAccess = await this.hasAccessByPatientUserIdAndGrantedEmail(patient.id, email);
+        const hasAccess = await this.hasAccessByPatientUserIdAndGrantedEmail(patient.id, grantedEmail);
+
+        if (hasAccess) {
+            throw new PatientDataAccessSpecificationError('Email address has been already invited.');
+        }
+    }
+
+    public async assertGrantedUserCanGiveAccessForPatientEmail(grantedUser: User, patientEmail: string): Promise<void> {
+        const patient = await this.userRepository.getOneByEmail(patientEmail);
+
+        if (patient !== null) {
+            throw new PatientDataAccessSpecificationError('Email address has been already invited.');
+        }
+
+        const hasAccess = await this.hasAccessByGrantedUserIdAndPatientEmail(grantedUser.id, patientEmail);
 
         if (hasAccess) {
             throw new PatientDataAccessSpecificationError('Email address has been already invited.');
@@ -156,6 +186,22 @@ export class PatientDataAccessSpecification {
         return dataAccess;
     }
 
+    private async getAccessByGrantedUserIdAndPatientUserId(
+        grantedUserId: string,
+        patientUserId: string,
+    ): Promise<PatientDataAccess> {
+        const dataAccess = await this.patientDataAccessRepository.getOneByPatientUserIdAndGrantedUserId(
+            patientUserId,
+            grantedUserId,
+        );
+
+        if (dataAccess === null) {
+            throw new PatientDataAccessSpecificationError('Access Is Absent.');
+        }
+
+        return dataAccess;
+    }
+
     private async getAccessByPatientUserIdAndGrantedEmail(
         patientUserId: string,
         grantedEmail: string,
@@ -163,6 +209,22 @@ export class PatientDataAccessSpecification {
         const dataAccess = await this.patientDataAccessRepository.getOneByPatientUserIdAndGrantedEmail(
             patientUserId,
             grantedEmail,
+        );
+
+        if (dataAccess === null) {
+            throw new PatientDataAccessSpecificationError('Access Is Absent.');
+        }
+
+        return dataAccess;
+    }
+
+    private async getAccessByGrantedUserIdAndPatientEmail(
+        grantedUserId: string,
+        patientEmail: string,
+    ): Promise<PatientDataAccess> {
+        const dataAccess = await this.patientDataAccessRepository.getOneByGrantedUserIdAndPatientEmail(
+            grantedUserId,
+            patientEmail,
         );
 
         if (dataAccess === null) {
@@ -185,12 +247,38 @@ export class PatientDataAccessSpecification {
         return true;
     }
 
+    private async hasAccessByGrantedUserIdAndPatientUserId(
+        grantedUserId: string,
+        patientUserId: string,
+    ): Promise<boolean> {
+        try {
+            await this.getAccessByGrantedUserIdAndPatientUserId(grantedUserId, patientUserId);
+        } catch {
+            return false;
+        }
+
+        return true;
+    }
+
     private async hasAccessByPatientUserIdAndGrantedEmail(
         patientUserId: string,
         grantedEmail: string,
     ): Promise<boolean> {
         try {
             await this.getAccessByPatientUserIdAndGrantedEmail(patientUserId, grantedEmail);
+        } catch {
+            return false;
+        }
+
+        return true;
+    }
+
+    private async hasAccessByGrantedUserIdAndPatientEmail(
+        grantedUserId: string,
+        patientEmail: string,
+    ): Promise<boolean> {
+        try {
+            await this.getAccessByGrantedUserIdAndPatientEmail(grantedUserId, patientEmail);
         } catch {
             return false;
         }
