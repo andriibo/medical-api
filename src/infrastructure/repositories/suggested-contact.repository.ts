@@ -3,6 +3,7 @@ import {InjectDataSource} from '@nestjs/typeorm';
 import {DataSource} from 'typeorm';
 import {ISuggestedContactRepository} from 'app/modules/suggested-contact/repositories/suggested-contact.repository';
 import {SuggestedContactModel} from 'infrastructure/models/suggested-contact.model';
+import {SuggestedContact} from 'domain/entities';
 
 @Injectable()
 export class SuggestedContactRepository implements ISuggestedContactRepository {
@@ -10,5 +11,13 @@ export class SuggestedContactRepository implements ISuggestedContactRepository {
 
     public async create(suggestedContact: SuggestedContactModel): Promise<void> {
         await this.dataSource.manager.save(suggestedContact);
+    }
+
+    public async getOneById(id: string): Promise<SuggestedContact> {
+        return await this.dataSource.manager.findOneBy(SuggestedContactModel, {id});
+    }
+
+    public async delete(suggestedContact: SuggestedContactModel): Promise<void> {
+        await this.dataSource.manager.remove(suggestedContact);
     }
 }
