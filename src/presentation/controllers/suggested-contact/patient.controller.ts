@@ -24,7 +24,7 @@ export class PatientController {
     @ApiUnauthorizedResponse({description: 'Unauthorized.'})
     @ApiForbiddenResponse({description: 'Forbidden.'})
     @ApiNotFoundResponse({description: 'Not Found.'})
-    public async refuseSuggestedContact(@Param('contactId', ParseUUIDPipe) contactId: string): Promise<void> {
+    public async deleteSuggestedContact(@Param('contactId', ParseUUIDPipe) contactId: string): Promise<void> {
         const useCase = this.patientUseCasesFactory.createRefuseSuggestedContactUseCase();
 
         try {
