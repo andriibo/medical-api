@@ -18,14 +18,14 @@ export class EmergencyContactModelMapper implements IEmergencyContactEntityMappe
         return contact;
     }
 
-    public mapBySuggestedContact(contactDto: SuggestedContact): EmergencyContact {
+    public mapBySuggestedContact(suggestedContact: SuggestedContact): EmergencyContact {
         const contact = new EmergencyContactModel();
-        contact.userId = contactDto.patientUserId;
-        contact.firstName = contactDto.firstName;
-        contact.lastName = contactDto.lastName;
-        contact.email = contactDto.email;
-        contact.phone = contactDto.phone;
-        contact.relationship = contactDto.relationship;
+        contact.userId = suggestedContact.patientUserId;
+        contact.firstName = suggestedContact.firstName;
+        contact.lastName = suggestedContact.lastName;
+        contact.email = suggestedContact.email;
+        contact.phone = suggestedContact.phone;
+        contact.relationship = suggestedContact.relationship;
 
         return contact;
     }
