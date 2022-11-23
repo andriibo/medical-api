@@ -9,8 +9,16 @@ export class SuggestedContactSpecification {
         await this.patientDataAccessSpecification.assertGrantedUserHasAccess(user, patientUserId);
     }
 
-    public async assertUserCanDeleteContact(grantedUser: User, suggestedContact: SuggestedContact): Promise<void> {
+    public assertUserCanDeleteContact(grantedUser: User, suggestedContact: SuggestedContact): void {
         const isSuggestedBy = suggestedContact.suggestedBy === grantedUser.id;
+
+        if (!isSuggestedBy) {
+            throw new SuggestedContactSpecificationError('Delete Not Allowed.');
+        }
+    }
+
+    public assertPatientCanDeleteContact(patient: User, suggestedContact: SuggestedContact): void {
+        const isSuggestedBy = suggestedContact.patientUserId === patient.id;
 
         if (!isSuggestedBy) {
             throw new SuggestedContactSpecificationError('Delete Not Allowed.');
