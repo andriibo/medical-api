@@ -3,12 +3,8 @@ import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service'
 import {ISuggestedContactRepository} from 'app/modules/suggested-contact/repositories/suggested-contact.repository';
 import {DeleteSuggestedContactUseCase} from 'app/modules/suggested-contact/use-cases/patient';
 import {DeleteSuggestedContactByPatientService} from 'app/modules/suggested-contact/services/delete-suggested-contact-by-patient.service';
-import {
-    ApproveSuggestedContactUseCase
-} from "app/modules/suggested-contact/use-cases/patient/approve-suggested-contact.use-case";
-import {
-    ApproveSuggestedContactByPatientService
-} from "app/modules/suggested-contact/services/approve-suggested-contact-by-patient.service";
+import {ApproveSuggestedContactUseCase} from 'app/modules/suggested-contact/use-cases/patient/approve-suggested-contact.use-case';
+import {ApproveSuggestedContactByPatientService} from 'app/modules/suggested-contact/services/approve-suggested-contact-by-patient.service';
 
 @Injectable()
 export class PatientUseCasesFactory {
