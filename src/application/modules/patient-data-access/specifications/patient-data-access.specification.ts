@@ -54,7 +54,10 @@ export class PatientDataAccessSpecification {
         }
     }
 
-    public async assertGrantedUserCanGiveAccessToPatientEmail(grantedUser: User, patientEmail: string): Promise<void> {
+    public async assertGrantedUserCanGetAccessToUnregisteredPatient(
+        grantedUser: User,
+        patientEmail: string,
+    ): Promise<void> {
         const patient = await this.userRepository.getOneByEmail(patientEmail);
 
         if (patient !== null) {
