@@ -17,10 +17,6 @@ export class InitiateDataAccessUseCase {
         const userToGrant = await this.userRepository.getOneByEmail(dto.email);
 
         if (userToGrant === null) {
-            throw new Error('Unregistered user.');
-        }
-
-        if (userToGrant === null) {
             await this.accessToUnregisteredPatientService.initiateDataAccess(doctor, dto.email);
         } else {
             await this.accessToRegisteredPatientService.initiateDataAccess(doctor, userToGrant);
