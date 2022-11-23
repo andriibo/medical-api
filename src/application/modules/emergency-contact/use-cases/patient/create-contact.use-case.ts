@@ -16,7 +16,7 @@ export class CreateContactUseCase {
     public async createContact(dto: ContactDto): Promise<void> {
         const user = await this.authedUserService.getUser();
 
-        this.emergencyContactSpecification.assertUserCanCreateContact(user, dto);
+        this.emergencyContactSpecification.assertUserCanCreateContact(user);
 
         const emergencyContact = this.createEmergencyContact(user, dto);
 

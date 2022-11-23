@@ -12,6 +12,7 @@ import {EmergencyContactSpecification} from 'app/modules/emergency-contact/speci
 
 @Module({
     imports: [TypeOrmModule.forFeature([EmergencyContactModel]), AuthModule, PatientDataAccessModule],
+    exports: [IEmergencyContactRepository, IEmergencyContactEntityMapper, EmergencyContactSpecification],
     controllers: [DoctorController, PatientController],
     providers: [
         DoctorUseCasesFactory,
