@@ -1,5 +1,5 @@
 import {ApiProperty} from '@nestjs/swagger';
-import {Length, IsEmail, IsNotEmpty, IsIn, MaxLength} from 'class-validator';
+import {Length, IsEmail, IsNotEmpty, IsIn, MaxLength, IsNumberString} from 'class-validator';
 import {ContactDto} from 'domain/dtos/request/emergency-contact/contact.dto';
 
 export class CreateContactView extends ContactDto {
@@ -22,6 +22,7 @@ export class CreateContactView extends ContactDto {
     @ApiProperty({minLength: 11, maxLength: 11})
     @IsNotEmpty()
     @Length(11, 11)
+    @IsNumberString()
     public phone: string;
 
     @ApiProperty({enum: ['MedicalProfessional', 'Caregiver', 'Friends&Family']})

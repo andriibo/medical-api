@@ -1,5 +1,5 @@
 import {ApiProperty} from '@nestjs/swagger';
-import {Length, IsEmail, IsNotEmpty, IsOptional, MaxLength} from 'class-validator';
+import {Length, IsEmail, IsNotEmpty, IsOptional, MaxLength, IsNumberString} from 'class-validator';
 import {CreateDoctorDto} from 'domain/dtos/request/auth/create-doctor.dto';
 
 export class SignUpDoctorView extends CreateDoctorDto {
@@ -22,6 +22,7 @@ export class SignUpDoctorView extends CreateDoctorDto {
     @ApiProperty({minLength: 11, maxLength: 11})
     @IsNotEmpty()
     @Length(11, 11)
+    @IsNumberString()
     public phone: string;
 
     @ApiProperty({required: false, minLength: 0, maxLength: 100})
