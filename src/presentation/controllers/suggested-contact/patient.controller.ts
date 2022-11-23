@@ -18,7 +18,7 @@ export class PatientController {
     public constructor(private readonly patientUseCasesFactory: PatientUseCasesFactory) {}
 
     @Roles('Patient')
-    @Delete('suggested-contact/refuse/:contactId')
+    @Delete('suggested-contact/:contactId')
     @ApiResponse({status: HttpStatus.OK, description: 'OK.'})
     @ApiBadRequestResponse({description: 'Bad request.'})
     @ApiUnauthorizedResponse({description: 'Unauthorized.'})
