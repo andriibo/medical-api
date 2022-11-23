@@ -30,7 +30,7 @@ export class PatientDataAccessSpecification {
         }
     }
 
-    public async assertGrantedUserCanGiveAccessToPatient(grantedUser: User, patient: User): Promise<void> {
+    public async assertGrantedUserCanGetAccessToPatient(grantedUser: User, patient: User): Promise<void> {
         const hasAccess = await this.hasAccessByPatientUserIdAndGrantedUserId(patient.id, grantedUser.id);
 
         if (hasAccess) {

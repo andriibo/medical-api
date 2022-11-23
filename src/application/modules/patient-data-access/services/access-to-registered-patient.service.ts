@@ -14,7 +14,7 @@ export class AccessToRegisteredPatientService {
     ) {}
 
     public async initiateDataAccess(grantedUser: User, patient: User): Promise<void> {
-        await this.patientDataAccessSpecification.assertGrantedUserCanGiveAccessToPatient(grantedUser, patient);
+        await this.patientDataAccessSpecification.assertGrantedUserCanGetAccessToPatient(grantedUser, patient);
 
         const dataAccess = this.createDataAccess(grantedUser, patient);
 
