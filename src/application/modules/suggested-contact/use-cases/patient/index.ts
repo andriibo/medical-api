@@ -1,3 +1,3 @@
-import {RefuseSuggestedContactUseCase} from './refuse-suggested-contact.use-case';
+import {DeleteSuggestedContactUseCase} from './delete-suggested-contact.use-case';
 
-export {RefuseSuggestedContactUseCase};
+export {DeleteSuggestedContactUseCase};
