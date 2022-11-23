@@ -4,14 +4,14 @@ import {ISuggestedContactRepository} from 'app/modules/suggested-contact/reposit
 import {EntityNotFoundError} from 'app/errors';
 import {DeleteSuggestedContactByPatientService} from 'app/modules/suggested-contact/services/delete-suggested-contact-by-patient.service';
 
-export class RefuseSuggestedContactUseCase {
+export class DeleteSuggestedContactUseCase {
     public constructor(
         private readonly authedUserService: IAuthedUserService,
         private readonly suggestedContactRepository: ISuggestedContactRepository,
         private readonly deleteSuggestedContactByPatientService: DeleteSuggestedContactByPatientService,
     ) {}
 
-    public async refuseSuggestedContact(contactId: string): Promise<void> {
+    public async deleteSuggestedContact(contactId: string): Promise<void> {
         const user = await this.authedUserService.getUser();
         const suggestedContact = await this.getSuggestedContact(contactId);
 
