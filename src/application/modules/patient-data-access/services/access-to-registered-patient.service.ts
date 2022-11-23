@@ -13,21 +13,21 @@ export class AccessToRegisteredPatientService {
         private readonly patientDataAccessSpecification: PatientDataAccessSpecification,
     ) {}
 
-    public async initiateDataAccess(patient: User, userToGrant: User): Promise<void> {
-        await this.patientDataAccessSpecification.assertPatientCanGiveAccessForUser(patient, userToGrant);
+    public async initiateDataAccess(grantedUser: User, patient: User): Promise<void> {
+        await this.patientDataAccessSpecification.assertGrantedUserCanGetAccessToPatient(grantedUser, patient);
 
-        const dataAccess = this.createDataAccess(patient, userToGrant);
+        const dataAccess = this.createDataAccess(grantedUser, patient);
 
         await this.patientDataAccessRepository.create(dataAccess);
 
         await this.patientDataAccessEventEmitter.emitDoctorInitiatedAccessToRegisteredPatient(
-            patient,
-            userToGrant.email,
+            grantedUser,
+            patient.email,
         );
     }
 
-    private createDataAccess(patient: User, userToGrant: User): PatientDataAccess {
-        const dataAccess = this.patientDataAccessEntityMapper.mapByPatientAndGrantedUser(patient, userToGrant);
+    private createDataAccess(grantedUser: User, patient: User): PatientDataAccess {
+        const dataAccess = this.patientDataAccessEntityMapper.mapByPatientAndGrantedUser(patient, grantedUser);
         dataAccess.direction = PatientDataAccessRequestDirection.ToPatient;
 
         return dataAccess;
