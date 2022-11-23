@@ -1,7 +1,6 @@
 import {SuggestedContact, User} from 'domain/entities';
 import {ISuggestedContactRepository} from 'app/modules/suggested-contact/repositories';
 import {SuggestedContactSpecification} from 'app/modules/suggested-contact/specifications/suggested-contact.specification';
-import {SuggestedContactDto} from 'domain/dtos/response/suggested-contact/suggested-contact.dto';
 import {IEmergencyContactEntityMapper} from 'app/modules/emergency-contact/mappers/emergency-contact-entity.mapper';
 import {EmergencyContactSpecification} from 'app/modules/emergency-contact/specifications/emergency-contact.specification';
 import {IEmergencyContactRepository} from 'app/modules/emergency-contact/repositories';
@@ -19,8 +18,7 @@ export class ApproveSuggestedContactByPatientService {
         this.suggestedContactSpecification.assertPatientCanModifyContact(patient, suggestedContact);
         this.emergencyContactSpecification.assertUserCanCreateContact(patient);
 
-        const dto = SuggestedContactDto.fromSuggestedContact(suggestedContact);
-        const emergencyContact = this.emergencyContactEntityMapper.mapBySuggestedContactDto(dto);
+        const emergencyContact = this.emergencyContactEntityMapper.mapBySuggestedContactDto(suggestedContact);
 
         await this.emergencyContactRepository.create(emergencyContact);
         await this.suggestedContactRepository.delete(suggestedContact);
