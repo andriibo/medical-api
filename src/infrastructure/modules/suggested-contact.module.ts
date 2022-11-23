@@ -1,5 +1,5 @@
 import {Module} from '@nestjs/common';
-import {DoctorController} from 'controllers/suggested-contact';
+import {DoctorController, PatientController} from 'controllers/suggested-contact';
 import {TypeOrmModule} from '@nestjs/typeorm';
 import {DoctorUseCasesFactory} from 'infrastructure/factories/suggested-contact';
 import {AuthModule} from 'infrastructure/modules';
@@ -10,12 +10,15 @@ import {SuggestedContactRepository} from 'infrastructure/repositories/suggested-
 import {ISuggestedContactEntityMapper} from 'app/modules/suggested-contact/mappers/suggested-contact-entity.mapper';
 import {SuggestedContactModelMapper} from 'infrastructure/mappers/suggested-contact-model.mapper';
 import {DeleteSuggestedContactByDoctorService} from 'app/modules/suggested-contact/services/delete-suggested-contact-by-doctor.service';
+import {DeleteSuggestedContactByPatientService} from 'app/modules/suggested-contact/services/delete-suggested-contact-by-patient.service';
+import {PatientUseCasesFactory} from 'infrastructure/factories/suggested-contact/patient-use-cases.factory';
 
 @Module({
     imports: [TypeOrmModule.forFeature([SuggestedContactModel]), AuthModule],
-    controllers: [DoctorController],
+    controllers: [DoctorController, PatientController],
     providers: [
         DoctorUseCasesFactory,
+        PatientUseCasesFactory,
         SuggestedContactSpecification,
         {
             provide: ISuggestedContactRepository,
@@ -32,6 +35,19 @@ import {DeleteSuggestedContactByDoctorService} from 'app/modules/suggested-conta
                 suggestedContactSpecification: SuggestedContactSpecification,
             ) => {
                 return new DeleteSuggestedContactByDoctorService(
+                    suggestedContactRepository,
+                    suggestedContactSpecification,
+                );
+            },
+            inject: [ISuggestedContactRepository, SuggestedContactSpecification],
+        },
+        {
+            provide: DeleteSuggestedContactByPatientService,
+            useFactory: (
+                suggestedContactRepository: ISuggestedContactRepository,
+                suggestedContactSpecification: SuggestedContactSpecification,
+            ) => {
+                return new DeleteSuggestedContactByPatientService(
                     suggestedContactRepository,
                     suggestedContactSpecification,
                 );
