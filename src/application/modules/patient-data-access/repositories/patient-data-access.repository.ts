@@ -12,6 +12,8 @@ export interface IPatientDataAccessRepository {
 
     getOneByPatientUserIdAndGrantedEmail(patientUserId: string, grantedEmail: string): Promise<PatientDataAccess>;
 
+    getOneByGrantedUserIdAndPatientEmail(grantedUserId: string, patientEmail: string): Promise<PatientDataAccess>;
+
     getByPatient(patient: User): Promise<PatientDataAccess[]>;
 
     getByGrantedUser(grantedUser: User): Promise<PatientDataAccess[]>;

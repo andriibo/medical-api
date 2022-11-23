@@ -13,19 +13,19 @@ export class PatientDataAccessEntityMapper implements IPatientDataAccessEntityMa
         return access;
     }
 
-    public mapByPatientAndGrantedEmail(patient: User, email: string): PatientDataAccess {
+    public mapByPatientAndGrantedEmail(patient: User, grantedEmail: string): PatientDataAccess {
         const access = new PatientDataAccessModel();
         access.patientUserId = patient.id;
-        access.grantedEmail = email;
+        access.grantedEmail = grantedEmail;
         access.status = PatientDataAccessStatus.Initiated;
 
         return access;
     }
 
-    public mapByGrantedUserAndPatientEmail(doctor: User, email: string): PatientDataAccess {
+    public mapByGrantedUserAndPatientEmail(doctor: User, patientEmail: string): PatientDataAccess {
         const access = new PatientDataAccessModel();
         access.grantedUserId = doctor.id;
-        access.patientEmail = email;
+        access.patientEmail = patientEmail;
         access.status = PatientDataAccessStatus.Initiated;
 
         return access;
