@@ -1,4 +1,4 @@
-import {Controller, HttpStatus, BadRequestException, Param, ParseUUIDPipe, Delete} from '@nestjs/common';
+import {Controller, HttpStatus, BadRequestException, Param, ParseUUIDPipe, Delete, Post} from '@nestjs/common';
 import {
     ApiBadRequestResponse,
     ApiBearerAuth,
@@ -29,6 +29,23 @@ export class PatientController {
 
         try {
             await useCase.deleteSuggestedContact(contactId);
+        } catch (error) {
+            throw new BadRequestException(error.message);
+        }
+    }
+
+    @Roles('Patient')
+    @Post('suggested-contact/approve/:contactId')
+    @ApiResponse({status: HttpStatus.OK, description: 'OK.'})
+    @ApiBadRequestResponse({description: 'Bad request.'})
+    @ApiUnauthorizedResponse({description: 'Unauthorized.'})
+    @ApiForbiddenResponse({description: 'Forbidden.'})
+    @ApiNotFoundResponse({description: 'Not Found.'})
+    public async approveSuggestedContact(@Param('contactId', ParseUUIDPipe) contactId: string): Promise<void> {
+        const useCase = this.patientUseCasesFactory.createApproveSuggestedContactUseCase();
+
+        try {
+            await useCase.approveSuggestedContact(contactId);
         } catch (error) {
             throw new BadRequestException(error.message);
         }

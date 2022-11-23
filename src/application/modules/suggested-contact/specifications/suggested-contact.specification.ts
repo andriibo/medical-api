@@ -17,11 +17,11 @@ export class SuggestedContactSpecification {
         }
     }
 
-    public assertPatientCanDeleteContact(patient: User, suggestedContact: SuggestedContact): void {
+    public assertPatientCanModifyContact(patient: User, suggestedContact: SuggestedContact): void {
         const isSuggestedBy = suggestedContact.patientUserId === patient.id;
 
         if (!isSuggestedBy) {
-            throw new SuggestedContactSpecificationError('Delete Not Allowed.');
+            throw new SuggestedContactSpecificationError('Action Not Allowed.');
         }
     }
 }

@@ -1,10 +1,9 @@
 import {EmergencyContact, User} from 'domain/entities';
-import {ContactDto} from 'domain/dtos/request/emergency-contact/contact.dto';
 import {UserRole} from 'domain/entities/user.entity';
 import {EmergencyContactSpecificationError} from 'app/modules/emergency-contact/errors';
 
 export class EmergencyContactSpecification {
-    public assertUserCanCreateContact(user: User, dto: ContactDto): void {
+    public assertUserCanCreateContact(user: User): void {
         const isUserPatient = user.role === UserRole.Patient;
 
         if (!isUserPatient) {
