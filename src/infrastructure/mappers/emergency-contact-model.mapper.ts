@@ -18,7 +18,7 @@ export class EmergencyContactModelMapper implements IEmergencyContactEntityMappe
         return contact;
     }
 
-    public mapBySuggestedContactDto(contactDto: SuggestedContact): EmergencyContact {
+    public mapBySuggestedContact(contactDto: SuggestedContact): EmergencyContact {
         const contact = new EmergencyContactModel();
         contact.userId = contactDto.patientUserId;
         contact.firstName = contactDto.firstName;

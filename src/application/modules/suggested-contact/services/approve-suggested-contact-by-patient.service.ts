@@ -18,7 +18,7 @@ export class ApproveSuggestedContactByPatientService {
         this.suggestedContactSpecification.assertPatientCanModifyContact(patient, suggestedContact);
         this.emergencyContactSpecification.assertUserCanCreateContact(patient);
 
-        const emergencyContact = this.emergencyContactEntityMapper.mapBySuggestedContactDto(suggestedContact);
+        const emergencyContact = this.emergencyContactEntityMapper.mapBySuggestedContact(suggestedContact);
 
         await this.emergencyContactRepository.create(emergencyContact);
         await this.suggestedContactRepository.delete(suggestedContact);
