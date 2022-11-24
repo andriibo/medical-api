@@ -1,4 +1,4 @@
-import {PatientDataAccess} from 'domain/entities/patient-data-access.entity';
+import {PatientDataAccess, PatientDataAccessStatus} from 'domain/entities/patient-data-access.entity';
 import {User} from 'domain/entities';
 
 export interface IPatientDataAccessRepository {
@@ -23,6 +23,8 @@ export interface IPatientDataAccessRepository {
     getByPatientEmail(patientEmail: string): Promise<PatientDataAccess[]>;
 
     getOneById(id: string): Promise<PatientDataAccess>;
+
+    getByPatientAndStatus(patient: User, status: PatientDataAccessStatus): Promise<PatientDataAccess[]>;
 }
 
 export const IPatientDataAccessRepository = Symbol('IPatientDataAccessRepository');

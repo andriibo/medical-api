@@ -5,6 +5,7 @@ import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repo
 import {PatientDataAccess} from 'domain/entities';
 import {PatientDataAccessModel} from 'infrastructure/models';
 import {User} from 'domain/entities';
+import {PatientDataAccessStatus} from 'domain/entities/patient-data-access.entity';
 
 @Injectable()
 export class PatientDataAccessRepository implements IPatientDataAccessRepository {
@@ -69,5 +70,12 @@ export class PatientDataAccessRepository implements IPatientDataAccessRepository
 
     public async getOneById(id: string): Promise<PatientDataAccess> {
         return await this.dataSource.manager.findOneBy(PatientDataAccessModel, {id});
+    }
+
+    public async getByPatientAndStatus(patient: User, status: PatientDataAccessStatus): Promise<PatientDataAccess[]> {
+        return await this.dataSource.manager.findBy(PatientDataAccessModel, {
+            patientUserId: patient.id,
+            status: status,
+        });
     }
 }
