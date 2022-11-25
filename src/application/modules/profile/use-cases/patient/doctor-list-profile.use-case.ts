@@ -1,14 +1,15 @@
 import {IUserRepository} from 'app/modules/auth/repositories';
 import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service';
 import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repositories';
-import {PatientDataAccess, User} from 'domain/entities';
 import {PatientDataAccessStatus} from 'domain/entities/patient-data-access.entity';
 import {MyDoctorDto} from 'domain/dtos/response/profile/my-doctor.dto';
+import {IDoctorMetadataRepository} from 'app/modules/profile/repositories';
 
 export class DoctorListProfileUseCase {
     public constructor(
         private readonly authedUserService: IAuthedUserService,
         private readonly patientDataAccessRepository: IPatientDataAccessRepository,
+        private readonly doctorMetadataRepository: IDoctorMetadataRepository,
         private readonly userRepository: IUserRepository,
     ) {}
 
@@ -20,21 +21,31 @@ export class DoctorListProfileUseCase {
             PatientDataAccessStatus.Approved,
         );
 
-        const users = await this.getGrantedUsers(items);
+        const doctorIds = items.filter((item) => item.grantedUserId).map((item) => item.grantedUserId);
+        const indexedDoctors = this.getIndexedDoctors(doctorIds);
+        const indexedMetadataForDoctors = this.getIndexedMetadata(doctorIds);
 
-        const indexedUsers = {};
-        users.map((user) => (indexedUsers[user.id] = user));
+        return items.map((patientDataAccess) => {
+            const doctor = indexedDoctors[patientDataAccess.grantedUserId];
+            const metadata = indexedMetadataForDoctors[patientDataAccess.grantedUserId];
 
-        return items.map((item) => {
-            const user = indexedUsers[item.grantedUserId];
-
-            return MyDoctorDto.fromUserAndPatientDataAccess(user, item);
+            return MyDoctorDto.fromUserAndPatientDataAccess(doctor, metadata, patientDataAccess);
         });
     }
 
-    private async getGrantedUsers(items: PatientDataAccess[]): Promise<User[]> {
-        const userIds = items.filter((item) => item.grantedUserId).map((item) => item.grantedUserId);
+    private async getIndexedDoctors(doctorIds: string[]): Promise<object> {
+        const doctors = await this.userRepository.getByIds(doctorIds);
+        const indexedDoctors = {};
+        doctors.map((user) => (indexedDoctors[user.id] = user));
 
-        return await this.userRepository.getByIds(userIds);
+        return indexedDoctors;
+    }
+
+    private async getIndexedMetadata(doctorIds: string[]): Promise<object> {
+        const metadataForDoctors = await this.doctorMetadataRepository.getByIds(doctorIds);
+        const indexedMetadataForDoctors = {};
+        metadataForDoctors.map((metadata) => (indexedMetadataForDoctors[metadata.userId] = metadata));
+
+        return indexedMetadataForDoctors;
     }
 }
