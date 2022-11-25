@@ -1,0 +1,51 @@
+import {IUserRepository} from 'app/modules/auth/repositories';
+import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service';
+import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repositories';
+import {PatientDataAccessStatus} from 'domain/entities/patient-data-access.entity';
+import {MyDoctorDto} from 'domain/dtos/response/profile/my-doctor.dto';
+import {IPatientMetadataRepository} from 'app/modules/profile/repositories';
+
+export class PatientListProfileUseCase {
+    public constructor(
+        private readonly authedUserService: IAuthedUserService,
+        private readonly patientDataAccessRepository: IPatientDataAccessRepository,
+        private readonly patientMetadataRepository: IPatientMetadataRepository,
+        private readonly userRepository: IUserRepository,
+    ) {}
+
+    public async getMyPatientList(): Promise<MyDoctorDto[]> {
+        const user = await this.authedUserService.getUser();
+
+        const items = await this.patientDataAccessRepository.getByGrantedUserIdAndStatus(
+            user.id,
+            PatientDataAccessStatus.Approved,
+        );
+
+        const patientIds = items.filter((item) => item.patientUserId).map((item) => item.patientUserId);
+        const indexedPatients = this.getIndexedPatients(patientIds);
+        const indexedMetadataForPatients = this.getIndexedMetadata(patientIds);
+
+        return items.map((patientDataAccess) => {
+            const patient = indexedPatients[patientDataAccess.patientUserId];
+            const metadata = indexedMetadataForPatients[patientDataAccess.patientUserId];
+
+            return MyPatientDto.fromUserAndPatientDataAccess(patient, metadata, patientDataAccess);
+        });
+    }
+
+    private async getIndexedPatients(patientIds: string[]): Promise<object> {
+        const patients = await this.userRepository.getByIds(patientIds);
+        const indexedPatients = {};
+        patients.map((user) => (indexedPatients[user.id] = user));
+
+        return indexedPatients;
+    }
+
+    private async getIndexedMetadata(patientIds: string[]): Promise<object> {
+        const metadataForPatients = await this.patientMetadataRepository.getByIds(patientIds);
+        const indexedMetadataForPatients = {};
+        metadataForPatients.map((metadata) => (indexedMetadataForPatients[metadata.userId] = metadata));
+
+        return indexedMetadataForPatients;
+    }
+}
