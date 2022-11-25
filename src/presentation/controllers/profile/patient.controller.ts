@@ -1,10 +1,12 @@
 import {Body, Controller, Get, HttpCode, HttpStatus, Patch} from '@nestjs/common';
-import {ApiBearerAuth, ApiResponse, ApiTags} from '@nestjs/swagger';
+import {ApiBearerAuth, ApiForbiddenResponse, ApiResponse, ApiTags, ApiUnauthorizedResponse} from '@nestjs/swagger';
 import {Roles} from 'presentation/guards';
 import {PatientView} from 'presentation/views/response/user';
 import {PatientUseCasesFactory} from 'infrastructure/factories/profile';
 import {PatientDto} from 'domain/dtos/response/profile/patient.dto';
 import {UpdatePatientProfileView} from 'views/request/profile/update-patient-profile.view';
+import {MyDoctorDto} from 'domain/dtos/response/profile/my-doctor.dto';
+import {MyDoctorView} from 'views/response/profile';
 
 @Controller('patient')
 @ApiBearerAuth()
@@ -30,5 +32,16 @@ export class PatientController {
         const useCase = this.patientUseCasesFactory.createUpdatePatientProfileUseCase();
 
         await useCase.updateProfileInfo(requestBody);
+    }
+
+    @Roles('Patient')
+    @Get('my-doctors')
+    @ApiResponse({status: HttpStatus.OK, type: [MyDoctorView]})
+    @ApiUnauthorizedResponse({description: 'Unauthorized.'})
+    @ApiForbiddenResponse({description: 'Forbidden.'})
+    public async getMyDoctors(): Promise<MyDoctorDto[]> {
+        const useCase = this.patientUseCasesFactory.createDoctorListUseCase();
+
+        return await useCase.getMyDoctorList();
     }
 }
