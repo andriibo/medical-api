@@ -1,6 +1,6 @@
 import {Inject, Injectable} from '@nestjs/common';
 import {IUserRepository} from 'app/modules/auth/repositories';
-import {IPatientMetadataRepository} from 'app/modules/profile/repositories';
+import {IDoctorMetadataRepository, IPatientMetadataRepository} from 'app/modules/profile/repositories';
 import {PatientProfileUseCase, UpdatePatientProfileUseCase} from 'app/modules/profile/use-cases/patient';
 import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service';
 import {IUserProfileMapper} from 'app/modules/profile/mappers/user-profile.mapper';
@@ -18,6 +18,7 @@ export class PatientUseCasesFactory {
         @Inject(IFileUrlService) private readonly fileUrlService: IFileUrlService,
         @Inject(IPatientDataAccessRepository)
         private readonly patientDataAccessRepository: IPatientDataAccessRepository,
+        @Inject(IDoctorMetadataRepository) private readonly doctorMetadataRepository: IDoctorMetadataRepository,
     ) {}
 
     public createGetPatientProfileUseCase(): PatientProfileUseCase {
@@ -42,6 +43,7 @@ export class PatientUseCasesFactory {
         return new DoctorListProfileUseCase(
             this.authedUserService,
             this.patientDataAccessRepository,
+            this.doctorMetadataRepository,
             this.userRepository,
         );
     }

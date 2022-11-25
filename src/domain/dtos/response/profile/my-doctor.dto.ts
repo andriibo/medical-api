@@ -11,6 +11,7 @@ export class MyDoctorDto {
     public lastName: string;
 
     public phone: string;
+
     public institution: string;
 
     public avatar: string;

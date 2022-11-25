@@ -18,5 +18,8 @@ export class MyDoctorView implements MyDoctorDto {
     public phone: string;
 
     @ApiProperty()
+    public institution: string;
+
+    @ApiProperty()
     public avatar: string;
 }
