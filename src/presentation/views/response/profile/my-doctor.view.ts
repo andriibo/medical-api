@@ -1,25 +1,8 @@
 import {ApiProperty} from '@nestjs/swagger';
 import {MyDoctorDto} from 'domain/dtos/response/profile/my-doctor.dto';
+import {DoctorView} from 'views/response/user';
 
-export class MyDoctorView implements MyDoctorDto {
+export class MyDoctorView extends DoctorView implements MyDoctorDto {
     @ApiProperty()
     public accessId: string;
-
-    @ApiProperty()
-    public email: string;
-
-    @ApiProperty()
-    public firstName: string;
-
-    @ApiProperty()
-    public lastName: string;
-
-    @ApiProperty()
-    public phone: string;
-
-    @ApiProperty()
-    public institution: string;
-
-    @ApiProperty()
-    public avatar: string;
 }

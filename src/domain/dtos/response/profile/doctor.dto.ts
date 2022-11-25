@@ -14,8 +14,12 @@ export class DoctorDto {
 
     public avatar: string;
 
-    public static fromUserAndDoctorMetadata(user: User, metadata: DoctorMetadata): DoctorDto {
-        const dto = new DoctorDto();
+    public static fromUserAndDoctorMetadata<T extends typeof DoctorDto>(
+        this: T,
+        user: User,
+        metadata: DoctorMetadata,
+    ): InstanceType<T> {
+        const dto = new this() as InstanceType<T>;
         dto.email = user.email;
         dto.firstName = user.firstName;
         dto.lastName = user.lastName;
