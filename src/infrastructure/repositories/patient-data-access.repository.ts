@@ -81,4 +81,14 @@ export class PatientDataAccessRepository implements IPatientDataAccessRepository
             status,
         });
     }
+
+    public async getByGrantedUserIdAndStatus(
+        grantedUserId: string,
+        status: PatientDataAccessStatus,
+    ): Promise<PatientDataAccess[]> {
+        return await this.dataSource.manager.findBy(PatientDataAccessModel, {
+            grantedUserId,
+            status,
+        });
+    }
 }
