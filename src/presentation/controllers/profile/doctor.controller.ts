@@ -17,8 +17,8 @@ import {DoctorUseCasesFactory} from 'infrastructure/factories/profile';
 import {DoctorDto} from 'domain/dtos/response/profile/doctor.dto';
 import {PatientDto} from 'domain/dtos/response/profile/patient.dto';
 import {UpdateDoctorProfileView} from 'views/request/profile/update-doctor-profile.view';
-import {MyDoctorView} from "views/response/profile";
-import {MyDoctorDto} from "domain/dtos/response/profile/my-doctor.dto";
+import {MyPatientView} from 'views/response/profile/my-patient.view';
+import {MyPatientDto} from 'domain/dtos/response/profile/my-patient.dto';
 
 @Controller('doctor')
 @ApiBearerAuth()
@@ -66,7 +66,7 @@ export class DoctorController {
     @ApiResponse({status: HttpStatus.OK, type: [MyPatientView]})
     @ApiUnauthorizedResponse({description: 'Unauthorized.'})
     @ApiForbiddenResponse({description: 'Forbidden.'})
-    public async getMyPatients(): Promise<MyDoctorDto[]> {
+    public async getMyPatients(): Promise<MyPatientDto[]> {
         const useCase = this.doctorUseCasesFactory.createPatientListUseCase();
 
         return await useCase.getMyPatientList();

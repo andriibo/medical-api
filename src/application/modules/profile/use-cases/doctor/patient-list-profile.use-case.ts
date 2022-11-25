@@ -2,8 +2,8 @@ import {IUserRepository} from 'app/modules/auth/repositories';
 import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service';
 import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repositories';
 import {PatientDataAccessStatus} from 'domain/entities/patient-data-access.entity';
-import {MyDoctorDto} from 'domain/dtos/response/profile/my-doctor.dto';
 import {IPatientMetadataRepository} from 'app/modules/profile/repositories';
+import {MyPatientDto} from 'domain/dtos/response/profile/my-patient.dto';
 
 export class PatientListProfileUseCase {
     public constructor(
@@ -13,7 +13,7 @@ export class PatientListProfileUseCase {
         private readonly userRepository: IUserRepository,
     ) {}
 
-    public async getMyPatientList(): Promise<MyDoctorDto[]> {
+    public async getMyPatientList(): Promise<MyPatientDto[]> {
         const user = await this.authedUserService.getUser();
 
         const items = await this.patientDataAccessRepository.getByGrantedUserIdAndStatus(
@@ -29,7 +29,7 @@ export class PatientListProfileUseCase {
             const patient = indexedPatients[patientDataAccess.patientUserId];
             const metadata = indexedMetadataForPatients[patientDataAccess.patientUserId];
 
-            return MyPatientDto.fromUserAndPatientDataAccess(patient, metadata, patientDataAccess);
+            return MyPatientDto.fromUserAndPatientMetadataAndPatientDataAccess(patient, metadata, patientDataAccess);
         });
     }
 

@@ -22,7 +22,7 @@ export class MyPatientDto {
 
     public avatar: string;
 
-    public static fromUserAndPatientDataAccess(
+    public static fromUserAndPatientMetadataAndPatientDataAccess(
         user: User,
         metadata: PatientMetadata,
         dataAccess: PatientDataAccess,

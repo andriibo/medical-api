@@ -12,6 +12,7 @@ import {IUserProfileMapper} from 'app/modules/profile/mappers/user-profile.mappe
 import {PatientDataAccessSpecification} from 'app/modules/patient-data-access/specifications/patient-data-access.specification';
 import {IFileUrlService} from 'app/modules/profile/services/file-url.service';
 import {DoctorListProfileUseCase} from "app/modules/profile/use-cases/patient/doctor-list-profile.use-case";
+import {PatientListProfileUseCase} from "app/modules/profile/use-cases/doctor/patient-list-profile.use-case";
 
 @Injectable()
 export class DoctorUseCasesFactory {
