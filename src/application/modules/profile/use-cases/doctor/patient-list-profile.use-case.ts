@@ -29,7 +29,10 @@ export class PatientListProfileUseCase {
             const patient = indexedPatients[patientDataAccess.patientUserId];
             const metadata = indexedMetadataForPatients[patientDataAccess.patientUserId];
 
-            return MyPatientDto.fromUserAndPatientMetadataAndPatientDataAccess(patient, metadata, patientDataAccess);
+            const dto = MyPatientDto.fromUserAndPatientMetadata(patient, metadata);
+            dto.accessId = patientDataAccess.id;
+
+            return dto;
         });
     }
 

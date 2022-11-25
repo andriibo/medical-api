@@ -20,8 +20,12 @@ export class PatientDto {
 
     public avatar: string;
 
-    public static fromUserAndPatientMetadata(user: User, metadata: PatientMetadata): PatientDto {
-        const dto = new PatientDto();
+    public static fromUserAndPatientMetadata<T extends typeof PatientDto>(
+        this: T,
+        user: User,
+        metadata: PatientMetadata,
+    ): InstanceType<T> {
+        const dto = new this() as InstanceType<T>;
         dto.email = user.email;
         dto.firstName = user.firstName;
         dto.lastName = user.lastName;
