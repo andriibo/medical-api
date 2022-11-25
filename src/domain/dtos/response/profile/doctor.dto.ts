@@ -14,8 +14,8 @@ export class DoctorDto {
 
     public avatar: string;
 
-    public static fromUserAndDoctorMetadata(user: User, metadata: DoctorMetadata): DoctorDto {
-        const dto = new DoctorDto();
+    public static fromUserAndDoctorMetadata(user: User, metadata: DoctorMetadata): any {
+        const dto = new this();
         dto.email = user.email;
         dto.firstName = user.firstName;
         dto.lastName = user.lastName;
