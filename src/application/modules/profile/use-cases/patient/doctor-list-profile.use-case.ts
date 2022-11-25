@@ -15,8 +15,8 @@ export class DoctorListProfileUseCase {
     public async getMyDoctorList(): Promise<MyDoctorDto[]> {
         const patient = await this.authedUserService.getUser();
 
-        const items = await this.patientDataAccessRepository.getByPatientAndStatus(
-            patient,
+        const items = await this.patientDataAccessRepository.getByPatientUserIdAndStatus(
+            patient.id,
             PatientDataAccessStatus.Approved,
         );
 

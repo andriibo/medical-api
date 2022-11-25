@@ -24,7 +24,7 @@ export interface IPatientDataAccessRepository {
 
     getOneById(id: string): Promise<PatientDataAccess>;
 
-    getByPatientAndStatus(patient: User, status: PatientDataAccessStatus): Promise<PatientDataAccess[]>;
+    getByPatientUserIdAndStatus(patientUserId: string, status: PatientDataAccessStatus): Promise<PatientDataAccess[]>;
 }
 
 export const IPatientDataAccessRepository = Symbol('IPatientDataAccessRepository');
