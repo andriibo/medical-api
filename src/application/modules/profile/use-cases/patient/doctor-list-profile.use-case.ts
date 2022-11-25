@@ -29,7 +29,7 @@ export class DoctorListProfileUseCase {
             const doctor = indexedDoctors[patientDataAccess.grantedUserId];
             const metadata = indexedMetadataForDoctors[patientDataAccess.grantedUserId];
 
-            return MyDoctorDto.fromUserAndPatientDataAccess(doctor, metadata, patientDataAccess);
+            return MyDoctorDto.fromUserAndDoctorMetadataAndPatientDataAccess(doctor, metadata, patientDataAccess);
         });
     }
 

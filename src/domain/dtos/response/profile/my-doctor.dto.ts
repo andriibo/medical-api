@@ -16,7 +16,7 @@ export class MyDoctorDto {
 
     public avatar: string;
 
-    public static fromUserAndPatientDataAccess(
+    public static fromUserAndDoctorMetadataAndPatientDataAccess(
         user: User,
         metadata: DoctorMetadata,
         dataAccess: PatientDataAccess,
