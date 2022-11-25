@@ -3,8 +3,7 @@ import {InjectDataSource} from '@nestjs/typeorm';
 import {DataSource, In} from 'typeorm';
 import {IPatientMetadataRepository} from 'app/modules/profile/repositories';
 import {PatientMetadataModel} from 'infrastructure/models/patient-metadata.model';
-import {DoctorMetadata, PatientMetadata} from 'domain/entities';
-import {DoctorMetadataModel} from "infrastructure/models";
+import {PatientMetadata} from 'domain/entities';
 
 @Injectable()
 export class PatientMetadataRepository implements IPatientMetadataRepository {
