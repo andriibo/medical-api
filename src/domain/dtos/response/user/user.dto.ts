@@ -9,12 +9,15 @@ export class UserDto {
 
     public lastName?: string;
 
+    public avatar?: string;
+
     public static fromUser(user: User): UserDto {
         const dto = new UserDto();
         dto.userId = user.id;
         dto.email = user.email;
         dto.firstName = user.firstName;
         dto.lastName = user.lastName;
+        dto.avatar = user.avatar;
 
         return dto;
     }

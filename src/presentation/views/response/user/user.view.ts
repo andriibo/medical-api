@@ -13,4 +13,7 @@ export class UserView implements UserDto {
 
     @ApiProperty()
     public lastName?: string;
+
+    @ApiProperty()
+    public avatar?: string;
 }
