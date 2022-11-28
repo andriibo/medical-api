@@ -22,8 +22,8 @@ export class DoctorListProfileUseCase {
         );
 
         const doctorIds = items.filter((item) => item.grantedUserId).map((item) => item.grantedUserId);
-        const indexedDoctors = this.getIndexedDoctors(doctorIds);
-        const indexedMetadataForDoctors = this.getIndexedMetadata(doctorIds);
+        const indexedDoctors = await this.getIndexedDoctors(doctorIds);
+        const indexedMetadataForDoctors = await this.getIndexedMetadata(doctorIds);
 
         return items.map((patientDataAccess) => {
             const doctor = indexedDoctors[patientDataAccess.grantedUserId];
