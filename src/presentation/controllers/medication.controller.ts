@@ -12,15 +12,6 @@ export class MedicationController {
     public constructor(private readonly medicationUseCasesFactory: MedicationUseCasesFactory) {}
 
     @Auth()
-    @Get('medication')
-    @HttpCode(HttpStatus.OK)
-    @ApiOperation({deprecated: true, summary: 'Deprecated endpoint. Use GET "/medications" instead.'})
-    @ApiResponse({status: HttpStatus.OK, type: [MedicationView]})
-    public async getMedicationsDeprecated(): Promise<MedicationDto[]> {
-        return await this.getMedications();
-    }
-
-    @Auth()
     @Get('medications')
     @HttpCode(HttpStatus.OK)
     @ApiResponse({status: HttpStatus.OK, type: [MedicationView]})

@@ -40,22 +40,6 @@ export class AuthController {
         return await useCase.signInUser(requestBody);
     }
 
-    @Post('sign-up/doctor')
-    @HttpCode(HttpStatus.CREATED)
-    @ApiOperation({deprecated: true, summary: 'Deprecated endpoint. Use POST "/doctor/sign-up" instead.'})
-    @ApiResponse({status: HttpStatus.CREATED})
-    public async signUpDoctorDeprecated(@Body() requestBody: SignUpDoctorView): Promise<void> {
-        await this.signUpDoctor(requestBody);
-    }
-
-    @Post('sign-up/patient')
-    @HttpCode(HttpStatus.CREATED)
-    @ApiOperation({deprecated: true, summary: 'Deprecated endpoint. Use POST "/patient/sign-up" instead.'})
-    @ApiResponse({status: HttpStatus.CREATED})
-    public async signUpPatientDeprecated(@Body() requestBody: SignUpPatientView): Promise<void> {
-        await this.signUpPatient(requestBody);
-    }
-
     @Post('doctor/sign-up')
     @HttpCode(HttpStatus.CREATED)
     @ApiResponse({status: HttpStatus.CREATED})
@@ -81,14 +65,6 @@ export class AuthController {
         const useCase = this.authUseCasesFactory.createSignUpUseCase();
 
         await useCase.signUpCaregiver(requestBody);
-    }
-
-    @Post('confirm-sign-up')
-    @HttpCode(HttpStatus.OK)
-    @ApiOperation({deprecated: true, summary: 'Deprecated endpoint. Use POST "/sign-up/confirm" instead.'})
-    @ApiResponse({status: HttpStatus.OK})
-    public async confirmSignUpDeprecated(@Body() requestBody: ConfirmSignUpUserView): Promise<void> {
-        await this.confirmSignUp(requestBody);
     }
 
     @Post('sign-up/confirm')

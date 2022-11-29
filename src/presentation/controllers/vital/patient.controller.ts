@@ -1,5 +1,5 @@
 import {BadRequestException, Body, Controller, Get, HttpCode, HttpStatus, Post, Query} from '@nestjs/common';
-import {ApiBearerAuth, ApiResponse, ApiTags} from '@nestjs/swagger';
+import {ApiBearerAuth, ApiOperation, ApiResponse, ApiTags} from '@nestjs/swagger';
 import {GetVitalsByPatientDto} from 'domain/dtos/request/vital';
 import {VitalUseCasesFactory} from 'infrastructure/factories/vital-use-cases.factory';
 import {Roles} from 'presentation/guards';
@@ -31,8 +31,17 @@ export class PatientController {
     @Roles('Patient')
     @Get('vitals')
     @HttpCode(HttpStatus.OK)
+    @ApiOperation({deprecated: true, summary: 'Deprecated endpoint. Use GET "/patient/my-vitals" instead.'})
     @ApiResponse({status: HttpStatus.OK, type: GetVitalsView})
-    public async getVitals(@Query() query: GetVitalQueryView): Promise<GetVitalsView> {
+    public async getVitalsDeprecated(@Query() query: GetVitalQueryView): Promise<GetVitalsView> {
+        return await this.getMyVitals(query);
+    }
+
+    @Roles('Patient')
+    @Get('my-vitals')
+    @HttpCode(HttpStatus.OK)
+    @ApiResponse({status: HttpStatus.OK, type: GetVitalsView})
+    public async getMyVitals(@Query() query: GetVitalQueryView): Promise<GetVitalsView> {
         const useCase = this.useCasesFactory.getVitals();
 
         try {

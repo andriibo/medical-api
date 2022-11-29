@@ -39,20 +39,6 @@ export class PatientMedicationController {
     }
 
     @Roles('Doctor', 'Patient')
-    @Get('patient-medication/:patientUserId')
-    @HttpCode(HttpStatus.OK)
-    @ApiOperation({
-        deprecated: true,
-        summary: 'Deprecated endpoint. Use GET "/patient-medications/{patientUserId}" instead.',
-    })
-    @ApiResponse({status: HttpStatus.OK, type: [MedicationView]})
-    public async getPatientMedicationsDeprecated(
-        @Param('patientUserId', ParseUUIDPipe) patientUserId: string,
-    ): Promise<MedicationDto[]> {
-        return await this.getPatientMedications(patientUserId);
-    }
-
-    @Roles('Doctor', 'Patient')
     @Get('patient-medications/:patientUserId')
     @HttpCode(HttpStatus.OK)
     @ApiResponse({status: HttpStatus.OK, type: [MedicationView]})

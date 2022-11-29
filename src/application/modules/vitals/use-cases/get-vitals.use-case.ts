@@ -1,7 +1,7 @@
 import {IVitalRepository} from 'app/modules/vitals/repositories';
 import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service';
 import {PatientDataAccessSpecification} from 'app/modules/patient-data-access/specifications/patient-data-access.specification';
-import {GetVitalsByDoctorDto, GetVitalsByPatientDto} from 'domain/dtos/request/vital';
+import {GetVitalsByGrantedUserDto, GetVitalsByPatientDto} from 'domain/dtos/request/vital';
 import {GetVitalsDto as GetVitalsResponseDto} from 'domain/dtos/response/vital/';
 
 export class GetVitalsUseCase {
@@ -18,11 +18,11 @@ export class GetVitalsUseCase {
         return GetVitalsResponseDto.fromVitalsList(vitals);
     }
 
-    public async getVitalsByDoctor(dto: GetVitalsByDoctorDto): Promise<GetVitalsResponseDto> {
-        const doctor = await this.authedUserService.getUser();
+    public async getVitalsByGrantedUser(dto: GetVitalsByGrantedUserDto): Promise<GetVitalsResponseDto> {
+        const grantedUser = await this.authedUserService.getUser();
 
-        await this.patientDataAccessSpecification.assertGrantedUserHasAccess(doctor, dto.userId);
-        const vitals = await this.vitalRepository.getByUserForInterval(dto.userId, dto.startDate, dto.endDate);
+        await this.patientDataAccessSpecification.assertGrantedUserHasAccess(grantedUser, dto.patientUserId);
+        const vitals = await this.vitalRepository.getByUserForInterval(dto.patientUserId, dto.startDate, dto.endDate);
 
         return GetVitalsResponseDto.fromVitalsList(vitals);
     }

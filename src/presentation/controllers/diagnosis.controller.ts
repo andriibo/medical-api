@@ -12,15 +12,6 @@ export class DiagnosisController {
     public constructor(private readonly diagnosisUseCasesFactory: DiagnosisUseCasesFactory) {}
 
     @Auth()
-    @Get('diagnosis')
-    @HttpCode(HttpStatus.OK)
-    @ApiOperation({deprecated: true, summary: 'Deprecated endpoint. Use GET "/diagnoses" instead.'})
-    @ApiResponse({status: HttpStatus.OK, type: [DiagnosisView]})
-    public async getDiagnosesDeprecated(): Promise<DiagnosisDto[]> {
-        return await this.getDiagnoses();
-    }
-
-    @Auth()
     @Get('diagnoses')
     @HttpCode(HttpStatus.OK)
     @ApiResponse({status: HttpStatus.OK, type: [DiagnosisView]})
