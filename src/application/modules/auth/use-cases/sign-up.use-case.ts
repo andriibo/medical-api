@@ -6,6 +6,7 @@ import {CreateDoctorDto} from 'domain/dtos/request/auth/create-doctor.dto';
 import {CreatePatientDto} from 'domain/dtos/request/auth/create-patient.dto';
 import {User} from 'domain/entities';
 import {IAuthEventEmitter} from 'app/modules/auth/event-emitters/auth.event-emitter';
+import {CreateCaregiverDto} from 'domain/dtos/request/auth/create-caregiver.dto';
 
 export class SignUpUseCase {
     public constructor(
@@ -33,6 +34,16 @@ export class SignUpUseCase {
         const createdUser = await this.createUser(user);
 
         await this.authEventEmitter.emitPatientCreated(createdUser);
+    }
+
+    public async signUpCaregiver(dto: CreateCaregiverDto): Promise<void> {
+        const authModel = await this.authService.signUp(SignUpModel.fromCreateCaregiverDto(dto));
+
+        const user = this.userEntityMapper.mapByAuthModelAndCreateCaregiverDto(authModel, dto);
+
+        const createdUser = await this.createUser(user);
+
+        await this.authEventEmitter.emitCaregiverCreated(createdUser);
     }
 
     private async createUser(user: User): Promise<User> {

@@ -27,5 +27,5 @@ export class UserModel implements User {
     @Column()
     public avatar?: string;
 
-    public metadata: UserMetadata;
+    public metadata?: UserMetadata;
 }

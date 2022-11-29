@@ -23,5 +23,5 @@ export interface User {
 
     avatar?: string;
 
-    metadata: UserMetadata;
+    metadata?: UserMetadata;
 }

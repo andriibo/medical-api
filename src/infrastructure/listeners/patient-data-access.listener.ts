@@ -45,6 +45,11 @@ export class PatientDataAccessListener {
         await this.accessToPatientBindingService.bindAccessToPatient(patient);
     }
 
+    @OnEvent('caregiver-created')
+    public async handleCaregiverCreated(caregiver: User): Promise<void> {
+        await this.accessToGrantedUserBindingService.bindAccessToGrantedUser(caregiver);
+    }
+
     @OnEvent('data-access-deleted-by-patient')
     public async handleAccessDeletedByPatient(patient: User, email: string): Promise<void> {
         await this.mailService.sendNotificationThatPatientDeletedDataAccess(patient, email);
