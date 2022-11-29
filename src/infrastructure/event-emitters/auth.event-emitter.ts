@@ -16,6 +16,10 @@ export class AuthEventEmitter implements IAuthEventEmitter {
         await this.eventEmitter.emit('patient-created', patient);
     }
 
+    public async emitCaregiverCreated(caregiver: User): Promise<void> {
+        await this.eventEmitter.emit('caregiver-created', caregiver);
+    }
+
     public async emitUserActivated(dto: ConfirmSignUpUserDto): Promise<void> {
         await this.eventEmitter.emit('user-activated', dto);
     }

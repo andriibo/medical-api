@@ -24,6 +24,7 @@ import {Auth} from 'presentation/guards';
 import {ChangeEmailDto} from 'domain/dtos/request/auth/change-email.dto';
 import {ConfirmChangeEmailDto} from 'domain/dtos/request/auth/confirm-change-email.dto';
 import {ChangePasswordDto} from 'domain/dtos/request/auth/change-password.dto';
+import {SignUpCaregiverView} from 'views/request/auth/sign-up-caregiver.view';
 
 @Controller()
 @ApiTags('Auth')
@@ -71,6 +72,15 @@ export class AuthController {
         const useCase = this.authUseCasesFactory.createSignUpUseCase();
 
         await useCase.signUpPatient(requestBody);
+    }
+
+    @Post('caregiver/sign-up')
+    @HttpCode(HttpStatus.CREATED)
+    @ApiResponse({status: HttpStatus.CREATED})
+    public async signUpCaregiver(@Body() requestBody: SignUpCaregiverView): Promise<void> {
+        const useCase = this.authUseCasesFactory.createSignUpUseCase();
+
+        await useCase.signUpCaregiver(requestBody);
     }
 
     @Post('confirm-sign-up')

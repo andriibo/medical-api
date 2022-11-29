@@ -6,6 +6,8 @@ export interface IAuthEventEmitter {
 
     emitPatientCreated(patient: User): void;
 
+    emitCaregiverCreated(caregiver: User): void;
+
     emitUserActivated(dto: ConfirmSignUpUserDto): void;
 }
 
