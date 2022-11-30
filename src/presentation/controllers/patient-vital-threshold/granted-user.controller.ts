@@ -20,7 +20,7 @@ export class GrantedUserController {
         summary: 'Deprecated endpoint. Use GET "/patient-vital-thresholds/{patientUserId}" instead.',
     })
     @ApiResponse({status: HttpStatus.OK, type: [ThresholdView]})
-    public async getDoctorVitalThresholds(
+    public async getVitalThresholdsDeprecated(
         @Param('patientUserId', ParseUUIDPipe) patientUserId: string,
     ): Promise<ThresholdDto[]> {
         return await this.getVitalThresholds(patientUserId);
