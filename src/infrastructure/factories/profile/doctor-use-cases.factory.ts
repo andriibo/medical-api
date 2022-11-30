@@ -47,6 +47,7 @@ export class DoctorUseCasesFactory {
             this.authedUserService,
             this.patientMetadataRepository,
             this.patientDataAccessSpecification,
+            this.fileUrlService,
         );
     }
 
