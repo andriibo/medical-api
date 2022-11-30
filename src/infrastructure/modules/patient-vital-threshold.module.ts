@@ -1,5 +1,5 @@
 import {Module} from '@nestjs/common';
-import {GrantedUserController, PatientController} from 'controllers/patient-vital-threshold';
+import {DoctorController, PatientController} from 'controllers/patient-vital-threshold';
 import {IPatientVitalThresholdRepository} from 'app/modules/patient-vital-threshold/repositories';
 import {PatientVitalThresholdRepository} from 'infrastructure/repositories';
 import {TypeOrmModule} from '@nestjs/typeorm';
@@ -11,10 +11,11 @@ import {PatientDataAccessSpecification} from 'app/modules/patient-data-access/sp
 import {IPatientVitalThresholdEntityMapper} from 'app/modules/patient-vital-threshold/mappers/patient-vital-threshold-entity.mapper';
 import {PatientVitalThresholdEntityMapper} from 'infrastructure/mappers/patient-vital-threshold-model.mapper';
 import {PatientVitalThresholdsDtoMapper} from 'app/modules/patient-vital-threshold/mappers/patient-vital-thresholds-dto.mapper';
+import {GrantedUserController} from 'controllers/patient-vital-threshold/granted-user.controller';
 
 @Module({
     imports: [TypeOrmModule.forFeature([PatientVitalThresholdModel]), AuthModule, PatientDataAccessModule],
-    controllers: [GrantedUserController, PatientController],
+    controllers: [DoctorController, PatientController, GrantedUserController],
     providers: [
         DoctorUseCasesFactory,
         PatientUseCasesFactory,
