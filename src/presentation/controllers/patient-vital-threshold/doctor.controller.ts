@@ -29,8 +29,8 @@ import {ThresholdView} from 'views/response/patient-vital-threshold/threshold.vi
 export class DoctorController {
     public constructor(private readonly doctorUseCasesFactory: DoctorUseCasesFactory) {}
 
-    @Roles('Caregiver', 'Doctor')
-    @Get('/patient-vital-thresholds/:patientUserId')
+    @Roles('Doctor')
+    @Get('patient-vital-thresholds/:patientUserId')
     @HttpCode(HttpStatus.OK)
     @HttpCode(HttpStatus.BAD_REQUEST)
     @ApiOperation({
