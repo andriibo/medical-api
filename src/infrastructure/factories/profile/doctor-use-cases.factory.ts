@@ -29,12 +29,7 @@ export class DoctorUseCasesFactory {
     ) {}
 
     public createGetDoctorProfileUseCase(): DoctorProfileUseCase {
-        return new DoctorProfileUseCase(
-            this.userRepository,
-            this.authedUserService,
-            this.doctorMetadataRepository,
-            this.fileUrlService,
-        );
+        return new DoctorProfileUseCase(this.authedUserService, this.doctorMetadataRepository, this.fileUrlService);
     }
 
     public createUpdateDoctorProfileUseCase(): UpdateDoctorProfileUseCase {
