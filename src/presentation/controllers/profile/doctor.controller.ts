@@ -12,13 +12,13 @@ import {
 import {ApiBearerAuth, ApiForbiddenResponse, ApiResponse, ApiTags, ApiUnauthorizedResponse} from '@nestjs/swagger';
 import {Roles} from 'presentation/guards';
 import {DoctorView} from 'presentation/views/response/user';
-import {PatientView} from 'presentation/views/response/user';
 import {DoctorUseCasesFactory} from 'infrastructure/factories/profile';
 import {DoctorDto} from 'domain/dtos/response/profile/doctor.dto';
 import {PatientDto} from 'domain/dtos/response/profile/patient.dto';
 import {UpdateDoctorProfileView} from 'views/request/profile/update-doctor-profile.view';
 import {MyPatientView} from 'views/response/profile/my-patient.view';
 import {MyPatientDto} from 'domain/dtos/response/profile/my-patient.dto';
+import {PatientDetailsView} from 'views/response/profile/patient-details.view';
 
 @Controller('doctor')
 @ApiBearerAuth()
@@ -50,7 +50,7 @@ export class DoctorController {
     @Get('patient-profile/:patientUserId')
     @HttpCode(HttpStatus.OK)
     @HttpCode(HttpStatus.BAD_REQUEST)
-    @ApiResponse({status: HttpStatus.OK, type: PatientView})
+    @ApiResponse({status: HttpStatus.OK, type: PatientDetailsView})
     public async getPatientProfile(@Param('patientUserId', ParseUUIDPipe) patientUserId: string): Promise<PatientDto> {
         const useCase = this.doctorUseCasesFactory.createGetPatientProfileUseCase();
 
