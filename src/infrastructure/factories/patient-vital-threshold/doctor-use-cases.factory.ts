@@ -3,7 +3,6 @@ import {
     UpdateThresholdsUseCase,
     IDtoPropToThresholdNameMap,
     DtoPropToThresholdNameMaps,
-    ThresholdListUseCase,
 } from 'app/modules/patient-vital-threshold/use-cases/doctor';
 import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service';
 import {IPatientVitalThresholdRepository} from 'app/modules/patient-vital-threshold/repositories';
@@ -26,16 +25,6 @@ export class DoctorUseCasesFactory {
         @Inject(PatientVitalThresholdsDtoMapper)
         private readonly patientVitalThresholdsDtoMapper: PatientVitalThresholdsDtoMapper,
     ) {}
-
-    public createPatientVitalThresholdListUseCase(): ThresholdListUseCase {
-        return new ThresholdListUseCase(
-            this.authedUserService,
-            this.userRepository,
-            this.patientVitalThresholdRepository,
-            this.patientVitalThresholdSpecification,
-            this.patientVitalThresholdsDtoMapper,
-        );
-    }
 
     public createUpdateHeartRateUseCase(): UpdateThresholdsUseCase {
         return this.createUpdateThresholdUseCase(DtoPropToThresholdNameMaps.heartRate);
