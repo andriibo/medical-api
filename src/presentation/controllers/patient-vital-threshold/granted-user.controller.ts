@@ -23,14 +23,14 @@ import {DoctorUseCasesFactory} from 'infrastructure/factories/patient-vital-thre
 import {ThresholdDto} from 'domain/dtos/response/patient-vital-threshold/threshold.dto';
 import {ThresholdView} from 'views/response/patient-vital-threshold/threshold.view';
 
-@Controller('doctor')
+@Controller()
 @ApiBearerAuth()
 @ApiTags('Patient Vital Threshold')
-export class DoctorController {
+export class GrantedUserController {
     public constructor(private readonly doctorUseCasesFactory: DoctorUseCasesFactory) {}
 
-    @Roles('Doctor')
-    @Get('patient-vital-thresholds/:patientUserId')
+    @Roles('Caregiver', 'Doctor')
+    @Get('/patient-vital-thresholds/:patientUserId')
     @HttpCode(HttpStatus.OK)
     @HttpCode(HttpStatus.BAD_REQUEST)
     @ApiResponse({status: HttpStatus.OK, type: [ThresholdView]})
@@ -47,7 +47,7 @@ export class DoctorController {
     }
 
     @Roles('Doctor')
-    @Patch('blood-pressure/:patientUserId')
+    @Patch('doctor/blood-pressure/:patientUserId')
     @HttpCode(HttpStatus.OK)
     @HttpCode(HttpStatus.BAD_REQUEST)
     @ApiResponse({status: HttpStatus.OK})
@@ -65,7 +65,7 @@ export class DoctorController {
     }
 
     @Roles('Doctor')
-    @Patch('heart-rate/:patientUserId')
+    @Patch('doctor/heart-rate/:patientUserId')
     @HttpCode(HttpStatus.OK)
     @HttpCode(HttpStatus.BAD_REQUEST)
     @ApiResponse({status: HttpStatus.OK})
@@ -83,7 +83,7 @@ export class DoctorController {
     }
 
     @Roles('Doctor')
-    @Patch('mean-arterial-pressure/:patientUserId')
+    @Patch('doctor/mean-arterial-pressure/:patientUserId')
     @HttpCode(HttpStatus.OK)
     @HttpCode(HttpStatus.BAD_REQUEST)
     @ApiResponse({status: HttpStatus.OK})
@@ -101,7 +101,7 @@ export class DoctorController {
     }
 
     @Roles('Doctor')
-    @Patch('oxygen-saturation/:patientUserId')
+    @Patch('doctor/oxygen-saturation/:patientUserId')
     @HttpCode(HttpStatus.OK)
     @HttpCode(HttpStatus.BAD_REQUEST)
     @ApiResponse({status: HttpStatus.OK})
@@ -119,7 +119,7 @@ export class DoctorController {
     }
 
     @Roles('Doctor')
-    @Patch('respiration-rate/:patientUserId')
+    @Patch('doctor/respiration-rate/:patientUserId')
     @HttpCode(HttpStatus.OK)
     @HttpCode(HttpStatus.BAD_REQUEST)
     @ApiResponse({status: HttpStatus.OK})
@@ -137,7 +137,7 @@ export class DoctorController {
     }
 
     @Roles('Doctor')
-    @Patch('temperature/:patientUserId')
+    @Patch('doctor/temperature/:patientUserId')
     @HttpCode(HttpStatus.OK)
     @HttpCode(HttpStatus.BAD_REQUEST)
     @ApiResponse({status: HttpStatus.OK})
