@@ -26,7 +26,7 @@ export class DataAccessListUseCase {
 
         return items.map((item) => {
             const dto = DataAccessDto.fromPatientDataAccess(item);
-            const user = UserDto.fromUser(indexedUsers[item.grantedUserId]);
+            const user = UserDto.fromUser(indexedUsers[item.patientUserId]);
             user.avatar = this.fileUrlService.createUrlToUserAvatar(user.avatar);
             dto.requestedUser = user;
 
