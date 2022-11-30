@@ -22,12 +22,7 @@ export class PatientUseCasesFactory {
     ) {}
 
     public createGetPatientProfileUseCase(): PatientProfileUseCase {
-        return new PatientProfileUseCase(
-            this.userRepository,
-            this.authedUserService,
-            this.patientMetadataRepository,
-            this.fileUrlService,
-        );
+        return new PatientProfileUseCase(this.authedUserService, this.patientMetadataRepository, this.fileUrlService);
     }
 
     public createUpdatePatientProfileUseCase(): UpdatePatientProfileUseCase {

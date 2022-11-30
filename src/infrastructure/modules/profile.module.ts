@@ -16,6 +16,8 @@ import {S3Service} from 'infrastructure/aws/s3/s3.service';
 import {IUserAvatarService} from 'app/modules/profile/services/user-avatar.service';
 import {IFileNameService} from 'app/modules/profile/services/file-name.service';
 import {FileNameService} from 'infrastructure/services/file-name.service';
+import {CaregiverController} from 'controllers/profile/caregiver.controller';
+import {CaregiverUseCasesFactory} from 'infrastructure/factories/profile/caregiver-use-cases.factory';
 
 @Module({
     imports: [
@@ -23,11 +25,12 @@ import {FileNameService} from 'infrastructure/services/file-name.service';
         AuthModule,
         PatientDataAccessModule,
     ],
-    controllers: [PatientController, DoctorController, AvatarController],
+    controllers: [PatientController, DoctorController, AvatarController, CaregiverController],
     providers: [
         DoctorUseCasesFactory,
         PatientUseCasesFactory,
         UserAvatarUseCasesFactory,
+        CaregiverUseCasesFactory,
         {
             provide: IPatientMetadataRepository,
             useClass: PatientMetadataRepository,
