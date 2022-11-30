@@ -22,6 +22,8 @@ import {AccessToRegisteredPatientService} from 'app/modules/patient-data-access/
 import {AccessForUnregisteredDoctorService} from 'app/modules/patient-data-access/services/access-for-unregistered-doctor.service';
 import {AccessToUnregisteredPatientService} from 'app/modules/patient-data-access/services/access-to-unregistered-patient.service';
 import {AccessToPatientBindingService} from 'app/modules/patient-data-access/services/access-to-patient-binding.service';
+import {IFileUrlService} from 'app/modules/profile/services/file-url.service';
+import {FileUrlService} from 'infrastructure/services/file-url.service';
 
 @Module({
     imports: [TypeOrmModule.forFeature([PatientDataAccessModel]), MailModule, AuthModule],
@@ -42,6 +44,10 @@ import {AccessToPatientBindingService} from 'app/modules/patient-data-access/ser
         {
             provide: IPatientDataAccessEventEmitter,
             useClass: PatientDataAccessEventEmitter,
+        },
+        {
+            provide: IFileUrlService,
+            useClass: FileUrlService,
         },
         {
             provide: PatientDataAccessSpecification,

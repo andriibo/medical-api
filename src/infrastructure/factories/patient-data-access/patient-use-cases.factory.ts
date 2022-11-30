@@ -13,6 +13,7 @@ import {DeleteDataAccessByPatientService} from 'app/modules/patient-data-access/
 import {AccessForUnregisteredDoctorService} from 'app/modules/patient-data-access/services/access-for-unregistered-doctor.service';
 import {AccessForRegisteredDoctorService} from 'app/modules/patient-data-access/services/access-for-registered-doctor.service';
 import {RefuseDataAccessUseCase} from 'app/modules/patient-data-access/use-cases/patient/refuse-data-access.use-case';
+import {IFileUrlService} from 'app/modules/profile/services/file-url.service';
 
 @Injectable()
 export class PatientUseCasesFactory {
@@ -29,6 +30,7 @@ export class PatientUseCasesFactory {
         private readonly accessForUnregisteredDoctorService: AccessForUnregisteredDoctorService,
         @Inject(DeleteDataAccessByPatientService)
         private readonly deleteDataAccessByPatientService: DeleteDataAccessByPatientService,
+        @Inject(IFileUrlService) private readonly fileUrlService: IFileUrlService,
     ) {}
 
     public createInitiateDataAccessUseCase(): InitiateDataAccessUseCase {
@@ -57,7 +59,12 @@ export class PatientUseCasesFactory {
     }
 
     public createDataAccessListUseCase(): DataAccessListUseCase {
-        return new DataAccessListUseCase(this.userRepository, this.patientDataAccessRepository, this.authedUserService);
+        return new DataAccessListUseCase(
+            this.userRepository,
+            this.patientDataAccessRepository,
+            this.authedUserService,
+            this.fileUrlService,
+        );
     }
 
     public createDeleteDataAccessUseCase(): DeleteDataAccessUseCase {
