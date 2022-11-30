@@ -2,6 +2,7 @@ import {User} from 'domain/entities/user.entity';
 import {IUserProfileMapper} from 'app/modules/profile/mappers/user-profile.mapper';
 import {UpdateDoctorProfileDto, UpdatePatientProfileDto} from 'domain/dtos/request/profile';
 import {DoctorMetadata, PatientMetadata} from 'domain/entities';
+import {UpdateCaregiverProfileDto} from 'domain/dtos/request/profile/update-caregiver-profile.dto';
 
 export class UserProfileMapper implements IUserProfileMapper {
     public mapByUpdateDoctorProfileDto(dto: UpdateDoctorProfileDto, user: User, metadata: DoctorMetadata): User {
@@ -27,6 +28,14 @@ export class UserProfileMapper implements IUserProfileMapper {
         metadata.weight = dto.weight;
 
         user.metadata = metadata;
+
+        return user;
+    }
+
+    public mapByUpdateCaregiverProfileDto(dto: UpdateCaregiverProfileDto, user: User): User {
+        user.firstName = dto.firstName;
+        user.lastName = dto.lastName;
+        user.phone = dto.phone;
 
         return user;
     }
