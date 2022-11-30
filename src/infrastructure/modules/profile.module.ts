@@ -18,6 +18,8 @@ import {IFileNameService} from 'app/modules/profile/services/file-name.service';
 import {FileNameService} from 'infrastructure/services/file-name.service';
 import {CaregiverController} from 'controllers/profile/caregiver.controller';
 import {CaregiverUseCasesFactory} from 'infrastructure/factories/profile/caregiver-use-cases.factory';
+import {GrantedUserController} from 'controllers/profile/granted-user.controller';
+import {GrantedUserUseCasesFactory} from 'infrastructure/factories/profile/granted-user-use-cases.factory';
 
 @Module({
     imports: [
@@ -25,12 +27,13 @@ import {CaregiverUseCasesFactory} from 'infrastructure/factories/profile/caregiv
         AuthModule,
         PatientDataAccessModule,
     ],
-    controllers: [PatientController, DoctorController, AvatarController, CaregiverController],
+    controllers: [PatientController, DoctorController, AvatarController, CaregiverController, GrantedUserController],
     providers: [
         DoctorUseCasesFactory,
         PatientUseCasesFactory,
         UserAvatarUseCasesFactory,
         CaregiverUseCasesFactory,
+        GrantedUserUseCasesFactory,
         {
             provide: IPatientMetadataRepository,
             useClass: PatientMetadataRepository,
