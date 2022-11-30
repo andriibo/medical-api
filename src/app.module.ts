@@ -20,6 +20,7 @@ import {
     PatientMedicationModule,
     PatientVitalThresholdModule,
     WebsocketModule,
+    FileModule,
 } from 'infrastructure/modules';
 import {AssignUserMiddleware} from 'presentation/middlewares/assign-user.middleware';
 import {EventEmitterModule} from '@nestjs/event-emitter';
@@ -40,6 +41,7 @@ const APP_MODULES_IMPORT = [
     PatientMedicationModule,
     PatientVitalThresholdModule,
     WebsocketModule,
+    FileModule,
 ];
 
 const GUARDS = [AuthGuard, RolesGuard];
