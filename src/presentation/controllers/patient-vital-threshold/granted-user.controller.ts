@@ -23,13 +23,7 @@ export class GrantedUserController {
     public async getDoctorVitalThresholds(
         @Param('patientUserId', ParseUUIDPipe) patientUserId: string,
     ): Promise<ThresholdDto[]> {
-        const useCase = this.grantedUserUseCasesFactory.createPatientVitalThresholdListUseCase();
-
-        try {
-            return await useCase.getList(patientUserId);
-        } catch (error) {
-            throw new BadRequestException(error.message);
-        }
+        return await this.getVitalThresholds(patientUserId);
     }
 
     @Roles('Caregiver', 'Doctor')
