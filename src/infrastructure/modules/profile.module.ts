@@ -13,6 +13,8 @@ import {UserAvatarUseCasesFactory} from 'infrastructure/factories/user-avatar-us
 import {AvatarController} from 'controllers/profile/avatar.controller';
 import {CaregiverController} from 'controllers/profile/caregiver.controller';
 import {CaregiverUseCasesFactory} from 'infrastructure/factories/profile/caregiver-use-cases.factory';
+import {GrantedUserController} from 'controllers/profile/granted-user.controller';
+import {GrantedUserUseCasesFactory} from 'infrastructure/factories/profile/granted-user-use-cases.factory';
 
 @Module({
     imports: [
@@ -21,12 +23,13 @@ import {CaregiverUseCasesFactory} from 'infrastructure/factories/profile/caregiv
         PatientDataAccessModule,
         FileModule,
     ],
-    controllers: [PatientController, DoctorController, AvatarController, CaregiverController],
+    controllers: [PatientController, DoctorController, AvatarController, CaregiverController, GrantedUserController],
     providers: [
         DoctorUseCasesFactory,
         PatientUseCasesFactory,
         UserAvatarUseCasesFactory,
         CaregiverUseCasesFactory,
+        GrantedUserUseCasesFactory,
         {
             provide: IPatientMetadataRepository,
             useClass: PatientMetadataRepository,
