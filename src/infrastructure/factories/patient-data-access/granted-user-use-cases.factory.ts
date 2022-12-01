@@ -7,11 +7,13 @@ import {AccessToUnregisteredPatientService} from 'app/modules/patient-data-acces
 import {
     ApproveDataAccessUseCase,
     DataAccessListUseCase,
+    DeleteDataAccessUseCase,
     InitiateDataAccessUseCase,
     RefuseDataAccessUseCase,
 } from 'app/modules/patient-data-access/use-cases/granted-user';
 import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repositories';
 import {IFileUrlService} from 'app/modules/profile/services/file-url.service';
+import {DeleteDataAccessByDoctorService} from 'app/modules/patient-data-access/services/delete-data-access-by-doctor.service';
 
 @Injectable()
 export class GrantedUserUseCasesFactory {
@@ -27,6 +29,8 @@ export class GrantedUserUseCasesFactory {
         @Inject(PatientDataAccessSpecification)
         private readonly patientDataAccessSpecification: PatientDataAccessSpecification,
         @Inject(IFileUrlService) private readonly fileUrlService: IFileUrlService,
+        @Inject(PatientDataAccessSpecification)
+        private readonly deleteDataAccessByDoctorService: DeleteDataAccessByDoctorService,
     ) {}
 
     public createInitiateDataAccessUseCase(): InitiateDataAccessUseCase {
@@ -60,6 +64,14 @@ export class GrantedUserUseCasesFactory {
             this.patientDataAccessRepository,
             this.authedUserService,
             this.fileUrlService,
+        );
+    }
+
+    public createDeleteDataAccessUseCase(): DeleteDataAccessUseCase {
+        return new DeleteDataAccessUseCase(
+            this.patientDataAccessRepository,
+            this.authedUserService,
+            this.deleteDataAccessByDoctorService,
         );
     }
 }
