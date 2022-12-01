@@ -18,7 +18,7 @@ import {PatientDto} from 'domain/dtos/response/profile/patient.dto';
 import {UpdateDoctorProfileView} from 'views/request/profile/update-doctor-profile.view';
 import {MyPatientView} from 'views/response/profile/my-patient.view';
 import {MyPatientDto} from 'domain/dtos/response/profile/my-patient.dto';
-import {PatientDetailsView} from 'views/response/profile/patient-details.view';
+import {PatientView} from 'presentation/views/response/user';
 
 @Controller('doctor')
 @ApiBearerAuth()
@@ -50,7 +50,7 @@ export class DoctorController {
     @Get('patient-profile/:patientUserId')
     @HttpCode(HttpStatus.OK)
     @HttpCode(HttpStatus.BAD_REQUEST)
-    @ApiResponse({status: HttpStatus.OK, type: PatientDetailsView})
+    @ApiResponse({status: HttpStatus.OK, type: PatientView})
     public async getPatientProfile(@Param('patientUserId', ParseUUIDPipe) patientUserId: string): Promise<PatientDto> {
         const useCase = this.doctorUseCasesFactory.createGetPatientProfileUseCase();
 
