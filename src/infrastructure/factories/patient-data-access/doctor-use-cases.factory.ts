@@ -10,7 +10,6 @@ import {
 import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service';
 import {PatientDataAccessSpecification} from 'app/modules/patient-data-access/specifications/patient-data-access.specification';
 import {DeleteDataAccessByDoctorService} from 'app/modules/patient-data-access/services/delete-data-access-by-doctor.service';
-import {InitiateDataAccessUseCase} from 'app/modules/patient-data-access/use-cases/doctor/initiate-data-access.use-case';
 import {AccessToRegisteredPatientService} from 'app/modules/patient-data-access/services/access-to-registered-patient.service';
 import {AccessToUnregisteredPatientService} from 'app/modules/patient-data-access/services/access-to-unregistered-patient.service';
 import {IFileUrlService} from 'app/modules/profile/services/file-url.service';
@@ -32,15 +31,6 @@ export class DoctorUseCasesFactory {
         private readonly accessToUnregisteredPatientService: AccessToUnregisteredPatientService,
         @Inject(IFileUrlService) private readonly fileUrlService: IFileUrlService,
     ) {}
-
-    public createInitiateDataAccessUseCase(): InitiateDataAccessUseCase {
-        return new InitiateDataAccessUseCase(
-            this.userRepository,
-            this.authedUserService,
-            this.accessToRegisteredPatientService,
-            this.accessToUnregisteredPatientService,
-        );
-    }
 
     public createDataAccessListUseCase(): DataAccessListUseCase {
         return new DataAccessListUseCase(

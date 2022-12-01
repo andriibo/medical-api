@@ -13,13 +13,13 @@ export class InitiateDataAccessUseCase {
     ) {}
 
     public async initiateDataAccess(dto: InitiateDataAccessDto): Promise<void> {
-        const doctor = await this.authedUserService.getUser();
+        const grantedUser = await this.authedUserService.getUser();
         const patient = await this.userRepository.getOneByEmail(dto.email);
 
         if (patient === null) {
-            await this.accessToUnregisteredPatientService.initiateDataAccess(doctor, dto.email);
+            await this.accessToUnregisteredPatientService.initiateDataAccess(grantedUser, dto.email);
         } else {
-            await this.accessToRegisteredPatientService.initiateDataAccess(doctor, patient);
+            await this.accessToRegisteredPatientService.initiateDataAccess(grantedUser, patient);
         }
     }
 }
