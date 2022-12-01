@@ -3,7 +3,7 @@ import {ApiBearerAuth, ApiOperation, ApiResponse, ApiTags} from '@nestjs/swagger
 import {Roles} from 'presentation/guards';
 import {ThresholdDto} from 'domain/dtos/response/patient-vital-threshold/threshold.dto';
 import {ThresholdView} from 'views/response/patient-vital-threshold/threshold.view';
-import {GrantedUserUseCasesFactory} from 'infrastructure/factories/patient-vital-threshold/granted-user-use-cases.factory';
+import {GrantedUserUseCasesFactory} from 'infrastructure/factories/patient-vital-threshold';
 
 @Controller()
 @ApiBearerAuth()
