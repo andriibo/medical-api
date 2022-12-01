@@ -82,7 +82,7 @@ export class GrantedUserController {
     @HttpCode(HttpStatus.BAD_REQUEST)
     @ApiOperation({
         deprecated: true,
-        summary: 'Deprecated endpoint. Use GET "/data-access/approve/{accessId}" instead.',
+        summary: 'Deprecated endpoint. Use PATCH "/data-access/approve/{accessId}" instead.',
     })
     @ApiResponse({status: HttpStatus.OK})
     public async approveDataAccessDeprecated(@Param('accessId', ParseUUIDPipe) accessId: string): Promise<void> {
