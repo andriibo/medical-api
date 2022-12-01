@@ -11,7 +11,6 @@ import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service'
 import {IUserProfileMapper} from 'app/modules/profile/mappers/user-profile.mapper';
 import {PatientDataAccessSpecification} from 'app/modules/patient-data-access/specifications/patient-data-access.specification';
 import {IFileUrlService} from 'app/modules/profile/services/file-url.service';
-import {PatientListProfileUseCase} from 'app/modules/profile/use-cases/doctor/patient-list-profile.use-case';
 
 @Injectable()
 export class DoctorUseCasesFactory {
@@ -48,15 +47,6 @@ export class DoctorUseCasesFactory {
             this.patientMetadataRepository,
             this.patientDataAccessSpecification,
             this.fileUrlService,
-        );
-    }
-
-    public createPatientListUseCase(): PatientListProfileUseCase {
-        return new PatientListProfileUseCase(
-            this.authedUserService,
-            this.patientDataAccessRepository,
-            this.patientMetadataRepository,
-            this.userRepository,
         );
     }
 }
