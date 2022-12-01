@@ -10,6 +10,7 @@ import {IPatientDataAccessEntityMapper} from 'app/modules/patient-data-access/ma
 import {PatientDataAccessEntityMapper} from 'infrastructure/mappers/patient-data-access-model.mapper';
 import {AuthModule} from 'infrastructure/modules/auth.module';
 import {MailModule} from 'infrastructure/modules/mail.module';
+import {FileModule} from 'infrastructure/modules/file.module';
 import {PatientDataAccessSpecification} from 'app/modules/patient-data-access/specifications/patient-data-access.specification';
 import {AccessForRegisteredDoctorService} from 'app/modules/patient-data-access/services/access-for-registered-doctor.service';
 import {AccessToGrantedUserBindingService} from 'app/modules/patient-data-access/services/access-to-granted-user-binding.service';
@@ -22,11 +23,9 @@ import {AccessToRegisteredPatientService} from 'app/modules/patient-data-access/
 import {AccessForUnregisteredDoctorService} from 'app/modules/patient-data-access/services/access-for-unregistered-doctor.service';
 import {AccessToUnregisteredPatientService} from 'app/modules/patient-data-access/services/access-to-unregistered-patient.service';
 import {AccessToPatientBindingService} from 'app/modules/patient-data-access/services/access-to-patient-binding.service';
-import {IFileUrlService} from 'app/modules/profile/services/file-url.service';
-import {FileUrlService} from 'infrastructure/services/file-url.service';
 
 @Module({
-    imports: [TypeOrmModule.forFeature([PatientDataAccessModel]), MailModule, AuthModule],
+    imports: [TypeOrmModule.forFeature([PatientDataAccessModel]), MailModule, AuthModule, FileModule],
     exports: [IPatientDataAccessRepository, PatientDataAccessSpecification],
     controllers: [PatientController, DoctorController],
     providers: [
@@ -44,10 +43,6 @@ import {FileUrlService} from 'infrastructure/services/file-url.service';
         {
             provide: IPatientDataAccessEventEmitter,
             useClass: PatientDataAccessEventEmitter,
-        },
-        {
-            provide: IFileUrlService,
-            useClass: FileUrlService,
         },
         {
             provide: PatientDataAccessSpecification,
