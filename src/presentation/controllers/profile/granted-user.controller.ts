@@ -31,7 +31,7 @@ export class GrantedUserController {
         return await this.getMyPatients();
     }
 
-    @Roles('Doctor')
+    @Roles('Caregiver', 'Doctor')
     @Get('profile/my-patients')
     @ApiResponse({status: HttpStatus.OK, type: [MyPatientView]})
     @ApiUnauthorizedResponse({description: 'Unauthorized.'})
