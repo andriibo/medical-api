@@ -1,11 +1,7 @@
 import {Inject, Injectable} from '@nestjs/common';
 import {IUserRepository} from 'app/modules/auth/repositories';
 import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repositories';
-import {
-    ApproveDataAccessUseCase,
-    DataAccessListUseCase,
-    DeleteDataAccessUseCase,
-} from 'app/modules/patient-data-access/use-cases/doctor';
+import {DataAccessListUseCase, DeleteDataAccessUseCase} from 'app/modules/patient-data-access/use-cases/doctor';
 import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service';
 import {PatientDataAccessSpecification} from 'app/modules/patient-data-access/specifications/patient-data-access.specification';
 import {DeleteDataAccessByDoctorService} from 'app/modules/patient-data-access/services/delete-data-access-by-doctor.service';
@@ -37,14 +33,6 @@ export class DoctorUseCasesFactory {
             this.patientDataAccessRepository,
             this.authedUserService,
             this.fileUrlService,
-        );
-    }
-
-    public createApproveDataAccessUseCase(): ApproveDataAccessUseCase {
-        return new ApproveDataAccessUseCase(
-            this.patientDataAccessRepository,
-            this.authedUserService,
-            this.patientDataAccessSpecification,
         );
     }
 

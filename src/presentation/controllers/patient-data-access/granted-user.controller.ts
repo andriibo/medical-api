@@ -75,4 +75,32 @@ export class GrantedUserController {
             throw new BadRequestException(error.message);
         }
     }
+
+    @Roles('Doctor')
+    @Patch('doctor/data-access/approve/:accessId')
+    @HttpCode(HttpStatus.OK)
+    @HttpCode(HttpStatus.BAD_REQUEST)
+    @ApiOperation({
+        deprecated: true,
+        summary: 'Deprecated endpoint. Use GET "/data-access/approve/{accessId}" instead.',
+    })
+    @ApiResponse({status: HttpStatus.OK})
+    public async approveDataAccessDeprecated(@Param('accessId', ParseUUIDPipe) accessId: string): Promise<void> {
+        return await this.approveDataAccess(accessId);
+    }
+
+    @Roles('Caregiver', 'Doctor')
+    @Patch('data-access/approve/:accessId')
+    @HttpCode(HttpStatus.OK)
+    @HttpCode(HttpStatus.BAD_REQUEST)
+    @ApiResponse({status: HttpStatus.OK})
+    public async approveDataAccess(@Param('accessId', ParseUUIDPipe) accessId: string): Promise<void> {
+        const useCase = this.grantedUserUseCasesFactory.createApproveDataAccessUseCase();
+
+        try {
+            await useCase.approveDataAccess(accessId);
+        } catch (error) {
+            throw new BadRequestException(error.message);
+        }
+    }
 }

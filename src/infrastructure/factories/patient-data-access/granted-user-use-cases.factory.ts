@@ -5,6 +5,7 @@ import {PatientDataAccessSpecification} from 'app/modules/patient-data-access/sp
 import {AccessToRegisteredPatientService} from 'app/modules/patient-data-access/services/access-to-registered-patient.service';
 import {AccessToUnregisteredPatientService} from 'app/modules/patient-data-access/services/access-to-unregistered-patient.service';
 import {
+    ApproveDataAccessUseCase,
     InitiateDataAccessUseCase,
     RefuseDataAccessUseCase,
 } from 'app/modules/patient-data-access/use-cases/granted-user';
@@ -36,6 +37,14 @@ export class GrantedUserUseCasesFactory {
 
     public createRefuseDataAccessUseCase(): RefuseDataAccessUseCase {
         return new RefuseDataAccessUseCase(
+            this.patientDataAccessRepository,
+            this.authedUserService,
+            this.patientDataAccessSpecification,
+        );
+    }
+
+    public createApproveDataAccessUseCase(): ApproveDataAccessUseCase {
+        return new ApproveDataAccessUseCase(
             this.patientDataAccessRepository,
             this.authedUserService,
             this.patientDataAccessSpecification,
