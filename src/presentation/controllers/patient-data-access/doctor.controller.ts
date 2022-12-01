@@ -32,21 +32,6 @@ export class DoctorController {
     }
 
     @Roles('Doctor')
-    @Patch('data-access/refuse/:accessId')
-    @HttpCode(HttpStatus.OK)
-    @HttpCode(HttpStatus.BAD_REQUEST)
-    @ApiResponse({status: HttpStatus.OK})
-    public async refuseDataAccess(@Param('accessId', ParseUUIDPipe) accessId: string): Promise<void> {
-        const useCase = this.doctorUseCasesFactory.createRefuseDataAccessUseCase();
-
-        try {
-            await useCase.refuseDataAccess(accessId);
-        } catch (error) {
-            throw new BadRequestException(error.message);
-        }
-    }
-
-    @Roles('Doctor')
     @Patch('data-access/approve/:accessId')
     @HttpCode(HttpStatus.OK)
     @HttpCode(HttpStatus.BAD_REQUEST)
