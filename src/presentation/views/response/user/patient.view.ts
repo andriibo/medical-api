@@ -3,6 +3,9 @@ import {PatientDto} from 'domain/dtos/response/profile/patient.dto';
 
 export class PatientView extends PatientDto {
     @ApiProperty()
+    public id: string;
+
+    @ApiProperty()
     public email: string;
 
     @ApiProperty()
