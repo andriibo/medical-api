@@ -26,7 +26,7 @@ export class GrantedUserController {
     @HttpCode(HttpStatus.BAD_REQUEST)
     @ApiOperation({
         deprecated: true,
-        summary: 'Deprecated endpoint. Use GET "/data-access/initiate" instead.',
+        summary: 'Deprecated endpoint. Use POST "/data-access/initiate" instead.',
     })
     @ApiResponse({status: HttpStatus.CREATED})
     public async initiateDataAccessDeprecated(@Body() requestBody: InitiateDataAccessView): Promise<void> {
