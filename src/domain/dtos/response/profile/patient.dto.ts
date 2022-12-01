@@ -2,6 +2,8 @@ import {User} from 'domain/entities/user.entity';
 import {PatientMetadata} from 'domain/entities';
 
 export class PatientDto {
+    public id?: string;
+
     public email: string;
 
     public firstName: string;
@@ -26,6 +28,7 @@ export class PatientDto {
         metadata: PatientMetadata,
     ): InstanceType<T> {
         const dto = new this() as InstanceType<T>;
+        dto.id = user.id;
         dto.email = user.email;
         dto.firstName = user.firstName;
         dto.lastName = user.lastName;

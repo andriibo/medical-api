@@ -12,11 +12,11 @@ import {
 import {ApiBearerAuth, ApiResponse, ApiTags} from '@nestjs/swagger';
 import {Roles} from 'presentation/guards';
 import {DoctorView} from 'presentation/views/response/user';
-import {PatientView} from 'presentation/views/response/user';
 import {DoctorUseCasesFactory} from 'infrastructure/factories/profile';
 import {DoctorDto} from 'domain/dtos/response/profile/doctor.dto';
 import {PatientDto} from 'domain/dtos/response/profile/patient.dto';
 import {UpdateDoctorProfileView} from 'views/request/profile/update-doctor-profile.view';
+import {PatientView} from 'presentation/views/response/user';
 
 @Controller('doctor')
 @ApiBearerAuth()

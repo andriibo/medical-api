@@ -4,6 +4,7 @@ import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service'
 import {PatientDto} from 'domain/dtos/response/profile/patient.dto';
 import {PatientDataAccessSpecification} from 'app/modules/patient-data-access/specifications/patient-data-access.specification';
 import {EntityNotFoundError} from 'app/errors/entity-not-found.error';
+import {IFileUrlService} from 'app/modules/profile/services/file-url.service';
 
 export class PatientProfileUseCase {
     public constructor(
@@ -11,6 +12,7 @@ export class PatientProfileUseCase {
         private readonly authedUserService: IAuthedUserService,
         private readonly patientMetadataRepository: IPatientMetadataRepository,
         private readonly patientDataAccessSpecification: PatientDataAccessSpecification,
+        private readonly fileUrlService: IFileUrlService,
     ) {}
 
     public async getProfileInfo(patientUserId: string): Promise<PatientDto> {
@@ -25,6 +27,9 @@ export class PatientProfileUseCase {
 
         const patientMetadata = await this.patientMetadataRepository.getOneById(patient.id);
 
-        return PatientDto.fromUserAndPatientMetadata(patient, patientMetadata);
+        const dto = PatientDto.fromUserAndPatientMetadata(patient, patientMetadata);
+        dto.avatar = this.fileUrlService.createUrlToUserAvatar(dto.avatar);
+
+        return dto;
     }
 }
