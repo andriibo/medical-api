@@ -29,7 +29,7 @@ export class GrantedUserUseCasesFactory {
         @Inject(PatientDataAccessSpecification)
         private readonly patientDataAccessSpecification: PatientDataAccessSpecification,
         @Inject(IFileUrlService) private readonly fileUrlService: IFileUrlService,
-        @Inject(PatientDataAccessSpecification)
+        @Inject(DeleteDataAccessByDoctorService)
         private readonly deleteDataAccessByDoctorService: DeleteDataAccessByDoctorService,
     ) {}
 
