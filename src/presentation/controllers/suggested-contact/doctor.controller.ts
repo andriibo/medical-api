@@ -1,4 +1,4 @@
-import {Controller, HttpStatus, BadRequestException, Post, Body, Delete, Param, ParseUUIDPipe} from '@nestjs/common';
+import {Controller, HttpStatus, BadRequestException, Delete, Param, ParseUUIDPipe} from '@nestjs/common';
 import {
     ApiBadRequestResponse,
     ApiBearerAuth,
@@ -9,7 +9,6 @@ import {
     ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 import {Roles} from 'presentation/guards';
-import {CreateSuggestedContactView} from 'views/request/suggested-contact';
 import {DoctorUseCasesFactory} from 'infrastructure/factories/suggested-contact';
 
 @Controller('doctor')
@@ -17,23 +16,6 @@ import {DoctorUseCasesFactory} from 'infrastructure/factories/suggested-contact'
 @ApiTags('Suggested Contact')
 export class DoctorController {
     public constructor(private readonly doctorUseCasesFactory: DoctorUseCasesFactory) {}
-
-    @Roles('Doctor')
-    @Post('suggested-contact')
-    @ApiResponse({status: HttpStatus.CREATED, description: 'Created.'})
-    @ApiBadRequestResponse({description: 'Bad request.'})
-    @ApiUnauthorizedResponse({description: 'Unauthorized.'})
-    @ApiForbiddenResponse({description: 'Forbidden.'})
-    @ApiNotFoundResponse({description: 'Not Found.'})
-    public async createSuggestedContact(@Body() requestBody: CreateSuggestedContactView): Promise<void> {
-        const useCase = this.doctorUseCasesFactory.createSuggestedContactUseCase();
-
-        try {
-            await useCase.createSuggestedContact(requestBody);
-        } catch (error) {
-            throw new BadRequestException(error.message);
-        }
-    }
 
     @Roles('Doctor')
     @Delete('suggested-contact/:contactId')
