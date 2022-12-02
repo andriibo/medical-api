@@ -19,6 +19,8 @@ import {
     ForgotPasswordResponse,
     UpdateUserAttributesResponse,
     ResendConfirmationCodeResponse,
+    GetUserCommand,
+    AttributeType,
 } from '@aws-sdk/client-cognito-identity-provider';
 import {ConfigService} from '@nestjs/config';
 import {
@@ -34,6 +36,7 @@ import {
     ForgotPasswordResponseModel,
     ChangeEmailResponseModel,
     ResendConfirmationCodeResultModel,
+    UserAttributesModel,
 } from 'app/modules/auth/models';
 import {IAuthService} from 'app/modules/auth/services/auth.service';
 import * as jwt from 'jsonwebtoken';
@@ -268,6 +271,21 @@ export class CognitoService implements IAuthService {
         }
     }
 
+    public async getUserAttributes(accessToken: string): Promise<UserAttributesModel> {
+        const command = new GetUserCommand({
+            AccessToken: accessToken,
+        });
+
+        try {
+            const result = await this.cognitoClient.send(command);
+
+            return this.getUserAttriburesResult(result.UserAttributes);
+        } catch (error) {
+            console.error(error.message);
+            throw new AuthServiceError(error.message);
+        }
+    }
+
     private getAuthResult(authResult: AuthenticationResultType): AuthResultModel {
         const authResultModel = new AuthResultModel();
         authResultModel.token = authResult.AccessToken;
@@ -386,6 +404,21 @@ export class CognitoService implements IAuthService {
     private isTokenIssuerValid(decodedToken, tokenISS): boolean {
         return decodedToken.iss === tokenISS;
     }
+
+    private getUserAttriburesResult(attributes: AttributeType[]): UserAttributesModel {
+        const userAttributes = new UserAttributesModel();
+        userAttributes.sub = this.getAttributeValueByName(attributes, USER_ATTRIBUTES.USER_SUB);
+        userAttributes.email = this.getAttributeValueByName(attributes, USER_ATTRIBUTES.EMIAL);
+        userAttributes.emailVerified = this.getAttributeValueByName(attributes, USER_ATTRIBUTES.EMIAL_VERIFIED);
+        userAttributes.updatedAt = this.getAttributeValueByName(attributes, USER_ATTRIBUTES.UPDATED_AT);
+
+        return userAttributes;
+    }
+
+    private getAttributeValueByName(attributes: AttributeType[], name: string): string {
+        const attribute = attributes.find((attribute) => attribute.Name === name);
+        return Boolean(attribute) ? attribute.Value : null;
+    }
 }
 
 class USER_ATTRIBUTES {
@@ -393,6 +426,8 @@ class USER_ATTRIBUTES {
     public static readonly EMIAL = 'email';
     public static readonly PASSWORD = 'PASSWORD';
 
+    public static readonly EMIAL_VERIFIED = 'email_verified';
+    public static readonly USER_SUB = 'sub';
     public static readonly UPDATED_AT = 'updated_at';
 }
 

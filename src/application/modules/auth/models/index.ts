@@ -12,6 +12,7 @@ import {ForgotPasswordResponseModel} from './forgot-password-result.model';
 import {IRequestUserModel} from './request-user.model';
 import {ChangeEmailResponseModel} from './change-email-result.model';
 import {ResendConfirmationCodeResultModel} from './resend-confirmation-code-result.model';
+import {UserAttributesModel} from './user-attributes.model';
 
 export {
     ConfirmSignUpModel,
@@ -28,4 +29,5 @@ export {
     ForgotPasswordResponseModel,
     ChangeEmailResponseModel,
     ResendConfirmationCodeResultModel,
+    UserAttributesModel,
 };
