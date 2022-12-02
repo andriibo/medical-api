@@ -1,10 +1,10 @@
 import {Module} from '@nestjs/common';
-import {DoctorController, PatientController} from 'controllers/emergency-contact';
+import {GrantUserController, PatientController} from 'controllers/emergency-contact';
 import {IEmergencyContactRepository} from 'app/modules/emergency-contact/repositories';
 import {EmergencyContactRepository} from 'infrastructure/repositories';
 import {TypeOrmModule} from '@nestjs/typeorm';
 import {EmergencyContactModel} from 'infrastructure/models';
-import {DoctorUseCasesFactory, PatientUseCasesFactory} from 'infrastructure/factories/emergency-contact';
+import {GrantedUserUseCasesFactory, PatientUseCasesFactory} from 'infrastructure/factories/emergency-contact';
 import {IEmergencyContactEntityMapper} from 'app/modules/emergency-contact/mappers/emergency-contact-entity.mapper';
 import {EmergencyContactModelMapper} from 'infrastructure/mappers/emergency-contact-model.mapper';
 import {AuthModule, PatientDataAccessModule} from 'infrastructure/modules';
@@ -13,9 +13,9 @@ import {EmergencyContactSpecification} from 'app/modules/emergency-contact/speci
 @Module({
     imports: [TypeOrmModule.forFeature([EmergencyContactModel]), AuthModule, PatientDataAccessModule],
     exports: [IEmergencyContactRepository, IEmergencyContactEntityMapper, EmergencyContactSpecification],
-    controllers: [DoctorController, PatientController],
+    controllers: [GrantUserController, PatientController],
     providers: [
-        DoctorUseCasesFactory,
+        GrantedUserUseCasesFactory,
         PatientUseCasesFactory,
         EmergencyContactSpecification,
         {
