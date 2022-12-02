@@ -112,7 +112,7 @@ export class GrantedUserController {
     @HttpCode(HttpStatus.OK)
     @ApiOperation({
         deprecated: true,
-        summary: 'Deprecated endpoint. Use GET "/data-access" instead.',
+        summary: 'Deprecated endpoint. Use GET "/data-accesses" instead.',
     })
     @ApiResponse({status: HttpStatus.OK, type: [DataAccessView]})
     public async getDataAccessesDeprecated(): Promise<DataAccessDto[]> {
