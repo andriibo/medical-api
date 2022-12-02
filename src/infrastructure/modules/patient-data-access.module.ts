@@ -1,11 +1,11 @@
 import {Module} from '@nestjs/common';
-import {PatientController, DoctorController} from 'controllers/patient-data-access';
+import {PatientController} from 'controllers/patient-data-access';
 import {IUserRepository} from 'app/modules/auth/repositories';
 import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repositories';
 import {PatientDataAccessRepository} from 'infrastructure/repositories';
 import {TypeOrmModule} from '@nestjs/typeorm';
 import {PatientDataAccessModel} from 'infrastructure/models';
-import {PatientUseCasesFactory, DoctorUseCasesFactory} from 'infrastructure/factories/patient-data-access';
+import {PatientUseCasesFactory} from 'infrastructure/factories/patient-data-access';
 import {IPatientDataAccessEntityMapper} from 'app/modules/patient-data-access/mappers/patient-data-access-entity.mapper';
 import {PatientDataAccessEntityMapper} from 'infrastructure/mappers/patient-data-access-model.mapper';
 import {AuthModule} from 'infrastructure/modules/auth.module';
@@ -29,10 +29,9 @@ import {GrantedUserController} from 'controllers/patient-data-access/granted-use
 @Module({
     imports: [TypeOrmModule.forFeature([PatientDataAccessModel]), MailModule, AuthModule, FileModule],
     exports: [IPatientDataAccessRepository, PatientDataAccessSpecification],
-    controllers: [PatientController, DoctorController, GrantedUserController],
+    controllers: [PatientController, GrantedUserController],
     providers: [
         PatientUseCasesFactory,
-        DoctorUseCasesFactory,
         GrantedUserUseCasesFactory,
         PatientDataAccessListener,
         {
