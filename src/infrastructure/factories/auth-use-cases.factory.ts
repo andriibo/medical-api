@@ -12,6 +12,7 @@ import {
     ResendSignUpCodeUseCase,
 } from 'app/modules/auth/use-cases';
 import {IAuthEventEmitter} from 'app/modules/auth/event-emitters/auth.event-emitter';
+import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service';
 
 @Injectable()
 export class AuthUseCasesFactory {
@@ -20,6 +21,7 @@ export class AuthUseCasesFactory {
         @Inject(IUserRepository) private readonly userRepository: IUserRepository,
         @Inject(IUserEntityMapper) private readonly userEntityMapper: IUserEntityMapper,
         @Inject(IAuthEventEmitter) private readonly authEventEmitter: IAuthEventEmitter,
+        @Inject(IAuthedUserService) private readonly authedUserService: IAuthedUserService,
     ) {}
 
     public createSignUpUseCase(): SignUpUseCase {
@@ -43,7 +45,7 @@ export class AuthUseCasesFactory {
     }
 
     public createChangeEmailUseCase(): ChangeEmailUseCase {
-        return new ChangeEmailUseCase(this.authService);
+        return new ChangeEmailUseCase(this.authService, this.authedUserService);
     }
 
     public createChangePasswordUseCase(): ChangePasswordUseCase {

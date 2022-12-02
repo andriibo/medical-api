@@ -20,4 +20,10 @@ export class AuthedUserService implements IAuthedUserService {
 
         return await this.userRepository.getOneById(tokenClaims.getUserId());
     }
+
+    public async syncUserEmailWithExternalProvider(externalProviderEmail: string): Promise<void> {
+        const user = await this.getUser();
+        user.email = externalProviderEmail;
+        this.userRepository.updateUserAndMetadata(user);
+    }
 }
