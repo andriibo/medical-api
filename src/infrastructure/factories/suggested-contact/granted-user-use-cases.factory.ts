@@ -3,7 +3,11 @@ import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service'
 import {ISuggestedContactRepository} from 'app/modules/suggested-contact/repositories/suggested-contact.repository';
 import {SuggestedContactSpecification} from 'app/modules/suggested-contact/specifications/suggested-contact.specification';
 import {ISuggestedContactEntityMapper} from 'app/modules/suggested-contact/mappers/suggested-contact-entity.mapper';
-import {CreateSuggestedContactUseCase} from 'app/modules/suggested-contact/use-cases/grant-user';
+import {
+    CreateSuggestedContactUseCase,
+    DeleteSuggestedContactUseCase,
+} from 'app/modules/suggested-contact/use-cases/granted-user';
+import {DeleteSuggestedContactByDoctorService} from 'app/modules/suggested-contact/services/delete-suggested-contact-by-doctor.service';
 
 @Injectable()
 export class GrantedUserUseCasesFactory {
@@ -15,6 +19,8 @@ export class GrantedUserUseCasesFactory {
         private readonly suggestedContactEntityMapper: ISuggestedContactEntityMapper,
         @Inject(SuggestedContactSpecification)
         private readonly suggestedContactSpecification: SuggestedContactSpecification,
+        @Inject(DeleteSuggestedContactByDoctorService)
+        private readonly deleteSuggestedContactByDoctorService: DeleteSuggestedContactByDoctorService,
     ) {}
 
     public createSuggestedContactUseCase(): CreateSuggestedContactUseCase {
@@ -23,6 +29,14 @@ export class GrantedUserUseCasesFactory {
             this.suggestedContactRepository,
             this.suggestedContactEntityMapper,
             this.suggestedContactSpecification,
+        );
+    }
+
+    public createDeleteSuggestedContactUseCase(): DeleteSuggestedContactUseCase {
+        return new DeleteSuggestedContactUseCase(
+            this.authedUserService,
+            this.suggestedContactRepository,
+            this.deleteSuggestedContactByDoctorService,
         );
     }
 }

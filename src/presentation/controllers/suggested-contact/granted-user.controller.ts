@@ -1,4 +1,4 @@
-import {Controller, HttpStatus, BadRequestException, Post, Body} from '@nestjs/common';
+import {Controller, HttpStatus, BadRequestException, Post, Body, Delete, Param, ParseUUIDPipe} from '@nestjs/common';
 import {
     ApiBadRequestResponse,
     ApiBearerAuth,
@@ -42,6 +42,30 @@ export class GrantedUserController {
 
         try {
             await useCase.createSuggestedContact(requestBody);
+        } catch (error) {
+            throw new BadRequestException(error.message);
+        }
+    }
+
+    @Roles('Doctor')
+    @Delete('doctor/suggested-contact/:contactId')
+    @ApiOperation({
+        deprecated: true,
+        summary: 'Deprecated endpoint. Use DELETE  "/suggested-contact/{contactId}" instead.',
+    })
+    @ApiResponse({status: HttpStatus.NO_CONTENT, description: 'No content.'})
+    public async deleteSuggestedContactDeprecated(@Param('contactId', ParseUUIDPipe) contactId: string): Promise<void> {
+        return this.deleteSuggestedContact(contactId);
+    }
+
+    @Roles('Doctor')
+    @Delete('suggested-contact/:contactId')
+    @ApiResponse({status: HttpStatus.NO_CONTENT, description: 'No content.'})
+    public async deleteSuggestedContact(@Param('contactId', ParseUUIDPipe) contactId: string): Promise<void> {
+        const useCase = this.grantedUserUseCasesFactory.createDeleteSuggestedContactUseCase();
+
+        try {
+            await useCase.deleteSuggestedContact(contactId);
         } catch (error) {
             throw new BadRequestException(error.message);
         }

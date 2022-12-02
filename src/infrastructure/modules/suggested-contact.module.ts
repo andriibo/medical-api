@@ -1,7 +1,6 @@
 import {Module} from '@nestjs/common';
-import {DoctorController, GrantedUserController, PatientController} from 'controllers/suggested-contact';
+import {GrantedUserController, PatientController} from 'controllers/suggested-contact';
 import {TypeOrmModule} from '@nestjs/typeorm';
-import {DoctorUseCasesFactory} from 'infrastructure/factories/suggested-contact';
 import {AuthModule, EmergencyContactModule} from 'infrastructure/modules';
 import {SuggestedContactModel} from 'infrastructure/models/suggested-contact.model';
 import {SuggestedContactSpecification} from 'app/modules/suggested-contact/specifications/suggested-contact.specification';
@@ -20,9 +19,8 @@ import {GrantedUserUseCasesFactory} from 'infrastructure/factories/suggested-con
 
 @Module({
     imports: [TypeOrmModule.forFeature([SuggestedContactModel]), AuthModule, EmergencyContactModule],
-    controllers: [DoctorController, PatientController, GrantedUserController],
+    controllers: [PatientController, GrantedUserController],
     providers: [
-        DoctorUseCasesFactory,
         PatientUseCasesFactory,
         GrantedUserUseCasesFactory,
         SuggestedContactSpecification,
