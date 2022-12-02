@@ -6,10 +6,12 @@ import {AccessToRegisteredPatientService} from 'app/modules/patient-data-access/
 import {AccessToUnregisteredPatientService} from 'app/modules/patient-data-access/services/access-to-unregistered-patient.service';
 import {
     ApproveDataAccessUseCase,
+    DataAccessListUseCase,
     InitiateDataAccessUseCase,
     RefuseDataAccessUseCase,
 } from 'app/modules/patient-data-access/use-cases/granted-user';
 import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repositories';
+import {IFileUrlService} from 'app/modules/profile/services/file-url.service';
 
 @Injectable()
 export class GrantedUserUseCasesFactory {
@@ -24,6 +26,7 @@ export class GrantedUserUseCasesFactory {
         private readonly patientDataAccessRepository: IPatientDataAccessRepository,
         @Inject(PatientDataAccessSpecification)
         private readonly patientDataAccessSpecification: PatientDataAccessSpecification,
+        @Inject(IFileUrlService) private readonly fileUrlService: IFileUrlService,
     ) {}
 
     public createInitiateDataAccessUseCase(): InitiateDataAccessUseCase {
@@ -48,6 +51,15 @@ export class GrantedUserUseCasesFactory {
             this.patientDataAccessRepository,
             this.authedUserService,
             this.patientDataAccessSpecification,
+        );
+    }
+
+    public createDataAccessListUseCase(): DataAccessListUseCase {
+        return new DataAccessListUseCase(
+            this.userRepository,
+            this.patientDataAccessRepository,
+            this.authedUserService,
+            this.fileUrlService,
         );
     }
 }

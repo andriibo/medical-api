@@ -8,11 +8,14 @@ import {
     Patch,
     Param,
     ParseUUIDPipe,
+    Get,
 } from '@nestjs/common';
 import {ApiBearerAuth, ApiOperation, ApiResponse, ApiTags} from '@nestjs/swagger';
 import {Roles} from 'presentation/guards';
 import {InitiateDataAccessView} from 'views/request/data-access';
 import {GrantedUserUseCasesFactory} from 'infrastructure/factories/patient-data-access/granted-user-use-cases.factory';
+import {DataAccessView} from 'views/response/data-access';
+import {DataAccessDto} from 'domain/dtos/response/data-access/data-access.dto';
 
 @Controller()
 @ApiBearerAuth()
@@ -102,5 +105,27 @@ export class GrantedUserController {
         } catch (error) {
             throw new BadRequestException(error.message);
         }
+    }
+
+    @Roles('Doctor')
+    @Get('doctor/data-accesses')
+    @HttpCode(HttpStatus.OK)
+    @ApiOperation({
+        deprecated: true,
+        summary: 'Deprecated endpoint. Use GET "/data-accesses" instead.',
+    })
+    @ApiResponse({status: HttpStatus.OK, type: [DataAccessView]})
+    public async getDataAccessesDeprecated(): Promise<DataAccessDto[]> {
+        return await this.getDataAccesses();
+    }
+
+    @Roles('Caregiver', 'Doctor')
+    @Get('data-accesses')
+    @HttpCode(HttpStatus.OK)
+    @ApiResponse({status: HttpStatus.OK, type: [DataAccessView]})
+    public async getDataAccesses(): Promise<DataAccessDto[]> {
+        const useCase = this.grantedUserUseCasesFactory.createDataAccessListUseCase();
+
+        return await useCase.getList();
     }
 }
