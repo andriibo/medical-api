@@ -9,6 +9,7 @@ import {
     Param,
     ParseUUIDPipe,
     Get,
+    Delete,
 } from '@nestjs/common';
 import {ApiBearerAuth, ApiOperation, ApiResponse, ApiTags} from '@nestjs/swagger';
 import {Roles} from 'presentation/guards';
@@ -127,5 +128,33 @@ export class GrantedUserController {
         const useCase = this.grantedUserUseCasesFactory.createDataAccessListUseCase();
 
         return await useCase.getList();
+    }
+
+    @Roles('Doctor')
+    @Delete('doctor/data-access/:accessId')
+    @HttpCode(HttpStatus.NO_CONTENT)
+    @HttpCode(HttpStatus.BAD_REQUEST)
+    @ApiOperation({
+        deprecated: true,
+        summary: 'Deprecated endpoint. Use DELETE "/data-access/{accessId}" instead.',
+    })
+    @ApiResponse({status: HttpStatus.NO_CONTENT})
+    public async deleteDataAccessDeprecated(@Param('accessId', ParseUUIDPipe) accessId: string): Promise<void> {
+        return this.deleteDataAccess(accessId);
+    }
+
+    @Roles('Caregiver', 'Doctor')
+    @Delete('data-access/:accessId')
+    @HttpCode(HttpStatus.NO_CONTENT)
+    @HttpCode(HttpStatus.BAD_REQUEST)
+    @ApiResponse({status: HttpStatus.NO_CONTENT})
+    public async deleteDataAccess(@Param('accessId', ParseUUIDPipe) accessId: string): Promise<void> {
+        const useCase = this.grantedUserUseCasesFactory.createDeleteDataAccessUseCase();
+
+        try {
+            await useCase.deleteDataAccess(accessId);
+        } catch (error) {
+            throw new BadRequestException(error.message);
+        }
     }
 }
