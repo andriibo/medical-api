@@ -5,7 +5,6 @@ import {
     ApproveDataAccessUseCase,
     DataAccessListUseCase,
     DeleteDataAccessUseCase,
-    RefuseDataAccessUseCase,
 } from 'app/modules/patient-data-access/use-cases/doctor';
 import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service';
 import {PatientDataAccessSpecification} from 'app/modules/patient-data-access/specifications/patient-data-access.specification';
@@ -38,14 +37,6 @@ export class DoctorUseCasesFactory {
             this.patientDataAccessRepository,
             this.authedUserService,
             this.fileUrlService,
-        );
-    }
-
-    public createRefuseDataAccessUseCase(): RefuseDataAccessUseCase {
-        return new RefuseDataAccessUseCase(
-            this.patientDataAccessRepository,
-            this.authedUserService,
-            this.patientDataAccessSpecification,
         );
     }
 

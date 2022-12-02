@@ -1,4 +1,14 @@
-import {Controller, HttpStatus, BadRequestException, HttpCode, Post, Body} from '@nestjs/common';
+import {
+    Controller,
+    HttpStatus,
+    BadRequestException,
+    HttpCode,
+    Post,
+    Body,
+    Patch,
+    Param,
+    ParseUUIDPipe,
+} from '@nestjs/common';
 import {ApiBearerAuth, ApiOperation, ApiResponse, ApiTags} from '@nestjs/swagger';
 import {Roles} from 'presentation/guards';
 import {InitiateDataAccessView} from 'views/request/data-access';
@@ -33,6 +43,34 @@ export class GrantedUserController {
 
         try {
             await useCase.initiateDataAccess(requestBody);
+        } catch (error) {
+            throw new BadRequestException(error.message);
+        }
+    }
+
+    @Roles('Doctor')
+    @Patch('doctor/data-access/refuse/:accessId')
+    @HttpCode(HttpStatus.OK)
+    @HttpCode(HttpStatus.BAD_REQUEST)
+    @ApiOperation({
+        deprecated: true,
+        summary: 'Deprecated endpoint. Use PATCH "/data-access/refuse/{accessId}" instead.',
+    })
+    @ApiResponse({status: HttpStatus.OK})
+    public async refuseDataAccessDeprecated(@Param('accessId', ParseUUIDPipe) accessId: string): Promise<void> {
+        return await this.refuseDataAccess(accessId);
+    }
+
+    @Roles('Caregiver', 'Doctor')
+    @Patch('data-access/refuse/:accessId')
+    @HttpCode(HttpStatus.OK)
+    @HttpCode(HttpStatus.BAD_REQUEST)
+    @ApiResponse({status: HttpStatus.OK})
+    public async refuseDataAccess(@Param('accessId', ParseUUIDPipe) accessId: string): Promise<void> {
+        const useCase = this.grantedUserUseCasesFactory.createRefuseDataAccessUseCase();
+
+        try {
+            await useCase.refuseDataAccess(accessId);
         } catch (error) {
             throw new BadRequestException(error.message);
         }
