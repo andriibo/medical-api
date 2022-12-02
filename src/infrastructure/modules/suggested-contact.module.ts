@@ -1,5 +1,5 @@
 import {Module} from '@nestjs/common';
-import {DoctorController, PatientController} from 'controllers/suggested-contact';
+import {DoctorController, GrantedUserController, PatientController} from 'controllers/suggested-contact';
 import {TypeOrmModule} from '@nestjs/typeorm';
 import {DoctorUseCasesFactory} from 'infrastructure/factories/suggested-contact';
 import {AuthModule, EmergencyContactModule} from 'infrastructure/modules';
@@ -16,13 +16,15 @@ import {ApproveSuggestedContactByPatientService} from 'app/modules/suggested-con
 import {IEmergencyContactEntityMapper} from 'app/modules/emergency-contact/mappers/emergency-contact-entity.mapper';
 import {EmergencyContactSpecification} from 'app/modules/emergency-contact/specifications/emergency-contact.specification';
 import {IEmergencyContactRepository} from 'app/modules/emergency-contact/repositories';
+import {GrantedUserUseCasesFactory} from 'infrastructure/factories/suggested-contact/granted-user-use-cases.factory';
 
 @Module({
     imports: [TypeOrmModule.forFeature([SuggestedContactModel]), AuthModule, EmergencyContactModule],
-    controllers: [DoctorController, PatientController],
+    controllers: [DoctorController, PatientController, GrantedUserController],
     providers: [
         DoctorUseCasesFactory,
         PatientUseCasesFactory,
+        GrantedUserUseCasesFactory,
         SuggestedContactSpecification,
         {
             provide: ISuggestedContactRepository,
