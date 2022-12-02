@@ -1,14 +1,4 @@
-import {
-    Controller,
-    HttpStatus,
-    Get,
-    Patch,
-    Delete,
-    BadRequestException,
-    Param,
-    ParseUUIDPipe,
-    HttpCode,
-} from '@nestjs/common';
+import {Controller, HttpStatus, Get, Delete, BadRequestException, Param, ParseUUIDPipe, HttpCode} from '@nestjs/common';
 import {ApiBearerAuth, ApiResponse, ApiTags} from '@nestjs/swagger';
 import {Roles} from 'presentation/guards';
 import {DoctorUseCasesFactory} from 'infrastructure/factories/patient-data-access/doctor-use-cases.factory';
@@ -29,21 +19,6 @@ export class DoctorController {
         const useCase = this.doctorUseCasesFactory.createDataAccessListUseCase();
 
         return await useCase.getList();
-    }
-
-    @Roles('Doctor')
-    @Patch('data-access/approve/:accessId')
-    @HttpCode(HttpStatus.OK)
-    @HttpCode(HttpStatus.BAD_REQUEST)
-    @ApiResponse({status: HttpStatus.OK})
-    public async approveDataAccess(@Param('accessId', ParseUUIDPipe) accessId: string): Promise<void> {
-        const useCase = this.doctorUseCasesFactory.createApproveDataAccessUseCase();
-
-        try {
-            await useCase.approveDataAccess(accessId);
-        } catch (error) {
-            throw new BadRequestException(error.message);
-        }
     }
 
     @Roles('Doctor')
