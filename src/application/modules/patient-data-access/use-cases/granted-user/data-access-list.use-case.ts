@@ -26,9 +26,13 @@ export class DataAccessListUseCase {
 
         return items.map((item) => {
             const dto = DataAccessDto.fromPatientDataAccess(item);
-            const user = UserDto.fromUser(indexedUsers[item.patientUserId]);
-            user.avatar = this.fileUrlService.createUrlToUserAvatar(user.avatar);
-            dto.requestedUser = user;
+            if (item.patientUserId in indexedUsers) {
+                const user = UserDto.fromUser(indexedUsers[item.patientUserId]);
+                user.avatar = this.fileUrlService.createUrlToUserAvatar(user.avatar);
+                dto.requestedUser = user;
+            } else if (item.patientEmail) {
+                dto.requestedUser = UserDto.fromEmail(item.patientEmail);
+            }
 
             return dto;
         });
