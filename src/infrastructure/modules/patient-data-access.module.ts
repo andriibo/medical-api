@@ -23,14 +23,17 @@ import {AccessToRegisteredPatientService} from 'app/modules/patient-data-access/
 import {AccessForUnregisteredDoctorService} from 'app/modules/patient-data-access/services/access-for-unregistered-doctor.service';
 import {AccessToUnregisteredPatientService} from 'app/modules/patient-data-access/services/access-to-unregistered-patient.service';
 import {AccessToPatientBindingService} from 'app/modules/patient-data-access/services/access-to-patient-binding.service';
+import {GrantedUserUseCasesFactory} from 'infrastructure/factories/patient-data-access/granted-user-use-cases.factory';
+import {GrantedUserController} from 'controllers/patient-data-access/granted-user.controller';
 
 @Module({
     imports: [TypeOrmModule.forFeature([PatientDataAccessModel]), MailModule, AuthModule, FileModule],
     exports: [IPatientDataAccessRepository, PatientDataAccessSpecification],
-    controllers: [PatientController, DoctorController],
+    controllers: [PatientController, DoctorController, GrantedUserController],
     providers: [
         PatientUseCasesFactory,
         DoctorUseCasesFactory,
+        GrantedUserUseCasesFactory,
         PatientDataAccessListener,
         {
             provide: IPatientDataAccessRepository,
