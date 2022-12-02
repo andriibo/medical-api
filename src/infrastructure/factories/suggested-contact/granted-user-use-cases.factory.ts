@@ -3,7 +3,7 @@ import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service'
 import {ISuggestedContactRepository} from 'app/modules/suggested-contact/repositories/suggested-contact.repository';
 import {SuggestedContactSpecification} from 'app/modules/suggested-contact/specifications/suggested-contact.specification';
 import {ISuggestedContactEntityMapper} from 'app/modules/suggested-contact/mappers/suggested-contact-entity.mapper';
-import {CreateSuggestedContactUseCase} from 'app/modules/suggested-contact/use-cases/grant-user';
+import {CreateSuggestedContactUseCase} from 'app/modules/suggested-contact/use-cases/granted-user';
 
 @Injectable()
 export class GrantedUserUseCasesFactory {
