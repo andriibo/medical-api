@@ -10,7 +10,7 @@ import {
     ParseUUIDPipe,
     HttpCode,
 } from '@nestjs/common';
-import {ApiBearerAuth, ApiOperation, ApiResponse, ApiTags} from '@nestjs/swagger';
+import {ApiBearerAuth, ApiResponse, ApiTags} from '@nestjs/swagger';
 import {Roles} from 'presentation/guards';
 import {PatientMedicationUseCasesFactory} from 'infrastructure/factories/patient-medication-use-cases.factory';
 import {CreateMedicationView} from 'presentation/views/request/patient-medication/create-medication.view';
@@ -38,7 +38,7 @@ export class PatientMedicationController {
         }
     }
 
-    @Roles('Doctor', 'Patient')
+    @Roles('Caregiver', 'Doctor', 'Patient')
     @Get('patient-medications/:patientUserId')
     @HttpCode(HttpStatus.OK)
     @ApiResponse({status: HttpStatus.OK, type: [MedicationView]})
