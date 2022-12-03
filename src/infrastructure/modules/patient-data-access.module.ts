@@ -12,15 +12,15 @@ import {AuthModule} from 'infrastructure/modules/auth.module';
 import {MailModule} from 'infrastructure/modules/mail.module';
 import {FileModule} from 'infrastructure/modules/file.module';
 import {PatientDataAccessSpecification} from 'app/modules/patient-data-access/specifications/patient-data-access.specification';
-import {AccessForRegisteredDoctorService} from 'app/modules/patient-data-access/services/access-for-registered-doctor.service';
+import {AccessForRegisteredGrantedUserService} from 'app/modules/patient-data-access/services/access-for-registered-granted-user.service';
 import {AccessToGrantedUserBindingService} from 'app/modules/patient-data-access/services/access-to-granted-user-binding.service';
 import {IPatientDataAccessEventEmitter} from 'app/modules/patient-data-access/event-emitters/patient-data-access.event-emitter';
 import {PatientDataAccessEventEmitter} from 'infrastructure/event-emitters/patient-data-access.event-emitter';
 import {PatientDataAccessListener} from 'infrastructure/listeners';
 import {DeleteDataAccessByPatientService} from 'app/modules/patient-data-access/services/delete-data-access-by-patient.service';
-import {DeleteDataAccessByDoctorService} from 'app/modules/patient-data-access/services/delete-data-access-by-doctor.service';
+import {DeleteDataAccessByGrantedUserService} from 'app/modules/patient-data-access/services/delete-data-access-by-granted-user.service';
 import {AccessToRegisteredPatientService} from 'app/modules/patient-data-access/services/access-to-registered-patient.service';
-import {AccessForUnregisteredDoctorService} from 'app/modules/patient-data-access/services/access-for-unregistered-doctor.service';
+import {AccessForUnregisteredGrantedUserService} from 'app/modules/patient-data-access/services/access-for-unregistered-granted-user.service';
 import {AccessToUnregisteredPatientService} from 'app/modules/patient-data-access/services/access-to-unregistered-patient.service';
 import {AccessToPatientBindingService} from 'app/modules/patient-data-access/services/access-to-patient-binding.service';
 import {GrantedUserUseCasesFactory} from 'infrastructure/factories/patient-data-access/granted-user-use-cases.factory';
@@ -57,14 +57,14 @@ import {GrantedUserController} from 'controllers/patient-data-access/granted-use
             inject: [IUserRepository, IPatientDataAccessRepository],
         },
         {
-            provide: AccessForRegisteredDoctorService,
+            provide: AccessForRegisteredGrantedUserService,
             useFactory: (
                 patientDataAccessRepository: IPatientDataAccessRepository,
                 patientDataAccessEntityMapper: IPatientDataAccessEntityMapper,
                 patientDataAccessEventEmitter: IPatientDataAccessEventEmitter,
                 patientDataAccessSpecification: PatientDataAccessSpecification,
             ) => {
-                return new AccessForRegisteredDoctorService(
+                return new AccessForRegisteredGrantedUserService(
                     patientDataAccessRepository,
                     patientDataAccessEntityMapper,
                     patientDataAccessEventEmitter,
@@ -79,14 +79,14 @@ import {GrantedUserController} from 'controllers/patient-data-access/granted-use
             ],
         },
         {
-            provide: AccessForUnregisteredDoctorService,
+            provide: AccessForUnregisteredGrantedUserService,
             useFactory: (
                 patientDataAccessRepository: IPatientDataAccessRepository,
                 patientDataAccessEntityMapper: IPatientDataAccessEntityMapper,
                 patientDataAccessEventEmitter: IPatientDataAccessEventEmitter,
                 patientDataAccessSpecification: PatientDataAccessSpecification,
             ) => {
-                return new AccessForUnregisteredDoctorService(
+                return new AccessForUnregisteredGrantedUserService(
                     patientDataAccessRepository,
                     patientDataAccessEntityMapper,
                     patientDataAccessEventEmitter,
@@ -174,13 +174,13 @@ import {GrantedUserController} from 'controllers/patient-data-access/granted-use
             inject: [IPatientDataAccessRepository, PatientDataAccessSpecification, IPatientDataAccessEventEmitter],
         },
         {
-            provide: DeleteDataAccessByDoctorService,
+            provide: DeleteDataAccessByGrantedUserService,
             useFactory: (
                 patientDataAccessRepository: IPatientDataAccessRepository,
                 patientDataAccessSpecification: PatientDataAccessSpecification,
                 patientDataAccessEventEmitter: IPatientDataAccessEventEmitter,
             ) => {
-                return new DeleteDataAccessByDoctorService(
+                return new DeleteDataAccessByGrantedUserService(
                     patientDataAccessRepository,
                     patientDataAccessSpecification,
                     patientDataAccessEventEmitter,

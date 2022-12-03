@@ -10,8 +10,8 @@ import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service'
 import {PatientDataAccessSpecification} from 'app/modules/patient-data-access/specifications/patient-data-access.specification';
 import {ApproveDataAccessUseCase} from 'app/modules/patient-data-access/use-cases/patient/approve-data-access.use-case';
 import {DeleteDataAccessByPatientService} from 'app/modules/patient-data-access/services/delete-data-access-by-patient.service';
-import {AccessForUnregisteredDoctorService} from 'app/modules/patient-data-access/services/access-for-unregistered-doctor.service';
-import {AccessForRegisteredDoctorService} from 'app/modules/patient-data-access/services/access-for-registered-doctor.service';
+import {AccessForUnregisteredGrantedUserService} from 'app/modules/patient-data-access/services/access-for-unregistered-granted-user.service';
+import {AccessForRegisteredGrantedUserService} from 'app/modules/patient-data-access/services/access-for-registered-granted-user.service';
 import {RefuseDataAccessUseCase} from 'app/modules/patient-data-access/use-cases/patient/refuse-data-access.use-case';
 import {IFileUrlService} from 'app/modules/profile/services/file-url.service';
 
@@ -24,10 +24,10 @@ export class PatientUseCasesFactory {
         @Inject(IAuthedUserService) private readonly authedUserService: IAuthedUserService,
         @Inject(PatientDataAccessSpecification)
         private readonly patientDataAccessSpecification: PatientDataAccessSpecification,
-        @Inject(AccessForRegisteredDoctorService)
-        private readonly accessForRegisteredDoctorService: AccessForRegisteredDoctorService,
-        @Inject(AccessForUnregisteredDoctorService)
-        private readonly accessForUnregisteredDoctorService: AccessForUnregisteredDoctorService,
+        @Inject(AccessForRegisteredGrantedUserService)
+        private readonly accessForRegisteredGrantedUserService: AccessForRegisteredGrantedUserService,
+        @Inject(AccessForUnregisteredGrantedUserService)
+        private readonly accessForUnregisteredGrantedUserService: AccessForUnregisteredGrantedUserService,
         @Inject(DeleteDataAccessByPatientService)
         private readonly deleteDataAccessByPatientService: DeleteDataAccessByPatientService,
         @Inject(IFileUrlService) private readonly fileUrlService: IFileUrlService,
@@ -37,8 +37,8 @@ export class PatientUseCasesFactory {
         return new InitiateDataAccessUseCase(
             this.userRepository,
             this.authedUserService,
-            this.accessForRegisteredDoctorService,
-            this.accessForUnregisteredDoctorService,
+            this.accessForRegisteredGrantedUserService,
+            this.accessForUnregisteredGrantedUserService,
         );
     }
 
