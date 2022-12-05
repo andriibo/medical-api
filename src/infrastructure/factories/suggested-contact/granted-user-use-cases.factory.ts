@@ -7,7 +7,7 @@ import {
     CreateSuggestedContactUseCase,
     DeleteSuggestedContactUseCase,
 } from 'app/modules/suggested-contact/use-cases/granted-user';
-import {DeleteSuggestedContactByDoctorService} from 'app/modules/suggested-contact/services/delete-suggested-contact-by-doctor.service';
+import {DeleteSuggestedContactByGrantedUserService} from 'app/modules/suggested-contact/services/delete-suggested-contact-by-granted-user.service';
 
 @Injectable()
 export class GrantedUserUseCasesFactory {
@@ -19,8 +19,8 @@ export class GrantedUserUseCasesFactory {
         private readonly suggestedContactEntityMapper: ISuggestedContactEntityMapper,
         @Inject(SuggestedContactSpecification)
         private readonly suggestedContactSpecification: SuggestedContactSpecification,
-        @Inject(DeleteSuggestedContactByDoctorService)
-        private readonly deleteSuggestedContactByDoctorService: DeleteSuggestedContactByDoctorService,
+        @Inject(DeleteSuggestedContactByGrantedUserService)
+        private readonly deleteSuggestedContactByGrantedUserService: DeleteSuggestedContactByGrantedUserService,
     ) {}
 
     public createSuggestedContactUseCase(): CreateSuggestedContactUseCase {
@@ -36,7 +36,7 @@ export class GrantedUserUseCasesFactory {
         return new DeleteSuggestedContactUseCase(
             this.authedUserService,
             this.suggestedContactRepository,
-            this.deleteSuggestedContactByDoctorService,
+            this.deleteSuggestedContactByGrantedUserService,
         );
     }
 }
