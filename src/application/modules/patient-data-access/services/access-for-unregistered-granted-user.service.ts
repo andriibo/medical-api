@@ -5,7 +5,7 @@ import {PatientDataAccessSpecification} from 'app/modules/patient-data-access/sp
 import {PatientDataAccessRequestDirection} from 'domain/entities/patient-data-access.entity';
 import {IPatientDataAccessEventEmitter} from 'app/modules/patient-data-access/event-emitters/patient-data-access.event-emitter';
 
-export class AccessForUnregisteredDoctorService {
+export class AccessForUnregisteredGrantedUserService {
     public constructor(
         private readonly patientDataAccessRepository: IPatientDataAccessRepository,
         private readonly patientDataAccessEntityMapper: IPatientDataAccessEntityMapper,
