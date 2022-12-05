@@ -1,7 +1,6 @@
 import {Module} from '@nestjs/common';
-import {DoctorController, GrantedUserController, PatientController} from 'controllers/suggested-contact';
+import {GrantedUserController, PatientController} from 'controllers/suggested-contact';
 import {TypeOrmModule} from '@nestjs/typeorm';
-import {DoctorUseCasesFactory} from 'infrastructure/factories/suggested-contact';
 import {AuthModule, EmergencyContactModule} from 'infrastructure/modules';
 import {SuggestedContactModel} from 'infrastructure/models/suggested-contact.model';
 import {SuggestedContactSpecification} from 'app/modules/suggested-contact/specifications/suggested-contact.specification';
@@ -9,7 +8,7 @@ import {ISuggestedContactRepository} from 'app/modules/suggested-contact/reposit
 import {SuggestedContactRepository} from 'infrastructure/repositories/suggested-contact.repository';
 import {ISuggestedContactEntityMapper} from 'app/modules/suggested-contact/mappers/suggested-contact-entity.mapper';
 import {SuggestedContactModelMapper} from 'infrastructure/mappers/suggested-contact-model.mapper';
-import {DeleteSuggestedContactByDoctorService} from 'app/modules/suggested-contact/services/delete-suggested-contact-by-doctor.service';
+import {DeleteSuggestedContactByGrantedUserService} from 'app/modules/suggested-contact/services/delete-suggested-contact-by-granted-user.service';
 import {DeleteSuggestedContactByPatientService} from 'app/modules/suggested-contact/services/delete-suggested-contact-by-patient.service';
 import {PatientUseCasesFactory} from 'infrastructure/factories/suggested-contact/patient-use-cases.factory';
 import {ApproveSuggestedContactByPatientService} from 'app/modules/suggested-contact/services/approve-suggested-contact-by-patient.service';
@@ -20,9 +19,8 @@ import {GrantedUserUseCasesFactory} from 'infrastructure/factories/suggested-con
 
 @Module({
     imports: [TypeOrmModule.forFeature([SuggestedContactModel]), AuthModule, EmergencyContactModule],
-    controllers: [DoctorController, PatientController, GrantedUserController],
+    controllers: [PatientController, GrantedUserController],
     providers: [
-        DoctorUseCasesFactory,
         PatientUseCasesFactory,
         GrantedUserUseCasesFactory,
         SuggestedContactSpecification,
@@ -35,12 +33,12 @@ import {GrantedUserUseCasesFactory} from 'infrastructure/factories/suggested-con
             useClass: SuggestedContactModelMapper,
         },
         {
-            provide: DeleteSuggestedContactByDoctorService,
+            provide: DeleteSuggestedContactByGrantedUserService,
             useFactory: (
                 suggestedContactRepository: ISuggestedContactRepository,
                 suggestedContactSpecification: SuggestedContactSpecification,
             ) => {
-                return new DeleteSuggestedContactByDoctorService(
+                return new DeleteSuggestedContactByGrantedUserService(
                     suggestedContactRepository,
                     suggestedContactSpecification,
                 );
