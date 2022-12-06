@@ -20,7 +20,7 @@ export class GrantedUserUseCasesFactory {
     public constructor(
         @Inject(IUserRepository) private readonly userRepository: IUserRepository,
         @Inject(IAuthedUserService) private readonly authedUserService: IAuthedUserService,
-        @Inject(AccessToRegisteredPatientService)
+        @Inject(PatientDataAccessSpecification)
         private readonly accessToRegisteredPatientService: AccessToRegisteredPatientService,
         @Inject(AccessToUnregisteredPatientService)
         private readonly accessToUnregisteredPatientService: AccessToUnregisteredPatientService,
