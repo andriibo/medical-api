@@ -17,7 +17,7 @@ definitions:
             variables:
               USER: $USER
               SERVER: $SERVER_DO
-              REMOTE_PATH: "/var/www/${WORK_DIR}/.env"
+              REMOTE_PATH: "/var/www/${WORK_DIR}/api/.env"
               LOCAL_PATH: ".env"
           - pipe: atlassian/ssh-run:0.4.1
             variables:
@@ -25,7 +25,7 @@ definitions:
               SERVER: $SERVER_DO
               COMMAND: |
                 export DOCKER_BUILDKIT=1
-                cd /var/www/${WORK_DIR}/
+                cd /var/www/${WORK_DIR}/api/
                 git pull origin ${BITBUCKET_BRANCH}
                 docker compose build --no-cache --pull
                 docker compose up -d
