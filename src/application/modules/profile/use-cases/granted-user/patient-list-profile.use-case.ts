@@ -15,7 +15,6 @@ export class PatientListProfileUseCase {
 
     public async getMyPatientList(): Promise<MyPatientDto[]> {
         const user = await this.authedUserService.getUser();
-
         const items = await this.patientDataAccessRepository.getByGrantedUserIdAndStatus(
             user.id,
             PatientDataAccessStatus.Approved,
@@ -25,15 +24,22 @@ export class PatientListProfileUseCase {
         const indexedPatients = await this.getIndexedPatients(patientIds);
         const indexedMetadataForPatients = await this.getIndexedMetadata(patientIds);
 
-        return items.map((patientDataAccess) => {
-            const patient = indexedPatients[patientDataAccess.patientUserId];
-            const metadata = indexedMetadataForPatients[patientDataAccess.patientUserId];
+        return items
+            .map((patientDataAccess) => {
+                const patient = indexedPatients[patientDataAccess.patientUserId];
+                const metadata = indexedMetadataForPatients[patientDataAccess.patientUserId];
 
-            const dto = MyPatientDto.fromUserAndPatientMetadata(patient, metadata);
-            dto.accessId = patientDataAccess.id;
+                const dto = MyPatientDto.fromUserAndPatientMetadata(patient, metadata);
+                dto.accessId = patientDataAccess.id;
 
-            return dto;
-        });
+                return dto;
+            })
+            .sort(function (aPatient, bPatient) {
+                const aName = aPatient.firstName + ' ' + aPatient.lastName;
+                const bName = bPatient.firstName + ' ' + bPatient.lastName;
+
+                return aName.localeCompare(bName);
+            });
     }
 
     private async getIndexedPatients(patientIds: string[]): Promise<object> {

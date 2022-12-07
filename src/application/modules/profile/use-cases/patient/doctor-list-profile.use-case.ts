@@ -25,15 +25,22 @@ export class DoctorListProfileUseCase {
         const indexedDoctors = await this.getIndexedDoctors(doctorIds);
         const indexedMetadataForDoctors = await this.getIndexedMetadata(doctorIds);
 
-        return items.map((patientDataAccess) => {
-            const doctor = indexedDoctors[patientDataAccess.grantedUserId];
-            const metadata = indexedMetadataForDoctors[patientDataAccess.grantedUserId];
+        return items
+            .map((patientDataAccess) => {
+                const doctor = indexedDoctors[patientDataAccess.grantedUserId];
+                const metadata = indexedMetadataForDoctors[patientDataAccess.grantedUserId];
 
-            const dto = MyDoctorDto.fromUserAndDoctorMetadata(doctor, metadata);
-            dto.accessId = patientDataAccess.id;
+                const dto = MyDoctorDto.fromUserAndDoctorMetadata(doctor, metadata);
+                dto.accessId = patientDataAccess.id;
 
-            return dto;
-        });
+                return dto;
+            })
+            .sort(function (aDoctor, bDoctor) {
+                const aName = aDoctor.firstName + ' ' + aDoctor.lastName;
+                const bName = bDoctor.firstName + ' ' + bDoctor.lastName;
+
+                return aName.localeCompare(bName);
+            });
     }
 
     private async getIndexedDoctors(doctorIds: string[]): Promise<object> {
