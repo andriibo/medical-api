@@ -15,6 +15,8 @@ import {CaregiverController} from 'controllers/profile/caregiver.controller';
 import {CaregiverUseCasesFactory} from 'infrastructure/factories/profile/caregiver-use-cases.factory';
 import {GrantedUserController} from 'controllers/profile/granted-user.controller';
 import {GrantedUserUseCasesFactory} from 'infrastructure/factories/profile/granted-user-use-cases.factory';
+import {ISortUsersService} from 'app/modules/profile/services/sort-users.service';
+import {SortUsersService} from 'infrastructure/services/sort-users.service';
 
 @Module({
     imports: [
@@ -41,6 +43,10 @@ import {GrantedUserUseCasesFactory} from 'infrastructure/factories/profile/grant
         {
             provide: IUserProfileMapper,
             useClass: UserProfileMapper,
+        },
+        {
+            provide: ISortUsersService,
+            useClass: SortUsersService,
         },
     ],
 })

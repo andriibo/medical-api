@@ -4,6 +4,7 @@ import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repo
 import {PatientDataAccessStatus} from 'domain/entities/patient-data-access.entity';
 import {MyDoctorDto} from 'domain/dtos/response/profile/my-doctor.dto';
 import {IDoctorMetadataRepository} from 'app/modules/profile/repositories';
+import {ISortUsersService} from 'app/modules/profile/services/sort-users.service';
 
 export class DoctorListProfileUseCase {
     public constructor(
@@ -11,6 +12,7 @@ export class DoctorListProfileUseCase {
         private readonly patientDataAccessRepository: IPatientDataAccessRepository,
         private readonly doctorMetadataRepository: IDoctorMetadataRepository,
         private readonly userRepository: IUserRepository,
+        private readonly sortUsersService: ISortUsersService,
     ) {}
 
     public async getMyDoctorList(): Promise<MyDoctorDto[]> {
@@ -25,22 +27,17 @@ export class DoctorListProfileUseCase {
         const indexedDoctors = await this.getIndexedDoctors(doctorIds);
         const indexedMetadataForDoctors = await this.getIndexedMetadata(doctorIds);
 
-        return items
-            .map((patientDataAccess) => {
-                const doctor = indexedDoctors[patientDataAccess.grantedUserId];
-                const metadata = indexedMetadataForDoctors[patientDataAccess.grantedUserId];
+        const myDoctors = items.map((patientDataAccess) => {
+            const doctor = indexedDoctors[patientDataAccess.grantedUserId];
+            const metadata = indexedMetadataForDoctors[patientDataAccess.grantedUserId];
 
-                const dto = MyDoctorDto.fromUserAndDoctorMetadata(doctor, metadata);
-                dto.accessId = patientDataAccess.id;
+            const dto = MyDoctorDto.fromUserAndDoctorMetadata(doctor, metadata);
+            dto.accessId = patientDataAccess.id;
 
-                return dto;
-            })
-            .sort(function (aDoctor, bDoctor) {
-                const aName = aDoctor.firstName + ' ' + aDoctor.lastName;
-                const bName = bDoctor.firstName + ' ' + bDoctor.lastName;
+            return dto;
+        });
 
-                return aName.localeCompare(bName);
-            });
+        return this.sortUsersService.byName(myDoctors) as MyDoctorDto[];
     }
 
     private async getIndexedDoctors(doctorIds: string[]): Promise<object> {
