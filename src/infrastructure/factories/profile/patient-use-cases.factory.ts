@@ -40,6 +40,7 @@ export class PatientUseCasesFactory {
             this.patientDataAccessRepository,
             this.doctorMetadataRepository,
             this.userRepository,
+            this.fileUrlService,
         );
     }
 }

@@ -4,6 +4,7 @@ import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repo
 import {PatientDataAccessStatus} from 'domain/entities/patient-data-access.entity';
 import {MyDoctorDto} from 'domain/dtos/response/profile/my-doctor.dto';
 import {IDoctorMetadataRepository} from 'app/modules/profile/repositories';
+import {IFileUrlService} from 'app/modules/profile/services/file-url.service';
 import {sortUserDtosByName} from 'app/support/sort.helper';
 
 export class DoctorListProfileUseCase {
@@ -12,6 +13,7 @@ export class DoctorListProfileUseCase {
         private readonly patientDataAccessRepository: IPatientDataAccessRepository,
         private readonly doctorMetadataRepository: IDoctorMetadataRepository,
         private readonly userRepository: IUserRepository,
+        private readonly fileUrlService: IFileUrlService,
     ) {}
 
     public async getMyDoctorList(): Promise<MyDoctorDto[]> {
@@ -31,6 +33,7 @@ export class DoctorListProfileUseCase {
             const metadata = indexedMetadataForDoctors[patientDataAccess.grantedUserId];
 
             const dto = MyDoctorDto.fromUserAndDoctorMetadata(doctor, metadata);
+            dto.avatar = this.fileUrlService.createUrlToUserAvatar(dto.avatar);
             dto.accessId = patientDataAccess.id;
 
             return dto;
