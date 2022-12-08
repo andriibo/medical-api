@@ -7,7 +7,6 @@ import {IUserProfileMapper} from 'app/modules/profile/mappers/user-profile.mappe
 import {IFileUrlService} from 'app/modules/profile/services/file-url.service';
 import {DoctorListProfileUseCase} from 'app/modules/profile/use-cases/patient/doctor-list-profile.use-case';
 import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repositories';
-import {ISortUsersService} from 'app/modules/profile/services/sort-users.service';
 
 @Injectable()
 export class PatientUseCasesFactory {
@@ -20,8 +19,6 @@ export class PatientUseCasesFactory {
         @Inject(IPatientDataAccessRepository)
         private readonly patientDataAccessRepository: IPatientDataAccessRepository,
         @Inject(IDoctorMetadataRepository) private readonly doctorMetadataRepository: IDoctorMetadataRepository,
-        @Inject(ISortUsersService)
-        private readonly sortUsersService: ISortUsersService,
     ) {}
 
     public createGetPatientProfileUseCase(): PatientProfileUseCase {
@@ -43,7 +40,6 @@ export class PatientUseCasesFactory {
             this.patientDataAccessRepository,
             this.doctorMetadataRepository,
             this.userRepository,
-            this.sortUsersService,
         );
     }
 }

@@ -4,7 +4,7 @@ import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repo
 import {PatientDataAccessStatus} from 'domain/entities/patient-data-access.entity';
 import {MyDoctorDto} from 'domain/dtos/response/profile/my-doctor.dto';
 import {IDoctorMetadataRepository} from 'app/modules/profile/repositories';
-import {ISortUsersService} from 'app/modules/profile/services/sort-users.service';
+import {sortByName} from 'app/support/array.helper';
 
 export class DoctorListProfileUseCase {
     public constructor(
@@ -12,7 +12,6 @@ export class DoctorListProfileUseCase {
         private readonly patientDataAccessRepository: IPatientDataAccessRepository,
         private readonly doctorMetadataRepository: IDoctorMetadataRepository,
         private readonly userRepository: IUserRepository,
-        private readonly sortUsersService: ISortUsersService,
     ) {}
 
     public async getMyDoctorList(): Promise<MyDoctorDto[]> {
@@ -37,7 +36,7 @@ export class DoctorListProfileUseCase {
             return dto;
         });
 
-        return this.sortUsersService.byName(myDoctors) as MyDoctorDto[];
+        return sortByName(myDoctors);
     }
 
     private async getIndexedDoctors(doctorIds: string[]): Promise<object> {

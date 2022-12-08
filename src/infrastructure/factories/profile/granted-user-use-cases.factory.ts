@@ -4,7 +4,6 @@ import {IPatientMetadataRepository} from 'app/modules/profile/repositories';
 import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repositories';
 import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service';
 import {PatientListProfileUseCase} from 'app/modules/profile/use-cases/granted-user';
-import {ISortUsersService} from 'app/modules/profile/services/sort-users.service';
 
 @Injectable()
 export class GrantedUserUseCasesFactory {
@@ -14,8 +13,6 @@ export class GrantedUserUseCasesFactory {
         @Inject(IPatientMetadataRepository) private readonly patientMetadataRepository: IPatientMetadataRepository,
         @Inject(IPatientDataAccessRepository)
         private readonly patientDataAccessRepository: IPatientDataAccessRepository,
-        @Inject(ISortUsersService)
-        private readonly sortUsersService: ISortUsersService,
     ) {}
 
     public createPatientListUseCase(): PatientListProfileUseCase {
@@ -24,7 +21,6 @@ export class GrantedUserUseCasesFactory {
             this.patientDataAccessRepository,
             this.patientMetadataRepository,
             this.userRepository,
-            this.sortUsersService,
         );
     }
 }
