@@ -4,6 +4,7 @@ import {IPatientMetadataRepository} from 'app/modules/profile/repositories';
 import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repositories';
 import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service';
 import {PatientListProfileUseCase} from 'app/modules/profile/use-cases/granted-user';
+import {IFileUrlService} from 'app/modules/profile/services/file-url.service';
 
 @Injectable()
 export class GrantedUserUseCasesFactory {
@@ -13,6 +14,7 @@ export class GrantedUserUseCasesFactory {
         @Inject(IPatientMetadataRepository) private readonly patientMetadataRepository: IPatientMetadataRepository,
         @Inject(IPatientDataAccessRepository)
         private readonly patientDataAccessRepository: IPatientDataAccessRepository,
+        @Inject(IFileUrlService) private readonly fileUrlService: IFileUrlService,
     ) {}
 
     public createPatientListUseCase(): PatientListProfileUseCase {
@@ -21,6 +23,7 @@ export class GrantedUserUseCasesFactory {
             this.patientDataAccessRepository,
             this.patientMetadataRepository,
             this.userRepository,
+            this.fileUrlService,
         );
     }
 }
