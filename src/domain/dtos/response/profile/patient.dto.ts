@@ -1,10 +1,9 @@
 import {User} from 'domain/entities/user.entity';
 import {PatientMetadata} from 'domain/entities';
+import {UserDto} from 'domain/dtos/response/user/user.dto';
 
-export class PatientDto {
+export class PatientDto extends UserDto {
     public id?: string;
-
-    public email: string;
 
     public firstName: string;
 

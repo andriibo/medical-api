@@ -35,7 +35,7 @@ export class PatientListProfileUseCase {
             return dto;
         });
 
-        return sortUserDtosByName(myPatients);
+        return sortUserDtosByName(myPatients) as MyPatientDto[];
     }
 
     private async getIndexedPatients(patientIds: string[]): Promise<object> {

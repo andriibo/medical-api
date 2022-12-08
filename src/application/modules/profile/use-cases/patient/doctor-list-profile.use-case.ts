@@ -36,7 +36,7 @@ export class DoctorListProfileUseCase {
             return dto;
         });
 
-        return sortUserDtosByName(myDoctors);
+        return sortUserDtosByName(myDoctors) as MyDoctorDto[];
     }
 
     private async getIndexedDoctors(doctorIds: string[]): Promise<object> {
