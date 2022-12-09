@@ -3,6 +3,9 @@ import {DoctorDto} from 'domain/dtos/response/profile/doctor.dto';
 
 export class DoctorView extends DoctorDto {
     @ApiProperty()
+    public userId: string;
+
+    @ApiProperty()
     public email: string;
 
     @ApiProperty()
