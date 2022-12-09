@@ -10,9 +10,9 @@ export class DeleteDataAccessByGrantedUserService {
         private readonly patientDataAccessEventEmitter: IPatientDataAccessEventEmitter,
     ) {}
 
-    public async deleteDataAccess(doctor: User, dataAccess: PatientDataAccess): Promise<void> {
-        await this.patientDataAccessSpecification.assertGrantedUserCanDeleteAccess(doctor, dataAccess);
+    public async deleteDataAccess(grantedUser: User, dataAccess: PatientDataAccess): Promise<void> {
+        await this.patientDataAccessSpecification.assertGrantedUserCanDeleteAccess(grantedUser, dataAccess);
         await this.patientDataAccessRepository.delete(dataAccess);
-        await this.patientDataAccessEventEmitter.emitAccessDeletedByDoctor(doctor, dataAccess.grantedEmail);
+        await this.patientDataAccessEventEmitter.emitAccessDeletedByGrantedUser(grantedUser, dataAccess.patientEmail);
     }
 }
