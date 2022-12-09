@@ -5,6 +5,7 @@ import {PatientDataAccessStatus} from 'domain/entities/patient-data-access.entit
 import {MyDoctorDto} from 'domain/dtos/response/profile/my-doctor.dto';
 import {IDoctorMetadataRepository} from 'app/modules/profile/repositories';
 import {IFileUrlService} from 'app/modules/profile/services/file-url.service';
+import {sortUserDtosByName} from 'app/support/sort.helper';
 
 export class DoctorListProfileUseCase {
     public constructor(
@@ -27,7 +28,7 @@ export class DoctorListProfileUseCase {
         const indexedDoctors = await this.getIndexedDoctors(doctorIds);
         const indexedMetadataForDoctors = await this.getIndexedMetadata(doctorIds);
 
-        return items.map((patientDataAccess) => {
+        const myDoctors = items.map((patientDataAccess) => {
             const doctor = indexedDoctors[patientDataAccess.grantedUserId];
             const metadata = indexedMetadataForDoctors[patientDataAccess.grantedUserId];
 
@@ -37,6 +38,8 @@ export class DoctorListProfileUseCase {
 
             return dto;
         });
+
+        return sortUserDtosByName(myDoctors) as MyDoctorDto[];
     }
 
     private async getIndexedDoctors(doctorIds: string[]): Promise<object> {
