@@ -27,7 +27,7 @@ export class PatientDataAccessEventEmitter implements IPatientDataAccessEventEmi
         await this.eventEmitter.emit('data-access-deleted-by-patient', patient, grantedEmail);
     }
 
-    public async emitAccessDeletedByDoctor(doctor: User, grantedEmail: string): Promise<void> {
-        await this.eventEmitter.emit('data-access-deleted-by-doctor', doctor, grantedEmail);
+    public async emitAccessDeletedByGrantedUser(grantedUser: User, patientEmail: string): Promise<void> {
+        await this.eventEmitter.emit('data-access-deleted-by-granted-user', grantedUser, patientEmail);
     }
 }

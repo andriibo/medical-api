@@ -51,12 +51,12 @@ export class PatientDataAccessListener {
     }
 
     @OnEvent('data-access-deleted-by-patient')
-    public async handleAccessDeletedByPatient(patient: User, email: string): Promise<void> {
-        await this.mailService.sendNotificationThatPatientDeletedDataAccess(patient, email);
+    public async handleAccessDeletedByPatient(patient: User, grantedEmail: string): Promise<void> {
+        await this.mailService.sendNotificationThatPatientDeletedDataAccess(patient, grantedEmail);
     }
 
-    @OnEvent('data-access-deleted-by-doctor')
-    public async handleAccessDeletedByDoctor(doctor: User, email: string): Promise<void> {
-        await this.mailService.sendNotificationThatDoctorDeletedDataAccess(doctor, email);
+    @OnEvent('data-access-deleted-by-granted-user')
+    public async handleAccessDeletedByGrantedUser(grantedUser: User, patientEmail: string): Promise<void> {
+        await this.mailService.sendNotificationThatGrantedUserDeletedDataAccess(grantedUser, patientEmail);
     }
 }

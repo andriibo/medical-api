@@ -80,11 +80,11 @@ export class MailService implements IMailService {
         await this.mailerService.sendMail(mail);
     }
 
-    public async sendNotificationThatDoctorDeletedDataAccess(doctor: User, toEmail: string): Promise<void> {
+    public async sendNotificationThatGrantedUserDeletedDataAccess(grantedUser: User, toEmail: string): Promise<void> {
         const mail: Email = {
             to: toEmail,
             subject: 'You were removed from list of patients',
-            text: `${doctor.firstName} ${doctor.lastName} has removed you from the list of their patients and doesn't have access to your account anymore.`,
+            text: `${grantedUser.firstName} ${grantedUser.lastName} has removed you from the list of their patients and doesn't have access to your account anymore.`,
         };
 
         await this.mailerService.sendMail(mail);
