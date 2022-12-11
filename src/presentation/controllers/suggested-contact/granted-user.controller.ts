@@ -58,7 +58,7 @@ export class GrantedUserController {
         return this.deleteSuggestedContact(contactId);
     }
 
-    @Roles('Doctor')
+    @Roles('Caregiver', 'Doctor')
     @Delete('suggested-contact/:contactId')
     @ApiResponse({status: HttpStatus.NO_CONTENT, description: 'No content.'})
     public async deleteSuggestedContact(@Param('contactId', ParseUUIDPipe) contactId: string): Promise<void> {
