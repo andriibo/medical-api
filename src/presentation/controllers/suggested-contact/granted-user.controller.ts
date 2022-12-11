@@ -1,4 +1,15 @@
-import {Controller, HttpStatus, BadRequestException, Post, Body, Delete, Param, ParseUUIDPipe} from '@nestjs/common';
+import {
+    Controller,
+    HttpStatus,
+    BadRequestException,
+    Post,
+    Body,
+    Delete,
+    Param,
+    ParseUUIDPipe,
+    Get,
+    HttpCode,
+} from '@nestjs/common';
 import {
     ApiBadRequestResponse,
     ApiBearerAuth,
@@ -12,6 +23,8 @@ import {
 import {Roles} from 'presentation/guards';
 import {CreateSuggestedContactView} from 'views/request/suggested-contact';
 import {GrantedUserUseCasesFactory} from 'infrastructure/factories/suggested-contact/granted-user-use-cases.factory';
+import {SuggestedContactView} from 'views/response/suggested-contact';
+import {SuggestedContactDto} from 'domain/dtos/response/suggested-contact/suggested-contact.dto';
 
 @Controller()
 @ApiBearerAuth()
@@ -69,5 +82,15 @@ export class GrantedUserController {
         } catch (error) {
             throw new BadRequestException(error.message);
         }
+    }
+
+    @Roles('Caregiver', 'Doctor')
+    @Get('my-suggested-contacts')
+    @HttpCode(HttpStatus.OK)
+    @ApiResponse({status: HttpStatus.OK, type: [SuggestedContactView]})
+    public async getMySuggestedContacts(): Promise<SuggestedContactDto[]> {
+        const useCase = this.grantedUserUseCasesFactory.createContactListUseCase();
+
+        return await useCase.getList();
     }
 }

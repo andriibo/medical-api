@@ -6,6 +6,9 @@ export class SuggestedContactView implements SuggestedContactDto {
     public contactId: string;
 
     @ApiProperty()
+    public patientUserId: string;
+
+    @ApiProperty()
     public firstName: string;
 
     @ApiProperty()

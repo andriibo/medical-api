@@ -3,6 +3,8 @@ import {SuggestedContact} from 'domain/entities';
 export class SuggestedContactDto {
     public contactId: string;
 
+    public patientUserId: string;
+
     public firstName: string;
 
     public lastName: string;
@@ -20,6 +22,7 @@ export class SuggestedContactDto {
     public static fromSuggestedContact(suggestedContact: SuggestedContact): SuggestedContactDto {
         const dto = new SuggestedContactDto();
         dto.contactId = suggestedContact.id;
+        dto.patientUserId = suggestedContact.patientUserId;
         dto.firstName = suggestedContact.firstName;
         dto.lastName = suggestedContact.lastName;
         dto.email = suggestedContact.email;

@@ -8,6 +8,7 @@ import {
     DeleteSuggestedContactUseCase,
 } from 'app/modules/suggested-contact/use-cases/granted-user';
 import {DeleteSuggestedContactByGrantedUserService} from 'app/modules/suggested-contact/services/delete-suggested-contact-by-granted-user.service';
+import {ContactListUseCase} from 'app/modules/suggested-contact/use-cases/granted-user/contact-list.use-case';
 
 @Injectable()
 export class GrantedUserUseCasesFactory {
@@ -38,5 +39,9 @@ export class GrantedUserUseCasesFactory {
             this.suggestedContactRepository,
             this.deleteSuggestedContactByGrantedUserService,
         );
+    }
+
+    public createContactListUseCase(): ContactListUseCase {
+        return new ContactListUseCase(this.authedUserService, this.suggestedContactRepository);
     }
 }
