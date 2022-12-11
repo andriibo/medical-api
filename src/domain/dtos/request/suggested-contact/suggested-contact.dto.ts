@@ -1,7 +1,7 @@
 import {SuggestedContact} from 'domain/entities';
 
 export class SuggestedContactDto {
-    public contactId: string;
+    public contactId?: string;
 
     public patientUserId?: string;
 
