@@ -20,8 +20,8 @@ import {
 } from '@nestjs/swagger';
 import {Roles} from 'presentation/guards';
 import {PatientUseCasesFactory} from 'infrastructure/factories/suggested-contact/patient-use-cases.factory';
-import {SuggestedContactDto} from 'domain/dtos/request/suggested-contact/suggested-contact.dto';
 import {SuggestedContactView} from 'views/response/suggested-contact';
+import {SuggestedContactDto} from 'domain/dtos/response/suggested-contact/suggested-contact.dto';
 
 @Controller('patient')
 @ApiBearerAuth()

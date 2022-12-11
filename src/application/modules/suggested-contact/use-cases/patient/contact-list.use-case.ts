@@ -1,6 +1,6 @@
 import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service';
 import {ISuggestedContactRepository} from 'app/modules/suggested-contact/repositories';
-import {SuggestedContactDto} from 'domain/dtos/request/suggested-contact/suggested-contact.dto';
+import {SuggestedContactDto} from 'domain/dtos/response/suggested-contact/suggested-contact.dto';
 
 export class ContactListUseCase {
     public constructor(
