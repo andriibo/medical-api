@@ -20,4 +20,8 @@ export class SuggestedContactRepository implements ISuggestedContactRepository {
     public async delete(suggestedContact: SuggestedContactModel): Promise<void> {
         await this.dataSource.manager.remove(suggestedContact);
     }
+
+    public async getByPatientUserId(patientUserId: string): Promise<SuggestedContact[]> {
+        return await this.dataSource.manager.findBy(SuggestedContactModel, {patientUserId});
+    }
 }
