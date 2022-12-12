@@ -24,9 +24,9 @@ export class CreateSuggestedContactUseCase {
         await this.suggestedContactRepository.create(suggestedContact);
     }
 
-    private createContact(doctor: User, dto: SuggestedContactDto): SuggestedContact {
+    private createContact(grantedUser: User, dto: SuggestedContactDto): SuggestedContact {
         const suggestedContact = this.suggestedContactEntityMapper.mapBySuggestedContactDto(dto);
-        suggestedContact.suggestedBy = doctor.id;
+        suggestedContact.suggestedBy = grantedUser.id;
 
         return suggestedContact;
     }

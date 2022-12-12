@@ -1,7 +1,7 @@
 import {Module} from '@nestjs/common';
 import {GrantedUserController, PatientController} from 'controllers/suggested-contact';
 import {TypeOrmModule} from '@nestjs/typeorm';
-import {AuthModule, EmergencyContactModule} from 'infrastructure/modules';
+import {AuthModule, EmergencyContactModule, PatientDataAccessModule} from 'infrastructure/modules';
 import {SuggestedContactModel} from 'infrastructure/models/suggested-contact.model';
 import {SuggestedContactSpecification} from 'app/modules/suggested-contact/specifications/suggested-contact.specification';
 import {ISuggestedContactRepository} from 'app/modules/suggested-contact/repositories';
@@ -16,14 +16,19 @@ import {IEmergencyContactEntityMapper} from 'app/modules/emergency-contact/mappe
 import {EmergencyContactSpecification} from 'app/modules/emergency-contact/specifications/emergency-contact.specification';
 import {IEmergencyContactRepository} from 'app/modules/emergency-contact/repositories';
 import {GrantedUserUseCasesFactory} from 'infrastructure/factories/suggested-contact/granted-user-use-cases.factory';
+import {PatientDataAccessSpecification} from 'app/modules/patient-data-access/specifications/patient-data-access.specification';
 
 @Module({
-    imports: [TypeOrmModule.forFeature([SuggestedContactModel]), AuthModule, EmergencyContactModule],
+    imports: [
+        TypeOrmModule.forFeature([SuggestedContactModel]),
+        AuthModule,
+        EmergencyContactModule,
+        PatientDataAccessModule,
+    ],
     controllers: [PatientController, GrantedUserController],
     providers: [
         PatientUseCasesFactory,
         GrantedUserUseCasesFactory,
-        SuggestedContactSpecification,
         {
             provide: ISuggestedContactRepository,
             useClass: SuggestedContactRepository,
@@ -82,6 +87,13 @@ import {GrantedUserUseCasesFactory} from 'infrastructure/factories/suggested-con
                 EmergencyContactSpecification,
                 IEmergencyContactRepository,
             ],
+        },
+        {
+            provide: SuggestedContactSpecification,
+            useFactory: (patientDataAccessSpecification: PatientDataAccessSpecification) => {
+                return new SuggestedContactSpecification(patientDataAccessSpecification);
+            },
+            inject: [PatientDataAccessSpecification],
         },
     ],
 })
