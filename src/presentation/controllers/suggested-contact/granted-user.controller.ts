@@ -85,12 +85,18 @@ export class GrantedUserController {
     }
 
     @Roles('Caregiver', 'Doctor')
-    @Get('my-suggested-contacts')
+    @Get('my-suggested-contacts/:patientUserId')
     @HttpCode(HttpStatus.OK)
     @ApiResponse({status: HttpStatus.OK, type: [SuggestedContactView]})
-    public async getMySuggestedContacts(): Promise<SuggestedContactDto[]> {
-        const useCase = this.grantedUserUseCasesFactory.createContactListUseCase();
+    public async getPatientSuggestedContacts(
+        @Param('patientUserId', ParseUUIDPipe) patientUserId: string,
+    ): Promise<SuggestedContactDto[]> {
+        const useCase = this.grantedUserUseCasesFactory.createPatientContactUseCase();
 
-        return await useCase.getList();
+        try {
+            return await useCase.getList(patientUserId);
+        } catch (error) {
+            throw new BadRequestException(error.message);
+        }
     }
 }

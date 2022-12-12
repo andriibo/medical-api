@@ -5,8 +5,7 @@ export interface ISuggestedContactRepository {
     getOneById(id: string): Promise<SuggestedContact>;
     delete(suggestedContact: SuggestedContact): Promise<void>;
     getByPatientUserId(patientUserId: string): Promise<SuggestedContact[]>;
-
-    getBySuggestedBy(suggestedBy: string): Promise<SuggestedContact[]>;
+    getByPatientUserIdAndSuggestedBy(patientUserId: string, suggestedBy: string): Promise<SuggestedContact[]>;
 }
 
 export const ISuggestedContactRepository = Symbol('ISuggestedContactRepository');

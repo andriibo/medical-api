@@ -4,8 +4,6 @@ import {UserDto} from 'domain/dtos/response/user/user.dto';
 export class SuggestedContactDto {
     public contactId: string;
 
-    public patientUserId: string;
-
     public firstName: string;
 
     public lastName: string;
@@ -18,12 +16,11 @@ export class SuggestedContactDto {
 
     public suggestedAt: string;
 
-    public suggestedByUser: UserDto;
+    public suggestedByUser?: UserDto;
 
     public static fromSuggestedContact(suggestedContact: SuggestedContact): SuggestedContactDto {
         const dto = new SuggestedContactDto();
         dto.contactId = suggestedContact.id;
-        dto.patientUserId = suggestedContact.patientUserId;
         dto.firstName = suggestedContact.firstName;
         dto.lastName = suggestedContact.lastName;
         dto.email = suggestedContact.email;

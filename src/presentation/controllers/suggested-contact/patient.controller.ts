@@ -62,10 +62,10 @@ export class PatientController {
     }
 
     @Roles('Patient')
-    @Get('my-suggested-contacts')
+    @Get('suggested-contacts')
     @HttpCode(HttpStatus.OK)
     @ApiResponse({status: HttpStatus.OK, type: [SuggestedContactView]})
-    public async getMySuggestedContacts(): Promise<SuggestedContactDto[]> {
+    public async getSuggestedContacts(): Promise<SuggestedContactDto[]> {
         const useCase = this.patientUseCasesFactory.createContactListUseCase();
 
         return await useCase.getList();

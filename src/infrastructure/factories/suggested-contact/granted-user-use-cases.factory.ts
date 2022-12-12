@@ -6,14 +6,16 @@ import {ISuggestedContactEntityMapper} from 'app/modules/suggested-contact/mappe
 import {
     CreateSuggestedContactUseCase,
     DeleteSuggestedContactUseCase,
+    PatientContactListUseCase,
 } from 'app/modules/suggested-contact/use-cases/granted-user';
 import {DeleteSuggestedContactByGrantedUserService} from 'app/modules/suggested-contact/services/delete-suggested-contact-by-granted-user.service';
-import {ContactListUseCase} from 'app/modules/suggested-contact/use-cases/granted-user/contact-list.use-case';
+import {IUserRepository} from 'app/modules/auth/repositories';
 
 @Injectable()
 export class GrantedUserUseCasesFactory {
     public constructor(
         @Inject(IAuthedUserService) private readonly authedUserService: IAuthedUserService,
+        @Inject(IUserRepository) private readonly userRepository: IUserRepository,
         @Inject(ISuggestedContactRepository)
         private readonly suggestedContactRepository: ISuggestedContactRepository,
         @Inject(ISuggestedContactEntityMapper)
@@ -41,7 +43,11 @@ export class GrantedUserUseCasesFactory {
         );
     }
 
-    public createContactListUseCase(): ContactListUseCase {
-        return new ContactListUseCase(this.authedUserService, this.suggestedContactRepository);
+    public createPatientContactUseCase(): PatientContactListUseCase {
+        return new PatientContactListUseCase(
+            this.authedUserService,
+            this.userRepository,
+            this.suggestedContactRepository,
+        );
     }
 }

@@ -7,9 +7,6 @@ export class SuggestedContactView implements SuggestedContactDto {
     public contactId: string;
 
     @ApiProperty()
-    public patientUserId: string;
-
-    @ApiProperty()
     public firstName: string;
 
     @ApiProperty()
@@ -28,5 +25,5 @@ export class SuggestedContactView implements SuggestedContactDto {
     public suggestedAt: string;
 
     @ApiProperty()
-    public suggestedByUser: UserView;
+    public suggestedByUser?: UserView;
 }

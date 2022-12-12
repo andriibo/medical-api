@@ -15,10 +15,10 @@ export class PatientContactListUseCase {
     ) {}
 
     public async getList(patientUserId: string): Promise<ContactDto[]> {
-        const doctor = await this.authedUserService.getUser();
+        const grantedUser = await this.authedUserService.getUser();
         const patient = await this.getPatient(patientUserId);
 
-        await this.patientDataAccessSpecification.assertGrantedUserHasAccess(doctor, patient.id);
+        await this.patientDataAccessSpecification.assertGrantedUserHasAccess(grantedUser, patient.id);
 
         const items = await this.emergencyContactRepository.getByUserId(patient.id);
 
