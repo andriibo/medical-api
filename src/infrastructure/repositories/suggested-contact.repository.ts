@@ -24,4 +24,11 @@ export class SuggestedContactRepository implements ISuggestedContactRepository {
     public async getByPatientUserId(patientUserId: string): Promise<SuggestedContact[]> {
         return await this.dataSource.manager.findBy(SuggestedContactModel, {patientUserId});
     }
+
+    public async getByPatientUserIdAndSuggestedBy(
+        patientUserId: string,
+        suggestedBy: string,
+    ): Promise<SuggestedContact[]> {
+        return await this.dataSource.manager.findBy(SuggestedContactModel, {patientUserId, suggestedBy});
+    }
 }

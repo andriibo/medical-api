@@ -6,8 +6,10 @@ import {ISuggestedContactEntityMapper} from 'app/modules/suggested-contact/mappe
 import {
     CreateSuggestedContactUseCase,
     DeleteSuggestedContactUseCase,
+    PatientContactListUseCase,
 } from 'app/modules/suggested-contact/use-cases/granted-user';
 import {DeleteSuggestedContactByGrantedUserService} from 'app/modules/suggested-contact/services/delete-suggested-contact-by-granted-user.service';
+import {IUserRepository} from 'app/modules/auth/repositories';
 
 @Injectable()
 export class GrantedUserUseCasesFactory {
@@ -38,5 +40,9 @@ export class GrantedUserUseCasesFactory {
             this.suggestedContactRepository,
             this.deleteSuggestedContactByGrantedUserService,
         );
+    }
+
+    public createPatientContactUseCase(): PatientContactListUseCase {
+        return new PatientContactListUseCase(this.authedUserService, this.suggestedContactRepository);
     }
 }

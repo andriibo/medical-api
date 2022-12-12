@@ -1,4 +1,15 @@
-import {Controller, HttpStatus, BadRequestException, Post, Body, Delete, Param, ParseUUIDPipe} from '@nestjs/common';
+import {
+    Controller,
+    HttpStatus,
+    BadRequestException,
+    Post,
+    Body,
+    Delete,
+    Param,
+    ParseUUIDPipe,
+    Get,
+    HttpCode,
+} from '@nestjs/common';
 import {
     ApiBadRequestResponse,
     ApiBearerAuth,
@@ -12,6 +23,8 @@ import {
 import {Roles} from 'presentation/guards';
 import {CreateSuggestedContactView} from 'views/request/suggested-contact';
 import {GrantedUserUseCasesFactory} from 'infrastructure/factories/suggested-contact/granted-user-use-cases.factory';
+import {MySuggestedContactView} from 'views/response/suggested-contact';
+import {MySuggestedContactDto} from 'domain/dtos/response/suggested-contact/my-suggested-contact.dto';
 
 @Controller()
 @ApiBearerAuth()
@@ -66,6 +79,22 @@ export class GrantedUserController {
 
         try {
             await useCase.deleteSuggestedContact(contactId);
+        } catch (error) {
+            throw new BadRequestException(error.message);
+        }
+    }
+
+    @Roles('Caregiver', 'Doctor')
+    @Get('my-suggested-contacts/:patientUserId')
+    @HttpCode(HttpStatus.OK)
+    @ApiResponse({status: HttpStatus.OK, type: [MySuggestedContactView]})
+    public async getPatientSuggestedContacts(
+        @Param('patientUserId', ParseUUIDPipe) patientUserId: string,
+    ): Promise<MySuggestedContactDto[]> {
+        const useCase = this.grantedUserUseCasesFactory.createPatientContactUseCase();
+
+        try {
+            return await useCase.getList(patientUserId);
         } catch (error) {
             throw new BadRequestException(error.message);
         }
