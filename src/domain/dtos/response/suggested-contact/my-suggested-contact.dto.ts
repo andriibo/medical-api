@@ -1,7 +1,6 @@
 import {SuggestedContact} from 'domain/entities';
-import {UserDto} from 'domain/dtos/response/user/user.dto';
 
-export class SuggestedContactDto {
+export class MySuggestedContactDto {
     public contactId: string;
 
     public firstName: string;
@@ -16,10 +15,8 @@ export class SuggestedContactDto {
 
     public suggestedAt: string;
 
-    public suggestedByUser: UserDto;
-
-    public static fromSuggestedContact(suggestedContact: SuggestedContact): SuggestedContactDto {
-        const dto = new SuggestedContactDto();
+    public static fromSuggestedContact(suggestedContact: SuggestedContact): MySuggestedContactDto {
+        const dto = new MySuggestedContactDto();
         dto.contactId = suggestedContact.id;
         dto.firstName = suggestedContact.firstName;
         dto.lastName = suggestedContact.lastName;

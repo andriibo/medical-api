@@ -1,6 +1,6 @@
 import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service';
 import {ISuggestedContactRepository} from 'app/modules/suggested-contact/repositories';
-import {SuggestedContactDto} from 'domain/dtos/response/suggested-contact/suggested-contact.dto';
+import {MySuggestedContactDto} from 'domain/dtos/response/suggested-contact/my-suggested-contact.dto';
 import {User} from 'domain/entities';
 import {EntityNotFoundError} from 'app/errors';
 import {IUserRepository} from 'app/modules/auth/repositories';
@@ -12,7 +12,7 @@ export class PatientContactListUseCase {
         private readonly suggestedContactRepository: ISuggestedContactRepository,
     ) {}
 
-    public async getList(patientUserId: string): Promise<SuggestedContactDto[]> {
+    public async getList(patientUserId: string): Promise<MySuggestedContactDto[]> {
         const grantedUser = await this.authedUserService.getUser();
         const patient = await this.getPatient(patientUserId);
 
@@ -21,7 +21,7 @@ export class PatientContactListUseCase {
             grantedUser.id,
         );
 
-        return items.map((item) => SuggestedContactDto.fromSuggestedContact(item));
+        return items.map((item) => MySuggestedContactDto.fromSuggestedContact(item));
     }
 
     private async getPatient(patientUserId: string): Promise<User> {
