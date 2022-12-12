@@ -15,7 +15,6 @@ import {IUserRepository} from 'app/modules/auth/repositories';
 export class GrantedUserUseCasesFactory {
     public constructor(
         @Inject(IAuthedUserService) private readonly authedUserService: IAuthedUserService,
-        @Inject(IUserRepository) private readonly userRepository: IUserRepository,
         @Inject(ISuggestedContactRepository)
         private readonly suggestedContactRepository: ISuggestedContactRepository,
         @Inject(ISuggestedContactEntityMapper)
@@ -44,10 +43,6 @@ export class GrantedUserUseCasesFactory {
     }
 
     public createPatientContactUseCase(): PatientContactListUseCase {
-        return new PatientContactListUseCase(
-            this.authedUserService,
-            this.userRepository,
-            this.suggestedContactRepository,
-        );
+        return new PatientContactListUseCase(this.authedUserService, this.suggestedContactRepository);
     }
 }
