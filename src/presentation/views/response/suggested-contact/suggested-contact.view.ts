@@ -1,5 +1,6 @@
 import {ApiProperty} from '@nestjs/swagger';
 import {SuggestedContactDto} from 'domain/dtos/response/suggested-contact/suggested-contact.dto';
+import {UserView} from 'views/response/user';
 
 export class SuggestedContactView implements SuggestedContactDto {
     @ApiProperty()
@@ -21,8 +22,8 @@ export class SuggestedContactView implements SuggestedContactDto {
     public relationship: string;
 
     @ApiProperty()
-    public suggestedBy: string;
+    public suggestedAt: string;
 
     @ApiProperty()
-    public suggestedAt: string;
+    public suggestedUser: UserView;
 }

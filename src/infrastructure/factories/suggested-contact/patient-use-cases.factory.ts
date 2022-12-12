@@ -6,6 +6,7 @@ import {DeleteSuggestedContactByPatientService} from 'app/modules/suggested-cont
 import {ApproveSuggestedContactUseCase} from 'app/modules/suggested-contact/use-cases/patient/approve-suggested-contact.use-case';
 import {ApproveSuggestedContactByPatientService} from 'app/modules/suggested-contact/services/approve-suggested-contact-by-patient.service';
 import {ContactListUseCase} from 'app/modules/suggested-contact/use-cases/patient/contact-list.use-case';
+import {IUserRepository} from 'app/modules/auth/repositories';
 
 @Injectable()
 export class PatientUseCasesFactory {
@@ -17,6 +18,7 @@ export class PatientUseCasesFactory {
         private readonly deleteSuggestedContactByPatientService: DeleteSuggestedContactByPatientService,
         @Inject(ApproveSuggestedContactByPatientService)
         private readonly approveSuggestedContactByPatientService: ApproveSuggestedContactByPatientService,
+        @Inject(IUserRepository) private readonly userRepository: IUserRepository,
     ) {}
 
     public createDeleteSuggestedContactUseCase(): DeleteSuggestedContactUseCase {
@@ -36,6 +38,6 @@ export class PatientUseCasesFactory {
     }
 
     public createContactListUseCase(): ContactListUseCase {
-        return new ContactListUseCase(this.authedUserService, this.suggestedContactRepository);
+        return new ContactListUseCase(this.authedUserService, this.suggestedContactRepository, this.userRepository);
     }
 }
