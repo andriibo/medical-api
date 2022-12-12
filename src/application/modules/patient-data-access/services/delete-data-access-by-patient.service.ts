@@ -4,6 +4,7 @@ import {PatientDataAccessSpecification} from 'app/modules/patient-data-access/sp
 import {IPatientDataAccessEventEmitter} from 'app/modules/patient-data-access/event-emitters/patient-data-access.event-emitter';
 import {IUserRepository} from 'app/modules/auth/repositories';
 import {EntityNotFoundError} from 'app/errors';
+import {PatientDataAccessStatus} from 'domain/entities/patient-data-access.entity';
 
 export class DeleteDataAccessByPatientService {
     public constructor(
@@ -15,9 +16,15 @@ export class DeleteDataAccessByPatientService {
 
     public async deleteDataAccess(patient: User, dataAccess: PatientDataAccess): Promise<void> {
         await this.patientDataAccessSpecification.assertPatientCanDeleteAccess(patient, dataAccess);
-        const grantedUser = await this.getGrantedUser(dataAccess.grantedUserId);
         await this.patientDataAccessRepository.delete(dataAccess);
-        await this.patientDataAccessEventEmitter.emitAccessDeletedByPatient(patient, grantedUser.email);
+        await this.sendNotificationToGrantedUser(patient, dataAccess);
+    }
+
+    private async sendNotificationToGrantedUser(patient: User, dataAccess: PatientDataAccess): Promise<void> {
+        if (dataAccess.status === PatientDataAccessStatus.Approved) {
+            const grantedUser = await this.getGrantedUser(dataAccess.grantedUserId);
+            await this.patientDataAccessEventEmitter.emitAccessDeletedByPatient(patient, grantedUser.email);
+        }
     }
 
     private async getGrantedUser(grantedUserId: string): Promise<User> {
