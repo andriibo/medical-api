@@ -16,7 +16,7 @@ export class SuggestedContactDto {
 
     public suggestedAt: string;
 
-    public createdByUser: UserDto;
+    public suggestedByUser: UserDto;
 
     public static fromSuggestedContact(suggestedContact: SuggestedContact): SuggestedContactDto {
         const dto = new SuggestedContactDto();

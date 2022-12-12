@@ -25,5 +25,5 @@ export class SuggestedContactView implements SuggestedContactDto {
     public suggestedAt: string;
 
     @ApiProperty()
-    public createdByUser: UserView;
+    public suggestedByUser: UserView;
 }

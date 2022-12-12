@@ -22,7 +22,7 @@ export class ContactListUseCase {
 
         return items.map((item) => {
             const dto = SuggestedContactDto.fromSuggestedContact(item);
-            dto.createdByUser = UserDto.fromUser(indexedUsers[item.suggestedBy]);
+            dto.suggestedByUser = UserDto.fromUser(indexedUsers[item.suggestedBy]);
 
             return dto;
         });
