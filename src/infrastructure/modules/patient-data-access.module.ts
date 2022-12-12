@@ -161,11 +161,13 @@ import {GrantedUserController} from 'controllers/patient-data-access/granted-use
         {
             provide: DeleteDataAccessByPatientService,
             useFactory: (
+                userRepository: IUserRepository,
                 patientDataAccessRepository: IPatientDataAccessRepository,
                 patientDataAccessSpecification: PatientDataAccessSpecification,
                 patientDataAccessEventEmitter: IPatientDataAccessEventEmitter,
             ) => {
                 return new DeleteDataAccessByPatientService(
+                    userRepository,
                     patientDataAccessRepository,
                     patientDataAccessSpecification,
                     patientDataAccessEventEmitter,
@@ -176,11 +178,13 @@ import {GrantedUserController} from 'controllers/patient-data-access/granted-use
         {
             provide: DeleteDataAccessByGrantedUserService,
             useFactory: (
+                userRepository: IUserRepository,
                 patientDataAccessRepository: IPatientDataAccessRepository,
                 patientDataAccessSpecification: PatientDataAccessSpecification,
                 patientDataAccessEventEmitter: IPatientDataAccessEventEmitter,
             ) => {
                 return new DeleteDataAccessByGrantedUserService(
+                    userRepository,
                     patientDataAccessRepository,
                     patientDataAccessSpecification,
                     patientDataAccessEventEmitter,
