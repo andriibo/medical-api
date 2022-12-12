@@ -15,20 +15,20 @@ export class ContactListUseCase {
     public async getList(): Promise<SuggestedContactDto[]> {
         const user = await this.authedUserService.getUser();
         const items = await this.suggestedContactRepository.getByPatientUserId(user.id);
-        const users = await this.getSuggestedUsers(items);
+        const users = await this.getUsersWhoSuggestedContacts(items);
 
         const indexedUsers = {};
         users.map((user) => (indexedUsers[user.id] = user));
 
         return items.map((item) => {
             const dto = SuggestedContactDto.fromSuggestedContact(item);
-            dto.suggestedUser = UserDto.fromUser(indexedUsers[item.suggestedBy]);
+            dto.createdByUser = UserDto.fromUser(indexedUsers[item.suggestedBy]);
 
             return dto;
         });
     }
 
-    private async getSuggestedUsers(items: SuggestedContact[]): Promise<User[]> {
+    private async getUsersWhoSuggestedContacts(items: SuggestedContact[]): Promise<User[]> {
         const userIds = items.filter((item) => item.suggestedBy).map((item) => item.suggestedBy);
 
         return await this.userRepository.getByIds(userIds);
