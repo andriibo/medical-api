@@ -173,7 +173,12 @@ import {GrantedUserController} from 'controllers/patient-data-access/granted-use
                     patientDataAccessEventEmitter,
                 );
             },
-            inject: [IPatientDataAccessRepository, PatientDataAccessSpecification, IPatientDataAccessEventEmitter],
+            inject: [
+                IUserRepository,
+                IPatientDataAccessRepository,
+                PatientDataAccessSpecification,
+                IPatientDataAccessEventEmitter,
+            ],
         },
         {
             provide: DeleteDataAccessByGrantedUserService,
@@ -190,7 +195,12 @@ import {GrantedUserController} from 'controllers/patient-data-access/granted-use
                     patientDataAccessEventEmitter,
                 );
             },
-            inject: [IPatientDataAccessRepository, PatientDataAccessSpecification, IPatientDataAccessEventEmitter],
+            inject: [
+                IUserRepository,
+                IPatientDataAccessRepository,
+                PatientDataAccessSpecification,
+                IPatientDataAccessEventEmitter,
+            ],
         },
     ],
 })
