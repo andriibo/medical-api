@@ -20,10 +20,13 @@ export class DeleteDataAccessByPatientService {
     }
 
     private async sendNotificationToGrantedUser(patient: User, dataAccess: PatientDataAccess): Promise<void> {
+        let grantedEmail = dataAccess.grantedEmail;
         if (dataAccess.grantedUserId !== null) {
             const grantedUser = await this.getGrantedUser(dataAccess.grantedUserId);
-            await this.patientDataAccessEventEmitter.emitAccessDeletedByPatient(patient, grantedUser.email);
+            grantedEmail = grantedUser.email;
         }
+
+        await this.patientDataAccessEventEmitter.emitAccessDeletedByPatient(patient, grantedEmail);
     }
 
     private async getGrantedUser(grantedUserId: string): Promise<User> {
