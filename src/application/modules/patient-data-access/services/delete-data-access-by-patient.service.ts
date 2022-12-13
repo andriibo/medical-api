@@ -15,16 +15,13 @@ export class DeleteDataAccessByPatientService {
     public async deleteDataAccess(patient: User, dataAccess: PatientDataAccess): Promise<void> {
         await this.patientDataAccessSpecification.assertPatientCanDeleteAccess(patient, dataAccess);
         await this.patientDataAccessRepository.delete(dataAccess);
-        await this.sendNotificationToGrantedUser(patient, dataAccess);
+        await this.sendNotificationIfGrantedUserRegistered(patient, dataAccess);
     }
 
-    private async sendNotificationToGrantedUser(patient: User, dataAccess: PatientDataAccess): Promise<void> {
-        let grantedEmail = dataAccess.grantedEmail;
+    private async sendNotificationIfGrantedUserRegistered(patient: User, dataAccess: PatientDataAccess): Promise<void> {
         if (dataAccess.grantedUserId !== null) {
             const grantedUser = await this.userRepository.getOneByIdOrFail(dataAccess.grantedUserId);
-            grantedEmail = grantedUser.email;
+            await this.patientDataAccessEventEmitter.emitAccessDeletedByPatient(patient, grantedUser.email);
         }
-
-        await this.patientDataAccessEventEmitter.emitAccessDeletedByPatient(patient, grantedEmail);
     }
 }
