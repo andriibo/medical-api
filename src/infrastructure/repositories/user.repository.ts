@@ -4,6 +4,7 @@ import {DataSource, In} from 'typeorm';
 import {IUserRepository} from 'app/modules/auth/repositories';
 import {UserModel} from 'infrastructure/models';
 import {User} from 'domain/entities';
+import {EntityNotFoundError} from 'app/errors';
 
 @Injectable()
 export class UserRepository implements IUserRepository {
@@ -61,6 +62,15 @@ export class UserRepository implements IUserRepository {
 
     public async getOneById(id: string): Promise<User> {
         return await this.dataSource.manager.findOneBy(UserModel, {id});
+    }
+
+    public async getOneByIdOrFail(id: string): Promise<User> {
+        const user = await this.dataSource.manager.findOneBy(UserModel, {id});
+        if (user === null) {
+            throw new EntityNotFoundError('User Not Found.');
+        }
+
+        return user;
     }
 
     public async getByIds(ids: string[]): Promise<User[]> {

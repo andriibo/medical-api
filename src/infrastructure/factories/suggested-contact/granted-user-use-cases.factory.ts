@@ -9,7 +9,6 @@ import {
     PatientContactListUseCase,
 } from 'app/modules/suggested-contact/use-cases/granted-user';
 import {DeleteSuggestedContactByGrantedUserService} from 'app/modules/suggested-contact/services/delete-suggested-contact-by-granted-user.service';
-import {IUserRepository} from 'app/modules/auth/repositories';
 
 @Injectable()
 export class GrantedUserUseCasesFactory {

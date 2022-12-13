@@ -9,6 +9,8 @@ export interface IUserRepository {
 
     getOneById(userId: string): Promise<User>;
 
+    getOneByIdOrFail(userId: string): Promise<User>;
+
     getByIds(userIds: string[]): Promise<User[]>;
 
     getOneByEmail(email: string): Promise<User>;
