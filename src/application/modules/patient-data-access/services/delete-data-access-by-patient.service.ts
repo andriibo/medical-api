@@ -3,7 +3,6 @@ import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repo
 import {PatientDataAccessSpecification} from 'app/modules/patient-data-access/specifications/patient-data-access.specification';
 import {IPatientDataAccessEventEmitter} from 'app/modules/patient-data-access/event-emitters/patient-data-access.event-emitter';
 import {IUserRepository} from 'app/modules/auth/repositories';
-import {EntityNotFoundError} from 'app/errors';
 
 export class DeleteDataAccessByPatientService {
     public constructor(
@@ -22,20 +21,10 @@ export class DeleteDataAccessByPatientService {
     private async sendNotificationToGrantedUser(patient: User, dataAccess: PatientDataAccess): Promise<void> {
         let grantedEmail = dataAccess.grantedEmail;
         if (dataAccess.grantedUserId !== null) {
-            const grantedUser = await this.getGrantedUser(dataAccess.grantedUserId);
+            const grantedUser = await this.userRepository.getOneByIdOrFail(dataAccess.grantedUserId);
             grantedEmail = grantedUser.email;
         }
 
         await this.patientDataAccessEventEmitter.emitAccessDeletedByPatient(patient, grantedEmail);
-    }
-
-    private async getGrantedUser(grantedUserId: string): Promise<User> {
-        const patient = await this.userRepository.getOneById(grantedUserId);
-
-        if (patient === null) {
-            throw new EntityNotFoundError('Granted User Not Found.');
-        }
-
-        return patient;
     }
 }
