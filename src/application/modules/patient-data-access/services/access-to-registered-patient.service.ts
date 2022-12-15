@@ -20,7 +20,7 @@ export class AccessToRegisteredPatientService {
 
         await this.patientDataAccessRepository.create(dataAccess);
 
-        await this.patientDataAccessEventEmitter.emitDoctorInitiatedAccessToRegisteredPatient(
+        await this.patientDataAccessEventEmitter.emitGrantedUserInitiatedAccessToRegisteredPatient(
             grantedUser,
             patient.email,
         );

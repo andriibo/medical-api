@@ -1,13 +1,13 @@
 import {User} from 'domain/entities';
 
 export interface IMailService {
-    sendInviteToSignUpFromPatientToDoctor(patient: User, toEmail: string): Promise<void>;
+    sendInviteToSignUpFromPatientToGrantedUser(patient: User, toEmail: string): Promise<void>;
 
-    sendInviteToSignUpFromDoctorToPatient(doctor: User, toEmail: string): Promise<void>;
+    sendInviteToSignUpFromGrantedUserToPatient(grantedUser: User, toEmail: string): Promise<void>;
 
     sendNotificationThatPatientDataAccessWasInitiatedByPatient(patient: User, toEmail: string): Promise<void>;
 
-    sendNotificationThatPatientDataAccessWasInitiatedByDoctor(doctor: User, toEmail: string): Promise<void>;
+    sendNotificationThatPatientDataAccessWasInitiatedByGrantedUser(grantedUser: User, toEmail: string): Promise<void>;
 
     sendNotificationThatUserWasActivated(toEmail: string): Promise<void>;
 

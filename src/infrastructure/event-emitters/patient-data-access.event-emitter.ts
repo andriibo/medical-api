@@ -7,20 +7,48 @@ import {Injectable} from '@nestjs/common';
 export class PatientDataAccessEventEmitter implements IPatientDataAccessEventEmitter {
     public constructor(private eventEmitter: EventEmitter2) {}
 
-    public async emitPatientInitiatedAccessForUnregisteredDoctor(patient: User, grantedEmail: string): Promise<void> {
-        await this.eventEmitter.emit('patient-initiated-data-access-for-unregistered-doctor', patient, grantedEmail);
+    public async emitPatientInitiatedAccessForUnregisteredGrantedUser(
+        patient: User,
+        grantedEmail: string,
+    ): Promise<void> {
+        await this.eventEmitter.emit(
+            'patient-initiated-data-access-for-unregistered-granted-user',
+            patient,
+            grantedEmail,
+        );
     }
 
-    public async emitDoctorInitiatedAccessToUnregisteredPatient(doctor: User, patientEmail: string): Promise<void> {
-        await this.eventEmitter.emit('doctor-initiated-data-access-to-unregistered-patient', doctor, patientEmail);
+    public async emitGrantedUserInitiatedAccessToUnregisteredPatient(
+        grantedUser: User,
+        patientEmail: string,
+    ): Promise<void> {
+        await this.eventEmitter.emit(
+            'granted-user-initiated-data-access-to-unregistered-patient',
+            grantedUser,
+            patientEmail,
+        );
     }
 
-    public async emitPatientInitiatedAccessForRegisteredDoctor(patient: User, grantedEmail: string): Promise<void> {
-        await this.eventEmitter.emit('patient-initiated-data-access-for-registered-doctor', patient, grantedEmail);
+    public async emitPatientInitiatedAccessForRegisteredGrantedUser(
+        patient: User,
+        grantedEmail: string,
+    ): Promise<void> {
+        await this.eventEmitter.emit(
+            'patient-initiated-data-access-for-registered-granted-user',
+            patient,
+            grantedEmail,
+        );
     }
 
-    public async emitDoctorInitiatedAccessToRegisteredPatient(doctor: User, grantedEmail: string): Promise<void> {
-        await this.eventEmitter.emit('doctor-initiated-data-access-to-registered-patient', doctor, grantedEmail);
+    public async emitGrantedUserInitiatedAccessToRegisteredPatient(
+        grantedUser: User,
+        grantedEmail: string,
+    ): Promise<void> {
+        await this.eventEmitter.emit(
+            'granted-user-initiated-data-access-to-registered-patient',
+            grantedUser,
+            grantedEmail,
+        );
     }
 
     public async emitAccessDeletedByPatient(patient: User, grantedEmail: string): Promise<void> {
