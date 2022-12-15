@@ -23,7 +23,7 @@ export class AccessToUnregisteredPatientService {
 
         await this.patientDataAccessRepository.create(dataAccess);
 
-        await this.patientDataAccessEventEmitter.emitDoctorInitiatedAccessToUnregisteredPatient(
+        await this.patientDataAccessEventEmitter.emitGrantedUserInitiatedAccessToUnregisteredPatient(
             grantedUser,
             patientEmail,
         );

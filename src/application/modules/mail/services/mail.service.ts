@@ -6,7 +6,7 @@ import {Email} from 'app/modules/mail/models';
 export class MailService implements IMailService {
     public constructor(private mailerService: IMailSenderService) {}
 
-    public async sendInviteToSignUpFromPatientToDoctor(patient: User, toEmail: string): Promise<void> {
+    public async sendInviteToSignUpFromPatientToGrantedUser(patient: User, toEmail: string): Promise<void> {
         const deepLink = `zenzerapp://auth?email=${toEmail}`;
 
         const mail: Email = {
@@ -18,13 +18,13 @@ export class MailService implements IMailService {
         await this.mailerService.sendMail(mail);
     }
 
-    public async sendInviteToSignUpFromDoctorToPatient(doctor: User, toEmail: string): Promise<void> {
+    public async sendInviteToSignUpFromGrantedUserToPatient(grantedUser: User, toEmail: string): Promise<void> {
         const deepLink = `zenzerapp://auth?email=${toEmail}`;
 
         const mail: Email = {
             to: toEmail,
             subject: 'Invitation to Medical app.',
-            text: `${doctor.firstName} ${doctor.lastName} wants to add you as their medical patient on Medical app. SIGN UP ${deepLink}.`,
+            text: `${grantedUser.firstName} ${grantedUser.lastName} wants to add you as their medical patient on Medical app. SIGN UP ${deepLink}.`,
         };
 
         await this.mailerService.sendMail(mail);
@@ -45,8 +45,8 @@ export class MailService implements IMailService {
         await this.mailerService.sendMail(mail);
     }
 
-    public async sendNotificationThatPatientDataAccessWasInitiatedByDoctor(
-        doctor: User,
+    public async sendNotificationThatPatientDataAccessWasInitiatedByGrantedUser(
+        grantedUser: User,
         toEmail: string,
     ): Promise<void> {
         const deepLink = `zenzerapp://waiting-room`;
@@ -54,7 +54,7 @@ export class MailService implements IMailService {
         const mail: Email = {
             to: toEmail,
             subject: 'New incoming request.',
-            text: `${doctor.firstName} ${doctor.lastName} wants to add you as their medical patient. VIEW REQUEST ${deepLink}.`,
+            text: `${grantedUser.firstName} ${grantedUser.lastName} wants to add you as their medical patient. VIEW REQUEST ${deepLink}.`,
         };
 
         await this.mailerService.sendMail(mail);
