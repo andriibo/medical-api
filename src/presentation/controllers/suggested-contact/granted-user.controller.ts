@@ -22,7 +22,7 @@ import {
 } from '@nestjs/swagger';
 import {Roles} from 'presentation/guards';
 import {CreateSuggestedContactView} from 'views/request/suggested-contact';
-import {GrantedUserUseCasesFactory} from 'infrastructure/factories/suggested-contact/granted-user-use-cases.factory';
+import {GrantedUserUseCasesFactory} from 'infrastructure/modules/suggected-contact/factories';
 import {MySuggestedContactView} from 'views/response/suggested-contact';
 import {MySuggestedContactDto} from 'domain/dtos/response/suggested-contact/my-suggested-contact.dto';
 

@@ -1,17 +1,17 @@
-import {AuthModule} from './auth.module';
-import {VitalModule} from './vital.module';
-import {PatientDataAccessModule} from './patient-data-access.module';
-import {EmergencyContactModule} from './emergency-contact.module';
-import {SuggestedContactModule} from './suggested-contact.module';
-import {ProfileModule} from './profile.module';
-import {MailModule} from './mail.module';
-import {DiagnosisModule} from './diagnosis.module';
-import {PatientDiagnosisModule} from './patient-diagnosis.module';
-import {MedicationModule} from './medication.module';
-import {PatientMedicationModule} from './patient-medication.module';
-import {PatientVitalThresholdModule} from './patient-vital-threshold.module';
+import {AuthModule} from './auth/auth.module';
+import {VitalModule} from './vitals/vital.module';
+import {PatientDataAccessModule} from './patient-data-access/patient-data-access.module';
+import {EmergencyContactModule} from './emergency-contact/emergency-contact.module';
+import {SuggestedContactModule} from './suggected-contact/suggested-contact.module';
+import {ProfileModule} from './profile/profile.module';
+import {MailModule} from './mail/mail.module';
+import {DiagnosisModule} from './diagnosis/diagnosis.module';
+import {PatientDiagnosisModule} from './patient-diagnosis/patient-diagnosis.module';
+import {MedicationModule} from './medication/medication.module';
+import {PatientMedicationModule} from './patient-medication/patient-medication.module';
+import {PatientVitalThresholdModule} from './patient-vital-threshold/patient-vital-threshold.module';
 import {WebsocketModule} from './websocket.module';
-import {FileModule} from './file.module';
+import {FileModule} from './file/file.module';
 
 export {
     AuthModule,

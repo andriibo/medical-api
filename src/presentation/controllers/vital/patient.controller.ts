@@ -1,7 +1,7 @@
 import {BadRequestException, Body, Controller, Get, HttpCode, HttpStatus, Post, Query} from '@nestjs/common';
 import {ApiBearerAuth, ApiOperation, ApiResponse, ApiTags} from '@nestjs/swagger';
 import {GetVitalsByPatientDto} from 'domain/dtos/request/vital';
-import {VitalUseCasesFactory} from 'infrastructure/factories/vital-use-cases.factory';
+import {VitalUseCasesFactory} from 'infrastructure/modules/vitals/factories/vital-use-cases.factory';
 import {Roles} from 'presentation/guards';
 import {VitalNormalizationPipe} from 'presentation/pipes/vital-normalization.pipe';
 import {GetVitalQueryView, SyncVitalView} from 'presentation/views/request/vital';

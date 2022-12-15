@@ -10,7 +10,7 @@ import {
 import {Roles} from 'presentation/guards';
 import {MyPatientView} from 'views/response/profile/my-patient.view';
 import {MyPatientDto} from 'domain/dtos/response/profile/my-patient.dto';
-import {GrantedUserUseCasesFactory} from 'infrastructure/factories/profile/granted-user-use-cases.factory';
+import {GrantedUserUseCasesFactory} from 'infrastructure/modules/profile/factories';
 
 @Controller()
 @ApiBearerAuth()

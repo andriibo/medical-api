@@ -12,7 +12,7 @@ import {
 import {ApiBearerAuth, ApiResponse, ApiTags} from '@nestjs/swagger';
 import {Roles} from 'presentation/guards';
 import {DoctorView} from 'presentation/views/response/user';
-import {DoctorUseCasesFactory} from 'infrastructure/factories/profile';
+import {DoctorUseCasesFactory} from 'infrastructure/modules/profile/factories';
 import {DoctorDto} from 'domain/dtos/response/profile/doctor.dto';
 import {PatientDto} from 'domain/dtos/response/profile/patient.dto';
 import {UpdateDoctorProfileView} from 'views/request/profile/update-doctor-profile.view';

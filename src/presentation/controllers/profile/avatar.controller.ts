@@ -14,7 +14,7 @@ import {ApiBadRequestResponse, ApiBearerAuth, ApiConsumes, ApiResponse, ApiTags}
 import {FileInterceptor} from '@nestjs/platform-express';
 import {UploadAvatarProfileView} from 'views/request/profile/upload-avatar-profile.view';
 import {Express} from 'express';
-import {UserAvatarUseCasesFactory} from 'infrastructure/factories/user-avatar-use-cases.factory';
+import {UserAvatarUseCasesFactory} from 'infrastructure/modules/profile/factories';
 
 @Controller('avatar')
 @ApiBearerAuth()

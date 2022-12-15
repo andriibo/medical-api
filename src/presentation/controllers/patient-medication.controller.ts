@@ -12,7 +12,7 @@ import {
 } from '@nestjs/common';
 import {ApiBearerAuth, ApiResponse, ApiTags} from '@nestjs/swagger';
 import {Roles} from 'presentation/guards';
-import {PatientMedicationUseCasesFactory} from 'infrastructure/factories/patient-medication-use-cases.factory';
+import {PatientMedicationUseCasesFactory} from 'infrastructure/modules/patient-medication/factories/patient-medication-use-cases.factory';
 import {CreateMedicationView} from 'presentation/views/request/patient-medication/create-medication.view';
 import {MedicationDto} from 'domain/dtos/response/patient-medication/medication.dto';
 import {MedicationView} from 'views/response/patient-medication';

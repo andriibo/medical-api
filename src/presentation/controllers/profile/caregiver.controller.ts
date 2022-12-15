@@ -1,7 +1,7 @@
 import {Controller, Get, HttpStatus, HttpCode, Patch, Body} from '@nestjs/common';
 import {ApiBearerAuth, ApiResponse, ApiTags} from '@nestjs/swagger';
 import {Roles} from 'presentation/guards';
-import {CaregiverUseCasesFactory} from 'infrastructure/factories/profile/caregiver-use-cases.factory';
+import {CaregiverUseCasesFactory} from 'infrastructure/modules/profile/factories';
 import {CaregiverDto} from 'domain/dtos/response/profile/caregiver.dto';
 import {CaregiverView} from 'views/response/user/caregiver.view';
 import {UpdateCaregiverProfileView} from 'views/request/profile/update-caregiver-profile.view';

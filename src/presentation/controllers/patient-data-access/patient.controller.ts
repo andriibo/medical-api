@@ -13,7 +13,7 @@ import {
 } from '@nestjs/common';
 import {ApiBearerAuth, ApiResponse, ApiTags} from '@nestjs/swagger';
 import {Roles} from 'presentation/guards';
-import {PatientUseCasesFactory} from 'infrastructure/factories/patient-data-access/patient-use-cases.factory';
+import {PatientUseCasesFactory} from 'infrastructure/modules/patient-data-access/factories/patient-use-cases.factory';
 import {InitiateDataAccessView} from 'presentation/views/request/data-access';
 import {DataAccessView} from 'presentation/views/response/data-access';
 import {DataAccessDto} from 'domain/dtos/response/data-access/data-access.dto';

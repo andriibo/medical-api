@@ -2,7 +2,7 @@ import {Body, Controller, Get, HttpCode, HttpStatus, Patch} from '@nestjs/common
 import {ApiBearerAuth, ApiForbiddenResponse, ApiResponse, ApiTags, ApiUnauthorizedResponse} from '@nestjs/swagger';
 import {Roles} from 'presentation/guards';
 import {PatientView} from 'presentation/views/response/user';
-import {PatientUseCasesFactory} from 'infrastructure/factories/profile';
+import {PatientUseCasesFactory} from 'infrastructure/modules/profile/factories';
 import {PatientDto} from 'domain/dtos/response/profile/patient.dto';
 import {UpdatePatientProfileView} from 'views/request/profile/update-patient-profile.view';
 import {MyDoctorDto} from 'domain/dtos/response/profile/my-doctor.dto';

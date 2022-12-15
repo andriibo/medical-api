@@ -12,7 +12,7 @@ import {
 } from '@nestjs/common';
 import {ApiBearerAuth, ApiResponse, ApiTags} from '@nestjs/swagger';
 import {Roles} from 'presentation/guards';
-import {PatientDiagnosisUseCasesFactory} from 'infrastructure/factories/patient-diagnosis-use-cases.factory';
+import {PatientDiagnosisUseCasesFactory} from 'infrastructure/modules/patient-diagnosis/factories/patient-diagnosis-use-cases.factory';
 import {CreateDiagnosisView} from 'presentation/views/request/patient-diagnosis/create-diagnosis.view';
 import {DiagnosisDto} from 'domain/dtos/response/patient-diagnosis/diagnosis.dto';
 import {DiagnosisView} from 'views/response/patient-diagnosis';

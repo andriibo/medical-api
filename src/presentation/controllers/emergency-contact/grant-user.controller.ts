@@ -1,7 +1,7 @@
 import {Controller, HttpStatus, Get, Param, ParseUUIDPipe, HttpCode, BadRequestException} from '@nestjs/common';
 import {ApiBearerAuth, ApiOperation, ApiResponse, ApiTags} from '@nestjs/swagger';
 import {Roles} from 'presentation/guards';
-import {GrantedUserUseCasesFactory} from 'infrastructure/factories/emergency-contact/granted-user-use-cases.factory';
+import {GrantedUserUseCasesFactory} from 'infrastructure/modules/emergency-contact/factories/granted-user-use-cases.factory';
 import {ContactView} from 'presentation/views/response/emergency-contact';
 import {ContactDto} from 'domain/dtos/response/emergency-contact/contact.dto';
 

@@ -9,7 +9,7 @@ import {
     UpdateBloodPressureView,
     UpdateMeanArterialPressureView,
 } from 'views/request/patient-vital-threshold';
-import {DoctorUseCasesFactory} from 'infrastructure/factories/patient-vital-threshold/doctor-use-cases.factory';
+import {DoctorUseCasesFactory} from 'infrastructure/modules/patient-vital-threshold/factories/doctor-use-cases.factory';
 
 @Controller('doctor')
 @ApiBearerAuth()

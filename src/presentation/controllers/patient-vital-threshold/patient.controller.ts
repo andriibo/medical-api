@@ -1,6 +1,6 @@
 import {Controller, Get, HttpCode, HttpStatus} from '@nestjs/common';
 import {ApiBearerAuth, ApiResponse, ApiTags} from '@nestjs/swagger';
-import {PatientUseCasesFactory} from 'infrastructure/factories/patient-vital-threshold';
+import {PatientUseCasesFactory} from 'infrastructure/modules/patient-vital-threshold/factories';
 import {Roles} from 'presentation/guards';
 import {ThresholdView} from 'views/response/patient-vital-threshold/threshold.view';
 import {ThresholdDto} from 'domain/dtos/response/patient-vital-threshold/threshold.dto';

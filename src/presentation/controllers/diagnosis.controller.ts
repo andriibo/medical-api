@@ -1,7 +1,7 @@
 import {Controller, HttpStatus, Get, HttpCode} from '@nestjs/common';
-import {ApiBearerAuth, ApiResponse, ApiTags, ApiOperation} from '@nestjs/swagger';
+import {ApiBearerAuth, ApiResponse, ApiTags} from '@nestjs/swagger';
 import {Auth} from 'presentation/guards';
-import {DiagnosisUseCasesFactory} from 'infrastructure/factories/diagnosis-use-cases.factory';
+import {DiagnosisUseCasesFactory} from 'infrastructure/modules/diagnosis/factories/diagnosis-use-cases.factory';
 import {DiagnosisView} from 'views/response/diagnosis';
 import {DiagnosisDto} from 'domain/dtos/response/diagnosis/diagnosis.dto';
 

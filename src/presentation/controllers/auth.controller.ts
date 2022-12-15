@@ -1,5 +1,5 @@
 import {Body, Controller, HttpCode, HttpStatus, Post, Req} from '@nestjs/common';
-import {ApiBearerAuth, ApiResponse, ApiTags, ApiOperation} from '@nestjs/swagger';
+import {ApiBearerAuth, ApiResponse, ApiTags} from '@nestjs/swagger';
 import {
     ConfirmSignUpUserView,
     SignInUserView,
@@ -18,7 +18,7 @@ import {
     ResendSignUpCodeResponseView,
     UserSignedInView,
 } from 'presentation/views/response/auth';
-import {AuthUseCasesFactory} from 'infrastructure/factories/auth-use-cases.factory';
+import {AuthUseCasesFactory} from 'infrastructure/modules/auth/factories/auth-use-cases.factory';
 import {UserRequest} from 'presentation/middlewares/assign-user.middleware';
 import {Auth} from 'presentation/guards';
 import {ChangeEmailDto} from 'domain/dtos/request/auth/change-email.dto';

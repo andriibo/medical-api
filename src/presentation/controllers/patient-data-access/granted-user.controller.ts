@@ -14,7 +14,7 @@ import {
 import {ApiBearerAuth, ApiOperation, ApiResponse, ApiTags} from '@nestjs/swagger';
 import {Roles} from 'presentation/guards';
 import {InitiateDataAccessView} from 'views/request/data-access';
-import {GrantedUserUseCasesFactory} from 'infrastructure/factories/patient-data-access/granted-user-use-cases.factory';
+import {GrantedUserUseCasesFactory} from 'infrastructure/modules/patient-data-access/factories/granted-user-use-cases.factory';
 import {DataAccessView} from 'views/response/data-access';
 import {DataAccessDto} from 'domain/dtos/response/data-access/data-access.dto';
 
