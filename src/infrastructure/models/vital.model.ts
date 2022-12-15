@@ -1,5 +1,5 @@
 import {Vital} from 'domain/entities';
-import {FloatTransformer} from 'infrastructure/data-transrormers/float.transformer';
+import {FloatTransformer} from 'infrastructure/data-transformers/float.transformer';
 import {Entity, Column, PrimaryGeneratedColumn, JoinColumn, ManyToOne} from 'typeorm';
 import {UserModel} from './user.model';
 
