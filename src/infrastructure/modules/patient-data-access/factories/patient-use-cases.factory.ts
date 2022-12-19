@@ -2,7 +2,7 @@ import {Inject, Injectable} from '@nestjs/common';
 import {IUserRepository} from 'app/modules/auth/repositories';
 import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repositories';
 import {
-    InitiateDataAccessUseCase,
+    InitiateDoctorDataAccessUseCase,
     DataAccessListUseCase,
     DeleteDataAccessUseCase,
 } from 'app/modules/patient-data-access/use-cases/patient';
@@ -10,10 +10,13 @@ import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service'
 import {PatientDataAccessSpecification} from 'app/modules/patient-data-access/specifications/patient-data-access.specification';
 import {ApproveDataAccessUseCase} from 'app/modules/patient-data-access/use-cases/patient/approve-data-access.use-case';
 import {DeleteDataAccessByPatientService} from 'app/modules/patient-data-access/services/delete-data-access-by-patient.service';
-import {AccessForUnregisteredGrantedUserService} from 'app/modules/patient-data-access/services/access-for-unregistered-granted-user.service';
-import {AccessForRegisteredGrantedUserService} from 'app/modules/patient-data-access/services/access-for-registered-granted-user.service';
+import {AccessForUnregisteredDoctorService} from 'app/modules/patient-data-access/services/access-for-unregistered-doctor.service';
+import {AccessForRegisteredDoctorService} from 'app/modules/patient-data-access/services/access-for-registered-doctor.service';
 import {RefuseDataAccessUseCase} from 'app/modules/patient-data-access/use-cases/patient/refuse-data-access.use-case';
 import {IFileUrlService} from 'app/modules/profile/services/file-url.service';
+import {InitiateCaregiverDataAccessUseCase} from 'app/modules/patient-data-access/use-cases/patient/initiate-caregiver-data-access.use-case';
+import {AccessForRegisteredCaregiverService} from 'app/modules/patient-data-access/services/access-for-registered-caregiver.service';
+import {AccessForUnregisteredCaregiverService} from 'app/modules/patient-data-access/services/access-for-unregistered-caregiver.service';
 
 @Injectable()
 export class PatientUseCasesFactory {
@@ -24,21 +27,34 @@ export class PatientUseCasesFactory {
         @Inject(IAuthedUserService) private readonly authedUserService: IAuthedUserService,
         @Inject(PatientDataAccessSpecification)
         private readonly patientDataAccessSpecification: PatientDataAccessSpecification,
-        @Inject(AccessForRegisteredGrantedUserService)
-        private readonly accessForRegisteredGrantedUserService: AccessForRegisteredGrantedUserService,
-        @Inject(AccessForUnregisteredGrantedUserService)
-        private readonly accessForUnregisteredGrantedUserService: AccessForUnregisteredGrantedUserService,
+        @Inject(AccessForRegisteredDoctorService)
+        private readonly accessForRegisteredDoctorService: AccessForRegisteredDoctorService,
+        @Inject(AccessForRegisteredCaregiverService)
+        private readonly accessForRegisteredCaregiverService: AccessForRegisteredCaregiverService,
+        @Inject(AccessForUnregisteredDoctorService)
+        private readonly accessForUnregisteredDoctorService: AccessForUnregisteredDoctorService,
+        @Inject(AccessForUnregisteredCaregiverService)
+        private readonly accessForUnregisteredCaregiverService: AccessForUnregisteredCaregiverService,
         @Inject(DeleteDataAccessByPatientService)
         private readonly deleteDataAccessByPatientService: DeleteDataAccessByPatientService,
         @Inject(IFileUrlService) private readonly fileUrlService: IFileUrlService,
     ) {}
 
-    public createInitiateDataAccessUseCase(): InitiateDataAccessUseCase {
-        return new InitiateDataAccessUseCase(
+    public createDoctorInitiateDataAccessUseCase(): InitiateDoctorDataAccessUseCase {
+        return new InitiateDoctorDataAccessUseCase(
             this.userRepository,
             this.authedUserService,
-            this.accessForRegisteredGrantedUserService,
-            this.accessForUnregisteredGrantedUserService,
+            this.accessForRegisteredDoctorService,
+            this.accessForUnregisteredDoctorService,
+        );
+    }
+
+    public createCaregiverInitiateDataAccessUseCase(): InitiateCaregiverDataAccessUseCase {
+        return new InitiateCaregiverDataAccessUseCase(
+            this.userRepository,
+            this.authedUserService,
+            this.accessForRegisteredCaregiverService,
+            this.accessForUnregisteredCaregiverService,
         );
     }
 

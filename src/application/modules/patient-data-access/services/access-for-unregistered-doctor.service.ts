@@ -5,7 +5,7 @@ import {PatientDataAccessSpecification} from 'app/modules/patient-data-access/sp
 import {PatientDataAccessRequestDirection} from 'domain/entities/patient-data-access.entity';
 import {IPatientDataAccessEventEmitter} from 'app/modules/patient-data-access/event-emitters/patient-data-access.event-emitter';
 
-export class AccessForUnregisteredGrantedUserService {
+export class AccessForUnregisteredDoctorService {
     public constructor(
         private readonly patientDataAccessRepository: IPatientDataAccessRepository,
         private readonly patientDataAccessEntityMapper: IPatientDataAccessEntityMapper,
@@ -13,17 +13,14 @@ export class AccessForUnregisteredGrantedUserService {
         private readonly patientDataAccessSpecification: PatientDataAccessSpecification,
     ) {}
 
-    public async initiateDataAccess(patient: User, grantedEmail: string): Promise<void> {
-        await this.patientDataAccessSpecification.assertPatientCanGiveAccessForGrantedEmail(patient, grantedEmail);
+    public async initiateDataAccess(patient: User, doctorEmail: string): Promise<void> {
+        await this.patientDataAccessSpecification.assertPatientCanGiveAccessForGrantedEmail(patient, doctorEmail);
 
-        const dataAccess = this.createDataAccess(patient, grantedEmail);
+        const dataAccess = this.createDataAccess(patient, doctorEmail);
 
         await this.patientDataAccessRepository.create(dataAccess);
 
-        await this.patientDataAccessEventEmitter.emitPatientInitiatedAccessForUnregisteredGrantedUser(
-            patient,
-            grantedEmail,
-        );
+        await this.patientDataAccessEventEmitter.emitPatientInitiatedAccessForUnregisteredDoctor(patient, doctorEmail);
     }
 
     private createDataAccess(patient: User, grantedEmail: string): PatientDataAccess {

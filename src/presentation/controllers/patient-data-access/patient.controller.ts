@@ -11,7 +11,7 @@ import {
     HttpCode,
     Patch,
 } from '@nestjs/common';
-import {ApiBearerAuth, ApiResponse, ApiTags} from '@nestjs/swagger';
+import {ApiBearerAuth, ApiOperation, ApiResponse, ApiTags} from '@nestjs/swagger';
 import {Roles} from 'presentation/guards';
 import {PatientUseCasesFactory} from 'infrastructure/modules/patient-data-access/factories/patient-use-cases.factory';
 import {InitiateDataAccessView} from 'presentation/views/request/data-access';
@@ -28,9 +28,37 @@ export class PatientController {
     @Post('data-access/initiate')
     @HttpCode(HttpStatus.CREATED)
     @HttpCode(HttpStatus.BAD_REQUEST)
+    @ApiOperation({
+        deprecated: true,
+        summary: 'Deprecated endpoint. Use POST "/data-access/doctor/initiate".',
+    })
     @ApiResponse({status: HttpStatus.CREATED})
     public async initiateDataAccess(@Body() requestBody: InitiateDataAccessView): Promise<void> {
-        const useCase = this.patientUseCasesFactory.createInitiateDataAccessUseCase();
+        await this.initiateDoctorDataAccess(requestBody);
+    }
+
+    @Roles('Patient')
+    @Post('data-access/doctor/initiate')
+    @HttpCode(HttpStatus.CREATED)
+    @HttpCode(HttpStatus.BAD_REQUEST)
+    @ApiResponse({status: HttpStatus.CREATED})
+    public async initiateDoctorDataAccess(@Body() requestBody: InitiateDataAccessView): Promise<void> {
+        const useCase = this.patientUseCasesFactory.createDoctorInitiateDataAccessUseCase();
+
+        try {
+            await useCase.initiateDataAccess(requestBody);
+        } catch (error) {
+            throw new BadRequestException(error.message);
+        }
+    }
+
+    @Roles('Patient')
+    @Post('data-access/caregiver/initiate')
+    @HttpCode(HttpStatus.CREATED)
+    @HttpCode(HttpStatus.BAD_REQUEST)
+    @ApiResponse({status: HttpStatus.CREATED})
+    public async initiateCaregiverDataAccess(@Body() requestBody: InitiateDataAccessView): Promise<void> {
+        const useCase = this.patientUseCasesFactory.createCaregiverInitiateDataAccessUseCase();
 
         try {
             await useCase.initiateDataAccess(requestBody);

@@ -7,14 +7,18 @@ import {Injectable} from '@nestjs/common';
 export class PatientDataAccessEventEmitter implements IPatientDataAccessEventEmitter {
     public constructor(private eventEmitter: EventEmitter2) {}
 
-    public async emitPatientInitiatedAccessForUnregisteredGrantedUser(
+    public async emitPatientInitiatedAccessForUnregisteredDoctor(patient: User, doctorEmail: string): Promise<void> {
+        await this.eventEmitter.emit('patient-initiated-data-access-for-unregistered-doctor', patient, doctorEmail);
+    }
+
+    public async emitPatientInitiatedAccessForUnregisteredCaregiver(
         patient: User,
-        grantedEmail: string,
+        caregiverEmail: string,
     ): Promise<void> {
         await this.eventEmitter.emit(
-            'patient-initiated-data-access-for-unregistered-granted-user',
+            'patient-initiated-data-access-for-unregistered-caregiver',
             patient,
-            grantedEmail,
+            caregiverEmail,
         );
     }
 
@@ -29,15 +33,15 @@ export class PatientDataAccessEventEmitter implements IPatientDataAccessEventEmi
         );
     }
 
-    public async emitPatientInitiatedAccessForRegisteredGrantedUser(
+    public async emitPatientInitiatedAccessForRegisteredDoctor(patient: User, doctorEmail: string): Promise<void> {
+        await this.eventEmitter.emit('patient-initiated-data-access-for-registered-doctor', patient, doctorEmail);
+    }
+
+    public async emitPatientInitiatedAccessForRegisteredCaregiver(
         patient: User,
-        grantedEmail: string,
+        caregiverEmail: string,
     ): Promise<void> {
-        await this.eventEmitter.emit(
-            'patient-initiated-data-access-for-registered-granted-user',
-            patient,
-            grantedEmail,
-        );
+        await this.eventEmitter.emit('patient-initiated-data-access-for-registered-caregiver', patient, caregiverEmail);
     }
 
     public async emitGrantedUserInitiatedAccessToRegisteredPatient(

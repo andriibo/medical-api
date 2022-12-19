@@ -6,13 +6,25 @@ import {Email} from 'app/modules/mail/models';
 export class MailService implements IMailService {
     public constructor(private mailerService: IMailSenderService) {}
 
-    public async sendInviteToSignUpFromPatientToGrantedUser(patient: User, toEmail: string): Promise<void> {
+    public async sendInviteToSignUpFromPatientToDoctor(patient: User, toEmail: string): Promise<void> {
         const deepLink = `zenzerapp://auth?email=${toEmail}`;
 
         const mail: Email = {
             to: toEmail,
             subject: 'Invitation to Medical app.',
             text: `${patient.firstName} ${patient.lastName} wants to add you as their medical doctor on Medical app. SIGN UP ${deepLink}.`,
+        };
+
+        await this.mailerService.sendMail(mail);
+    }
+
+    public async sendInviteToSignUpFromPatientToCaregiver(patient: User, toEmail: string): Promise<void> {
+        const deepLink = `zenzerapp://auth?email=${toEmail}`;
+
+        const mail: Email = {
+            to: toEmail,
+            subject: 'Invitation to Medical app.',
+            text: `${patient.firstName} ${patient.lastName} wants to add you as their caregiver on Medical app. SIGN UP ${deepLink}.`,
         };
 
         await this.mailerService.sendMail(mail);
@@ -30,7 +42,7 @@ export class MailService implements IMailService {
         await this.mailerService.sendMail(mail);
     }
 
-    public async sendNotificationThatPatientDataAccessWasInitiatedByPatient(
+    public async sendNotificationToDoctorThatPatientDataAccessWasInitiatedByPatient(
         patient: User,
         toEmail: string,
     ): Promise<void> {
@@ -40,6 +52,21 @@ export class MailService implements IMailService {
             to: toEmail,
             subject: 'New incoming request.',
             text: `${patient.firstName} ${patient.lastName} wants to add you as their medical doctor. VIEW REQUEST ${deepLink}.`,
+        };
+
+        await this.mailerService.sendMail(mail);
+    }
+
+    public async sendNotificationToCaregiverThatPatientDataAccessWasInitiatedByPatient(
+        patient: User,
+        toEmail: string,
+    ): Promise<void> {
+        const deepLink = `zenzerapp://waiting-room`;
+
+        const mail: Email = {
+            to: toEmail,
+            subject: 'New incoming request.',
+            text: `${patient.firstName} ${patient.lastName} wants to add you as their caregiver. VIEW REQUEST ${deepLink}.`,
         };
 
         await this.mailerService.sendMail(mail);
