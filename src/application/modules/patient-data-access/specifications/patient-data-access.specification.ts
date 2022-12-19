@@ -31,6 +31,12 @@ export class PatientDataAccessSpecification {
     }
 
     public async assertGrantedUserCanGetAccessToPatient(grantedUser: User, patient: User): Promise<void> {
+        if (patient.role !== UserRole.Patient) {
+            throw new PatientDataAccessSpecificationError(
+                'The email already exists and is not for the patient. Try another one.',
+            );
+        }
+
         const hasAccess = await this.hasAccessByPatientUserIdAndGrantedUserId(patient.id, grantedUser.id);
 
         if (hasAccess) {
