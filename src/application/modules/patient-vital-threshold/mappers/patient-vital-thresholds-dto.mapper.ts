@@ -1,6 +1,6 @@
 import {PatientVitalThreshold, User} from 'domain/entities';
 import {ThresholdDto} from 'domain/dtos/response/patient-vital-threshold/threshold.dto';
-import {DefaultThresholdsTemplate} from 'app/modules/patient-vital-threshold/temlates/default-thresholds.template';
+import {DefaultThresholdsTemplate} from 'app/modules/patient-vital-threshold/templates/default-thresholds.template';
 import {UserDto} from 'domain/dtos/response/user/user.dto';
 
 export class PatientVitalThresholdsDtoMapper {
