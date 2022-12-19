@@ -1,22 +1,10 @@
-import {
-    Controller,
-    Get,
-    Patch,
-    HttpStatus,
-    Body,
-    Param,
-    ParseUUIDPipe,
-    HttpCode,
-    BadRequestException,
-} from '@nestjs/common';
+import {Controller, Get, Patch, HttpStatus, Body, HttpCode} from '@nestjs/common';
 import {ApiBearerAuth, ApiResponse, ApiTags} from '@nestjs/swagger';
 import {Roles} from 'presentation/guards';
 import {DoctorView} from 'presentation/views/response/user';
 import {DoctorUseCasesFactory} from 'infrastructure/modules/profile/factories';
 import {DoctorDto} from 'domain/dtos/response/profile/doctor.dto';
-import {PatientDto} from 'domain/dtos/response/profile/patient.dto';
 import {UpdateDoctorProfileView} from 'views/request/profile/update-doctor-profile.view';
-import {PatientView} from 'presentation/views/response/user';
 
 @Controller('doctor')
 @ApiBearerAuth()
@@ -42,20 +30,5 @@ export class DoctorController {
         const useCase = this.doctorUseCasesFactory.createUpdateDoctorProfileUseCase();
 
         await useCase.updateProfileInfo(requestBody);
-    }
-
-    @Roles('Doctor')
-    @Get('patient-profile/:patientUserId')
-    @HttpCode(HttpStatus.OK)
-    @HttpCode(HttpStatus.BAD_REQUEST)
-    @ApiResponse({status: HttpStatus.OK, type: PatientView})
-    public async getPatientProfile(@Param('patientUserId', ParseUUIDPipe) patientUserId: string): Promise<PatientDto> {
-        const useCase = this.doctorUseCasesFactory.createGetPatientProfileUseCase();
-
-        try {
-            return await useCase.getProfileInfo(patientUserId);
-        } catch (error) {
-            throw new BadRequestException(error.message);
-        }
     }
 }
