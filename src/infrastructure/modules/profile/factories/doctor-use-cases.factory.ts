@@ -2,14 +2,9 @@ import {Inject, Injectable} from '@nestjs/common';
 import {IUserRepository} from 'app/modules/auth/repositories';
 import {IDoctorMetadataRepository, IPatientMetadataRepository} from 'app/modules/profile/repositories';
 import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repositories';
-import {
-    DoctorProfileUseCase,
-    UpdateDoctorProfileUseCase,
-    PatientProfileUseCase,
-} from 'app/modules/profile/use-cases/doctor';
+import {DoctorProfileUseCase, UpdateDoctorProfileUseCase} from 'app/modules/profile/use-cases/doctor';
 import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service';
 import {IUserProfileMapper} from 'app/modules/profile/mappers/user-profile.mapper';
-import {PatientDataAccessSpecification} from 'app/modules/patient-data-access/specifications/patient-data-access.specification';
 import {IFileUrlService} from 'app/modules/profile/services/file-url.service';
 
 @Injectable()
@@ -22,8 +17,6 @@ export class DoctorUseCasesFactory {
         @Inject(IUserProfileMapper) private readonly userProfileMapper: IUserProfileMapper,
         @Inject(IPatientDataAccessRepository)
         private readonly patientDataAccessRepository: IPatientDataAccessRepository,
-        @Inject(PatientDataAccessSpecification)
-        private readonly patientDataAccessSpecification: PatientDataAccessSpecification,
         @Inject(IFileUrlService) private readonly fileUrlService: IFileUrlService,
     ) {}
 
@@ -37,16 +30,6 @@ export class DoctorUseCasesFactory {
             this.authedUserService,
             this.doctorMetadataRepository,
             this.userProfileMapper,
-        );
-    }
-
-    public createGetPatientProfileUseCase(): PatientProfileUseCase {
-        return new PatientProfileUseCase(
-            this.userRepository,
-            this.authedUserService,
-            this.patientMetadataRepository,
-            this.patientDataAccessSpecification,
-            this.fileUrlService,
         );
     }
 }
