@@ -52,7 +52,7 @@ export class WsPatientDataAccessGuard implements CanActivate {
 
     private extractRequestData(context: ExecutionContext): PatientRoomDto {
         const patientRoomDto = context.switchToWs().getData() as PatientRoomDto;
-        console.log('extractRequestData.patientRoomDto', patientRoomDto);
+
         if (!patientRoomDto.patientUserId) {
             throw new WsException(new UnauthorizedException());
         }
