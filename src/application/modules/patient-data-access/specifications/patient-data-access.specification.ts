@@ -171,6 +171,8 @@ export class PatientDataAccessSpecification {
         patientUserId: string,
         grantedUserId: string,
     ): Promise<PatientDataAccess> {
+        console.log('getAccessByPatientUserIdAndGrantedUserId.patientUserId', patientUserId);
+        console.log('getAccessByPatientUserIdAndGrantedUserId.grantedUserId', grantedUserId);
         const dataAccess = await this.patientDataAccessRepository.getOneByPatientUserIdAndGrantedUserId(
             patientUserId,
             grantedUserId,
