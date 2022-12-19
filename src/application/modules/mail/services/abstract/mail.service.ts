@@ -5,8 +5,6 @@ export interface IMailService {
 
     sendInviteToSignUpFromPatientToCaregiver(patient: User, toEmail: string): Promise<void>;
 
-    sendInviteToSignUpFromPatientToCaregiver(patient: User, toEmail: string): Promise<void>;
-
     sendInviteToSignUpFromGrantedUserToPatient(grantedUser: User, toEmail: string): Promise<void>;
 
     sendNotificationToDoctorThatPatientDataAccessWasInitiatedByPatient(patient: User, toEmail: string): Promise<void>;
