@@ -12,9 +12,9 @@ export function sortUserDtosByName(users: UserDto[]): UserDto[] {
 
 export function sortDataAccessDtosByCreatedAtDesc(dataAccesses: DataAccessDto[]): DataAccessDto[] {
     return dataAccesses.sort(function (aDataAccess, bDataAccess) {
-        const aDate = new Date(aDataAccess.createdAt);
-        const bDate = new Date(bDataAccess.createdAt);
+        const aTime = new Date(aDataAccess.createdAt).getTime();
+        const bTime = new Date(bDataAccess.createdAt).getTime();
 
-        return bDate.getTime() - aDate.getTime();
+        return bTime - aTime;
     });
 }
