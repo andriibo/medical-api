@@ -1,4 +1,5 @@
 import {DoctorController} from './doctor.controller';
 import {PatientController} from './patient.controller';
+import {GrantedUserController} from './granted-user.controller';
 
-export {DoctorController, PatientController};
+export {DoctorController, GrantedUserController, PatientController};
