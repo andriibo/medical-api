@@ -11,7 +11,7 @@ import {AuthModule} from 'infrastructure/modules/auth/auth.module';
 import {MailModule} from 'infrastructure/modules/mail/mail.module';
 import {FileModule} from 'infrastructure/modules/file/file.module';
 import {PatientDataAccessSpecification} from 'app/modules/patient-data-access/specifications/patient-data-access.specification';
-import {AccessForRegisteredGrantedUserService} from 'app/modules/patient-data-access/services/access-for-registered-granted-user.service';
+import {AccessForRegisteredDoctorService} from 'app/modules/patient-data-access/services/access-for-registered-doctor.service';
 import {AccessToGrantedUserBindingService} from 'app/modules/patient-data-access/services/access-to-granted-user-binding.service';
 import {IPatientDataAccessEventEmitter} from 'app/modules/patient-data-access/event-emitters/patient-data-access.event-emitter';
 import {PatientDataAccessEventEmitter} from './event-emitters/patient-data-access.event-emitter';
@@ -19,10 +19,12 @@ import {PatientDataAccessListener} from './listeners/patient-data-access.listene
 import {DeleteDataAccessByPatientService} from 'app/modules/patient-data-access/services/delete-data-access-by-patient.service';
 import {DeleteDataAccessByGrantedUserService} from 'app/modules/patient-data-access/services/delete-data-access-by-granted-user.service';
 import {AccessToRegisteredPatientService} from 'app/modules/patient-data-access/services/access-to-registered-patient.service';
-import {AccessForUnregisteredGrantedUserService} from 'app/modules/patient-data-access/services/access-for-unregistered-granted-user.service';
+import {AccessForUnregisteredDoctorService} from 'app/modules/patient-data-access/services/access-for-unregistered-doctor.service';
 import {AccessToUnregisteredPatientService} from 'app/modules/patient-data-access/services/access-to-unregistered-patient.service';
 import {AccessToPatientBindingService} from 'app/modules/patient-data-access/services/access-to-patient-binding.service';
 import {GrantedUserController} from 'controllers/patient-data-access/granted-user.controller';
+import {AccessForRegisteredCaregiverService} from 'app/modules/patient-data-access/services/access-for-registered-caregiver.service';
+import {AccessForUnregisteredCaregiverService} from 'app/modules/patient-data-access/services/access-for-unregistered-caregiver.service';
 
 @Module({
     imports: [TypeOrmModule.forFeature([PatientDataAccessModel]), MailModule, AuthModule, FileModule],
@@ -55,14 +57,14 @@ import {GrantedUserController} from 'controllers/patient-data-access/granted-use
             inject: [IUserRepository, IPatientDataAccessRepository],
         },
         {
-            provide: AccessForRegisteredGrantedUserService,
+            provide: AccessForRegisteredDoctorService,
             useFactory: (
                 patientDataAccessRepository: IPatientDataAccessRepository,
                 patientDataAccessEntityMapper: IPatientDataAccessEntityMapper,
                 patientDataAccessEventEmitter: IPatientDataAccessEventEmitter,
                 patientDataAccessSpecification: PatientDataAccessSpecification,
             ) => {
-                return new AccessForRegisteredGrantedUserService(
+                return new AccessForRegisteredDoctorService(
                     patientDataAccessRepository,
                     patientDataAccessEntityMapper,
                     patientDataAccessEventEmitter,
@@ -77,14 +79,58 @@ import {GrantedUserController} from 'controllers/patient-data-access/granted-use
             ],
         },
         {
-            provide: AccessForUnregisteredGrantedUserService,
+            provide: AccessForRegisteredCaregiverService,
             useFactory: (
                 patientDataAccessRepository: IPatientDataAccessRepository,
                 patientDataAccessEntityMapper: IPatientDataAccessEntityMapper,
                 patientDataAccessEventEmitter: IPatientDataAccessEventEmitter,
                 patientDataAccessSpecification: PatientDataAccessSpecification,
             ) => {
-                return new AccessForUnregisteredGrantedUserService(
+                return new AccessForRegisteredCaregiverService(
+                    patientDataAccessRepository,
+                    patientDataAccessEntityMapper,
+                    patientDataAccessEventEmitter,
+                    patientDataAccessSpecification,
+                );
+            },
+            inject: [
+                IPatientDataAccessRepository,
+                IPatientDataAccessEntityMapper,
+                IPatientDataAccessEventEmitter,
+                PatientDataAccessSpecification,
+            ],
+        },
+        {
+            provide: AccessForUnregisteredDoctorService,
+            useFactory: (
+                patientDataAccessRepository: IPatientDataAccessRepository,
+                patientDataAccessEntityMapper: IPatientDataAccessEntityMapper,
+                patientDataAccessEventEmitter: IPatientDataAccessEventEmitter,
+                patientDataAccessSpecification: PatientDataAccessSpecification,
+            ) => {
+                return new AccessForUnregisteredDoctorService(
+                    patientDataAccessRepository,
+                    patientDataAccessEntityMapper,
+                    patientDataAccessEventEmitter,
+                    patientDataAccessSpecification,
+                );
+            },
+            inject: [
+                IPatientDataAccessRepository,
+                IPatientDataAccessEntityMapper,
+                IPatientDataAccessEventEmitter,
+                PatientDataAccessSpecification,
+            ],
+        },
+        {
+            provide: AccessForUnregisteredCaregiverService,
+            useFactory: (
+                patientDataAccessRepository: IPatientDataAccessRepository,
+                patientDataAccessEntityMapper: IPatientDataAccessEntityMapper,
+                patientDataAccessEventEmitter: IPatientDataAccessEventEmitter,
+                patientDataAccessSpecification: PatientDataAccessSpecification,
+            ) => {
+                return new AccessForUnregisteredCaregiverService(
                     patientDataAccessRepository,
                     patientDataAccessEntityMapper,
                     patientDataAccessEventEmitter,
