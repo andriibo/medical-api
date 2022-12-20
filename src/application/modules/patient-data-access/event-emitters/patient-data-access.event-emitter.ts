@@ -1,11 +1,15 @@
 import {User} from 'domain/entities';
 
 export interface IPatientDataAccessEventEmitter {
-    emitPatientInitiatedAccessForUnregisteredGrantedUser(patient: User, grantedEmail: string): void;
+    emitPatientInitiatedAccessForUnregisteredDoctor(patient: User, doctorEmail: string): void;
+
+    emitPatientInitiatedAccessForUnregisteredCaregiver(patient: User, caregiverEmail: string): void;
 
     emitGrantedUserInitiatedAccessToUnregisteredPatient(grantedUser: User, patientEmail: string): void;
 
-    emitPatientInitiatedAccessForRegisteredGrantedUser(patient: User, grantedEmail: string): void;
+    emitPatientInitiatedAccessForRegisteredDoctor(patient: User, doctorEmail: string): void;
+
+    emitPatientInitiatedAccessForRegisteredCaregiver(patient: User, caregiverEmail: string): void;
 
     emitGrantedUserInitiatedAccessToRegisteredPatient(grantedUser: User, patientEmail: string): void;
 

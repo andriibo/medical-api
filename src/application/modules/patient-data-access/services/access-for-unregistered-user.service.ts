@@ -5,29 +5,28 @@ import {PatientDataAccessSpecification} from 'app/modules/patient-data-access/sp
 import {PatientDataAccessRequestDirection} from 'domain/entities/patient-data-access.entity';
 import {IPatientDataAccessEventEmitter} from 'app/modules/patient-data-access/event-emitters/patient-data-access.event-emitter';
 
-export class AccessForRegisteredGrantedUserService {
+export abstract class AccessForUnregisteredUserService {
     public constructor(
         private readonly patientDataAccessRepository: IPatientDataAccessRepository,
         private readonly patientDataAccessEntityMapper: IPatientDataAccessEntityMapper,
-        private readonly patientDataAccessEventEmitter: IPatientDataAccessEventEmitter,
+        protected readonly patientDataAccessEventEmitter: IPatientDataAccessEventEmitter,
         private readonly patientDataAccessSpecification: PatientDataAccessSpecification,
     ) {}
 
-    public async initiateDataAccess(patient: User, userToGrant: User): Promise<void> {
-        await this.patientDataAccessSpecification.assertPatientCanGiveAccessForUser(patient, userToGrant);
+    public async initiateDataAccess(patient: User, email: string): Promise<void> {
+        await this.patientDataAccessSpecification.assertPatientCanGiveAccessForGrantedEmail(patient, email);
 
-        const dataAccess = this.createDataAccess(patient, userToGrant);
+        const dataAccess = this.createDataAccess(patient, email);
 
         await this.patientDataAccessRepository.create(dataAccess);
 
-        await this.patientDataAccessEventEmitter.emitPatientInitiatedAccessForRegisteredGrantedUser(
-            patient,
-            userToGrant.email,
-        );
+        await this.sendNotification(patient, email);
     }
 
-    private createDataAccess(patient: User, userToGrant: User): PatientDataAccess {
-        const dataAccess = this.patientDataAccessEntityMapper.mapByPatientAndGrantedUser(patient, userToGrant);
+    protected abstract sendNotification(patient: User, email: string): Promise<void>;
+
+    private createDataAccess(patient: User, grantedEmail: string): PatientDataAccess {
+        const dataAccess = this.patientDataAccessEntityMapper.mapByPatientAndGrantedEmail(patient, grantedEmail);
         dataAccess.direction = PatientDataAccessRequestDirection.FromPatient;
 
         return dataAccess;

@@ -15,9 +15,14 @@ export class PatientDataAccessListener {
         private accessToPatientBindingService: AccessToPatientBindingService,
     ) {}
 
-    @OnEvent('patient-initiated-data-access-for-unregistered-granted-user')
-    public async handleAccessForUnregisteredUserInitiatedByPatient(patient: User, email: string): Promise<void> {
-        await this.mailService.sendInviteToSignUpFromPatientToGrantedUser(patient, email);
+    @OnEvent('patient-initiated-data-access-for-unregistered-doctor')
+    public async handleAccessForUnregisteredDoctorInitiatedByPatient(patient: User, email: string): Promise<void> {
+        await this.mailService.sendInviteToSignUpFromPatientToDoctor(patient, email);
+    }
+
+    @OnEvent('patient-initiated-data-access-for-unregistered-caregiver')
+    public async handleAccessForUnregisteredCaregiverInitiatedByPatient(patient: User, email: string): Promise<void> {
+        await this.mailService.sendInviteToSignUpFromPatientToDoctor(patient, email);
     }
 
     @OnEvent('granted-user-initiated-data-access-to-unregistered-patient')
@@ -28,9 +33,14 @@ export class PatientDataAccessListener {
         await this.mailService.sendInviteToSignUpFromGrantedUserToPatient(grantedUser, email);
     }
 
-    @OnEvent('patient-initiated-data-access-for-registered-granted-user')
-    public async handleAccessForRegisteredUserInitiatedByPatient(patient: User, email: string): Promise<void> {
-        await this.mailService.sendNotificationThatPatientDataAccessWasInitiatedByPatient(patient, email);
+    @OnEvent('patient-initiated-data-access-for-registered-doctor')
+    public async handleAccessForRegisteredDoctorInitiatedByPatient(patient: User, email: string): Promise<void> {
+        await this.mailService.sendNotificationToDoctorThatPatientDataAccessWasInitiatedByPatient(patient, email);
+    }
+
+    @OnEvent('patient-initiated-data-access-for-registered-caregiver')
+    public async handleAccessForRegisteredCaregiverInitiatedByPatient(patient: User, email: string): Promise<void> {
+        await this.mailService.sendNotificationToCaregiverThatPatientDataAccessWasInitiatedByPatient(patient, email);
     }
 
     @OnEvent('granted-user-initiated-data-access-to-registered-patient')
