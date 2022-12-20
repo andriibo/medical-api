@@ -5,7 +5,6 @@ import {PatientDataAccess, User} from 'domain/entities';
 import {DataAccessDto} from 'domain/dtos/response/data-access/data-access.dto';
 import {UserDto} from 'domain/dtos/response/user/user.dto';
 import {IFileUrlService} from 'app/modules/profile/services/file-url.service';
-import {sortDataAccessDtosByCreatedAtDesc} from 'app/support/sort.helper';
 
 export class DataAccessListUseCase {
     public constructor(
@@ -16,16 +15,16 @@ export class DataAccessListUseCase {
     ) {}
 
     public async getList(): Promise<DataAccessDto[]> {
-        const doctor = await this.authedUserService.getUser();
+        const grantedUser = await this.authedUserService.getUser();
 
-        const items = await this.patientDataAccessRepository.getByGrantedUser(doctor);
+        const items = await this.patientDataAccessRepository.getByGrantedUser(grantedUser);
 
         const users = await this.getPatients(items);
 
         const indexedUsers = {};
         users.map((user) => (indexedUsers[user.id] = user));
 
-        const dataAccesses = items.map((item) => {
+        return items.map((item) => {
             const dto = DataAccessDto.fromPatientDataAccess(item);
             if (item.patientUserId in indexedUsers) {
                 const user = UserDto.fromUser(indexedUsers[item.patientUserId]);
@@ -37,8 +36,6 @@ export class DataAccessListUseCase {
 
             return dto;
         });
-
-        return sortDataAccessDtosByCreatedAtDesc(dataAccesses);
     }
 
     private async getPatients(items: PatientDataAccess[]): Promise<User[]> {
