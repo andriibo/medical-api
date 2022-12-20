@@ -4,7 +4,7 @@ import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service'
 import {AccessForRegisteredDoctorService} from 'app/modules/patient-data-access/services/access-for-registered-doctor.service';
 import {AccessForUnregisteredDoctorService} from 'app/modules/patient-data-access/services/access-for-unregistered-doctor.service';
 
-export class InitiateDoctorDataAccessUseCase {
+export class InitiateDataAccessForDoctorUseCase {
     public constructor(
         private readonly userRepository: IUserRepository,
         private readonly authedUserService: IAuthedUserService,

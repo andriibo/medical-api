@@ -4,7 +4,7 @@ import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service'
 import {AccessForRegisteredCaregiverService} from 'app/modules/patient-data-access/services/access-for-registered-caregiver.service';
 import {AccessForUnregisteredCaregiverService} from 'app/modules/patient-data-access/services/access-for-unregistered-caregiver.service';
 
-export class InitiateCaregiverDataAccessUseCase {
+export class InitiateDataAccessForCaregiverUseCase {
     public constructor(
         private readonly userRepository: IUserRepository,
         private readonly authedUserService: IAuthedUserService,

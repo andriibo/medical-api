@@ -30,7 +30,7 @@ export class PatientController {
     @HttpCode(HttpStatus.BAD_REQUEST)
     @ApiOperation({
         deprecated: true,
-        summary: 'Deprecated endpoint. Use POST "/data-access/doctor/initiate".',
+        summary: 'Deprecated endpoint. Use POST "/data-access/initiate-for-doctor".',
     })
     @ApiResponse({status: HttpStatus.CREATED})
     public async initiateDataAccess(@Body() requestBody: InitiateDataAccessView): Promise<void> {
@@ -38,12 +38,12 @@ export class PatientController {
     }
 
     @Roles('Patient')
-    @Post('data-access/doctor/initiate')
+    @Post('data-access/initiate-for-doctor')
     @HttpCode(HttpStatus.CREATED)
     @HttpCode(HttpStatus.BAD_REQUEST)
     @ApiResponse({status: HttpStatus.CREATED})
     public async initiateDoctorDataAccess(@Body() requestBody: InitiateDataAccessView): Promise<void> {
-        const useCase = this.patientUseCasesFactory.createDoctorInitiateDataAccessUseCase();
+        const useCase = this.patientUseCasesFactory.createInitiateDataAccessForDoctorUseCase();
 
         try {
             await useCase.initiateDataAccess(requestBody);
@@ -53,12 +53,12 @@ export class PatientController {
     }
 
     @Roles('Patient')
-    @Post('data-access/caregiver/initiate')
+    @Post('data-access/initiate-for-caregiver')
     @HttpCode(HttpStatus.CREATED)
     @HttpCode(HttpStatus.BAD_REQUEST)
     @ApiResponse({status: HttpStatus.CREATED})
     public async initiateCaregiverDataAccess(@Body() requestBody: InitiateDataAccessView): Promise<void> {
-        const useCase = this.patientUseCasesFactory.createCaregiverInitiateDataAccessUseCase();
+        const useCase = this.patientUseCasesFactory.createInitiateDataAccessForCaregiverUseCase();
 
         try {
             await useCase.initiateDataAccess(requestBody);

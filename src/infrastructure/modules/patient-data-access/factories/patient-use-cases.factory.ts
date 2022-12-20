@@ -2,9 +2,9 @@ import {Inject, Injectable} from '@nestjs/common';
 import {IUserRepository} from 'app/modules/auth/repositories';
 import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repositories';
 import {
-    InitiateDoctorDataAccessUseCase,
     DataAccessListUseCase,
     DeleteDataAccessUseCase,
+    InitiateDataAccessUseCase,
 } from 'app/modules/patient-data-access/use-cases/patient';
 import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service';
 import {PatientDataAccessSpecification} from 'app/modules/patient-data-access/specifications/patient-data-access.specification';
@@ -14,7 +14,6 @@ import {AccessForUnregisteredDoctorService} from 'app/modules/patient-data-acces
 import {AccessForRegisteredDoctorService} from 'app/modules/patient-data-access/services/access-for-registered-doctor.service';
 import {RefuseDataAccessUseCase} from 'app/modules/patient-data-access/use-cases/patient/refuse-data-access.use-case';
 import {IFileUrlService} from 'app/modules/profile/services/file-url.service';
-import {InitiateCaregiverDataAccessUseCase} from 'app/modules/patient-data-access/use-cases/patient/initiate-caregiver-data-access.use-case';
 import {AccessForRegisteredCaregiverService} from 'app/modules/patient-data-access/services/access-for-registered-caregiver.service';
 import {AccessForUnregisteredCaregiverService} from 'app/modules/patient-data-access/services/access-for-unregistered-caregiver.service';
 
@@ -40,8 +39,8 @@ export class PatientUseCasesFactory {
         @Inject(IFileUrlService) private readonly fileUrlService: IFileUrlService,
     ) {}
 
-    public createDoctorInitiateDataAccessUseCase(): InitiateDoctorDataAccessUseCase {
-        return new InitiateDoctorDataAccessUseCase(
+    public createInitiateDataAccessForDoctorUseCase(): InitiateDataAccessUseCase {
+        return new InitiateDataAccessUseCase(
             this.userRepository,
             this.authedUserService,
             this.accessForRegisteredDoctorService,
@@ -49,8 +48,8 @@ export class PatientUseCasesFactory {
         );
     }
 
-    public createCaregiverInitiateDataAccessUseCase(): InitiateCaregiverDataAccessUseCase {
-        return new InitiateCaregiverDataAccessUseCase(
+    public createInitiateDataAccessForCaregiverUseCase(): InitiateDataAccessUseCase {
+        return new InitiateDataAccessUseCase(
             this.userRepository,
             this.authedUserService,
             this.accessForRegisteredCaregiverService,
