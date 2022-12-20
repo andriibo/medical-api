@@ -10,10 +10,11 @@ export abstract class AccessForRegisteredUserService {
         private readonly patientDataAccessRepository: IPatientDataAccessRepository,
         private readonly patientDataAccessEntityMapper: IPatientDataAccessEntityMapper,
         protected readonly patientDataAccessEventEmitter: IPatientDataAccessEventEmitter,
-        private readonly patientDataAccessSpecification: PatientDataAccessSpecification,
+        protected readonly patientDataAccessSpecification: PatientDataAccessSpecification,
     ) {}
+
     public async initiateDataAccess(patient: User, grantedUser: User): Promise<void> {
-        await this.patientDataAccessSpecification.assertPatientCanGiveAccessForUser(patient, grantedUser);
+        await this.assertPatientCanGiveAccessForUser(patient, grantedUser);
 
         const dataAccess = this.createDataAccess(patient, grantedUser);
 
@@ -21,6 +22,8 @@ export abstract class AccessForRegisteredUserService {
 
         await this.sendNotification(patient, grantedUser.email);
     }
+
+    protected abstract assertPatientCanGiveAccessForUser(patient: User, grantedUser: User): Promise<void>;
 
     protected abstract sendNotification(patient: User, email: string): Promise<void>;
 
