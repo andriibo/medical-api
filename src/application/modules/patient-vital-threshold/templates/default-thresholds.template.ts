@@ -1,69 +1,69 @@
 import {VitalThresholdName} from 'domain/entities/patient-vital-threshold.entity';
 import {ThresholdDto} from 'domain/dtos/response/patient-vital-threshold/threshold.dto';
 
-const MinHR = {
+export const MinHR = {
     thresholdName: VitalThresholdName.MinHR,
     value: 40,
 };
 
-const MaxHR = {
+export const MaxHR = {
     thresholdName: VitalThresholdName.MaxHR,
-    value: 100,
+    value: 220,
 };
 
-const MinTemp = {
+export const MinTemp = {
     thresholdName: VitalThresholdName.MinTemp,
-    value: 36,
+    value: 32,
 };
 
-const MaxTemp = {
+export const MaxTemp = {
     thresholdName: VitalThresholdName.MaxTemp,
-    value: 38,
+    value: 42,
 };
 
-const MinSpO2 = {
+export const MinSpO2 = {
     thresholdName: VitalThresholdName.MinSpO2,
-    value: 90,
+    value: 40,
 };
 
-const MinRR = {
+export const MinRR = {
     thresholdName: VitalThresholdName.MinRR,
-    value: 12,
+    value: 4,
 };
 
-const MaxRR = {
+export const MaxRR = {
     thresholdName: VitalThresholdName.MaxRR,
-    value: 25,
-};
-
-const MinDBP = {
-    thresholdName: VitalThresholdName.MinDBP,
     value: 60,
 };
 
-const MaxDBP = {
+export const MinDBP = {
+    thresholdName: VitalThresholdName.MinDBP,
+    value: 30,
+};
+
+export const MaxDBP = {
     thresholdName: VitalThresholdName.MaxDBP,
-    value: 80,
-};
-
-const MinSBP = {
-    thresholdName: VitalThresholdName.MinSBP,
-    value: 100,
-};
-
-const MaxSBP = {
-    thresholdName: VitalThresholdName.MaxSBP,
     value: 130,
 };
 
-const MinMAP = {
-    thresholdName: VitalThresholdName.MinMAP,
-    value: 65,
+export const MinSBP = {
+    thresholdName: VitalThresholdName.MinSBP,
+    value: 70,
 };
 
-const MaxMAP = {
+export const MaxSBP = {
+    thresholdName: VitalThresholdName.MaxSBP,
+    value: 220,
+};
+
+export const MinMAP = {
+    thresholdName: VitalThresholdName.MinMAP,
+    value: 43, // Calculated by the formula: MinMAP ~ 1/3(MinSBP + 2MinDBP)
+};
+
+export const MaxMAP = {
     thresholdName: VitalThresholdName.MaxMAP,
-    value: 110,
+    value: 160, // Calculated by the formula: MaxMAP ~ 1/3(MaxSBP + 2MaxDBP)
 };
 
 export const DefaultThresholdsTemplate = [

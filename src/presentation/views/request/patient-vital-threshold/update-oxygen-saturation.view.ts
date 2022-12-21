@@ -1,11 +1,12 @@
 import {ApiProperty} from '@nestjs/swagger';
 import {IsNotEmpty, Min, Max} from 'class-validator';
 import {MinThresholdDto} from 'domain/dtos/request/patient-vital-threshold/min-threshold.dto';
+import {MinSpO2} from 'app/modules/patient-vital-threshold/templates/default-thresholds.template';
 
 export class UpdateOxygenSaturationView extends MinThresholdDto {
-    @ApiProperty({minimum: 80, maximum: 100})
+    @ApiProperty({minimum: MinSpO2.value, maximum: 100})
     @IsNotEmpty()
-    @Min(80)
+    @Min(MinSpO2.value)
     @Max(100)
     public min: number;
 }

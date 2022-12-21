@@ -2,33 +2,39 @@ import {ApiProperty} from '@nestjs/swagger';
 import {IsNotEmpty, Min, Max} from 'class-validator';
 import {BloodPressureThresholdDto} from 'domain/dtos/request/patient-vital-threshold/blood-pressure-threshold.dto';
 import {IsGreaterThan} from 'infrastructure/validators/is-greater-than';
+import {
+    MinDBP,
+    MaxDBP,
+    MinSBP,
+    MaxSBP,
+} from 'app/modules/patient-vital-threshold/templates/default-thresholds.template';
 
 export class UpdateBloodPressureView extends BloodPressureThresholdDto {
-    @ApiProperty({minimum: 60, maximum: 80})
+    @ApiProperty({minimum: MinDBP.value, maximum: MaxDBP.value})
     @IsNotEmpty()
-    @Min(60)
-    @Max(80)
+    @Min(MinDBP.value)
+    @Max(MaxDBP.value)
     public minDBP: number;
 
-    @ApiProperty({minimum: 60, maximum: 80})
+    @ApiProperty({minimum: MinDBP.value, maximum: MaxDBP.value})
     @IsNotEmpty()
-    @Min(60)
-    @Max(80)
+    @Min(MinDBP.value)
+    @Max(MaxDBP.value)
     @IsGreaterThan('minDBP', {
         message: 'Max DBP must be greater than Min.',
     })
     public maxDBP: number;
 
-    @ApiProperty({minimum: 100, maximum: 130})
+    @ApiProperty({minimum: MinSBP.value, maximum: MaxSBP.value})
     @IsNotEmpty()
-    @Min(100)
-    @Max(130)
+    @Min(MinSBP.value)
+    @Max(MaxSBP.value)
     public minSBP: number;
 
-    @ApiProperty({minimum: 100, maximum: 130})
+    @ApiProperty({minimum: MinSBP.value, maximum: MaxSBP.value})
     @IsNotEmpty()
-    @Min(100)
-    @Max(130)
+    @Min(MinSBP.value)
+    @Max(MaxSBP.value)
     @IsGreaterThan('minSBP', {
         message: 'Max SBP must be greater than Min.',
     })
