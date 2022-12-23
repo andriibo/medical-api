@@ -13,6 +13,8 @@ export class UserDto {
 
     public avatar?: string;
 
+    public role: string;
+
     public static fromUser(user: User): UserDto {
         const dto = new UserDto();
         dto.userId = user.id;
@@ -21,6 +23,7 @@ export class UserDto {
         dto.lastName = user.lastName;
         dto.phone = user.phone;
         dto.avatar = user.avatar;
+        dto.role = user.role;
 
         return dto;
     }
@@ -32,6 +35,7 @@ export class UserDto {
         dto.firstName = '';
         dto.lastName = '';
         dto.phone = '';
+        dto.role = '';
 
         return dto;
     }
