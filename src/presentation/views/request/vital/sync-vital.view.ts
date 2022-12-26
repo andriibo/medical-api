@@ -4,28 +4,23 @@ import {ArrayMinSize, IsArray, IsNotEmpty, IsBoolean, IsNumber, ValidateNested} 
 import {SyncVitalDto, VitalDto} from 'domain/dtos/request/vital';
 
 export class VitalView extends VitalDto {
-    @ApiProperty()
-    @IsNotEmpty()
+    @ApiProperty({nullable: true})
     @IsNumber()
     public temperature: number;
 
-    @ApiProperty()
-    @IsNotEmpty()
+    @ApiProperty({nullable: true})
     @IsNumber()
     public hr: number;
 
-    @ApiProperty()
-    @IsNotEmpty()
+    @ApiProperty({nullable: true})
     @IsNumber()
     public spo: number;
 
-    @ApiProperty()
-    @IsNotEmpty()
+    @ApiProperty({nullable: true})
     @IsNumber()
     public rr: number;
 
-    @ApiProperty()
-    @IsNotEmpty()
+    @ApiProperty({nullable: true})
     @IsBoolean()
     public fall: boolean;
 
