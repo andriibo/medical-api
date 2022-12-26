@@ -100,8 +100,8 @@ export class MailService implements IMailService {
     public async sendNotificationThatPatientDeletedDataAccess(patient: User, toEmail: string): Promise<void> {
         const mail: Email = {
             to: toEmail,
-            subject: 'You were removed from list of doctors',
-            text: `${patient.firstName} ${patient.lastName} has removed you from the list of their doctors. You no longer have access to the patient account.`,
+            subject: 'Invitation request was withdrawn',
+            text: `${patient.firstName} ${patient.lastName} has withdrawn their invitation request that was sent to you earlier.`,
         };
 
         await this.mailerService.sendMail(mail);
@@ -110,8 +110,8 @@ export class MailService implements IMailService {
     public async sendNotificationThatGrantedUserDeletedDataAccess(grantedUser: User, toEmail: string): Promise<void> {
         const mail: Email = {
             to: toEmail,
-            subject: 'You were removed from list of patients',
-            text: `${grantedUser.firstName} ${grantedUser.lastName} has removed you from the list of their patients and doesn't have access to your account anymore.`,
+            subject: 'Incoming request was withdrawn',
+            text: `${grantedUser.firstName} ${grantedUser.lastName} has withdrawn their request that was sent to you earlier.`,
         };
 
         await this.mailerService.sendMail(mail);
