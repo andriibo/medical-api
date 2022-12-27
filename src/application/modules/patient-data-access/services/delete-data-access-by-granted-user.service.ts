@@ -3,6 +3,7 @@ import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repo
 import {PatientDataAccessSpecification} from 'app/modules/patient-data-access/specifications/patient-data-access.specification';
 import {IPatientDataAccessEventEmitter} from 'app/modules/patient-data-access/event-emitters/patient-data-access.event-emitter';
 import {IUserRepository} from 'app/modules/auth/repositories';
+import {PatientDataAccessStatus} from 'domain/entities/patient-data-access.entity';
 
 export class DeleteDataAccessByGrantedUserService {
     public constructor(
@@ -19,9 +20,16 @@ export class DeleteDataAccessByGrantedUserService {
     }
 
     private async sendNotificationIfPatientRegistered(grantedUser: User, dataAccess: PatientDataAccess): Promise<void> {
+        let patientEmail = dataAccess.patientEmail;
         if (dataAccess.patientUserId !== null) {
             const patient = await this.userRepository.getOneByIdOrFail(dataAccess.patientUserId);
-            await this.patientDataAccessEventEmitter.emitAccessDeletedByGrantedUser(grantedUser, patient.email);
+            patientEmail = patient.email;
+        }
+
+        if (dataAccess.status === PatientDataAccessStatus.Initiated) {
+            await this.patientDataAccessEventEmitter.emitInitiatedAccessDeletedByGrantedUser(grantedUser, patientEmail);
+        } else {
+            await this.patientDataAccessEventEmitter.emitAccessDeletedByGrantedUser(grantedUser, patientEmail);
         }
     }
 }
