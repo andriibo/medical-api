@@ -16,20 +16,26 @@ export class DeleteDataAccessByGrantedUserService {
     public async deleteDataAccess(grantedUser: User, dataAccess: PatientDataAccess): Promise<void> {
         await this.patientDataAccessSpecification.assertGrantedUserCanDeleteAccess(grantedUser, dataAccess);
         await this.patientDataAccessRepository.delete(dataAccess);
-        await this.sendNotificationIfPatientRegistered(grantedUser, dataAccess);
+        await this.sendNotification(grantedUser, dataAccess);
     }
 
-    private async sendNotificationIfPatientRegistered(grantedUser: User, dataAccess: PatientDataAccess): Promise<void> {
-        let patientEmail = dataAccess.patientEmail;
-        if (dataAccess.patientUserId !== null) {
-            const patient = await this.userRepository.getOneByIdOrFail(dataAccess.patientUserId);
-            patientEmail = patient.email;
-        }
+    private async sendNotification(grantedUser: User, dataAccess: PatientDataAccess): Promise<void> {
+        const patientEmail = await this.getPatientEmail(dataAccess);
 
         if (dataAccess.status === PatientDataAccessStatus.Initiated) {
             await this.patientDataAccessEventEmitter.emitInitiatedAccessDeletedByGrantedUser(grantedUser, patientEmail);
         } else {
             await this.patientDataAccessEventEmitter.emitAccessDeletedByGrantedUser(grantedUser, patientEmail);
         }
+    }
+
+    private async getPatientEmail(dataAccess: PatientDataAccess): Promise<string> {
+        if (dataAccess.patientUserId !== null) {
+            const patient = await this.userRepository.getOneByIdOrFail(dataAccess.patientUserId);
+
+            return patient.email;
+        }
+
+        return dataAccess.patientEmail;
     }
 }
