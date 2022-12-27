@@ -107,7 +107,7 @@ export class MailService implements IMailService {
         await this.mailerService.sendMail(mail);
     }
 
-    public async sendNotificationThatPatientDeletedInitiatedDataAccess(patient: User, toEmail: string): Promise<void> {
+    public async sendNotificationThatPatientWithdrawnDataAccess(patient: User, toEmail: string): Promise<void> {
         const mail: Email = {
             to: toEmail,
             subject: 'Incoming request was withdrawn',
@@ -127,10 +127,7 @@ export class MailService implements IMailService {
         await this.mailerService.sendMail(mail);
     }
 
-    public async sendNotificationThatGrantedUserDeletedInitiatedDataAccess(
-        grantedUser: User,
-        toEmail: string,
-    ): Promise<void> {
+    public async sendNotificationThatGrantedUserWithdrawnDataAccess(grantedUser: User, toEmail: string): Promise<void> {
         const mail: Email = {
             to: toEmail,
             subject: 'Incoming request was withdrawn',

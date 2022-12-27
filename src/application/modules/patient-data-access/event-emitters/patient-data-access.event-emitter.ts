@@ -15,11 +15,11 @@ export interface IPatientDataAccessEventEmitter {
 
     emitAccessDeletedByPatient(patient: User, grantedEmail: string): void;
 
-    emitInitiatedAccessDeletedByPatient(patient: User, grantedEmail: string): void;
+    emitAccessWithdrawnByPatient(patient: User, grantedEmail: string): void;
 
     emitAccessDeletedByGrantedUser(grantedUser: User, patientEmail: string): void;
 
-    emitInitiatedAccessDeletedByGrantedUser(grantedUser: User, patientEmail: string): void;
+    emitAccessWithdrawnByGrantedUser(grantedUser: User, patientEmail: string): void;
 }
 
 export const IPatientDataAccessEventEmitter = Symbol('IPatientDataAccessEventEmitter');

@@ -23,7 +23,7 @@ export class DeleteDataAccessByPatientService {
         const grantedEmail = await this.getGrantedEmail(dataAccess);
 
         if (dataAccess.status === PatientDataAccessStatus.Initiated) {
-            await this.patientDataAccessEventEmitter.emitInitiatedAccessDeletedByPatient(patient, grantedEmail);
+            await this.patientDataAccessEventEmitter.emitAccessWithdrawnByPatient(patient, grantedEmail);
         } else {
             await this.patientDataAccessEventEmitter.emitAccessDeletedByPatient(patient, grantedEmail);
         }
