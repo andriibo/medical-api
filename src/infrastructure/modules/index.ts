@@ -9,7 +9,7 @@ import {DiagnosisModule} from './diagnosis/diagnosis.module';
 import {PatientDiagnosisModule} from './patient-diagnosis/patient-diagnosis.module';
 import {MedicationModule} from './medication/medication.module';
 import {PatientMedicationModule} from './patient-medication/patient-medication.module';
-import {PatientVitalThresholdModule} from './patient-vital-threshold/patient-vital-threshold.module';
+import {PatientVitalThresholdsModule} from './patient-vital-thresholds/patient-vital-thresholds.module';
 import {WebsocketModule} from './websocket.module';
 import {FileModule} from './file/file.module';
 
@@ -25,7 +25,7 @@ export {
     PatientDiagnosisModule,
     MedicationModule,
     PatientMedicationModule,
-    PatientVitalThresholdModule,
+    PatientVitalThresholdsModule,
     WebsocketModule,
     FileModule,
 };

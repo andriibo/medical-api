@@ -10,7 +10,7 @@ import {Diagnosis} from './diagnosis.entity';
 import {PatientDiagnosis} from './patient-diagnosis.entity';
 import {Medication} from './medication.entity';
 import {PatientMedication} from './patient-medication.entity';
-import {PatientVitalThreshold} from './patient-vital-threshold.entity';
+import {PatientVitalThresholds} from './patient-vital-thresholds.entity';
 
 export {
     User,
@@ -25,5 +25,5 @@ export {
     PatientDiagnosis,
     Medication,
     PatientMedication,
-    PatientVitalThreshold,
+    PatientVitalThresholds,
 };

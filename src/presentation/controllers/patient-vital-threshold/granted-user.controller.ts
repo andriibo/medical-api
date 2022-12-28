@@ -1,9 +1,9 @@
 import {BadRequestException, Controller, Get, HttpCode, HttpStatus, Param, ParseUUIDPipe} from '@nestjs/common';
 import {ApiBearerAuth, ApiOperation, ApiResponse, ApiTags} from '@nestjs/swagger';
 import {Roles} from 'presentation/guards';
-import {ThresholdDto} from 'domain/dtos/response/patient-vital-threshold/threshold.dto';
-import {ThresholdView} from 'views/response/patient-vital-threshold/threshold.view';
-import {GrantedUserUseCasesFactory} from 'infrastructure/modules/patient-vital-threshold/factories';
+import {PatientVitalThresholdsView} from 'views/response/patient-vital-threshold/patient-vital-thresholds.view';
+import {GrantedUserUseCasesFactory} from 'infrastructure/modules/patient-vital-thresholds/factories';
+import {PatientVitalThresholdsDto} from 'domain/dtos/response/patient-vital-threshold/patient-vital-thresholds.dto';
 
 @Controller()
 @ApiBearerAuth()
@@ -19,10 +19,10 @@ export class GrantedUserController {
         deprecated: true,
         summary: 'Deprecated endpoint. Use GET "/patient-vital-thresholds/{patientUserId}" instead.',
     })
-    @ApiResponse({status: HttpStatus.OK, type: [ThresholdView]})
+    @ApiResponse({status: HttpStatus.OK, type: [PatientVitalThresholdsView]})
     public async getVitalThresholdsDeprecated(
         @Param('patientUserId', ParseUUIDPipe) patientUserId: string,
-    ): Promise<ThresholdDto[]> {
+    ): Promise<PatientVitalThresholdsDto> {
         return await this.getVitalThresholds(patientUserId);
     }
 
@@ -30,10 +30,10 @@ export class GrantedUserController {
     @Get('patient-vital-thresholds/:patientUserId')
     @HttpCode(HttpStatus.OK)
     @HttpCode(HttpStatus.BAD_REQUEST)
-    @ApiResponse({status: HttpStatus.OK, type: [ThresholdView]})
+    @ApiResponse({status: HttpStatus.OK, type: [PatientVitalThresholdsView]})
     public async getVitalThresholds(
         @Param('patientUserId', ParseUUIDPipe) patientUserId: string,
-    ): Promise<ThresholdDto[]> {
+    ): Promise<PatientVitalThresholdsDto> {
         const useCase = this.grantedUserUseCasesFactory.createPatientVitalThresholdListUseCase();
 
         try {

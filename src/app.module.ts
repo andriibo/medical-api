@@ -18,7 +18,7 @@ import {
     PatientDiagnosisModule,
     MedicationModule,
     PatientMedicationModule,
-    PatientVitalThresholdModule,
+    PatientVitalThresholdsModule,
     WebsocketModule,
     FileModule,
 } from 'infrastructure/modules';
@@ -39,7 +39,7 @@ const APP_MODULES_IMPORT = [
     PatientDiagnosisModule,
     MedicationModule,
     PatientMedicationModule,
-    PatientVitalThresholdModule,
+    PatientVitalThresholdsModule,
     WebsocketModule,
     FileModule,
 ];

@@ -9,7 +9,7 @@ import {
     UpdateBloodPressureView,
     UpdateMeanArterialPressureView,
 } from 'views/request/patient-vital-threshold';
-import {DoctorUseCasesFactory} from 'infrastructure/modules/patient-vital-threshold/factories/doctor-use-cases.factory';
+import {DoctorUseCasesFactory} from 'infrastructure/modules/patient-vital-thresholds/factories/doctor-use-cases.factory';
 
 @Controller('doctor')
 @ApiBearerAuth()
@@ -29,7 +29,7 @@ export class DoctorController {
         const useCase = this.doctorUseCasesFactory.createUpdateBloodPressureUseCase();
 
         try {
-            await useCase.updateThreshold(patientUserId, requestBody);
+            await useCase.updateThresholds(patientUserId, requestBody);
         } catch (error) {
             throw new BadRequestException(error.message);
         }
@@ -47,7 +47,7 @@ export class DoctorController {
         const useCase = this.doctorUseCasesFactory.createUpdateHeartRateUseCase();
 
         try {
-            await useCase.updateThreshold(patientUserId, requestBody);
+            await useCase.updateThresholds(patientUserId, requestBody);
         } catch (error) {
             throw new BadRequestException(error.message);
         }
@@ -65,7 +65,7 @@ export class DoctorController {
         const useCase = this.doctorUseCasesFactory.createUpdateMeanArterialPressureUseCase();
 
         try {
-            await useCase.updateThreshold(patientUserId, requestBody);
+            await useCase.updateThresholds(patientUserId, requestBody);
         } catch (error) {
             throw new BadRequestException(error.message);
         }
@@ -101,7 +101,7 @@ export class DoctorController {
         const useCase = this.doctorUseCasesFactory.createUpdateRespirationRateUseCase();
 
         try {
-            await useCase.updateThreshold(patientUserId, requestBody);
+            await useCase.updateThresholds(patientUserId, requestBody);
         } catch (error) {
             throw new BadRequestException(error.message);
         }
@@ -119,7 +119,7 @@ export class DoctorController {
         const useCase = this.doctorUseCasesFactory.createUpdateTemperatureUseCase();
 
         try {
-            await useCase.updateThreshold(patientUserId, requestBody);
+            await useCase.updateThresholds(patientUserId, requestBody);
         } catch (error) {
             throw new BadRequestException(error.message);
         }
