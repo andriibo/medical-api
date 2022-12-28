@@ -9,10 +9,10 @@ export class PatientVitalThresholdsView implements PatientVitalThresholdsDto {
     @ApiProperty()
     public maxHr: number;
 
-    @ApiProperty()
+    @ApiProperty({nullable: true})
     public hrSetBy?: UserView;
 
-    @ApiProperty()
+    @ApiProperty({nullable: true})
     public hrSetAt?: number;
 
     @ApiProperty()
@@ -21,19 +21,19 @@ export class PatientVitalThresholdsView implements PatientVitalThresholdsDto {
     @ApiProperty()
     public maxTemp: number;
 
-    @ApiProperty()
+    @ApiProperty({nullable: true})
     public tempSetBy?: UserView;
 
-    @ApiProperty()
+    @ApiProperty({nullable: true})
     public tempSetAt?: number;
 
     @ApiProperty()
     public minSpo2: number;
 
-    @ApiProperty()
+    @ApiProperty({nullable: true})
     public spo2SetBy?: UserView;
 
-    @ApiProperty()
+    @ApiProperty({nullable: true})
     public spo2SetAt?: number;
 
     @ApiProperty()
@@ -42,10 +42,10 @@ export class PatientVitalThresholdsView implements PatientVitalThresholdsDto {
     @ApiProperty()
     public maxRr: number;
 
-    @ApiProperty()
+    @ApiProperty({nullable: true})
     public rrSetBy?: UserView;
 
-    @ApiProperty()
+    @ApiProperty({nullable: true})
     public rrSetAt?: number;
 
     @ApiProperty()
@@ -54,10 +54,10 @@ export class PatientVitalThresholdsView implements PatientVitalThresholdsDto {
     @ApiProperty()
     public maxDbp: number;
 
-    @ApiProperty()
+    @ApiProperty({nullable: true})
     public dbpSetBy?: UserView;
 
-    @ApiProperty()
+    @ApiProperty({nullable: true})
     public dbpSetAt?: number;
 
     @ApiProperty()
@@ -66,10 +66,10 @@ export class PatientVitalThresholdsView implements PatientVitalThresholdsDto {
     @ApiProperty()
     public maxSbp: number;
 
-    @ApiProperty()
+    @ApiProperty({nullable: true})
     public sbpSetBy?: UserView;
 
-    @ApiProperty()
+    @ApiProperty({nullable: true})
     public sbpSetAt?: number;
 
     @ApiProperty()
@@ -78,6 +78,9 @@ export class PatientVitalThresholdsView implements PatientVitalThresholdsDto {
     @ApiProperty()
     public maxMap: number;
 
-    @ApiProperty()
+    @ApiProperty({nullable: true})
     public mapSetBy?: UserView;
+
+    @ApiProperty({nullable: true})
+    public mapSetAt?: number;
 }
