@@ -5,6 +5,21 @@ import {BloodPressureThresholdsDto} from 'domain/dtos/request/patient-vital-thre
 import {currentUnixTimestamp} from 'app/support/date.helper';
 import {MinMaxThresholdDto} from 'domain/dtos/request/patient-vital-threshold/min-max-threshold.dto';
 import {MinThresholdDto} from 'domain/dtos/request/patient-vital-threshold/min-threshold.dto';
+import {
+    MaxDBP,
+    MaxHR,
+    MaxMAP,
+    MaxRR,
+    MaxSBP,
+    MaxTemp,
+    MinDBP,
+    MinHR,
+    MinMAP,
+    MinRR,
+    MinSBP,
+    MinSpO2,
+    MinTemp,
+} from 'app/modules/patient-vital-thresholds/templates/default-thresholds.template';
 
 export class PatientVitalThresholdsEntityMapper implements IPatientVitalThresholdsEntityMapper {
     mapByBloodPressureDto(
@@ -13,7 +28,7 @@ export class PatientVitalThresholdsEntityMapper implements IPatientVitalThreshol
         doctor: User,
     ): PatientVitalThresholds {
         if (patientVitalThresholds === null) {
-            patientVitalThresholds = new PatientVitalThresholdsModel();
+            patientVitalThresholds = this.createThresholdsModelWithDefaultValues();
         }
 
         patientVitalThresholds.minDbp = dto.minDBP;
@@ -34,7 +49,7 @@ export class PatientVitalThresholdsEntityMapper implements IPatientVitalThreshol
         doctor: User,
     ): PatientVitalThresholds {
         if (patientVitalThresholds === null) {
-            patientVitalThresholds = new PatientVitalThresholdsModel();
+            patientVitalThresholds = this.createThresholdsModelWithDefaultValues();
         }
         patientVitalThresholds.minHr = dto.min;
         patientVitalThresholds.maxHr = dto.max;
@@ -50,7 +65,7 @@ export class PatientVitalThresholdsEntityMapper implements IPatientVitalThreshol
         doctor: User,
     ): PatientVitalThresholds {
         if (patientVitalThresholds === null) {
-            patientVitalThresholds = new PatientVitalThresholdsModel();
+            patientVitalThresholds = this.createThresholdsModelWithDefaultValues();
         }
         patientVitalThresholds.minMap = dto.min;
         patientVitalThresholds.maxMap = dto.max;
@@ -66,7 +81,7 @@ export class PatientVitalThresholdsEntityMapper implements IPatientVitalThreshol
         doctor: User,
     ): PatientVitalThresholds {
         if (patientVitalThresholds === null) {
-            patientVitalThresholds = new PatientVitalThresholdsModel();
+            patientVitalThresholds = this.createThresholdsModelWithDefaultValues();
         }
         patientVitalThresholds.minSpo2 = dto.min;
         patientVitalThresholds.spo2SetAt = currentUnixTimestamp();
@@ -81,7 +96,7 @@ export class PatientVitalThresholdsEntityMapper implements IPatientVitalThreshol
         doctor: User,
     ): PatientVitalThresholds {
         if (patientVitalThresholds === null) {
-            patientVitalThresholds = new PatientVitalThresholdsModel();
+            patientVitalThresholds = this.createThresholdsModelWithDefaultValues();
         }
         patientVitalThresholds.minRr = dto.min;
         patientVitalThresholds.maxRr = dto.min;
@@ -97,12 +112,31 @@ export class PatientVitalThresholdsEntityMapper implements IPatientVitalThreshol
         doctor: User,
     ): PatientVitalThresholds {
         if (patientVitalThresholds === null) {
-            patientVitalThresholds = new PatientVitalThresholdsModel();
+            patientVitalThresholds = this.createThresholdsModelWithDefaultValues();
         }
         patientVitalThresholds.minTemp = dto.min;
         patientVitalThresholds.maxTemp = dto.min;
         patientVitalThresholds.tempSetAt = currentUnixTimestamp();
         patientVitalThresholds.tempSetBy = doctor.id;
+
+        return patientVitalThresholds;
+    }
+
+    private createThresholdsModelWithDefaultValues(): PatientVitalThresholdsModel {
+        const patientVitalThresholds = new PatientVitalThresholdsModel();
+        patientVitalThresholds.minHr = MinHR.value;
+        patientVitalThresholds.maxHr = MaxHR.value;
+        patientVitalThresholds.minTemp = MinTemp.value;
+        patientVitalThresholds.maxTemp = MaxTemp.value;
+        patientVitalThresholds.minSpo2 = MinSpO2.value;
+        patientVitalThresholds.minRr = MinRR.value;
+        patientVitalThresholds.maxRr = MaxRR.value;
+        patientVitalThresholds.minDbp = MinDBP.value;
+        patientVitalThresholds.maxDbp = MaxDBP.value;
+        patientVitalThresholds.minSbp = MinSBP.value;
+        patientVitalThresholds.maxSbp = MaxSBP.value;
+        patientVitalThresholds.minMap = MinMAP.value;
+        patientVitalThresholds.maxMap = MaxMAP.value;
 
         return patientVitalThresholds;
     }
