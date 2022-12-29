@@ -20,7 +20,6 @@ export class PatientVitalThresholdsEntityMapper implements IPatientVitalThreshol
         patientVitalThresholds.maxDbp = dto.maxDBP;
         patientVitalThresholds.minSbp = dto.minSBP;
         patientVitalThresholds.maxSbp = dto.maxSBP;
-        patientVitalThresholds.maxSbp = dto.maxSBP;
         patientVitalThresholds.dbpSetBy = doctor.id;
         patientVitalThresholds.dbpSetAt = currentUnixTimestamp();
         patientVitalThresholds.sbpSetBy = doctor.id;
