@@ -3,6 +3,7 @@ import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repo
 import {PatientDataAccessSpecification} from 'app/modules/patient-data-access/specifications/patient-data-access.specification';
 import {IPatientDataAccessEventEmitter} from 'app/modules/patient-data-access/event-emitters/patient-data-access.event-emitter';
 import {IUserRepository} from 'app/modules/auth/repositories';
+import {PatientDataAccessStatus} from 'domain/entities/patient-data-access.entity';
 
 export class DeleteDataAccessByGrantedUserService {
     public constructor(
@@ -15,13 +16,26 @@ export class DeleteDataAccessByGrantedUserService {
     public async deleteDataAccess(grantedUser: User, dataAccess: PatientDataAccess): Promise<void> {
         await this.patientDataAccessSpecification.assertGrantedUserCanDeleteAccess(grantedUser, dataAccess);
         await this.patientDataAccessRepository.delete(dataAccess);
-        await this.sendNotificationIfPatientRegistered(grantedUser, dataAccess);
+        await this.sendNotification(grantedUser, dataAccess);
     }
 
-    private async sendNotificationIfPatientRegistered(grantedUser: User, dataAccess: PatientDataAccess): Promise<void> {
+    private async sendNotification(grantedUser: User, dataAccess: PatientDataAccess): Promise<void> {
+        const patientEmail = await this.getPatientEmail(dataAccess);
+
+        if (dataAccess.status === PatientDataAccessStatus.Initiated) {
+            await this.patientDataAccessEventEmitter.emitAccessWithdrawnByGrantedUser(grantedUser, patientEmail);
+        } else {
+            await this.patientDataAccessEventEmitter.emitAccessDeletedByGrantedUser(grantedUser, patientEmail);
+        }
+    }
+
+    private async getPatientEmail(dataAccess: PatientDataAccess): Promise<string> {
         if (dataAccess.patientUserId !== null) {
             const patient = await this.userRepository.getOneByIdOrFail(dataAccess.patientUserId);
-            await this.patientDataAccessEventEmitter.emitAccessDeletedByGrantedUser(grantedUser, patient.email);
+
+            return patient.email;
         }
+
+        return dataAccess.patientEmail;
     }
 }

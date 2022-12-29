@@ -68,8 +68,18 @@ export class PatientDataAccessListener {
         await this.mailService.sendNotificationThatPatientDeletedDataAccess(patient, grantedEmail);
     }
 
+    @OnEvent('data-access-withdrawn-by-patient')
+    public async handleAccessWithdrawnByPatient(patient: User, grantedEmail: string): Promise<void> {
+        await this.mailService.sendNotificationThatPatientWithdrawnDataAccess(patient, grantedEmail);
+    }
+
     @OnEvent('data-access-deleted-by-granted-user')
     public async handleAccessDeletedByGrantedUser(grantedUser: User, patientEmail: string): Promise<void> {
         await this.mailService.sendNotificationThatGrantedUserDeletedDataAccess(grantedUser, patientEmail);
+    }
+
+    @OnEvent('data-access-withdrawn-by-granted-user')
+    public async handleAccessWithdrawnByGrantedUser(grantedUser: User, patientEmail: string): Promise<void> {
+        await this.mailService.sendNotificationThatGrantedUserWithdrawnDataAccess(grantedUser, patientEmail);
     }
 }
