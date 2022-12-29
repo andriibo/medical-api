@@ -3,15 +3,15 @@ export class SyncVitalDto {
 }
 
 export class VitalDto {
-    public temperature: number;
+    public temperature: number | null;
 
-    public hr: number;
+    public hr: number | null;
 
-    public spo: number;
+    public spo: number | null;
 
-    public rr: number;
+    public rr: number | null;
 
-    public fall: boolean;
+    public fall: boolean | null;
 
-    public timestamp: number;
+    public timestamp: number | null;
 }
