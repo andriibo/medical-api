@@ -4,12 +4,12 @@ import {IPatientVitalThresholdsRepository} from 'app/modules/patient-vital-thres
 import {PatientVitalThresholdsSpecification} from 'app/modules/patient-vital-thresholds/specifications/patient-vital-thresholds.specification';
 import {IPatientVitalThresholdsEntityMapper} from 'app/modules/patient-vital-thresholds/mappers/patient-vital-thresholds-entity.mapper';
 import {IUserRepository} from 'app/modules/auth/repositories';
-import {UpdateBloodPressureThresholdsUseCase} from 'app/modules/patient-vital-thresholds/use-cases/doctor/update-blood-pressure-thresholds.use-case';
-import {UpdateHeartRateThresholdsUseCase} from 'app/modules/patient-vital-thresholds/use-cases/doctor/update-heart-rate-thresholds.use-case';
-import {UpdateMeanArterialPressureThresholdsUseCase} from 'app/modules/patient-vital-thresholds/use-cases/doctor/update-mean-arterial-pressure-thresholds.use-case';
-import {UpdateOxygenSaturationThresholdUseCase} from 'app/modules/patient-vital-thresholds/use-cases/doctor/update-oxygen-saturation-threshold.use-case';
-import {UpdateRespirationRateThresholdsUseCase} from 'app/modules/patient-vital-thresholds/use-cases/doctor/update-respiration-rate-thresholds.use-case';
-import {UpdateTemperatureThresholdsUseCase} from 'app/modules/patient-vital-thresholds/use-cases/doctor/update-temperature-thresholds.use-case';
+import {BloodPressureThresholdsUseCase} from 'app/modules/patient-vital-thresholds/use-cases/doctor/blood-pressure-thresholds.use-case';
+import {HeartRateThresholdsUseCase} from 'app/modules/patient-vital-thresholds/use-cases/doctor/heart-rate-thresholds.use-case';
+import {MeanArterialPressureThresholdsUseCase} from 'app/modules/patient-vital-thresholds/use-cases/doctor/mean-arterial-pressure-thresholds.use-case';
+import {OxygenSaturationThresholdUseCase} from 'app/modules/patient-vital-thresholds/use-cases/doctor/oxygen-saturation-threshold.use-case';
+import {RespirationRateThresholdsUseCase} from 'app/modules/patient-vital-thresholds/use-cases/doctor/respiration-rate-thresholds.use-case';
+import {TemperatureThresholdsUseCase} from 'app/modules/patient-vital-thresholds/use-cases/doctor/temperature-thresholds.use-case';
 
 @Injectable()
 export class DoctorUseCasesFactory {
@@ -24,8 +24,8 @@ export class DoctorUseCasesFactory {
         private readonly patientVitalThresholdSpecification: PatientVitalThresholdsSpecification,
     ) {}
 
-    public createUpdateHeartRateUseCase(): UpdateHeartRateThresholdsUseCase {
-        return new UpdateHeartRateThresholdsUseCase(
+    public createHeartRateUseCase(): HeartRateThresholdsUseCase {
+        return new HeartRateThresholdsUseCase(
             this.authedUserService,
             this.patientVitalThresholdsRepository,
             this.PatientVitalThresholdsEntityMapper,
@@ -33,8 +33,8 @@ export class DoctorUseCasesFactory {
         );
     }
 
-    public createUpdateTemperatureUseCase(): UpdateTemperatureThresholdsUseCase {
-        return new UpdateTemperatureThresholdsUseCase(
+    public createTemperatureUseCase(): TemperatureThresholdsUseCase {
+        return new TemperatureThresholdsUseCase(
             this.authedUserService,
             this.patientVitalThresholdsRepository,
             this.PatientVitalThresholdsEntityMapper,
@@ -42,8 +42,8 @@ export class DoctorUseCasesFactory {
         );
     }
 
-    public createUpdateRespirationRateUseCase(): UpdateRespirationRateThresholdsUseCase {
-        return new UpdateRespirationRateThresholdsUseCase(
+    public createRespirationRateUseCase(): RespirationRateThresholdsUseCase {
+        return new RespirationRateThresholdsUseCase(
             this.authedUserService,
             this.patientVitalThresholdsRepository,
             this.PatientVitalThresholdsEntityMapper,
@@ -51,8 +51,8 @@ export class DoctorUseCasesFactory {
         );
     }
 
-    public createUpdateOxygenSaturationUseCase(): UpdateOxygenSaturationThresholdUseCase {
-        return new UpdateOxygenSaturationThresholdUseCase(
+    public createOxygenSaturationUseCase(): OxygenSaturationThresholdUseCase {
+        return new OxygenSaturationThresholdUseCase(
             this.authedUserService,
             this.patientVitalThresholdsRepository,
             this.PatientVitalThresholdsEntityMapper,
@@ -60,8 +60,8 @@ export class DoctorUseCasesFactory {
         );
     }
 
-    public createUpdateBloodPressureUseCase(): UpdateBloodPressureThresholdsUseCase {
-        return new UpdateBloodPressureThresholdsUseCase(
+    public createBloodPressureUseCase(): BloodPressureThresholdsUseCase {
+        return new BloodPressureThresholdsUseCase(
             this.authedUserService,
             this.patientVitalThresholdsRepository,
             this.PatientVitalThresholdsEntityMapper,
@@ -69,8 +69,8 @@ export class DoctorUseCasesFactory {
         );
     }
 
-    public createUpdateMeanArterialPressureUseCase(): UpdateMeanArterialPressureThresholdsUseCase {
-        return new UpdateMeanArterialPressureThresholdsUseCase(
+    public createMeanArterialPressureUseCase(): MeanArterialPressureThresholdsUseCase {
+        return new MeanArterialPressureThresholdsUseCase(
             this.authedUserService,
             this.patientVitalThresholdsRepository,
             this.PatientVitalThresholdsEntityMapper,

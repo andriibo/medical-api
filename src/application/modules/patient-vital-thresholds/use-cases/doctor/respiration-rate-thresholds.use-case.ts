@@ -4,7 +4,7 @@ import {PatientVitalThresholdsSpecification} from 'app/modules/patient-vital-thr
 import {IPatientVitalThresholdsEntityMapper} from 'app/modules/patient-vital-thresholds/mappers/patient-vital-thresholds-entity.mapper';
 import {MinMaxThresholdDto} from 'domain/dtos/request/patient-vital-threshold/min-max-threshold.dto';
 
-export class UpdateHeartRateThresholdsUseCase {
+export class RespirationRateThresholdsUseCase {
     public constructor(
         private readonly authedUserService: IAuthedUserService,
         private readonly thresholdsRepository: IPatientVitalThresholdsRepository,
@@ -12,14 +12,18 @@ export class UpdateHeartRateThresholdsUseCase {
         private readonly thresholdsSpecification: PatientVitalThresholdsSpecification,
     ) {}
 
-    public async updateThresholds(patientUserId: string, dto: MinMaxThresholdDto): Promise<void> {
+    public async createNewThresholds(patientUserId: string, dto: MinMaxThresholdDto): Promise<void> {
         const doctor = await this.authedUserService.getUser();
         await this.thresholdsSpecification.assertGrantedUserCanOperateThreshold(doctor, patientUserId);
 
-        const patientThresholds = await this.thresholdsRepository.getOneByPatientUserId(patientUserId);
-        const modifiedPatientThresholds = this.thresholdsMapper.mapByMinMaxHeartRateDto(dto, patientThresholds, doctor);
+        const patientThresholds = await this.thresholdsRepository.getCurrentThresholdsByPatientUserId(patientUserId);
+        const modifiedPatientThresholds = this.thresholdsMapper.mapByMinMaxRespirationRateDto(
+            dto,
+            patientThresholds,
+            doctor,
+        );
         modifiedPatientThresholds.patientUserId = patientUserId;
 
-        await this.thresholdsRepository.persist(modifiedPatientThresholds);
+        await this.thresholdsRepository.insert(modifiedPatientThresholds);
     }
 }

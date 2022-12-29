@@ -1,4 +1,14 @@
-import {BadRequestException, Body, Controller, HttpCode, HttpStatus, Param, ParseUUIDPipe, Patch} from '@nestjs/common';
+import {
+    BadRequestException,
+    Body,
+    Controller,
+    HttpCode,
+    HttpStatus,
+    Param,
+    ParseUUIDPipe,
+    Patch,
+    Post
+} from '@nestjs/common';
 import {ApiBearerAuth, ApiResponse, ApiTags} from '@nestjs/swagger';
 import {Roles} from 'presentation/guards';
 import {
@@ -18,7 +28,7 @@ export class DoctorController {
     public constructor(private readonly doctorUseCasesFactory: DoctorUseCasesFactory) {}
 
     @Roles('Doctor')
-    @Patch('blood-pressure/:patientUserId')
+    @Post('blood-pressure/:patientUserId')
     @HttpCode(HttpStatus.OK)
     @HttpCode(HttpStatus.BAD_REQUEST)
     @ApiResponse({status: HttpStatus.OK})
@@ -26,17 +36,17 @@ export class DoctorController {
         @Param('patientUserId', ParseUUIDPipe) patientUserId: string,
         @Body() requestBody: UpdateBloodPressureView,
     ): Promise<void> {
-        const useCase = this.doctorUseCasesFactory.createUpdateBloodPressureUseCase();
+        const useCase = this.doctorUseCasesFactory.createBloodPressureUseCase();
 
         try {
-            await useCase.updateThresholds(patientUserId, requestBody);
+            await useCase.createNewThresholds(patientUserId, requestBody);
         } catch (error) {
             throw new BadRequestException(error.message);
         }
     }
 
     @Roles('Doctor')
-    @Patch('heart-rate/:patientUserId')
+    @Post('heart-rate/:patientUserId')
     @HttpCode(HttpStatus.OK)
     @HttpCode(HttpStatus.BAD_REQUEST)
     @ApiResponse({status: HttpStatus.OK})
@@ -44,17 +54,17 @@ export class DoctorController {
         @Param('patientUserId', ParseUUIDPipe) patientUserId: string,
         @Body() requestBody: UpdateHeartRateView,
     ): Promise<void> {
-        const useCase = this.doctorUseCasesFactory.createUpdateHeartRateUseCase();
+        const useCase = this.doctorUseCasesFactory.createHeartRateUseCase();
 
         try {
-            await useCase.updateThresholds(patientUserId, requestBody);
+            await useCase.createNewThresholds(patientUserId, requestBody);
         } catch (error) {
             throw new BadRequestException(error.message);
         }
     }
 
     @Roles('Doctor')
-    @Patch('mean-arterial-pressure/:patientUserId')
+    @Post('mean-arterial-pressure/:patientUserId')
     @HttpCode(HttpStatus.OK)
     @HttpCode(HttpStatus.BAD_REQUEST)
     @ApiResponse({status: HttpStatus.OK})
@@ -62,17 +72,17 @@ export class DoctorController {
         @Param('patientUserId', ParseUUIDPipe) patientUserId: string,
         @Body() requestBody: UpdateMeanArterialPressureView,
     ): Promise<void> {
-        const useCase = this.doctorUseCasesFactory.createUpdateMeanArterialPressureUseCase();
+        const useCase = this.doctorUseCasesFactory.createMeanArterialPressureUseCase();
 
         try {
-            await useCase.updateThresholds(patientUserId, requestBody);
+            await useCase.createNewThresholds(patientUserId, requestBody);
         } catch (error) {
             throw new BadRequestException(error.message);
         }
     }
 
     @Roles('Doctor')
-    @Patch('oxygen-saturation/:patientUserId')
+    @Post('oxygen-saturation/:patientUserId')
     @HttpCode(HttpStatus.OK)
     @HttpCode(HttpStatus.BAD_REQUEST)
     @ApiResponse({status: HttpStatus.OK})
@@ -80,17 +90,17 @@ export class DoctorController {
         @Param('patientUserId', ParseUUIDPipe) patientUserId: string,
         @Body() requestBody: UpdateOxygenSaturationView,
     ): Promise<void> {
-        const useCase = this.doctorUseCasesFactory.createUpdateOxygenSaturationUseCase();
+        const useCase = this.doctorUseCasesFactory.createOxygenSaturationUseCase();
 
         try {
-            await useCase.updateThreshold(patientUserId, requestBody);
+            await useCase.createNewThreshold(patientUserId, requestBody);
         } catch (error) {
             throw new BadRequestException(error.message);
         }
     }
 
     @Roles('Doctor')
-    @Patch('respiration-rate/:patientUserId')
+    @Post('respiration-rate/:patientUserId')
     @HttpCode(HttpStatus.OK)
     @HttpCode(HttpStatus.BAD_REQUEST)
     @ApiResponse({status: HttpStatus.OK})
@@ -98,17 +108,17 @@ export class DoctorController {
         @Param('patientUserId', ParseUUIDPipe) patientUserId: string,
         @Body() requestBody: UpdateRespirationRateView,
     ): Promise<void> {
-        const useCase = this.doctorUseCasesFactory.createUpdateRespirationRateUseCase();
+        const useCase = this.doctorUseCasesFactory.createRespirationRateUseCase();
 
         try {
-            await useCase.updateThresholds(patientUserId, requestBody);
+            await useCase.createNewThresholds(patientUserId, requestBody);
         } catch (error) {
             throw new BadRequestException(error.message);
         }
     }
 
     @Roles('Doctor')
-    @Patch('temperature/:patientUserId')
+    @Post('temperature/:patientUserId')
     @HttpCode(HttpStatus.OK)
     @HttpCode(HttpStatus.BAD_REQUEST)
     @ApiResponse({status: HttpStatus.OK})
@@ -116,10 +126,10 @@ export class DoctorController {
         @Param('patientUserId', ParseUUIDPipe) patientUserId: string,
         @Body() requestBody: UpdateTemperatureView,
     ): Promise<void> {
-        const useCase = this.doctorUseCasesFactory.createUpdateTemperatureUseCase();
+        const useCase = this.doctorUseCasesFactory.createTemperatureUseCase();
 
         try {
-            await useCase.updateThresholds(patientUserId, requestBody);
+            await useCase.createNewThresholds(patientUserId, requestBody);
         } catch (error) {
             throw new BadRequestException(error.message);
         }

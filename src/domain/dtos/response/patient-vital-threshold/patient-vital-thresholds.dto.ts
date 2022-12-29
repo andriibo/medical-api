@@ -21,55 +21,55 @@ export class PatientVitalThresholdsDto {
 
     public maxHr: number;
 
-    public hrSetBy?: UserDto;
+    public hrSetBy: UserDto | null;
 
-    public hrSetAt?: number;
+    public hrSetAt: number | null;
 
     public minTemp: number;
 
     public maxTemp: number;
 
-    public tempSetBy?: UserDto;
+    public tempSetBy: UserDto | null;
 
-    public tempSetAt?: number;
+    public tempSetAt: number | null;
 
     public minSpo2: number;
 
-    public spo2SetBy?: UserDto;
+    public spo2SetBy: UserDto | null;
 
-    public spo2SetAt?: number;
+    public spo2SetAt: number | null;
 
     public minRr: number;
 
     public maxRr: number;
 
-    public rrSetBy?: UserDto;
+    public rrSetBy: UserDto | null;
 
-    public rrSetAt?: number;
+    public rrSetAt: number | null;
 
     public minDbp: number;
 
     public maxDbp: number;
 
-    public dbpSetBy?: UserDto;
+    public dbpSetBy: UserDto | null;
 
-    public dbpSetAt?: number;
+    public dbpSetAt: number | null;
 
     public minSbp: number;
 
     public maxSbp: number;
 
-    public sbpSetBy?: UserDto;
+    public sbpSetBy: UserDto | null;
 
-    public sbpSetAt?: number;
+    public sbpSetAt: number | null;
 
     public minMap: number;
 
     public maxMap: number;
 
-    public mapSetBy?: UserDto;
+    public mapSetBy: UserDto | null;
 
-    public mapSetAt?: number;
+    public mapSetAt: number | null;
 
     public static fromPatientVitalThresholds(
         thresholds: PatientVitalThresholds,

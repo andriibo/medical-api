@@ -19,7 +19,7 @@ export class ThresholdListUseCase {
 
         await this.thresholdSpecification.assertGrantedUserCanOperateThreshold(user, patientUserId);
 
-        const thresholds = await this.thresholdsRepository.getOneByPatientUserId(patientUserId);
+        const thresholds = await this.thresholdsRepository.getCurrentThresholdsByPatientUserId(patientUserId);
         if (thresholds === null) {
             return PatientVitalThresholdsDto.getDtoWithDefaultValues();
         }

@@ -9,11 +9,11 @@ import {PatientVitalThresholds} from 'domain/entities/patient-vital-thresholds.e
 export class PatientVitalThresholdsRepository implements IPatientVitalThresholdsRepository {
     public constructor(@InjectDataSource() private dataSource: DataSource) {}
 
-    public async persist(patientVitalThresholds: PatientVitalThresholdsModel): Promise<void> {
+    public async insert(patientVitalThresholds: PatientVitalThresholdsModel): Promise<void> {
         await this.dataSource.manager.save(patientVitalThresholds);
     }
 
-    public async getOneByPatientUserId(patientUserId: string): Promise<PatientVitalThresholds> {
+    public async getCurrentThresholdsByPatientUserId(patientUserId: string): Promise<PatientVitalThresholds> {
         return await this.dataSource.manager.findOneBy(PatientVitalThresholdsModel, {
             patientUserId,
         });
