@@ -14,8 +14,11 @@ export class PatientVitalThresholdsRepository implements IPatientVitalThresholds
     }
 
     public async getCurrentThresholdsByPatientUserId(patientUserId: string): Promise<PatientVitalThresholds> {
-        return await this.dataSource.manager.findOneBy(PatientVitalThresholdsModel, {
-            patientUserId,
+        return await this.dataSource.manager.findOne(PatientVitalThresholdsModel, {
+            where: {patientUserId},
+            order: {
+                id: 'DESC',
+            },
         });
     }
 }

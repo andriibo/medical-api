@@ -1,11 +1,7 @@
 import {Entity, Column, PrimaryGeneratedColumn} from 'typeorm';
 import {PatientVitalThresholds} from 'domain/entities';
 
-@Entity('patient_vital_thresholds', {
-    orderBy: {
-        id: 'DESC',
-    },
-})
+@Entity('patient_vital_thresholds')
 export class PatientVitalThresholdsModel implements PatientVitalThresholds {
     @PrimaryGeneratedColumn()
     public id: number;
