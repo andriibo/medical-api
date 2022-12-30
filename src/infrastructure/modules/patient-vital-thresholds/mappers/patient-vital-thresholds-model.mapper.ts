@@ -29,8 +29,9 @@ export class PatientVitalThresholdsEntityMapper implements IPatientVitalThreshol
     ): PatientVitalThresholds {
         if (patientVitalThresholds === null) {
             patientVitalThresholds = this.createThresholdsModelWithDefaultValues();
+        } else {
+            patientVitalThresholds.id = null;
         }
-
         patientVitalThresholds.minDbp = dto.minDBP;
         patientVitalThresholds.maxDbp = dto.maxDBP;
         patientVitalThresholds.minSbp = dto.minSBP;
@@ -50,6 +51,8 @@ export class PatientVitalThresholdsEntityMapper implements IPatientVitalThreshol
     ): PatientVitalThresholds {
         if (patientVitalThresholds === null) {
             patientVitalThresholds = this.createThresholdsModelWithDefaultValues();
+        } else {
+            patientVitalThresholds.id = null;
         }
         patientVitalThresholds.minHr = dto.min;
         patientVitalThresholds.maxHr = dto.max;
@@ -66,6 +69,8 @@ export class PatientVitalThresholdsEntityMapper implements IPatientVitalThreshol
     ): PatientVitalThresholds {
         if (patientVitalThresholds === null) {
             patientVitalThresholds = this.createThresholdsModelWithDefaultValues();
+        } else {
+            patientVitalThresholds.id = null;
         }
         patientVitalThresholds.minMap = dto.min;
         patientVitalThresholds.maxMap = dto.max;
@@ -82,6 +87,8 @@ export class PatientVitalThresholdsEntityMapper implements IPatientVitalThreshol
     ): PatientVitalThresholds {
         if (patientVitalThresholds === null) {
             patientVitalThresholds = this.createThresholdsModelWithDefaultValues();
+        } else {
+            patientVitalThresholds.id = null;
         }
         patientVitalThresholds.minSpo2 = dto.min;
         patientVitalThresholds.spo2SetAt = currentUnixTimestamp();
@@ -97,6 +104,8 @@ export class PatientVitalThresholdsEntityMapper implements IPatientVitalThreshol
     ): PatientVitalThresholds {
         if (patientVitalThresholds === null) {
             patientVitalThresholds = this.createThresholdsModelWithDefaultValues();
+        } else {
+            patientVitalThresholds.id = null;
         }
         patientVitalThresholds.minRr = dto.min;
         patientVitalThresholds.maxRr = dto.min;
@@ -113,7 +122,10 @@ export class PatientVitalThresholdsEntityMapper implements IPatientVitalThreshol
     ): PatientVitalThresholds {
         if (patientVitalThresholds === null) {
             patientVitalThresholds = this.createThresholdsModelWithDefaultValues();
+        } else {
+            patientVitalThresholds.id = null;
         }
+        patientVitalThresholds.id = null;
         patientVitalThresholds.minTemp = dto.min;
         patientVitalThresholds.maxTemp = dto.min;
         patientVitalThresholds.tempSetAt = currentUnixTimestamp();
