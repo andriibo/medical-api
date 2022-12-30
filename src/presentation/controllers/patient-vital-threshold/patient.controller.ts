@@ -14,7 +14,7 @@ export class PatientController {
     @Roles('Patient')
     @Get('my-vital-thresholds')
     @HttpCode(HttpStatus.OK)
-    @ApiResponse({status: HttpStatus.OK, type: [PatientVitalThresholdsView]})
+    @ApiResponse({status: HttpStatus.OK, type: PatientVitalThresholdsView})
     public async getVitalThresholds(): Promise<PatientVitalThresholdsDto> {
         const useCase = this.patientUseCasesFactory.createPatientVitalThresholdListUseCase();
 
