@@ -10,7 +10,7 @@ export class PatientVitalThresholdsRepository implements IPatientVitalThresholds
     public constructor(@InjectDataSource() private dataSource: DataSource) {}
 
     public async insert(patientVitalThresholds: PatientVitalThresholdsModel): Promise<void> {
-        await this.dataSource.manager.save(patientVitalThresholds);
+        await this.dataSource.manager.insert(PatientVitalThresholdsModel, patientVitalThresholds);
     }
 
     public async getCurrentThresholdsByPatientUserId(patientUserId: string): Promise<PatientVitalThresholds> {
