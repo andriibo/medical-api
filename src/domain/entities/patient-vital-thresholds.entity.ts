@@ -7,53 +7,53 @@ export interface PatientVitalThresholds {
 
     maxHr: number;
 
-    hrSetBy?: string;
+    hrSetBy: string | null;
 
-    hrSetAt?: number;
+    hrSetAt: number | null;
 
     minTemp: number;
 
     maxTemp: number;
 
-    tempSetBy?: string;
+    tempSetBy: string | null;
 
-    tempSetAt?: number;
+    tempSetAt: number | null;
 
     minSpo2: number;
 
-    spo2SetBy?: string;
+    spo2SetBy: string | null;
 
-    spo2SetAt?: number;
+    spo2SetAt: number | null;
 
     minRr: number;
 
     maxRr: number;
 
-    rrSetBy?: string;
+    rrSetBy: string | null;
 
-    rrSetAt?: number;
+    rrSetAt: number | null;
 
     minDbp: number;
 
     maxDbp: number;
 
-    dbpSetBy?: string;
+    dbpSetBy: string | null;
 
-    dbpSetAt?: number;
+    dbpSetAt: number | null;
 
     minSbp: number;
 
     maxSbp: number;
 
-    sbpSetBy?: string;
+    sbpSetBy: string | null;
 
-    sbpSetAt?: number;
+    sbpSetAt: number | null;
 
     minMap: number;
 
     maxMap: number;
 
-    mapSetBy?: string;
+    mapSetBy: string | null;
 
-    mapSetAt?: number;
+    mapSetAt: number | null;
 }

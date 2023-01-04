@@ -81,30 +81,34 @@ export class PatientVitalThresholdsDto {
         const dto = new PatientVitalThresholdsDto();
         dto.minHr = thresholds.minHr;
         dto.maxHr = thresholds.maxHr;
-        dto.hrSetBy = UserDto.fromUser(indexedUsers[thresholds.hrSetBy]);
+        dto.hrSetBy = indexedUsers[thresholds.hrSetBy] ? UserDto.fromUser(indexedUsers[thresholds.hrSetBy]) : null;
         dto.hrSetAt = thresholds.hrSetAt;
         dto.minTemp = thresholds.minTemp;
         dto.maxTemp = thresholds.maxTemp;
-        dto.tempSetBy = UserDto.fromUser(indexedUsers[thresholds.tempSetBy]);
+        dto.tempSetBy = indexedUsers[thresholds.tempSetBy]
+            ? UserDto.fromUser(indexedUsers[thresholds.tempSetBy])
+            : null;
         dto.tempSetAt = thresholds.tempSetAt;
         dto.minSpo2 = thresholds.minSpo2;
-        dto.spo2SetBy = UserDto.fromUser(indexedUsers[thresholds.spo2SetBy]);
+        dto.spo2SetBy = indexedUsers[thresholds.spo2SetBy]
+            ? UserDto.fromUser(indexedUsers[thresholds.spo2SetBy])
+            : null;
         dto.spo2SetAt = thresholds.spo2SetAt;
         dto.minRr = thresholds.minRr;
         dto.maxRr = thresholds.maxRr;
-        dto.rrSetBy = UserDto.fromUser(indexedUsers[thresholds.rrSetBy]);
+        dto.rrSetBy = indexedUsers[thresholds.rrSetBy] ? UserDto.fromUser(indexedUsers[thresholds.rrSetBy]) : null;
         dto.rrSetAt = thresholds.rrSetAt;
         dto.minDbp = thresholds.minDbp;
         dto.maxDbp = thresholds.maxDbp;
-        dto.dbpSetBy = UserDto.fromUser(indexedUsers[thresholds.dbpSetBy]);
+        dto.dbpSetBy = indexedUsers[thresholds.dbpSetBy] ? UserDto.fromUser(indexedUsers[thresholds.dbpSetBy]) : null;
         dto.dbpSetAt = thresholds.dbpSetAt;
         dto.minSbp = thresholds.minSbp;
         dto.maxSbp = thresholds.maxSbp;
-        dto.sbpSetBy = UserDto.fromUser(indexedUsers[thresholds.sbpSetBy]);
+        dto.sbpSetBy = indexedUsers[thresholds.sbpSetBy] ? UserDto.fromUser(indexedUsers[thresholds.sbpSetBy]) : null;
         dto.sbpSetAt = thresholds.sbpSetAt;
         dto.minMap = thresholds.minMap;
         dto.maxMap = thresholds.maxMap;
-        dto.mapSetBy = UserDto.fromUser(indexedUsers[thresholds.mapSetBy]);
+        dto.mapSetBy = indexedUsers[thresholds.mapSetBy] ? UserDto.fromUser(indexedUsers[thresholds.mapSetBy]) : null;
         dto.mapSetAt = thresholds.mapSetAt;
 
         return dto;
