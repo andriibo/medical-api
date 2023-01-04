@@ -6,8 +6,7 @@ import {PatientDataAccess} from 'domain/entities';
 import {PatientDataAccessModel} from './patient-data-access.model';
 import {User} from 'domain/entities';
 import {PatientDataAccessStatus} from 'domain/entities/patient-data-access.entity';
-import {UserModel} from 'infrastructure/modules/auth/models';
-import {UserRole} from "domain/entities/user.entity";
+import {UserRole} from 'domain/entities/user.entity';
 
 @Injectable()
 export class PatientDataAccessRepository implements IPatientDataAccessRepository {
@@ -80,19 +79,29 @@ export class PatientDataAccessRepository implements IPatientDataAccessRepository
         return await this.dataSource.manager.findOneBy(PatientDataAccessModel, {id});
     }
 
-    public async getByPatientUserIdAndStatus(
-        patientUserId: string,
-        status: PatientDataAccessStatus,
-    ): Promise<PatientDataAccess[]> {
-        const caregiverRole = UserRole.Caregiver;
+    public async getAccessesForDoctorsByPatientUserId(patientUserId: string): Promise<PatientDataAccess[]> {
+        const role = UserRole.Doctor;
+        const status = PatientDataAccessStatus.Approved;
         return await this.dataSource
             .createQueryBuilder(PatientDataAccessModel, 'pda')
-            .select(['user.*'])
-            .where('pda.patient_user_id = :id', {patientUserId})
+            .where('pda.patient_user_id = :patientUserId', {patientUserId})
             .andWhere('pda.status = :status', {status})
-            .andWhere('user.status = :status', {caregiverRole})
-            .innerJoin(UserModel, 'user')
-            .getRawMany();
+            .andWhere('user.role = :role', {role})
+            .leftJoinAndSelect('pda.grantedUser', 'user')
+            .leftJoinAndSelect('user.doctorMetadata', 'metadata')
+            .getMany();
+    }
+
+    public async getAccessesForCaregiversByPatientUserId(patientUserId: string): Promise<PatientDataAccess[]> {
+        const role = UserRole.Caregiver;
+        const status = PatientDataAccessStatus.Approved;
+        return await this.dataSource
+            .createQueryBuilder(PatientDataAccessModel, 'pda')
+            .where('pda.patient_user_id = :patientUserId', {patientUserId})
+            .andWhere('pda.status = :status', {status})
+            .andWhere('user.role = :role', {role})
+            .leftJoinAndSelect('pda.grantedUser', 'user')
+            .getMany();
     }
 
     public async getByGrantedUserIdAndStatus(

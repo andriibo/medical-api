@@ -1,4 +1,6 @@
 import {UserMetadata} from './user-metadata.entity';
+import {DoctorMetadata} from 'domain/entities/doctor-metadata.entity';
+import {PatientMetadata} from 'domain/entities/patient-metadata.entity';
 
 export enum UserRole {
     Caregiver = 'Caregiver',
@@ -24,4 +26,8 @@ export interface User {
     avatar?: string;
 
     metadata?: UserMetadata;
+
+    doctorMetadata?: DoctorMetadata | null;
+
+    patientMetadata?: PatientMetadata | null;
 }

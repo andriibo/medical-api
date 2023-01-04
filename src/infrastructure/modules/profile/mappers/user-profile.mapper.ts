@@ -12,7 +12,7 @@ export class UserProfileMapper implements IUserProfileMapper {
 
         metadata.institution = dto.institution;
 
-        user.metadata = metadata;
+        user.doctorMetadata = metadata;
 
         return user;
     }
@@ -27,7 +27,7 @@ export class UserProfileMapper implements IUserProfileMapper {
         metadata.height = dto.height;
         metadata.weight = dto.weight;
 
-        user.metadata = metadata;
+        user.patientMetadata = metadata;
 
         return user;
     }

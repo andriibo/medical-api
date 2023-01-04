@@ -10,7 +10,7 @@ import {EntityNotFoundError} from 'app/errors';
 export class UserRepository implements IUserRepository {
     public constructor(@InjectDataSource() private dataSource: DataSource) {}
 
-    public async create(entity: UserModel): Promise<User> {
+    public async persist(entity: UserModel): Promise<User> {
         const queryRunner = this.dataSource.createQueryRunner();
 
         await queryRunner.connect();
@@ -18,36 +18,17 @@ export class UserRepository implements IUserRepository {
 
         try {
             const persistedEntity = await queryRunner.manager.save(entity);
-            if (entity.metadata) {
-                await queryRunner.manager.save(entity.metadata);
+            if (entity.patientMetadata) {
+                await queryRunner.manager.save(entity.patientMetadata);
+            }
+            if (entity.doctorMetadata) {
+                await queryRunner.manager.save(entity.doctorMetadata);
             }
 
             await queryRunner.commitTransaction();
             await queryRunner.release();
 
             return persistedEntity;
-        } catch (err) {
-            await queryRunner.rollbackTransaction();
-            await queryRunner.release();
-
-            throw err;
-        }
-    }
-
-    public async updateUserAndMetadata(entity: UserModel): Promise<void> {
-        const queryRunner = this.dataSource.createQueryRunner();
-
-        await queryRunner.connect();
-        await queryRunner.startTransaction();
-
-        try {
-            await queryRunner.manager.save(entity);
-            if (entity.metadata) {
-                await queryRunner.manager.save(entity.metadata);
-            }
-
-            await queryRunner.commitTransaction();
-            await queryRunner.release();
         } catch (err) {
             await queryRunner.rollbackTransaction();
             await queryRunner.release();
