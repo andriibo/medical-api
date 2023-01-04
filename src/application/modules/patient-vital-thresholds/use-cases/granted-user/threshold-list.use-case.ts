@@ -20,9 +20,7 @@ export class ThresholdListUseCase {
         await this.thresholdSpecification.assertGrantedUserCanOperateThreshold(user, patientUserId);
 
         const thresholds = await this.thresholdsRepository.getCurrentThresholdsByPatientUserId(patientUserId);
-        if (thresholds === null) {
-            return PatientVitalThresholdsDto.getDtoWithDefaultValues();
-        }
+
         const users = await this.getUsersWhoSetThreshold(thresholds);
 
         return PatientVitalThresholdsDto.fromPatientVitalThresholds(thresholds, users);
@@ -37,7 +35,7 @@ export class ThresholdListUseCase {
             thresholds.dbpSetBy,
             thresholds.sbpSetBy,
             thresholds.mapSetBy,
-        ];
+        ].filter((setBy) => setBy !== null);
 
         return await this.userRepository.getByIds(arrayUnique(userIds));
     }

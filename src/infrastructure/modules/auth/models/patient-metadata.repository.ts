@@ -14,6 +14,10 @@ export class PatientMetadataRepository implements IPatientMetadataRepository {
     }
 
     public async getByIds(ids: string[]): Promise<PatientMetadata[]> {
+        if (!ids.length) {
+            return [];
+        }
+
         return await this.dataSource.manager.findBy(PatientMetadataModel, {userId: In(ids)});
     }
 }

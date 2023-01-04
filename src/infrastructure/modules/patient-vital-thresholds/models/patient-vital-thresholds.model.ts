@@ -1,5 +1,20 @@
 import {Entity, Column, PrimaryGeneratedColumn} from 'typeorm';
 import {PatientVitalThresholds} from 'domain/entities';
+import {
+    MaxDBP,
+    MaxHR,
+    MaxMAP,
+    MaxRR,
+    MaxSBP,
+    MaxTemp,
+    MinDBP,
+    MinHR,
+    MinMAP,
+    MinRR,
+    MinSBP,
+    MinSpO2,
+    MinTemp,
+} from 'app/modules/patient-vital-thresholds/templates/default-thresholds.template';
 
 @Entity('patient_vital_thresholds')
 export class PatientVitalThresholdsModel implements PatientVitalThresholds {
@@ -16,10 +31,10 @@ export class PatientVitalThresholdsModel implements PatientVitalThresholds {
     maxHr: number;
 
     @Column({name: 'hr_set_by'})
-    hrSetBy?: string;
+    hrSetBy: string | null = null;
 
     @Column({name: 'hr_set_at'})
-    hrSetAt?: number;
+    hrSetAt: number | null = null;
 
     @Column({name: 'min_temp'})
     minTemp: number;
@@ -28,19 +43,19 @@ export class PatientVitalThresholdsModel implements PatientVitalThresholds {
     maxTemp: number;
 
     @Column({name: 'temp_set_by'})
-    tempSetBy?: string;
+    tempSetBy: string | null = null;
 
     @Column({name: 'temp_set_at'})
-    tempSetAt?: number;
+    tempSetAt: number | null = null;
 
     @Column({name: 'min_spo2'})
     minSpo2: number;
 
     @Column({name: 'spo2_set_by'})
-    spo2SetBy?: string;
+    spo2SetBy: string | null = null;
 
     @Column({name: 'spo2_set_at'})
-    spo2SetAt?: number;
+    spo2SetAt: number | null = null;
 
     @Column({name: 'min_rr'})
     minRr: number;
@@ -49,10 +64,10 @@ export class PatientVitalThresholdsModel implements PatientVitalThresholds {
     maxRr: number;
 
     @Column({name: 'rr_set_by'})
-    rrSetBy?: string;
+    rrSetBy: string | null = null;
 
     @Column({name: 'rr_set_at'})
-    rrSetAt?: number;
+    rrSetAt: number | null = null;
 
     @Column({name: 'min_dbp'})
     minDbp: number;
@@ -61,10 +76,10 @@ export class PatientVitalThresholdsModel implements PatientVitalThresholds {
     maxDbp: number;
 
     @Column({name: 'dbp_set_by'})
-    dbpSetBy?: string;
+    dbpSetBy: string | null = null;
 
     @Column({name: 'dbp_set_at'})
-    dbpSetAt?: number;
+    dbpSetAt: number | null = null;
 
     @Column({name: 'min_sbp'})
     minSbp: number;
@@ -73,10 +88,10 @@ export class PatientVitalThresholdsModel implements PatientVitalThresholds {
     maxSbp: number;
 
     @Column({name: 'sbp_set_by'})
-    sbpSetBy?: string;
+    sbpSetBy: string | null = null;
 
     @Column({name: 'sbp_set_at'})
-    sbpSetAt?: number;
+    sbpSetAt: number | null = null;
 
     @Column({name: 'min_map'})
     minMap: number;
@@ -85,8 +100,27 @@ export class PatientVitalThresholdsModel implements PatientVitalThresholds {
     maxMap: number;
 
     @Column({name: 'map_set_by'})
-    mapSetBy?: string;
+    mapSetBy: string | null = null;
 
     @Column({name: 'map_set_at'})
-    mapSetAt?: number;
+    mapSetAt: number | null = null;
+
+    public static getModelWithDefaultValues(): PatientVitalThresholdsModel {
+        const model = new PatientVitalThresholdsModel();
+        model.minHr = MinHR.value;
+        model.maxHr = MaxHR.value;
+        model.minTemp = MinTemp.value;
+        model.maxTemp = MaxTemp.value;
+        model.minSpo2 = MinSpO2.value;
+        model.minRr = MinRR.value;
+        model.maxRr = MaxRR.value;
+        model.minDbp = MinDBP.value;
+        model.maxDbp = MaxDBP.value;
+        model.minSbp = MinSBP.value;
+        model.maxSbp = MaxSBP.value;
+        model.minMap = MinMAP.value;
+        model.maxMap = MaxMAP.value;
+
+        return model;
+    }
 }

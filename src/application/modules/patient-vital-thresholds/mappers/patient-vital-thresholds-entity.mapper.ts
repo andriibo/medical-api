@@ -6,37 +6,37 @@ import {MinThresholdDto} from 'domain/dtos/request/patient-vital-threshold/min-t
 export interface IPatientVitalThresholdsEntityMapper {
     mapByBloodPressureDto(
         dto: BloodPressureThresholdsDto,
-        patientVitalThresholds: PatientVitalThresholds | null,
+        patientVitalThresholds: PatientVitalThresholds,
         doctor: User,
     ): PatientVitalThresholds;
 
     mapByMinMaxHeartRateDto(
         dto: MinMaxThresholdDto,
-        patientVitalThresholds: PatientVitalThresholds | null,
+        patientVitalThresholds: PatientVitalThresholds,
         doctor: User,
     ): PatientVitalThresholds;
 
     mapByMinMaxMeanArterialPressureDto(
         dto: MinMaxThresholdDto,
-        patientVitalThresholds: PatientVitalThresholds | null,
+        patientVitalThresholds: PatientVitalThresholds,
         doctor: User,
     ): PatientVitalThresholds;
 
     mapByMinOxygenSaturationDto(
         dto: MinThresholdDto,
-        patientVitalThresholds: PatientVitalThresholds | null,
+        patientVitalThresholds: PatientVitalThresholds,
         doctor: User,
     ): PatientVitalThresholds;
 
     mapByMinMaxRespirationRateDto(
         dto: MinMaxThresholdDto,
-        patientVitalThresholds: PatientVitalThresholds | null,
+        patientVitalThresholds: PatientVitalThresholds,
         doctor: User,
     ): PatientVitalThresholds;
 
     mapByMinMaxTemperatureDto(
         dto: MinMaxThresholdDto,
-        patientVitalThresholds: PatientVitalThresholds | null,
+        patientVitalThresholds: PatientVitalThresholds,
         doctor: User,
     ): PatientVitalThresholds;
 }

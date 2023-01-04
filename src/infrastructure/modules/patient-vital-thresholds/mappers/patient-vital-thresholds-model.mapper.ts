@@ -5,33 +5,14 @@ import {BloodPressureThresholdsDto} from 'domain/dtos/request/patient-vital-thre
 import {currentUnixTimestamp} from 'app/support/date.helper';
 import {MinMaxThresholdDto} from 'domain/dtos/request/patient-vital-threshold/min-max-threshold.dto';
 import {MinThresholdDto} from 'domain/dtos/request/patient-vital-threshold/min-threshold.dto';
-import {
-    MaxDBP,
-    MaxHR,
-    MaxMAP,
-    MaxRR,
-    MaxSBP,
-    MaxTemp,
-    MinDBP,
-    MinHR,
-    MinMAP,
-    MinRR,
-    MinSBP,
-    MinSpO2,
-    MinTemp,
-} from 'app/modules/patient-vital-thresholds/templates/default-thresholds.template';
 
 export class PatientVitalThresholdsEntityMapper implements IPatientVitalThresholdsEntityMapper {
-    mapByBloodPressureDto(
+    public mapByBloodPressureDto(
         dto: BloodPressureThresholdsDto,
-        patientVitalThresholds: PatientVitalThresholds | null,
+        patientVitalThresholds: PatientVitalThresholds,
         doctor: User,
     ): PatientVitalThresholds {
-        if (patientVitalThresholds === null) {
-            patientVitalThresholds = this.createThresholdsModelWithDefaultValues();
-        } else {
-            patientVitalThresholds.id = null;
-        }
+        patientVitalThresholds = this.mapByEntity(patientVitalThresholds);
         patientVitalThresholds.minDbp = dto.minDBP;
         patientVitalThresholds.maxDbp = dto.maxDBP;
         patientVitalThresholds.minSbp = dto.minSBP;
@@ -44,16 +25,12 @@ export class PatientVitalThresholdsEntityMapper implements IPatientVitalThreshol
         return patientVitalThresholds;
     }
 
-    mapByMinMaxHeartRateDto(
+    public mapByMinMaxHeartRateDto(
         dto: MinMaxThresholdDto,
-        patientVitalThresholds: PatientVitalThresholds | null,
+        patientVitalThresholds: PatientVitalThresholds,
         doctor: User,
     ): PatientVitalThresholds {
-        if (patientVitalThresholds === null) {
-            patientVitalThresholds = this.createThresholdsModelWithDefaultValues();
-        } else {
-            patientVitalThresholds.id = null;
-        }
+        patientVitalThresholds = this.mapByEntity(patientVitalThresholds);
         patientVitalThresholds.minHr = dto.min;
         patientVitalThresholds.maxHr = dto.max;
         patientVitalThresholds.hrSetAt = currentUnixTimestamp();
@@ -62,16 +39,12 @@ export class PatientVitalThresholdsEntityMapper implements IPatientVitalThreshol
         return patientVitalThresholds;
     }
 
-    mapByMinMaxMeanArterialPressureDto(
+    public mapByMinMaxMeanArterialPressureDto(
         dto: MinMaxThresholdDto,
-        patientVitalThresholds: PatientVitalThresholds | null,
+        patientVitalThresholds: PatientVitalThresholds,
         doctor: User,
     ): PatientVitalThresholds {
-        if (patientVitalThresholds === null) {
-            patientVitalThresholds = this.createThresholdsModelWithDefaultValues();
-        } else {
-            patientVitalThresholds.id = null;
-        }
+        patientVitalThresholds = this.mapByEntity(patientVitalThresholds);
         patientVitalThresholds.minMap = dto.min;
         patientVitalThresholds.maxMap = dto.max;
         patientVitalThresholds.mapSetAt = currentUnixTimestamp();
@@ -80,16 +53,12 @@ export class PatientVitalThresholdsEntityMapper implements IPatientVitalThreshol
         return patientVitalThresholds;
     }
 
-    mapByMinOxygenSaturationDto(
+    public mapByMinOxygenSaturationDto(
         dto: MinThresholdDto,
-        patientVitalThresholds: PatientVitalThresholds | null,
+        patientVitalThresholds: PatientVitalThresholds,
         doctor: User,
     ): PatientVitalThresholds {
-        if (patientVitalThresholds === null) {
-            patientVitalThresholds = this.createThresholdsModelWithDefaultValues();
-        } else {
-            patientVitalThresholds.id = null;
-        }
+        patientVitalThresholds = this.mapByEntity(patientVitalThresholds);
         patientVitalThresholds.minSpo2 = dto.min;
         patientVitalThresholds.spo2SetAt = currentUnixTimestamp();
         patientVitalThresholds.spo2SetBy = doctor.id;
@@ -97,16 +66,12 @@ export class PatientVitalThresholdsEntityMapper implements IPatientVitalThreshol
         return patientVitalThresholds;
     }
 
-    mapByMinMaxRespirationRateDto(
+    public mapByMinMaxRespirationRateDto(
         dto: MinMaxThresholdDto,
-        patientVitalThresholds: PatientVitalThresholds | null,
+        patientVitalThresholds: PatientVitalThresholds,
         doctor: User,
     ): PatientVitalThresholds {
-        if (patientVitalThresholds === null) {
-            patientVitalThresholds = this.createThresholdsModelWithDefaultValues();
-        } else {
-            patientVitalThresholds.id = null;
-        }
+        patientVitalThresholds = this.mapByEntity(patientVitalThresholds);
         patientVitalThresholds.minRr = dto.min;
         patientVitalThresholds.maxRr = dto.min;
         patientVitalThresholds.rrSetAt = currentUnixTimestamp();
@@ -115,17 +80,12 @@ export class PatientVitalThresholdsEntityMapper implements IPatientVitalThreshol
         return patientVitalThresholds;
     }
 
-    mapByMinMaxTemperatureDto(
+    public mapByMinMaxTemperatureDto(
         dto: MinMaxThresholdDto,
-        patientVitalThresholds: PatientVitalThresholds | null,
+        patientVitalThresholds: PatientVitalThresholds,
         doctor: User,
     ): PatientVitalThresholds {
-        if (patientVitalThresholds === null) {
-            patientVitalThresholds = this.createThresholdsModelWithDefaultValues();
-        } else {
-            patientVitalThresholds.id = null;
-        }
-        patientVitalThresholds.id = null;
+        patientVitalThresholds = this.mapByEntity(patientVitalThresholds);
         patientVitalThresholds.minTemp = dto.min;
         patientVitalThresholds.maxTemp = dto.min;
         patientVitalThresholds.tempSetAt = currentUnixTimestamp();
@@ -134,22 +94,36 @@ export class PatientVitalThresholdsEntityMapper implements IPatientVitalThreshol
         return patientVitalThresholds;
     }
 
-    private createThresholdsModelWithDefaultValues(): PatientVitalThresholdsModel {
-        const patientVitalThresholds = new PatientVitalThresholdsModel();
-        patientVitalThresholds.minHr = MinHR.value;
-        patientVitalThresholds.maxHr = MaxHR.value;
-        patientVitalThresholds.minTemp = MinTemp.value;
-        patientVitalThresholds.maxTemp = MaxTemp.value;
-        patientVitalThresholds.minSpo2 = MinSpO2.value;
-        patientVitalThresholds.minRr = MinRR.value;
-        patientVitalThresholds.maxRr = MaxRR.value;
-        patientVitalThresholds.minDbp = MinDBP.value;
-        patientVitalThresholds.maxDbp = MaxDBP.value;
-        patientVitalThresholds.minSbp = MinSBP.value;
-        patientVitalThresholds.maxSbp = MaxSBP.value;
-        patientVitalThresholds.minMap = MinMAP.value;
-        patientVitalThresholds.maxMap = MaxMAP.value;
+    private mapByEntity(entity: PatientVitalThresholds): PatientVitalThresholds {
+        const model = new PatientVitalThresholdsModel();
+        model.minHr = entity.minHr;
+        model.maxHr = entity.maxHr;
+        model.hrSetBy = entity.hrSetBy;
+        model.hrSetAt = entity.hrSetAt;
+        model.minTemp = entity.minTemp;
+        model.maxTemp = entity.maxTemp;
+        model.tempSetBy = entity.tempSetBy;
+        model.tempSetAt = entity.tempSetAt;
+        model.minSpo2 = entity.minSpo2;
+        model.spo2SetBy = entity.spo2SetBy;
+        model.spo2SetAt = entity.spo2SetAt;
+        model.minRr = entity.minRr;
+        model.maxRr = entity.maxRr;
+        model.rrSetBy = entity.rrSetBy;
+        model.rrSetAt = entity.rrSetAt;
+        model.minDbp = entity.minDbp;
+        model.maxDbp = entity.maxDbp;
+        model.dbpSetBy = entity.dbpSetBy;
+        model.dbpSetAt = entity.dbpSetAt;
+        model.minSbp = entity.minSbp;
+        model.maxSbp = entity.maxSbp;
+        model.sbpSetBy = entity.sbpSetBy;
+        model.sbpSetAt = entity.sbpSetAt;
+        model.minMap = entity.minMap;
+        model.maxMap = entity.maxMap;
+        model.mapSetBy = entity.mapSetBy;
+        model.mapSetAt = entity.mapSetAt;
 
-        return patientVitalThresholds;
+        return model;
     }
 }

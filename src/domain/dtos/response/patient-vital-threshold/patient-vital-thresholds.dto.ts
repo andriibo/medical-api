@@ -113,23 +113,4 @@ export class PatientVitalThresholdsDto {
 
         return dto;
     }
-
-    public static getDtoWithDefaultValues(): PatientVitalThresholdsDto {
-        const dto = new PatientVitalThresholdsDto();
-        dto.minHr = MinHR.value;
-        dto.maxHr = MaxHR.value;
-        dto.minTemp = MinTemp.value;
-        dto.maxTemp = MaxTemp.value;
-        dto.minSpo2 = MinSpO2.value;
-        dto.minRr = MinRR.value;
-        dto.maxRr = MaxRR.value;
-        dto.minDbp = MinDBP.value;
-        dto.maxDbp = MaxDBP.value;
-        dto.minSbp = MinSBP.value;
-        dto.maxSbp = MaxSBP.value;
-        dto.minMap = MinMAP.value;
-        dto.maxMap = MaxMAP.value;
-
-        return dto;
-    }
 }
