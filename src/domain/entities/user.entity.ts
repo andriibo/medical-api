@@ -1,4 +1,3 @@
-import {UserMetadata} from './user-metadata.entity';
 import {DoctorMetadata} from 'domain/entities/doctor-metadata.entity';
 import {PatientMetadata} from 'domain/entities/patient-metadata.entity';
 
@@ -24,8 +23,6 @@ export interface User {
     createdAt: string;
 
     avatar?: string;
-
-    metadata?: UserMetadata;
 
     doctorMetadata?: DoctorMetadata | null;
 
