@@ -1,15 +1,15 @@
 import {ApiProperty} from '@nestjs/swagger';
 import {IsNotEmpty, Min, Max} from 'class-validator';
-import {BloodPressureThresholdDto} from 'domain/dtos/request/patient-vital-threshold/blood-pressure-threshold.dto';
+import {BloodPressureThresholdsDto} from 'domain/dtos/request/patient-vital-threshold/blood-pressure-thresholds.dto';
 import {IsGreaterThan} from 'infrastructure/validators/is-greater-than';
 import {
     MinDBP,
     MaxDBP,
     MinSBP,
     MaxSBP,
-} from 'app/modules/patient-vital-threshold/templates/default-thresholds.template';
+} from 'app/modules/patient-vital-thresholds/templates/default-thresholds.template';
 
-export class UpdateBloodPressureView extends BloodPressureThresholdDto {
+export class UpdateBloodPressureView extends BloodPressureThresholdsDto {
     @ApiProperty({minimum: MinDBP.value, maximum: MaxDBP.value})
     @IsNotEmpty()
     @Min(MinDBP.value)

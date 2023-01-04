@@ -14,6 +14,10 @@ export class DoctorMetadataRepository implements IDoctorMetadataRepository {
     }
 
     public async getByIds(ids: string[]): Promise<DoctorMetadata[]> {
+        if (!ids.length) {
+            return [];
+        }
+
         return await this.dataSource.manager.findBy(DoctorMetadataModel, {userId: In(ids)});
     }
 }
