@@ -2,7 +2,6 @@ import {IUserRepository} from 'app/modules/auth/repositories';
 import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service';
 import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repositories';
 import {MyDoctorDto} from 'domain/dtos/response/profile/my-doctor.dto';
-import {IDoctorMetadataRepository} from 'app/modules/profile/repositories';
 import {IFileUrlService} from 'app/modules/profile/services/file-url.service';
 import {sortUserDtosByName} from 'app/support/sort.helper';
 
@@ -10,7 +9,6 @@ export class DoctorListProfileUseCase {
     public constructor(
         private readonly authedUserService: IAuthedUserService,
         private readonly patientDataAccessRepository: IPatientDataAccessRepository,
-        private readonly doctorMetadataRepository: IDoctorMetadataRepository,
         private readonly userRepository: IUserRepository,
         private readonly fileUrlService: IFileUrlService,
     ) {}
