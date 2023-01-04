@@ -1,4 +1,3 @@
-import {IUserRepository} from 'app/modules/auth/repositories';
 import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service';
 import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repositories';
 import {MyDoctorDto} from 'domain/dtos/response/profile/my-doctor.dto';
@@ -9,7 +8,6 @@ export class DoctorListProfileUseCase {
     public constructor(
         private readonly authedUserService: IAuthedUserService,
         private readonly patientDataAccessRepository: IPatientDataAccessRepository,
-        private readonly userRepository: IUserRepository,
         private readonly fileUrlService: IFileUrlService,
     ) {}
 

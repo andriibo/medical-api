@@ -1,4 +1,3 @@
-import {IUserRepository} from 'app/modules/auth/repositories';
 import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service';
 import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repositories';
 import {IFileUrlService} from 'app/modules/profile/services/file-url.service';
@@ -9,7 +8,6 @@ export class CaregiverListProfileUseCase {
     public constructor(
         private readonly authedUserService: IAuthedUserService,
         private readonly patientDataAccessRepository: IPatientDataAccessRepository,
-        private readonly userRepository: IUserRepository,
         private readonly fileUrlService: IFileUrlService,
     ) {}
 

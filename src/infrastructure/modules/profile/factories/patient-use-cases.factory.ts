@@ -38,7 +38,6 @@ export class PatientUseCasesFactory {
         return new DoctorListProfileUseCase(
             this.authedUserService,
             this.patientDataAccessRepository,
-            this.userRepository,
             this.fileUrlService,
         );
     }
@@ -47,7 +46,6 @@ export class PatientUseCasesFactory {
         return new CaregiverListProfileUseCase(
             this.authedUserService,
             this.patientDataAccessRepository,
-            this.userRepository,
             this.fileUrlService,
         );
     }
