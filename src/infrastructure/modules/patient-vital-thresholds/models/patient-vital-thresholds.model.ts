@@ -51,7 +51,7 @@ export class PatientVitalThresholdsModel implements PatientVitalThresholds {
     @Column({name: 'rr_set_by'})
     rrSetBy?: string;
 
-    @Column({name: 'hr_set_at'})
+    @Column({name: 'rr_set_at'})
     rrSetAt?: number;
 
     @Column({name: 'min_dbp'})
