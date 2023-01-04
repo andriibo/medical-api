@@ -1,20 +1,5 @@
 import {UserDto} from 'domain/dtos/response/user/user.dto';
 import {PatientVitalThresholds, User} from 'domain/entities';
-import {
-    MaxDBP,
-    MaxHR,
-    MaxMAP,
-    MaxRR,
-    MaxSBP,
-    MaxTemp,
-    MinDBP,
-    MinHR,
-    MinMAP,
-    MinRR,
-    MinSBP,
-    MinSpO2,
-    MinTemp,
-} from 'app/modules/patient-vital-thresholds/templates/default-thresholds.template';
 
 export class PatientVitalThresholdsDto {
     public minHr: number;

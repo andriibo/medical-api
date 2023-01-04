@@ -73,7 +73,7 @@ export class PatientVitalThresholdsEntityMapper implements IPatientVitalThreshol
     ): PatientVitalThresholds {
         patientVitalThresholds = this.mapByEntity(patientVitalThresholds);
         patientVitalThresholds.minRr = dto.min;
-        patientVitalThresholds.maxRr = dto.min;
+        patientVitalThresholds.maxRr = dto.max;
         patientVitalThresholds.rrSetAt = currentUnixTimestamp();
         patientVitalThresholds.rrSetBy = doctor.id;
 
@@ -87,7 +87,7 @@ export class PatientVitalThresholdsEntityMapper implements IPatientVitalThreshol
     ): PatientVitalThresholds {
         patientVitalThresholds = this.mapByEntity(patientVitalThresholds);
         patientVitalThresholds.minTemp = dto.min;
-        patientVitalThresholds.maxTemp = dto.min;
+        patientVitalThresholds.maxTemp = dto.max;
         patientVitalThresholds.tempSetAt = currentUnixTimestamp();
         patientVitalThresholds.tempSetBy = doctor.id;
 
