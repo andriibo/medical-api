@@ -6,6 +6,8 @@ import {PatientDataAccess} from 'domain/entities';
 import {PatientDataAccessModel} from './patient-data-access.model';
 import {User} from 'domain/entities';
 import {PatientDataAccessStatus} from 'domain/entities/patient-data-access.entity';
+import {UserModel} from 'infrastructure/modules/auth/models';
+import {UserRole} from "domain/entities/user.entity";
 
 @Injectable()
 export class PatientDataAccessRepository implements IPatientDataAccessRepository {
@@ -82,10 +84,15 @@ export class PatientDataAccessRepository implements IPatientDataAccessRepository
         patientUserId: string,
         status: PatientDataAccessStatus,
     ): Promise<PatientDataAccess[]> {
-        return await this.dataSource.manager.findBy(PatientDataAccessModel, {
-            patientUserId,
-            status,
-        });
+        const caregiverRole = UserRole.Caregiver;
+        return await this.dataSource
+            .createQueryBuilder(PatientDataAccessModel, 'pda')
+            .select(['user.*'])
+            .where('pda.patient_user_id = :id', {patientUserId})
+            .andWhere('pda.status = :status', {status})
+            .andWhere('user.status = :status', {caregiverRole})
+            .innerJoin(UserModel, 'user')
+            .getRawMany();
     }
 
     public async getByGrantedUserIdAndStatus(
