@@ -47,7 +47,7 @@ export class PatientDataAccessRepository implements IPatientDataAccessRepository
     public async getByPatientUserId(patientUserId: string): Promise<PatientDataAccess[]> {
         return await this.dataSource
             .createQueryBuilder(PatientDataAccessModel, 'pda')
-            .innerJoinAndSelect('pda.grantedUser', 'user')
+            .leftJoinAndSelect('pda.grantedUser', 'user')
             .where('pda.patient_user_id = :patientUserId', {patientUserId})
             .andWhere('user.deleted_at is null')
             .orderBy({
