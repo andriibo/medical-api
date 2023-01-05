@@ -9,20 +9,30 @@ import {
     ParseFilePipe,
     MaxFileSizeValidator,
     FileTypeValidator,
+    Delete,
+    BadRequestException,
 } from '@nestjs/common';
-import {ApiBadRequestResponse, ApiBearerAuth, ApiConsumes, ApiResponse, ApiTags} from '@nestjs/swagger';
+import {
+    ApiBadRequestResponse,
+    ApiBearerAuth,
+    ApiConsumes,
+    ApiResponse,
+    ApiTags,
+    ApiUnauthorizedResponse,
+} from '@nestjs/swagger';
 import {FileInterceptor} from '@nestjs/platform-express';
 import {UploadAvatarProfileView} from 'views/request/profile/upload-avatar-profile.view';
 import {Express} from 'express';
-import {UserAvatarUseCasesFactory} from 'infrastructure/modules/profile/factories';
+import {ProfileUseCasesFactory} from 'infrastructure/modules/profile/factories';
 
-@Controller('avatar')
+@Controller()
 @ApiBearerAuth()
+@ApiUnauthorizedResponse({description: 'Unauthorized.'})
 @ApiTags('Profile')
-export class AvatarController {
-    public constructor(private readonly userAvatarUseCasesFactory: UserAvatarUseCasesFactory) {}
+export class ProfileController {
+    public constructor(private readonly profileUseCasesFactory: ProfileUseCasesFactory) {}
 
-    @Post('upload')
+    @Post('avatar/upload')
     @ApiConsumes('multipart/form-data')
     @HttpCode(HttpStatus.OK)
     @ApiResponse({status: HttpStatus.OK, description: 'OK.'})
@@ -40,8 +50,22 @@ export class AvatarController {
         )
         file: Express.Multer.File,
     ) {
-        const useCase = this.userAvatarUseCasesFactory.createUploadUserAvatarUseCase();
+        const useCase = this.profileUseCasesFactory.createUploadUserAvatarUseCase();
 
         await useCase.uploadAvatarProfile(file.buffer, file.mimetype);
+    }
+
+    @Delete('my-profile/delete')
+    @HttpCode(HttpStatus.NO_CONTENT)
+    @ApiResponse({status: HttpStatus.NO_CONTENT, description: 'No content.'})
+    @ApiBadRequestResponse({description: 'Bad request.'})
+    public async deleteProfile() {
+        const useCase = this.profileUseCasesFactory.createDeleteProfile();
+
+        try {
+            await useCase.deleteProfile();
+        } catch (error) {
+            throw new BadRequestException(error.message);
+        }
     }
 }
