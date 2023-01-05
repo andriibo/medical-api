@@ -7,7 +7,7 @@ export class userDeletedAt1672911418937 implements MigrationInterface {
             'user',
             new TableColumn({
                 name: 'deleted_at',
-                type: 'timestamp',
+                type: 'int',
                 isNullable: true,
             }),
         );
