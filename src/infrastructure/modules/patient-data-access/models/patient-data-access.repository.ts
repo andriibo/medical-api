@@ -92,9 +92,12 @@ export class PatientDataAccessRepository implements IPatientDataAccessRepository
         grantedUserId: string,
         status: PatientDataAccessStatus,
     ): Promise<PatientDataAccess[]> {
-        return await this.dataSource.manager.findBy(PatientDataAccessModel, {
-            grantedUserId,
-            status,
-        });
+        return await this.dataSource
+            .createQueryBuilder(PatientDataAccessModel, 'pda')
+            .leftJoinAndSelect('pda.patientUser', 'user')
+            .where('pda.granted_user_id = :grantedUserId', {grantedUserId})
+            .andWhere('pda.status = :status', {status})
+            .andWhere('user.deleted_at is null')
+            .getMany();
     }
 }

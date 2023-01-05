@@ -25,14 +25,12 @@ export class PatientListProfileUseCase {
         );
 
         const patientIds = items.filter((item) => item.patientUserId).map((item) => item.patientUserId);
-        const indexedPatients = await this.getIndexedPatients(patientIds);
         const indexedMetadataForPatients = await this.getIndexedMetadata(patientIds);
 
         const myPatients = items.map((patientDataAccess) => {
-            const patient = indexedPatients[patientDataAccess.patientUserId];
             const metadata = indexedMetadataForPatients[patientDataAccess.patientUserId];
 
-            const dto = MyPatientDto.fromUserAndPatientMetadata(patient, metadata);
+            const dto = MyPatientDto.fromUserAndPatientMetadata(patientDataAccess.patientUser, metadata);
             dto.avatar = this.fileUrlService.createUrlToUserAvatar(dto.avatar);
             dto.accessId = patientDataAccess.id;
 
@@ -40,14 +38,6 @@ export class PatientListProfileUseCase {
         });
 
         return sortUserDtosByName(myPatients) as MyPatientDto[];
-    }
-
-    private async getIndexedPatients(patientIds: string[]): Promise<object> {
-        const patients = await this.userRepository.getByIds(patientIds);
-        const indexedPatients = {};
-        patients.map((user) => (indexedPatients[user.id] = user));
-
-        return indexedPatients;
     }
 
     private async getIndexedMetadata(patientIds: string[]): Promise<object> {

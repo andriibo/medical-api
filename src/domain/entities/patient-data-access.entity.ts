@@ -1,3 +1,5 @@
+import {User} from 'domain/entities/user.entity';
+
 export enum PatientDataAccessRequestDirection {
     FromPatient = 'FromPatient',
     ToPatient = 'ToPatient',
@@ -25,4 +27,6 @@ export interface PatientDataAccess {
     status: string;
 
     createdAt: string;
+
+    patientUser?: User | null;
 }
