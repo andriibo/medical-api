@@ -18,6 +18,6 @@ export class UpdateDoctorProfileUseCase {
 
         const modifiedUser = this.userProfileMapper.mapByUpdateDoctorProfileDto(dto, user, metadata);
 
-        await this.userRepository.updateUserAndMetadata(modifiedUser);
+        await this.userRepository.persist(modifiedUser);
     }
 }

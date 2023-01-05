@@ -5,8 +5,6 @@ import {UserDto} from 'domain/dtos/response/user/user.dto';
 export class DoctorDto extends UserDto {
     public institution: string;
 
-    public avatar?: string;
-
     public static fromUserAndDoctorMetadata<T extends typeof DoctorDto>(
         this: T,
         user: User,

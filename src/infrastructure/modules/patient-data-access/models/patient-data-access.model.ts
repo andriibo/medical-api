@@ -1,5 +1,6 @@
-import {Entity, Column, PrimaryColumn} from 'typeorm';
+import {Entity, Column, PrimaryColumn, OneToOne, JoinColumn} from 'typeorm';
 import {PatientDataAccess} from 'domain/entities/patient-data-access.entity';
+import {UserModel} from 'infrastructure/modules/auth/models';
 
 @Entity('patient_data_access')
 export class PatientDataAccessModel implements PatientDataAccess {
@@ -26,4 +27,8 @@ export class PatientDataAccessModel implements PatientDataAccess {
 
     @Column({name: 'created_at'})
     public createdAt: string;
+
+    @OneToOne(() => UserModel)
+    @JoinColumn({name: 'granted_user_id'})
+    public grantedUser?: UserModel | null;
 }

@@ -7,6 +7,8 @@ import {PatientDto} from 'domain/dtos/response/profile/patient.dto';
 import {UpdatePatientProfileView} from 'views/request/profile/update-patient-profile.view';
 import {MyDoctorDto} from 'domain/dtos/response/profile/my-doctor.dto';
 import {MyDoctorView} from 'views/response/profile';
+import {MyCaregiverView} from 'views/response/profile/my-caregiver.view';
+import {MyCaregiverDto} from 'domain/dtos/response/profile/my-caregiver.dto';
 
 @Controller('patient')
 @ApiBearerAuth()
@@ -43,5 +45,16 @@ export class PatientController {
         const useCase = this.patientUseCasesFactory.createDoctorListUseCase();
 
         return await useCase.getMyDoctorList();
+    }
+
+    @Roles('Patient')
+    @Get('my-caregivers')
+    @ApiResponse({status: HttpStatus.OK, type: [MyCaregiverView]})
+    @ApiUnauthorizedResponse({description: 'Unauthorized.'})
+    @ApiForbiddenResponse({description: 'Forbidden.'})
+    public async getMyCaregivers(): Promise<MyCaregiverDto[]> {
+        const useCase = this.patientUseCasesFactory.createCaregiverListUseCase();
+
+        return await useCase.getMyCaregiverList();
     }
 }

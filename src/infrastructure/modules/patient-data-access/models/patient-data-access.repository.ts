@@ -6,6 +6,7 @@ import {PatientDataAccess} from 'domain/entities';
 import {PatientDataAccessModel} from './patient-data-access.model';
 import {User} from 'domain/entities';
 import {PatientDataAccessStatus} from 'domain/entities/patient-data-access.entity';
+import {UserRole} from 'domain/entities/user.entity';
 
 @Injectable()
 export class PatientDataAccessRepository implements IPatientDataAccessRepository {
@@ -78,14 +79,33 @@ export class PatientDataAccessRepository implements IPatientDataAccessRepository
         return await this.dataSource.manager.findOneBy(PatientDataAccessModel, {id});
     }
 
-    public async getByPatientUserIdAndStatus(
+    public async getDoctorsByPatientUserIdAndStatus(
         patientUserId: string,
         status: PatientDataAccessStatus,
     ): Promise<PatientDataAccess[]> {
-        return await this.dataSource.manager.findBy(PatientDataAccessModel, {
-            patientUserId,
-            status,
-        });
+        const role = UserRole.Doctor;
+        return await this.dataSource
+            .createQueryBuilder(PatientDataAccessModel, 'pda')
+            .where('pda.patient_user_id = :patientUserId', {patientUserId})
+            .andWhere('pda.status = :status', {status})
+            .andWhere('user.role = :role', {role})
+            .leftJoinAndSelect('pda.grantedUser', 'user')
+            .leftJoinAndSelect('user.doctorMetadata', 'metadata')
+            .getMany();
+    }
+
+    public async getCaregiversByPatientUserIdAndStatus(
+        patientUserId: string,
+        status: PatientDataAccessStatus,
+    ): Promise<PatientDataAccess[]> {
+        const role = UserRole.Caregiver;
+        return await this.dataSource
+            .createQueryBuilder(PatientDataAccessModel, 'pda')
+            .where('pda.patient_user_id = :patientUserId', {patientUserId})
+            .andWhere('pda.status = :status', {status})
+            .andWhere('user.role = :role', {role})
+            .leftJoinAndSelect('pda.grantedUser', 'user')
+            .getMany();
     }
 
     public async getByGrantedUserIdAndStatus(

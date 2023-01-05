@@ -24,6 +24,6 @@ export class AuthedUserService implements IAuthedUserService {
     public async syncUserEmailWithExternalProvider(externalProviderEmail: string): Promise<void> {
         const user = await this.getUser();
         user.email = externalProviderEmail;
-        this.userRepository.updateUserAndMetadata(user);
+        this.userRepository.persist(user);
     }
 }
