@@ -24,9 +24,15 @@ export interface IPatientDataAccessRepository {
 
     getOneById(id: string): Promise<PatientDataAccess>;
 
-    getAccessesForDoctorsByPatientUserId(patientUserId: string): Promise<PatientDataAccess[]>;
+    getDoctorsByPatientUserIdAndStatus(
+        patientUserId: string,
+        status: PatientDataAccessStatus,
+    ): Promise<PatientDataAccess[]>;
 
-    getAccessesForCaregiversByPatientUserId(patientUserId: string): Promise<PatientDataAccess[]>;
+    getCaregiversByPatientUserIdAndStatus(
+        patientUserId: string,
+        status: PatientDataAccessStatus,
+    ): Promise<PatientDataAccess[]>;
 
     getByGrantedUserIdAndStatus(grantedUserId: string, status: PatientDataAccessStatus): Promise<PatientDataAccess[]>;
 }
