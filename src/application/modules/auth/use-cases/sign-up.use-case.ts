@@ -48,7 +48,7 @@ export class SignUpUseCase {
 
     private async createUser(user: User): Promise<User> {
         try {
-            return await this.userRepository.create(user);
+            return await this.userRepository.persist(user);
         } catch (error) {
             await this.authService.deleteUser(user);
 

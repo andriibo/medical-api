@@ -14,6 +14,6 @@ export class UpdateCaregiverProfileUseCase {
         const user = await this.authedUserService.getUser();
         const modifiedUser = this.userProfileMapper.mapByUpdateCaregiverProfileDto(dto, user);
 
-        await this.userRepository.updateUserAndMetadata(modifiedUser);
+        await this.userRepository.persist(modifiedUser);
     }
 }

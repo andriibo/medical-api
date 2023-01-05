@@ -1,16 +1,7 @@
 import {User} from 'domain/entities/user.entity';
+import {UserDto} from 'domain/dtos/response/user/user.dto';
 
-export class CaregiverDto {
-    public email: string;
-
-    public firstName: string;
-
-    public lastName: string;
-
-    public phone: string;
-
-    public avatar: string;
-
+export class CaregiverDto extends UserDto {
     public static fromUser<T extends typeof CaregiverDto>(this: T, user: User): InstanceType<T> {
         const dto = new this() as InstanceType<T>;
         dto.email = user.email;

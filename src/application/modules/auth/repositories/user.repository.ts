@@ -1,9 +1,7 @@
 import {User} from 'domain/entities/user.entity';
 
 export interface IUserRepository {
-    create(entity: User): Promise<User>;
-
-    updateUserAndMetadata(entity: User): Promise<void>;
+    persist(entity: User): Promise<User>;
 
     updateAvatar(entity: User): Promise<void>;
 

@@ -1,12 +1,13 @@
 import {Inject, Injectable} from '@nestjs/common';
 import {IUserRepository} from 'app/modules/auth/repositories';
-import {IDoctorMetadataRepository, IPatientMetadataRepository} from 'app/modules/profile/repositories';
+import {IPatientMetadataRepository} from 'app/modules/profile/repositories';
 import {PatientProfileUseCase, UpdatePatientProfileUseCase} from 'app/modules/profile/use-cases/patient';
 import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service';
 import {IUserProfileMapper} from 'app/modules/profile/mappers/user-profile.mapper';
 import {IFileUrlService} from 'app/modules/profile/services/file-url.service';
 import {DoctorListProfileUseCase} from 'app/modules/profile/use-cases/patient/doctor-list-profile.use-case';
 import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repositories';
+import {CaregiverListProfileUseCase} from 'app/modules/profile/use-cases/patient/caregiver-list-profile.use-case';
 
 @Injectable()
 export class PatientUseCasesFactory {
@@ -18,7 +19,6 @@ export class PatientUseCasesFactory {
         @Inject(IFileUrlService) private readonly fileUrlService: IFileUrlService,
         @Inject(IPatientDataAccessRepository)
         private readonly patientDataAccessRepository: IPatientDataAccessRepository,
-        @Inject(IDoctorMetadataRepository) private readonly doctorMetadataRepository: IDoctorMetadataRepository,
     ) {}
 
     public createGetPatientProfileUseCase(): PatientProfileUseCase {
@@ -38,8 +38,14 @@ export class PatientUseCasesFactory {
         return new DoctorListProfileUseCase(
             this.authedUserService,
             this.patientDataAccessRepository,
-            this.doctorMetadataRepository,
-            this.userRepository,
+            this.fileUrlService,
+        );
+    }
+
+    public createCaregiverListUseCase(): CaregiverListProfileUseCase {
+        return new CaregiverListProfileUseCase(
+            this.authedUserService,
+            this.patientDataAccessRepository,
             this.fileUrlService,
         );
     }

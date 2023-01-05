@@ -1,5 +1,7 @@
-import {Entity, Column, PrimaryGeneratedColumn} from 'typeorm';
-import {User, UserMetadata} from 'domain/entities';
+import {Entity, Column, PrimaryGeneratedColumn, OneToOne} from 'typeorm';
+import {User} from 'domain/entities';
+import {DoctorMetadataModel} from 'infrastructure/modules/auth/models/doctor-metadata.model';
+import {PatientMetadataModel} from 'infrastructure/modules/auth/models/patient-metadata.model';
 
 @Entity('user')
 export class UserModel implements User {
@@ -30,5 +32,9 @@ export class UserModel implements User {
     @Column({name: 'deleted_at'})
     public deletedAt: string | null;
 
-    public metadata?: UserMetadata;
+    @OneToOne(() => DoctorMetadataModel, (metadata) => metadata.user)
+    public doctorMetadata?: DoctorMetadataModel | null;
+
+    @OneToOne(() => PatientMetadataModel, (metadata) => metadata.user)
+    public patientMetadata?: PatientMetadataModel | null;
 }

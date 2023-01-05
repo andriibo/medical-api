@@ -20,7 +20,7 @@ export class UserModelMapper implements IUserEntityMapper {
         metadata.userId = authModel.getUserId();
         metadata.institution = dto.institution;
 
-        user.metadata = metadata;
+        user.doctorMetadata = metadata;
 
         return user;
     }
@@ -41,7 +41,7 @@ export class UserModelMapper implements IUserEntityMapper {
         metadata.height = dto.height;
         metadata.weight = dto.weight;
 
-        user.metadata = metadata;
+        user.patientMetadata = metadata;
 
         return user;
     }
