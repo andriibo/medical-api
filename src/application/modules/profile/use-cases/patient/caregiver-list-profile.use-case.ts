@@ -3,6 +3,7 @@ import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repo
 import {IFileUrlService} from 'app/modules/profile/services/file-url.service';
 import {sortUserDtosByName} from 'app/support/sort.helper';
 import {MyCaregiverDto} from 'domain/dtos/response/profile/my-caregiver.dto';
+import {PatientDataAccessStatus} from 'domain/entities/patient-data-access.entity';
 
 export class CaregiverListProfileUseCase {
     public constructor(
@@ -14,7 +15,10 @@ export class CaregiverListProfileUseCase {
     public async getMyCaregiverList(): Promise<MyCaregiverDto[]> {
         const patient = await this.authedUserService.getUser();
 
-        const items = await this.patientDataAccessRepository.getAccessesForCaregiversByPatientUserId(patient.id);
+        const items = await this.patientDataAccessRepository.getCaregiversByPatientUserIdAndStatus(
+            patient.id,
+            PatientDataAccessStatus.Approved,
+        );
 
         const myCaregivers = items.map((patientDataAccess) => {
             const dto = MyCaregiverDto.fromUser(patientDataAccess.grantedUser);

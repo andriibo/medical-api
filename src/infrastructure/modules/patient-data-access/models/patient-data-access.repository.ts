@@ -84,9 +84,11 @@ export class PatientDataAccessRepository implements IPatientDataAccessRepository
         return await this.dataSource.manager.findOneBy(PatientDataAccessModel, {id});
     }
 
-    public async getAccessesForDoctorsByPatientUserId(patientUserId: string): Promise<PatientDataAccess[]> {
+    public async getDoctorsByPatientUserIdAndStatus(
+        patientUserId: string,
+        status: PatientDataAccessStatus,
+    ): Promise<PatientDataAccess[]> {
         const role = UserRole.Doctor;
-        const status = PatientDataAccessStatus.Approved;
         return await this.dataSource
             .createQueryBuilder(PatientDataAccessModel, 'pda')
             .leftJoinAndSelect('pda.grantedUser', 'user')
@@ -98,9 +100,11 @@ export class PatientDataAccessRepository implements IPatientDataAccessRepository
             .getMany();
     }
 
-    public async getAccessesForCaregiversByPatientUserId(patientUserId: string): Promise<PatientDataAccess[]> {
+    public async getCaregiversByPatientUserIdAndStatus(
+        patientUserId: string,
+        status: PatientDataAccessStatus,
+    ): Promise<PatientDataAccess[]> {
         const role = UserRole.Caregiver;
-        const status = PatientDataAccessStatus.Approved;
         return await this.dataSource
             .createQueryBuilder(PatientDataAccessModel, 'pda')
             .leftJoinAndSelect('pda.grantedUser', 'user')

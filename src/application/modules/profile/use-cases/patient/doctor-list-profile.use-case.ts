@@ -3,6 +3,7 @@ import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repo
 import {MyDoctorDto} from 'domain/dtos/response/profile/my-doctor.dto';
 import {IFileUrlService} from 'app/modules/profile/services/file-url.service';
 import {sortUserDtosByName} from 'app/support/sort.helper';
+import {PatientDataAccessStatus} from 'domain/entities/patient-data-access.entity';
 
 export class DoctorListProfileUseCase {
     public constructor(
@@ -14,7 +15,10 @@ export class DoctorListProfileUseCase {
     public async getMyDoctorList(): Promise<MyDoctorDto[]> {
         const patient = await this.authedUserService.getUser();
 
-        const items = await this.patientDataAccessRepository.getAccessesForDoctorsByPatientUserId(patient.id);
+        const items = await this.patientDataAccessRepository.getDoctorsByPatientUserIdAndStatus(
+            patient.id,
+            PatientDataAccessStatus.Approved,
+        );
 
         const myDoctors = items.map((patientDataAccess) => {
             const dto = MyDoctorDto.fromUserAndDoctorMetadata(
