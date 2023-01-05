@@ -1,9 +1,9 @@
 import {Controller, Get, HttpCode, HttpStatus} from '@nestjs/common';
 import {ApiBearerAuth, ApiResponse, ApiTags} from '@nestjs/swagger';
-import {PatientUseCasesFactory} from 'infrastructure/modules/patient-vital-threshold/factories';
+import {PatientUseCasesFactory} from 'infrastructure/modules/patient-vital-thresholds/factories';
 import {Roles} from 'presentation/guards';
-import {ThresholdView} from 'views/response/patient-vital-threshold/threshold.view';
-import {ThresholdDto} from 'domain/dtos/response/patient-vital-threshold/threshold.dto';
+import {PatientVitalThresholdsView} from 'views/response/patient-vital-threshold/patient-vital-thresholds.view';
+import {PatientVitalThresholdsDto} from 'domain/dtos/response/patient-vital-threshold/patient-vital-thresholds.dto';
 
 @Controller('patient')
 @ApiBearerAuth()
@@ -14,8 +14,8 @@ export class PatientController {
     @Roles('Patient')
     @Get('my-vital-thresholds')
     @HttpCode(HttpStatus.OK)
-    @ApiResponse({status: HttpStatus.OK, type: [ThresholdView]})
-    public async getVitalThresholds(): Promise<ThresholdDto[]> {
+    @ApiResponse({status: HttpStatus.OK, type: PatientVitalThresholdsView})
+    public async getVitalThresholds(): Promise<PatientVitalThresholdsDto> {
         const useCase = this.patientUseCasesFactory.createPatientVitalThresholdListUseCase();
 
         return await useCase.getList();

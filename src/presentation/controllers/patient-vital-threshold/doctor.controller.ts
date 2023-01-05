@@ -1,5 +1,15 @@
-import {BadRequestException, Body, Controller, HttpCode, HttpStatus, Param, ParseUUIDPipe, Patch} from '@nestjs/common';
-import {ApiBearerAuth, ApiResponse, ApiTags} from '@nestjs/swagger';
+import {
+    BadRequestException,
+    Body,
+    Controller,
+    HttpCode,
+    HttpStatus,
+    Param,
+    ParseUUIDPipe,
+    Patch,
+    Post,
+} from '@nestjs/common';
+import {ApiBearerAuth, ApiOperation, ApiResponse, ApiTags} from '@nestjs/swagger';
 import {Roles} from 'presentation/guards';
 import {
     UpdateHeartRateView,
@@ -9,7 +19,7 @@ import {
     UpdateBloodPressureView,
     UpdateMeanArterialPressureView,
 } from 'views/request/patient-vital-threshold';
-import {DoctorUseCasesFactory} from 'infrastructure/modules/patient-vital-threshold/factories/doctor-use-cases.factory';
+import {DoctorUseCasesFactory} from 'infrastructure/modules/patient-vital-thresholds/factories/doctor-use-cases.factory';
 
 @Controller('doctor')
 @ApiBearerAuth()
@@ -19,6 +29,22 @@ export class DoctorController {
 
     @Roles('Doctor')
     @Patch('blood-pressure/:patientUserId')
+    @ApiOperation({
+        deprecated: true,
+        summary: 'Deprecated endpoint. Use POST "/blood-pressure/{patientUserId}" instead.',
+    })
+    @HttpCode(HttpStatus.OK)
+    @HttpCode(HttpStatus.BAD_REQUEST)
+    @ApiResponse({status: HttpStatus.OK})
+    public async updateBloodPressureDeprecated(
+        @Param('patientUserId', ParseUUIDPipe) patientUserId: string,
+        @Body() requestBody: UpdateBloodPressureView,
+    ): Promise<void> {
+        return await this.updateBloodPressure(patientUserId, requestBody);
+    }
+
+    @Roles('Doctor')
+    @Post('blood-pressure/:patientUserId')
     @HttpCode(HttpStatus.OK)
     @HttpCode(HttpStatus.BAD_REQUEST)
     @ApiResponse({status: HttpStatus.OK})
@@ -26,10 +52,10 @@ export class DoctorController {
         @Param('patientUserId', ParseUUIDPipe) patientUserId: string,
         @Body() requestBody: UpdateBloodPressureView,
     ): Promise<void> {
-        const useCase = this.doctorUseCasesFactory.createUpdateBloodPressureUseCase();
+        const useCase = this.doctorUseCasesFactory.createBloodPressureUseCase();
 
         try {
-            await useCase.updateThreshold(patientUserId, requestBody);
+            await useCase.createNewThresholds(patientUserId, requestBody);
         } catch (error) {
             throw new BadRequestException(error.message);
         }
@@ -37,6 +63,22 @@ export class DoctorController {
 
     @Roles('Doctor')
     @Patch('heart-rate/:patientUserId')
+    @ApiOperation({
+        deprecated: true,
+        summary: 'Deprecated endpoint. Use POST "/heart-rate/{patientUserId}" instead.',
+    })
+    @HttpCode(HttpStatus.OK)
+    @HttpCode(HttpStatus.BAD_REQUEST)
+    @ApiResponse({status: HttpStatus.OK})
+    public async updateHeartRateDeprecated(
+        @Param('patientUserId', ParseUUIDPipe) patientUserId: string,
+        @Body() requestBody: UpdateHeartRateView,
+    ): Promise<void> {
+        return await this.updateHeartRate(patientUserId, requestBody);
+    }
+
+    @Roles('Doctor')
+    @Post('heart-rate/:patientUserId')
     @HttpCode(HttpStatus.OK)
     @HttpCode(HttpStatus.BAD_REQUEST)
     @ApiResponse({status: HttpStatus.OK})
@@ -44,10 +86,10 @@ export class DoctorController {
         @Param('patientUserId', ParseUUIDPipe) patientUserId: string,
         @Body() requestBody: UpdateHeartRateView,
     ): Promise<void> {
-        const useCase = this.doctorUseCasesFactory.createUpdateHeartRateUseCase();
+        const useCase = this.doctorUseCasesFactory.createHeartRateUseCase();
 
         try {
-            await useCase.updateThreshold(patientUserId, requestBody);
+            await useCase.createNewThresholds(patientUserId, requestBody);
         } catch (error) {
             throw new BadRequestException(error.message);
         }
@@ -55,6 +97,22 @@ export class DoctorController {
 
     @Roles('Doctor')
     @Patch('mean-arterial-pressure/:patientUserId')
+    @ApiOperation({
+        deprecated: true,
+        summary: 'Deprecated endpoint. Use POST "/mean-arterial-pressure/{patientUserId}" instead.',
+    })
+    @HttpCode(HttpStatus.OK)
+    @HttpCode(HttpStatus.BAD_REQUEST)
+    @ApiResponse({status: HttpStatus.OK})
+    public async updateMeanArterialPressureDeprecated(
+        @Param('patientUserId', ParseUUIDPipe) patientUserId: string,
+        @Body() requestBody: UpdateMeanArterialPressureView,
+    ): Promise<void> {
+        return await this.updateMeanArterialPressure(patientUserId, requestBody);
+    }
+
+    @Roles('Doctor')
+    @Post('mean-arterial-pressure/:patientUserId')
     @HttpCode(HttpStatus.OK)
     @HttpCode(HttpStatus.BAD_REQUEST)
     @ApiResponse({status: HttpStatus.OK})
@@ -62,10 +120,10 @@ export class DoctorController {
         @Param('patientUserId', ParseUUIDPipe) patientUserId: string,
         @Body() requestBody: UpdateMeanArterialPressureView,
     ): Promise<void> {
-        const useCase = this.doctorUseCasesFactory.createUpdateMeanArterialPressureUseCase();
+        const useCase = this.doctorUseCasesFactory.createMeanArterialPressureUseCase();
 
         try {
-            await useCase.updateThreshold(patientUserId, requestBody);
+            await useCase.createNewThresholds(patientUserId, requestBody);
         } catch (error) {
             throw new BadRequestException(error.message);
         }
@@ -73,6 +131,22 @@ export class DoctorController {
 
     @Roles('Doctor')
     @Patch('oxygen-saturation/:patientUserId')
+    @ApiOperation({
+        deprecated: true,
+        summary: 'Deprecated endpoint. Use POST "/oxygen-saturation/{patientUserId}" instead.',
+    })
+    @HttpCode(HttpStatus.OK)
+    @HttpCode(HttpStatus.BAD_REQUEST)
+    @ApiResponse({status: HttpStatus.OK})
+    public async updateOxygenSaturationDeprecated(
+        @Param('patientUserId', ParseUUIDPipe) patientUserId: string,
+        @Body() requestBody: UpdateOxygenSaturationView,
+    ): Promise<void> {
+        return await this.updateOxygenSaturation(patientUserId, requestBody);
+    }
+
+    @Roles('Doctor')
+    @Post('oxygen-saturation/:patientUserId')
     @HttpCode(HttpStatus.OK)
     @HttpCode(HttpStatus.BAD_REQUEST)
     @ApiResponse({status: HttpStatus.OK})
@@ -80,10 +154,10 @@ export class DoctorController {
         @Param('patientUserId', ParseUUIDPipe) patientUserId: string,
         @Body() requestBody: UpdateOxygenSaturationView,
     ): Promise<void> {
-        const useCase = this.doctorUseCasesFactory.createUpdateOxygenSaturationUseCase();
+        const useCase = this.doctorUseCasesFactory.createOxygenSaturationUseCase();
 
         try {
-            await useCase.updateThreshold(patientUserId, requestBody);
+            await useCase.createNewThreshold(patientUserId, requestBody);
         } catch (error) {
             throw new BadRequestException(error.message);
         }
@@ -91,6 +165,22 @@ export class DoctorController {
 
     @Roles('Doctor')
     @Patch('respiration-rate/:patientUserId')
+    @ApiOperation({
+        deprecated: true,
+        summary: 'Deprecated endpoint. Use POST "/respiration-rate/{patientUserId}" instead.',
+    })
+    @HttpCode(HttpStatus.OK)
+    @HttpCode(HttpStatus.BAD_REQUEST)
+    @ApiResponse({status: HttpStatus.OK})
+    public async updateRespirationRateDeprecated(
+        @Param('patientUserId', ParseUUIDPipe) patientUserId: string,
+        @Body() requestBody: UpdateRespirationRateView,
+    ): Promise<void> {
+        return this.updateRespirationRate(patientUserId, requestBody);
+    }
+
+    @Roles('Doctor')
+    @Post('respiration-rate/:patientUserId')
     @HttpCode(HttpStatus.OK)
     @HttpCode(HttpStatus.BAD_REQUEST)
     @ApiResponse({status: HttpStatus.OK})
@@ -98,10 +188,10 @@ export class DoctorController {
         @Param('patientUserId', ParseUUIDPipe) patientUserId: string,
         @Body() requestBody: UpdateRespirationRateView,
     ): Promise<void> {
-        const useCase = this.doctorUseCasesFactory.createUpdateRespirationRateUseCase();
+        const useCase = this.doctorUseCasesFactory.createRespirationRateUseCase();
 
         try {
-            await useCase.updateThreshold(patientUserId, requestBody);
+            await useCase.createNewThresholds(patientUserId, requestBody);
         } catch (error) {
             throw new BadRequestException(error.message);
         }
@@ -109,6 +199,22 @@ export class DoctorController {
 
     @Roles('Doctor')
     @Patch('temperature/:patientUserId')
+    @ApiOperation({
+        deprecated: true,
+        summary: 'Deprecated endpoint. Use POST "/temperature/{patientUserId}" instead.',
+    })
+    @HttpCode(HttpStatus.OK)
+    @HttpCode(HttpStatus.BAD_REQUEST)
+    @ApiResponse({status: HttpStatus.OK})
+    public async updateTemperatureDeprecated(
+        @Param('patientUserId', ParseUUIDPipe) patientUserId: string,
+        @Body() requestBody: UpdateTemperatureView,
+    ): Promise<void> {
+        return this.updateTemperature(patientUserId, requestBody);
+    }
+
+    @Roles('Doctor')
+    @Post('temperature/:patientUserId')
     @HttpCode(HttpStatus.OK)
     @HttpCode(HttpStatus.BAD_REQUEST)
     @ApiResponse({status: HttpStatus.OK})
@@ -116,10 +222,10 @@ export class DoctorController {
         @Param('patientUserId', ParseUUIDPipe) patientUserId: string,
         @Body() requestBody: UpdateTemperatureView,
     ): Promise<void> {
-        const useCase = this.doctorUseCasesFactory.createUpdateTemperatureUseCase();
+        const useCase = this.doctorUseCasesFactory.createTemperatureUseCase();
 
         try {
-            await useCase.updateThreshold(patientUserId, requestBody);
+            await useCase.createNewThresholds(patientUserId, requestBody);
         } catch (error) {
             throw new BadRequestException(error.message);
         }

@@ -55,6 +55,10 @@ export class UserRepository implements IUserRepository {
     }
 
     public async getByIds(ids: string[]): Promise<User[]> {
+        if (!ids.length) {
+            return [];
+        }
+
         return await this.dataSource.manager.findBy(UserModel, {id: In(ids)});
     }
 
