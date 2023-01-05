@@ -4,7 +4,6 @@ import {DataSource} from 'typeorm';
 import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repositories';
 import {PatientDataAccess} from 'domain/entities';
 import {PatientDataAccessModel} from './patient-data-access.model';
-import {User} from 'domain/entities';
 import {PatientDataAccessStatus} from 'domain/entities/patient-data-access.entity';
 import {UserRole} from 'domain/entities/user.entity';
 
@@ -45,22 +44,28 @@ export class PatientDataAccessRepository implements IPatientDataAccessRepository
         return await this.dataSource.manager.findOneBy(PatientDataAccessModel, {grantedUserId, patientEmail});
     }
 
-    public async getByPatient(patient: User): Promise<PatientDataAccess[]> {
-        return await this.dataSource.manager.find(PatientDataAccessModel, {
-            where: {patientUserId: patient.id},
-            order: {
-                createdAt: 'DESC',
-            },
-        });
+    public async getByPatientUserId(patientUserId: string): Promise<PatientDataAccess[]> {
+        return await this.dataSource
+            .createQueryBuilder(PatientDataAccessModel, 'pda')
+            .innerJoinAndSelect('pda.grantedUser', 'user')
+            .where('pda.patient_user_id = :patientUserId', {patientUserId})
+            .andWhere('user.deleted_at is null')
+            .orderBy({
+                'pda.createdAt': 'DESC',
+            })
+            .getMany();
     }
 
-    public async getByGrantedUser(grantedUser: User): Promise<PatientDataAccess[]> {
-        return await this.dataSource.manager.find(PatientDataAccessModel, {
-            where: {grantedUserId: grantedUser.id},
-            order: {
-                createdAt: 'DESC',
-            },
-        });
+    public async getByGrantedUserId(grantedUserId: string): Promise<PatientDataAccess[]> {
+        return await this.dataSource
+            .createQueryBuilder(PatientDataAccessModel, 'pda')
+            .innerJoinAndSelect('pda.patientUser', 'user')
+            .where('pda.granted_user_id = :grantedUserId', {grantedUserId})
+            .andWhere('user.deleted_at is null')
+            .orderBy({
+                'pda.createdAt': 'DESC',
+            })
+            .getMany();
     }
 
     public async getByGrantedEmail(grantedEmail: string): Promise<PatientDataAccess[]> {
@@ -84,11 +89,12 @@ export class PatientDataAccessRepository implements IPatientDataAccessRepository
         const status = PatientDataAccessStatus.Approved;
         return await this.dataSource
             .createQueryBuilder(PatientDataAccessModel, 'pda')
+            .leftJoinAndSelect('pda.grantedUser', 'user')
+            .leftJoinAndSelect('user.doctorMetadata', 'metadata')
             .where('pda.patient_user_id = :patientUserId', {patientUserId})
             .andWhere('pda.status = :status', {status})
             .andWhere('user.role = :role', {role})
-            .leftJoinAndSelect('pda.grantedUser', 'user')
-            .leftJoinAndSelect('user.doctorMetadata', 'metadata')
+            .andWhere('user.deleted_at is null')
             .getMany();
     }
 
@@ -97,10 +103,11 @@ export class PatientDataAccessRepository implements IPatientDataAccessRepository
         const status = PatientDataAccessStatus.Approved;
         return await this.dataSource
             .createQueryBuilder(PatientDataAccessModel, 'pda')
+            .leftJoinAndSelect('pda.grantedUser', 'user')
             .where('pda.patient_user_id = :patientUserId', {patientUserId})
             .andWhere('pda.status = :status', {status})
             .andWhere('user.role = :role', {role})
-            .leftJoinAndSelect('pda.grantedUser', 'user')
+            .andWhere('user.deleted_at is null')
             .getMany();
     }
 
@@ -111,6 +118,7 @@ export class PatientDataAccessRepository implements IPatientDataAccessRepository
         return await this.dataSource
             .createQueryBuilder(PatientDataAccessModel, 'pda')
             .leftJoinAndSelect('pda.patientUser', 'user')
+            .leftJoinAndSelect('user.patientMetadata', 'metadata')
             .where('pda.granted_user_id = :grantedUserId', {grantedUserId})
             .andWhere('pda.status = :status', {status})
             .andWhere('user.deleted_at is null')
