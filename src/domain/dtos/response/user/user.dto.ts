@@ -11,9 +11,11 @@ export class UserDto {
 
     public phone: string;
 
-    public avatar?: string;
+    public avatar?: string | null;
 
     public role: string;
+
+    public deletedAt: number | null = null;
 
     public static fromUser(user: User): UserDto {
         const dto = new UserDto();
@@ -22,8 +24,8 @@ export class UserDto {
         dto.firstName = user.firstName;
         dto.lastName = user.lastName;
         dto.phone = user.phone;
-        dto.avatar = user.avatar;
         dto.role = user.role;
+        dto.deletedAt = user.deletedAt;
 
         return dto;
     }

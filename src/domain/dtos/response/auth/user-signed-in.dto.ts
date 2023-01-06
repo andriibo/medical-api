@@ -1,18 +1,17 @@
-import {TokenClaimsModel} from 'infrastructure/aws/cognito/token-claims.model';
-import {UserDataSignedInDto} from './user-data-signed-in.dto';
+import {ITokenClaimsModel} from 'app/modules/auth/models';
+import {UserDto} from 'domain/dtos/response/user/user.dto';
+import {User} from 'domain/entities';
 
 export class UserSignedInDto {
     public token: string;
     public tokenExpireTime: Date;
-    public user: UserDataSignedInDto;
+    public user: UserDto;
 
-    public static fromTokenData(token: string, tokenClaims: object): UserSignedInDto {
-        const tokenClaimsModel = TokenClaimsModel.fromCognitoResponse(tokenClaims);
-
+    public static fromTokenData(token: string, tokenClaims: ITokenClaimsModel, user: User): UserSignedInDto {
         const dto = new UserSignedInDto();
         dto.token = token;
-        dto.tokenExpireTime = tokenClaimsModel.getTokenExpireTime();
-        dto.user = UserDataSignedInDto.fromTokenClaimsModel(tokenClaimsModel);
+        dto.tokenExpireTime = tokenClaims.getTokenExpireTime();
+        dto.user = UserDto.fromUser(user);
 
         return dto;
     }

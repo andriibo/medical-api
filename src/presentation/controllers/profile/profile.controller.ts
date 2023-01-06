@@ -11,6 +11,7 @@ import {
     FileTypeValidator,
     Delete,
     BadRequestException,
+    Patch,
 } from '@nestjs/common';
 import {
     ApiBadRequestResponse,
@@ -73,7 +74,7 @@ export class ProfileController {
     }
 
     @Auth()
-    @Post('my-profile/recovery')
+    @Patch('my-profile/recovery')
     @HttpCode(HttpStatus.OK)
     @ApiResponse({status: HttpStatus.OK, description: 'OK.'})
     @ApiBadRequestResponse({description: 'Bad request.'})
