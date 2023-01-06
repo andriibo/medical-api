@@ -7,7 +7,7 @@ export class CronService {
     public constructor(@Inject(IUserRepository) private readonly userRepository: IUserRepository) {}
 
     @Cron(CronExpression.EVERY_MINUTE)
-    async removeUsersMarkedDeletedAt() {
+    public async removeUsersMarkedDeletedAt(): Promise<void> {
         await this.userRepository.removeUsersMarkedDeletedAt();
     }
 }
