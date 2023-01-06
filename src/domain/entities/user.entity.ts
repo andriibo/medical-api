@@ -24,7 +24,7 @@ export interface User {
 
     avatar: string | null;
 
-    deletedAt: string | null;
+    deletedAt: number | null;
 
     doctorMetadata?: DoctorMetadata | null;
 
