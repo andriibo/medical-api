@@ -26,6 +26,8 @@ import {AssignUserMiddleware} from 'presentation/middlewares/assign-user.middlew
 import {EventEmitterModule} from '@nestjs/event-emitter';
 import {ServeStaticModule} from '@nestjs/serve-static';
 import {join} from 'path';
+import {ScheduleModule} from '@nestjs/schedule';
+import {CronService} from './cron/cron.service';
 
 const APP_MODULES_IMPORT = [
     AuthModule,
@@ -68,11 +70,12 @@ const INTERCEPTORS = [
             rootPath: join(__dirname, '..', 'static'),
             // exclude: ['/api*'],
         }),
+        ScheduleModule.forRoot(),
         ...APP_MODULES_IMPORT,
     ],
     exports: [TypeOrmModule],
     controllers: [AppController],
-    providers: [...INTERCEPTORS, ...GUARDS],
+    providers: [...INTERCEPTORS, ...GUARDS, CronService],
 })
 export class AppModule implements NestModule {
     configure(consumer: MiddlewareConsumer) {

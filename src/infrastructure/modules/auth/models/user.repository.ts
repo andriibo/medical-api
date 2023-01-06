@@ -1,10 +1,11 @@
 import {Injectable} from '@nestjs/common';
 import {InjectDataSource} from '@nestjs/typeorm';
-import {DataSource, In} from 'typeorm';
+import {DataSource, In, MoreThan} from 'typeorm';
 import {IUserRepository} from 'app/modules/auth/repositories';
 import {UserModel} from './user.model';
 import {User} from 'domain/entities';
 import {EntityNotFoundError} from 'app/errors';
+import {currentUnixTimestamp} from 'app/support/date.helper';
 
 @Injectable()
 export class UserRepository implements IUserRepository {
@@ -64,5 +65,14 @@ export class UserRepository implements IUserRepository {
 
     public async getOneByEmail(email: string): Promise<User> {
         return await this.dataSource.manager.findOneBy(UserModel, {email});
+    }
+
+    public async removeUsersMarkedDeletedAt(): Promise<void> {
+        await this.dataSource.manager
+            .createQueryBuilder()
+            .delete()
+            .from(UserModel)
+            .where({deletedAt: MoreThan(currentUnixTimestamp())})
+            .execute();
     }
 }
