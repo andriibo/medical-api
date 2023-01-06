@@ -279,7 +279,7 @@ export class CognitoService implements IAuthService {
         try {
             const result = await this.cognitoClient.send(command);
 
-            return this.getUserAttriburesResult(result.UserAttributes);
+            return this.getUserAttributesResult(result.UserAttributes);
         } catch (error) {
             console.error(error.message);
             throw new AuthServiceError(error.message);
@@ -405,7 +405,7 @@ export class CognitoService implements IAuthService {
         return decodedToken.iss === tokenISS;
     }
 
-    private getUserAttriburesResult(attributes: AttributeType[]): UserAttributesModel {
+    private getUserAttributesResult(attributes: AttributeType[]): UserAttributesModel {
         const userAttributes = new UserAttributesModel();
         userAttributes.sub = this.getAttributeValueByName(attributes, USER_ATTRIBUTES.USER_SUB);
         userAttributes.email = this.getAttributeValueByName(attributes, USER_ATTRIBUTES.EMIAL);
