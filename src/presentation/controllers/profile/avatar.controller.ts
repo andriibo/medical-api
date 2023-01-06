@@ -15,6 +15,7 @@ import {FileInterceptor} from '@nestjs/platform-express';
 import {UploadAvatarProfileView} from 'views/request/profile/upload-avatar-profile.view';
 import {Express} from 'express';
 import {UserAvatarUseCasesFactory} from 'infrastructure/modules/profile/factories';
+import {Auth} from 'presentation/guards';
 
 @Controller('avatar')
 @ApiBearerAuth()
@@ -22,6 +23,7 @@ import {UserAvatarUseCasesFactory} from 'infrastructure/modules/profile/factorie
 export class AvatarController {
     public constructor(private readonly userAvatarUseCasesFactory: UserAvatarUseCasesFactory) {}
 
+    @Auth()
     @Post('upload')
     @ApiConsumes('multipart/form-data')
     @HttpCode(HttpStatus.OK)
