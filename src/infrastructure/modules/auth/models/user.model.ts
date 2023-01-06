@@ -30,7 +30,7 @@ export class UserModel implements User {
     public avatar: string | null;
 
     @Column({name: 'deleted_at'})
-    public deletedAt: string | null;
+    public deletedAt: number | null;
 
     @OneToOne(() => DoctorMetadataModel, (metadata) => metadata.user)
     public doctorMetadata?: DoctorMetadataModel | null;
