@@ -74,12 +74,7 @@ export class PatientUseCasesFactory {
     }
 
     public createDataAccessListUseCase(): DataAccessListUseCase {
-        return new DataAccessListUseCase(
-            this.userRepository,
-            this.patientDataAccessRepository,
-            this.authedUserService,
-            this.fileUrlService,
-        );
+        return new DataAccessListUseCase(this.patientDataAccessRepository, this.authedUserService, this.fileUrlService);
     }
 
     public createDeleteDataAccessUseCase(): DeleteDataAccessUseCase {

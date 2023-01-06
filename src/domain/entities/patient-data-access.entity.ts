@@ -29,4 +29,6 @@ export interface PatientDataAccess {
     createdAt: string;
 
     grantedUser?: User | null;
+
+    patientUser?: User | null;
 }

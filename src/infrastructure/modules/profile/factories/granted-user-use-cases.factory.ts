@@ -25,8 +25,6 @@ export class GrantedUserUseCasesFactory {
         return new PatientListProfileUseCase(
             this.authedUserService,
             this.patientDataAccessRepository,
-            this.patientMetadataRepository,
-            this.userRepository,
             this.fileUrlService,
         );
     }

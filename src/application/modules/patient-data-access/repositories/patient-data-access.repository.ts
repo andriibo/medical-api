@@ -1,5 +1,4 @@
 import {PatientDataAccess, PatientDataAccessStatus} from 'domain/entities/patient-data-access.entity';
-import {User} from 'domain/entities';
 
 export interface IPatientDataAccessRepository {
     create(patientDataAccess: PatientDataAccess): Promise<void>;
@@ -14,9 +13,9 @@ export interface IPatientDataAccessRepository {
 
     getOneByGrantedUserIdAndPatientEmail(grantedUserId: string, patientEmail: string): Promise<PatientDataAccess>;
 
-    getByPatient(patient: User): Promise<PatientDataAccess[]>;
+    getByPatientUserId(patientUserId: string): Promise<PatientDataAccess[]>;
 
-    getByGrantedUser(grantedUser: User): Promise<PatientDataAccess[]>;
+    getByGrantedUserId(grantedUserId: string): Promise<PatientDataAccess[]>;
 
     getByGrantedEmail(grantedEmail: string): Promise<PatientDataAccess[]>;
 

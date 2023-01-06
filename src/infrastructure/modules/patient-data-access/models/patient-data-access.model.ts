@@ -29,6 +29,10 @@ export class PatientDataAccessModel implements PatientDataAccess {
     public createdAt: string;
 
     @OneToOne(() => UserModel)
+    @JoinColumn({name: 'patient_user_id'})
+    patientUser?: UserModel | null;
+
+    @OneToOne(() => UserModel)
     @JoinColumn({name: 'granted_user_id'})
     public grantedUser?: UserModel | null;
 }

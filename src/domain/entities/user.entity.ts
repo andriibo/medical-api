@@ -22,7 +22,9 @@ export interface User {
 
     createdAt: string;
 
-    avatar?: string;
+    avatar: string | null;
+
+    deletedAt: number | null;
 
     doctorMetadata?: DoctorMetadata | null;
 
