@@ -57,6 +57,7 @@ export class ProfileController {
         await useCase.uploadAvatarProfile(file.buffer, file.mimetype);
     }
 
+    @Auth()
     @Delete('my-profile')
     @HttpCode(HttpStatus.NO_CONTENT)
     @ApiResponse({status: HttpStatus.NO_CONTENT, description: 'No content.'})
