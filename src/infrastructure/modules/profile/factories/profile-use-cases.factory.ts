@@ -6,7 +6,7 @@ import {IUserAvatarService} from 'app/modules/profile/services/user-avatar.servi
 import {IFileNameService} from 'app/modules/profile/services/file-name.service';
 import {DeleteProfileUseCase} from 'app/modules/profile/use-cases/profile';
 import {ProfileSpecification} from 'app/modules/profile/specifications/profile.specification';
-import {RecoveryMyProfileUseCase} from 'app/modules/profile/use-cases/profile/recovery-my-profile.use-case';
+import {RecoverMyProfileUseCase} from 'app/modules/profile/use-cases/profile/recover-my-profile.use-case';
 
 @Injectable()
 export class ProfileUseCasesFactory {
@@ -31,7 +31,7 @@ export class ProfileUseCasesFactory {
         return new DeleteProfileUseCase(this.userRepository, this.authedUserService, this.profileSpecification);
     }
 
-    public createRecoveryMyProfile(): RecoveryMyProfileUseCase {
-        return new RecoveryMyProfileUseCase(this.userRepository, this.authedUserService, this.profileSpecification);
+    public createRecoverMyProfile(): RecoverMyProfileUseCase {
+        return new RecoverMyProfileUseCase(this.userRepository, this.authedUserService, this.profileSpecification);
     }
 }

@@ -74,10 +74,10 @@ export class ProfileController {
     @ApiResponse({status: HttpStatus.OK, description: 'OK.'})
     @ApiBadRequestResponse({description: 'Bad request.'})
     public async recoveryMyProfile() {
-        const useCase = this.profileUseCasesFactory.createRecoveryMyProfile();
+        const useCase = this.profileUseCasesFactory.createRecoverMyProfile();
 
         try {
-            await useCase.recoveryMyProfile();
+            await useCase.recoverMyProfile();
         } catch (error) {
             throw new BadRequestException(error.message);
         }
