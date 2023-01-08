@@ -9,7 +9,6 @@ import {
     ParseFilePipe,
     MaxFileSizeValidator,
     FileTypeValidator,
-    Delete,
     BadRequestException,
     Patch,
 } from '@nestjs/common';
@@ -59,7 +58,7 @@ export class ProfileController {
     }
 
     @Auth()
-    @Delete('my-profile')
+    @Patch('my-profile/delete')
     @HttpCode(HttpStatus.NO_CONTENT)
     @ApiResponse({status: HttpStatus.NO_CONTENT, description: 'No content.'})
     @ApiBadRequestResponse({description: 'Bad request.'})
