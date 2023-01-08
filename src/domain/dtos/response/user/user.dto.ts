@@ -24,6 +24,7 @@ export class UserDto {
         dto.firstName = user.firstName;
         dto.lastName = user.lastName;
         dto.phone = user.phone;
+        dto.avatar = user.avatar;
         dto.role = user.role;
         dto.deletedAt = user.deletedAt;
 

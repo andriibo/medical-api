@@ -59,8 +59,8 @@ export class ProfileController {
 
     @Auth()
     @Patch('my-profile/delete')
-    @HttpCode(HttpStatus.NO_CONTENT)
-    @ApiResponse({status: HttpStatus.NO_CONTENT, description: 'No content.'})
+    @HttpCode(HttpStatus.OK)
+    @ApiResponse({status: HttpStatus.OK, description: 'OK.'})
     @ApiBadRequestResponse({description: 'Bad request.'})
     public async deleteProfile() {
         const useCase = this.profileUseCasesFactory.createDeleteProfile();
