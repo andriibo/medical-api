@@ -11,7 +11,7 @@ export class UserDto {
 
     public phone: string;
 
-    public avatar?: string | null;
+    public avatar: string | null = null;
 
     public role: string;
 
