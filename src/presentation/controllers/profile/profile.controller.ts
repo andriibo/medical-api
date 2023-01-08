@@ -9,8 +9,8 @@ import {
     ParseFilePipe,
     MaxFileSizeValidator,
     FileTypeValidator,
-    Delete,
     BadRequestException,
+    Patch,
 } from '@nestjs/common';
 import {
     ApiBadRequestResponse,
@@ -58,15 +58,30 @@ export class ProfileController {
     }
 
     @Auth()
-    @Delete('my-profile')
-    @HttpCode(HttpStatus.NO_CONTENT)
-    @ApiResponse({status: HttpStatus.NO_CONTENT, description: 'No content.'})
+    @Patch('my-profile/delete')
+    @HttpCode(HttpStatus.OK)
+    @ApiResponse({status: HttpStatus.OK, description: 'OK.'})
     @ApiBadRequestResponse({description: 'Bad request.'})
     public async deleteProfile() {
         const useCase = this.profileUseCasesFactory.createDeleteProfile();
 
         try {
             await useCase.deleteProfile();
+        } catch (error) {
+            throw new BadRequestException(error.message);
+        }
+    }
+
+    @Auth()
+    @Patch('my-profile/recovery')
+    @HttpCode(HttpStatus.OK)
+    @ApiResponse({status: HttpStatus.OK, description: 'OK.'})
+    @ApiBadRequestResponse({description: 'Bad request.'})
+    public async recoveryMyProfile() {
+        const useCase = this.profileUseCasesFactory.createRecoverMyProfile();
+
+        try {
+            await useCase.recoverMyProfile();
         } catch (error) {
             throw new BadRequestException(error.message);
         }
