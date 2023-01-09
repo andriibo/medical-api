@@ -33,7 +33,7 @@ export class VitalsGateway implements OnGatewayInit, OnGatewayConnection, OnGate
         return this.logger.log(`Client disconnected: ${client.id}`);
     }
 
-    @WsPatientDataAccess({onlyRoles: ['Doctor']})
+    @WsPatientDataAccess({onlyRoles: ['Caregiver', 'Doctor', 'Patient']})
     @SubscribeMessage('joinRoom')
     public joinRoom(client: Socket, patientRoomDto: PatientRoomDto): void {
         client.join(patientRoomDto.patientUserId);
