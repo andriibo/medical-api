@@ -18,7 +18,6 @@ export class CronService {
             userIds.forEach((id) => {
                 this.authService.deleteUser(id);
             });
-            console.log(userIds);
             this.userRepository.deleteByIds(userIds);
         }
     }

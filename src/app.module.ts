@@ -27,7 +27,6 @@ import {EventEmitterModule} from '@nestjs/event-emitter';
 import {ServeStaticModule} from '@nestjs/serve-static';
 import {join} from 'path';
 import {ScheduleModule} from '@nestjs/schedule';
-import {CronService} from './cron/cron.service';
 import {CronModule} from 'infrastructure/modules/cron/cron.module';
 
 const APP_MODULES_IMPORT = [
@@ -77,7 +76,7 @@ const INTERCEPTORS = [
     ],
     exports: [TypeOrmModule],
     controllers: [AppController],
-    providers: [...INTERCEPTORS, ...GUARDS, CronService],
+    providers: [...INTERCEPTORS, ...GUARDS],
 })
 export class AppModule implements NestModule {
     configure(consumer: MiddlewareConsumer) {
