@@ -11,8 +11,6 @@ export class PatientDto extends UserDto {
 
     public weight: number;
 
-    public avatar?: string;
-
     public static fromUserAndPatientMetadata<T extends typeof PatientDto>(
         this: T,
         user: User,

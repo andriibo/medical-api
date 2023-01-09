@@ -7,4 +7,10 @@ export class ProfileSpecification {
             throw new ProfileSpecificationError('This action is not allowed.');
         }
     }
+
+    public assertUserCanRecoverHisProfile(user: User): void {
+        if (user.deletedAt === null) {
+            throw new ProfileSpecificationError('This action is not allowed.');
+        }
+    }
 }

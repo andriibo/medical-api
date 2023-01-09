@@ -1,6 +1,6 @@
 import {ApiProperty} from '@nestjs/swagger';
 import {UserSignedInDto} from 'domain/dtos/response/auth/user-signed-in.dto';
-import {UserDataSignedInView} from './user-data-signed-in.view';
+import {UserView} from 'views/response/user';
 
 export class UserSignedInView extends UserSignedInDto {
     @ApiProperty()
@@ -10,5 +10,5 @@ export class UserSignedInView extends UserSignedInDto {
     public tokenExpireTime: Date;
 
     @ApiProperty()
-    public user: UserDataSignedInView;
+    public user: UserView;
 }
