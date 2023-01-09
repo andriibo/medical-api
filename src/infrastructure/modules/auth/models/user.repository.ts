@@ -1,6 +1,6 @@
 import {Injectable} from '@nestjs/common';
 import {InjectDataSource} from '@nestjs/typeorm';
-import {DataSource, In, MoreThan} from 'typeorm';
+import {DataSource, In, LessThan} from 'typeorm';
 import {IUserRepository} from 'app/modules/auth/repositories';
 import {UserModel} from './user.model';
 import {User} from 'domain/entities';
@@ -67,12 +67,16 @@ export class UserRepository implements IUserRepository {
         return await this.dataSource.manager.findOneBy(UserModel, {email});
     }
 
-    public async removeUsersMarkedDeletedAt(): Promise<void> {
+    public async getUsersMarkedDeletedAt(): Promise<User[]> {
+        return await this.dataSource.manager.findBy(UserModel, {deletedAt: LessThan(currentUnixTimestamp())});
+    }
+
+    public async deleteByIds(ids: string[]): Promise<void> {
         await this.dataSource.manager
             .createQueryBuilder()
             .delete()
             .from(UserModel)
-            .where({deletedAt: MoreThan(currentUnixTimestamp())})
+            .where('id IN (:...ids)', {ids: ids})
             .execute();
     }
 }

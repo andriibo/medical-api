@@ -13,7 +13,9 @@ export interface IUserRepository {
 
     getOneByEmail(email: string): Promise<User>;
 
-    removeUsersMarkedDeletedAt(): Promise<void>;
+    getUsersMarkedDeletedAt(): Promise<User[]>;
+
+    deleteByIds(ids: string[]): Promise<void>;
 }
 
 export const IUserRepository = Symbol('IUserRepository');

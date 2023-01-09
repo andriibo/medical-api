@@ -28,6 +28,7 @@ import {ServeStaticModule} from '@nestjs/serve-static';
 import {join} from 'path';
 import {ScheduleModule} from '@nestjs/schedule';
 import {CronService} from './cron/cron.service';
+import {CronModule} from 'infrastructure/modules/cron/cron.module';
 
 const APP_MODULES_IMPORT = [
     AuthModule,
@@ -44,6 +45,7 @@ const APP_MODULES_IMPORT = [
     PatientVitalThresholdsModule,
     WebsocketModule,
     FileModule,
+    CronModule,
 ];
 
 const GUARDS = [AuthGuard, RolesGuard];
