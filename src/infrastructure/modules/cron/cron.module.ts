@@ -1,17 +1,15 @@
 import {Module} from '@nestjs/common';
-import {CronService} from 'app/modules/cron/services/cron.service';
-import {IUserRepository} from 'app/modules/auth/repositories';
 import {AuthModule} from 'infrastructure/modules';
+import {CronUseCasesFactory} from 'infrastructure/modules/cron/factories/cron-use-cases.factory';
+import {CronService} from 'app/modules/cron/services/cron.service';
 
 @Module({
     imports: [AuthModule],
     providers: [
+        CronUseCasesFactory,
         {
             provide: CronService,
-            useFactory: (userRepository: IUserRepository) => {
-                return new CronService(userRepository);
-            },
-            inject: [IUserRepository],
+            useClass: CronService,
         },
     ],
 })
