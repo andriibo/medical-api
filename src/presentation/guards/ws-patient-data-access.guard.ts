@@ -79,13 +79,15 @@ export class WsPatientDataAccessGuard implements CanActivate {
     }
 
     private async assertUserHasAccess(context: ExecutionContext, requestUser: IRequestUserModel): Promise<void> {
-        const patientRoomDto = this.extractRequestData(context);
+        const requestUserId = requestUser.tokenClaims.getUserId();
+        const patientUserId = this.extractRequestData(context).patientUserId;
+
+        if (requestUserId === patientUserId) {
+            return;
+        }
 
         try {
-            await this.patientDataAccessSpecification.assertGrantedUserIdHasAccess(
-                requestUser.tokenClaims.getUserId(),
-                patientRoomDto.patientUserId,
-            );
+            await this.patientDataAccessSpecification.assertGrantedUserIdHasAccess(requestUserId, patientUserId);
         } catch (error) {
             if (error instanceof PatientDataAccessSpecificationError) {
                 throw new WsException(new UnauthorizedException());

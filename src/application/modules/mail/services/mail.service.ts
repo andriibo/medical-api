@@ -12,7 +12,7 @@ export class MailService implements IMailService {
         const mail: Email = {
             to: toEmail,
             subject: 'Invitation to Medical app.',
-            text: `${patient.firstName} ${patient.lastName} wants to add you as their medical doctor on Medical app. SIGN UP ${deepLink}.`,
+            text: `${patient.firstName} ${patient.lastName} wants to add you as their medical doctor on Medical app. <a href="${deepLink}">SIGN UP</a>.`,
         };
 
         await this.mailerService.sendMail(mail);
@@ -24,7 +24,7 @@ export class MailService implements IMailService {
         const mail: Email = {
             to: toEmail,
             subject: 'Invitation to Medical app.',
-            text: `${patient.firstName} ${patient.lastName} wants to add you as their caregiver on Medical app. SIGN UP ${deepLink}.`,
+            text: `${patient.firstName} ${patient.lastName} wants to add you as their caregiver on Medical app. <a href="${deepLink}">SIGN UP</a>.`,
         };
 
         await this.mailerService.sendMail(mail);
@@ -36,7 +36,7 @@ export class MailService implements IMailService {
         const mail: Email = {
             to: toEmail,
             subject: 'Invitation to Medical app.',
-            text: `${grantedUser.firstName} ${grantedUser.lastName} wants to add you as their medical patient on Medical app. SIGN UP ${deepLink}.`,
+            text: `${grantedUser.firstName} ${grantedUser.lastName} wants to add you as their medical patient on Medical app. <a href="${deepLink}">SIGN UP</a>.`,
         };
 
         await this.mailerService.sendMail(mail);
@@ -51,7 +51,7 @@ export class MailService implements IMailService {
         const mail: Email = {
             to: toEmail,
             subject: 'New incoming request.',
-            text: `${patient.firstName} ${patient.lastName} wants to add you as their medical doctor. VIEW REQUEST ${deepLink}.`,
+            text: `${patient.firstName} ${patient.lastName} wants to add you as their medical doctor. <a href="${deepLink}">VIEW REQUEST</a>.`,
         };
 
         await this.mailerService.sendMail(mail);
@@ -66,7 +66,7 @@ export class MailService implements IMailService {
         const mail: Email = {
             to: toEmail,
             subject: 'New incoming request.',
-            text: `${patient.firstName} ${patient.lastName} wants to add you as their caregiver. VIEW REQUEST ${deepLink}.`,
+            text: `${patient.firstName} ${patient.lastName} wants to add you as their caregiver. <a href="${deepLink}">VIEW REQUEST</a>.`,
         };
 
         await this.mailerService.sendMail(mail);
@@ -81,7 +81,7 @@ export class MailService implements IMailService {
         const mail: Email = {
             to: toEmail,
             subject: 'New incoming request.',
-            text: `${grantedUser.firstName} ${grantedUser.lastName} wants to add you as their medical patient. VIEW REQUEST ${deepLink}.`,
+            text: `${grantedUser.firstName} ${grantedUser.lastName} wants to add you as their medical patient. <a href="${deepLink}">VIEW REQUEST</a>.`,
         };
 
         await this.mailerService.sendMail(mail);
