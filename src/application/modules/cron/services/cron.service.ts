@@ -1,20 +1,19 @@
-import {Inject, Injectable} from '@nestjs/common';
+import {Injectable} from '@nestjs/common';
 import {Cron, CronExpression} from '@nestjs/schedule';
-import {IUserRepository} from 'app/modules/auth/repositories';
+import {CronUseCasesFactory} from 'infrastructure/modules/cron/factories/cron-use-cases.factory';
 
 @Injectable()
 export class CronService {
-    public constructor(@Inject(IUserRepository) private readonly userRepository: IUserRepository) {}
+    public constructor(private readonly cronUseCasesFactory: CronUseCasesFactory) {}
 
     @Cron(CronExpression.EVERY_MINUTE)
     public async removeUsersMarkedDeletedAt(): Promise<void> {
-        const users = await this.userRepository.getUsersMarkedDeletedAt();
-        users.forEach((user) => {
-            try {
-                this.userRepository.delete(user);
-            } catch (error) {
-                console.log(error.message);
-            }
-        });
+        const useCase = this.cronUseCasesFactory.removeUsers();
+
+        try {
+            return await useCase.remove();
+        } catch (error) {
+            console.log(error.message);
+        }
     }
 }
