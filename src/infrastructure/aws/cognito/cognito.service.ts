@@ -173,8 +173,7 @@ export class CognitoService implements IAuthService {
 
     public async getTokenClaims(token: string): Promise<any> {
         const tokenISS = `https://cognito-idp.${this.config.region}.amazonaws.com/${this.config.userPoolId}`;
-        const response = await fetch(`${tokenISS}/.well-known/jwks.json`);
-        const userPoolJwk = await response.json();
+        const userPoolJwk = JSON.parse(this.configService.get<string>('JWKS'));
         const pem = jwkToBuffer(userPoolJwk.keys[USER_POOL_JWK.AUTH_TOKEN]);
 
         return await new Promise((resolve, reject) => {
