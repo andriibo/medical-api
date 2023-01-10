@@ -1,5 +1,4 @@
 import {IUserRepository} from 'app/modules/auth/repositories';
-import {CronSpecificationError} from 'app/modules/cron/errors';
 
 export class RemoveUsersUseCase {
     public constructor(private readonly userRepository: IUserRepository) {}
@@ -10,7 +9,7 @@ export class RemoveUsersUseCase {
             try {
                 this.userRepository.delete(user);
             } catch (error) {
-                throw new CronSpecificationError(error.message);
+                throw new Error(error.message);
             }
         });
     }
