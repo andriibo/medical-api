@@ -4,8 +4,6 @@ import {ProfileSpecification} from 'app/modules/profile/specifications/profile.s
 import {currentUnixTimestamp} from 'app/support/date.helper';
 
 export class DeleteProfileUseCase {
-    private readonly THIRTY_DAYS_IN_SECONDS = 30 * 24 * 60 * 60;
-
     public constructor(
         private readonly userRepository: IUserRepository,
         private readonly authedUserService: IAuthedUserService,
@@ -15,7 +13,7 @@ export class DeleteProfileUseCase {
     public async deleteProfile(): Promise<void> {
         const user = await this.authedUserService.getUser();
         this.profileSpecification.assertUserCanDeleteHisProfile(user);
-        user.deletedAt = currentUnixTimestamp() + this.THIRTY_DAYS_IN_SECONDS;
+        user.deletedAt = currentUnixTimestamp();
         this.userRepository.persist(user);
     }
 }

@@ -1,15 +1,19 @@
-import {Injectable} from '@nestjs/common';
+import {Inject, Injectable} from '@nestjs/common';
 import {InjectDataSource} from '@nestjs/typeorm';
-import {DataSource, In, LessThan} from 'typeorm';
+import {DataSource, In, MoreThan} from 'typeorm';
 import {IUserRepository} from 'app/modules/auth/repositories';
 import {UserModel} from './user.model';
 import {User} from 'domain/entities';
 import {EntityNotFoundError} from 'app/errors';
 import {currentUnixTimestamp} from 'app/support/date.helper';
+import {IAuthEventEmitter} from 'app/modules/auth/event-emitters/auth.event-emitter';
 
 @Injectable()
 export class UserRepository implements IUserRepository {
-    public constructor(@InjectDataSource() private dataSource: DataSource) {}
+    public constructor(
+        @InjectDataSource() private dataSource: DataSource,
+        @Inject(IAuthEventEmitter) private readonly authEventEmitter: IAuthEventEmitter,
+    ) {}
 
     public async persist(entity: UserModel): Promise<User> {
         const queryRunner = this.dataSource.createQueryRunner();
@@ -68,15 +72,30 @@ export class UserRepository implements IUserRepository {
     }
 
     public async getUsersMarkedDeletedAt(): Promise<User[]> {
-        return await this.dataSource.manager.findBy(UserModel, {deletedAt: LessThan(currentUnixTimestamp())});
+        const time = currentUnixTimestamp() - 30 * 24 * 60 * 60; /* now() - 30 days */
+        return await this.dataSource.manager.findBy(UserModel, {deletedAt: MoreThan(time)});
     }
 
-    public async deleteByIds(ids: string[]): Promise<void> {
-        await this.dataSource.manager
-            .createQueryBuilder()
-            .delete()
-            .from(UserModel)
-            .where('id IN (:...ids)', {ids: ids})
-            .execute();
+    public async delete(user: UserModel): Promise<void> {
+        const queryRunner = this.dataSource.createQueryRunner();
+
+        await queryRunner.connect();
+        await queryRunner.startTransaction();
+
+        try {
+            await queryRunner.manager
+                .createQueryBuilder()
+                .delete()
+                .from(UserModel)
+                .where('id=:id', {id: user.id})
+                .execute();
+            await this.authEventEmitter.emitUserDeleted(user);
+            await queryRunner.commitTransaction();
+        } catch (err) {
+            await queryRunner.rollbackTransaction();
+            throw err;
+        } finally {
+            await queryRunner.release();
+        }
     }
 }

@@ -9,6 +9,8 @@ export interface IAuthEventEmitter {
     emitCaregiverCreated(caregiver: User): void;
 
     emitUserActivated(dto: ConfirmSignUpUserDto): void;
+
+    emitUserDeleted(user: User): void;
 }
 
 export const IAuthEventEmitter = Symbol('IAuthEventEmitter');

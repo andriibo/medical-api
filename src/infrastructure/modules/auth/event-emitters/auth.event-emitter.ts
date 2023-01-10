@@ -23,4 +23,8 @@ export class AuthEventEmitter implements IAuthEventEmitter {
     public async emitUserActivated(dto: ConfirmSignUpUserDto): Promise<void> {
         await this.eventEmitter.emit('user-activated', dto);
     }
+
+    public async emitUserDeleted(user: User): Promise<void> {
+        await this.eventEmitter.emit('user-deleted', user);
+    }
 }

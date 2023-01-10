@@ -50,7 +50,7 @@ export class SignUpUseCase {
         try {
             return await this.userRepository.persist(user);
         } catch (error) {
-            await this.authService.deleteUser(user.id);
+            await this.authService.deleteUser(user);
 
             throw error;
         }

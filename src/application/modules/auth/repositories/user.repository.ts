@@ -15,7 +15,7 @@ export interface IUserRepository {
 
     getUsersMarkedDeletedAt(): Promise<User[]>;
 
-    deleteByIds(ids: string[]): Promise<void>;
+    delete(user: User): Promise<void>;
 }
 
 export const IUserRepository = Symbol('IUserRepository');
