@@ -1,4 +1,4 @@
-import {Inject, Injectable} from '@nestjs/common';
+import {Injectable} from '@nestjs/common';
 import {InjectDataSource} from '@nestjs/typeorm';
 import {DataSource, In, LessThan} from 'typeorm';
 import {IUserRepository} from 'app/modules/auth/repositories';
@@ -6,14 +6,10 @@ import {UserModel} from './user.model';
 import {User} from 'domain/entities';
 import {EntityNotFoundError} from 'app/errors';
 import {currentUnixTimestamp} from 'app/support/date.helper';
-import {IAuthEventEmitter} from 'app/modules/auth/event-emitters/auth.event-emitter';
 
 @Injectable()
 export class UserRepository implements IUserRepository {
-    public constructor(
-        @InjectDataSource() private dataSource: DataSource,
-        @Inject(IAuthEventEmitter) private readonly authEventEmitter: IAuthEventEmitter,
-    ) {}
+    public constructor(@InjectDataSource() private dataSource: DataSource) {}
 
     public async persist(entity: UserModel): Promise<User> {
         const queryRunner = this.dataSource.createQueryRunner();

@@ -1,11 +1,13 @@
 import {IRemoveUsersService} from 'app/modules/profile/services/remove-users.service';
-import {UserModel} from 'infrastructure/modules/auth/models';
 import {DataSource} from 'typeorm';
 import {IAuthService} from 'app/modules/auth/services/auth.service';
+import {User} from 'domain/entities';
+import {UserModel} from 'infrastructure/modules/auth/models';
 
 export class RemoveUsersService implements IRemoveUsersService {
     public constructor(private readonly authService: IAuthService, private dataSource: DataSource) {}
-    public async delete(user: UserModel): Promise<void> {
+
+    public async delete(user: User): Promise<void> {
         const queryRunner = this.dataSource.createQueryRunner();
 
         await queryRunner.connect();

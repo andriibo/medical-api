@@ -1,7 +1,7 @@
-import {UserModel} from 'infrastructure/modules/auth/models';
+import {User} from 'domain/entities';
 
 export interface IRemoveUsersService {
-    delete(user: UserModel): Promise<void>;
+    delete(user: User): Promise<void>;
 }
 
 export const IRemoveUsersService = Symbol('IRemoveUsersService');
