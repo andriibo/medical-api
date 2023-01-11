@@ -110,8 +110,8 @@ export class MailService implements IMailService {
     public async sendNotificationThatPatientWithdrawnDataAccess(patient: User, toEmail: string): Promise<void> {
         const mail: Email = {
             to: toEmail,
-            subject: 'Incoming request was withdrawn',
-            text: `${patient.firstName} ${patient.lastName} has withdrawn their request that was sent to you earlier.`,
+            subject: 'Invitation request was withdrawn',
+            text: `${patient.firstName} ${patient.lastName} has withdrawn their invitation request that was sent to you earlier.`,
         };
 
         await this.mailerService.sendMail(mail);
