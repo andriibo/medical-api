@@ -4,7 +4,7 @@ import {ConfigService} from '@nestjs/config';
 import {CronUseCasesFactory} from 'infrastructure/modules/cron/factories/cron-use-cases.factory';
 
 @Injectable()
-export class CronService {
+export class RemoveUsersJob {
     public constructor(
         private readonly cronUseCasesFactory: CronUseCasesFactory,
         private readonly configService: ConfigService,
