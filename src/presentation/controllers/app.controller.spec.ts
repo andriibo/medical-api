@@ -1,6 +1,6 @@
 import {Test, TestingModule} from '@nestjs/testing';
 import {AppController} from './app.controller';
-import {CognitoService} from 'infrastructure/aws/cognito.service';
+import {CognitoService} from 'infrastructure/aws/cognito/cognito.service';
 import {ConfigModule} from '@nestjs/config';
 
 describe('AppController', () => {

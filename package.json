@@ -96,6 +96,7 @@
       "^app/(.*)$": "<rootDir>/application/$1",
       "^config/(.*)$": "<rootDir>/config/$1",
       "^controllers/(.*)$": "<rootDir>/presentation/controllers/$1",
+      "^domain/(.*)$": "<rootDir>/domain/$1",
       "^infrastructure/(.*)$": "<rootDir>/infrastructure/$1",
       "^views/(.*)$": "<rootDir>/presentation/views/$1"
     }

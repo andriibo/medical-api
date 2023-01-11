@@ -3,7 +3,7 @@ import {INestApplication} from '@nestjs/common';
 import * as request from 'supertest';
 import {ConfigModule} from '@nestjs/config';
 import {AppController} from 'controllers/app.controller';
-import {CognitoService} from 'infrastructure/aws/cognito.service';
+import {CognitoService} from 'infrastructure/aws/cognito/cognito.service';
 
 describe('AppController (e2e)', () => {
     let app: INestApplication;
