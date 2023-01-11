@@ -172,13 +172,12 @@ export class CognitoService implements IAuthService {
     }
 
     public async getTokenClaims(token: string): Promise<any> {
-        const tokenISS = `https://cognito-idp.${this.config.region}.amazonaws.com/${this.config.userPoolId}`;
         const userPoolJwk = JSON.parse(this.configService.get<string>('JWKS'));
         const pem = jwkToBuffer(userPoolJwk.keys[USER_POOL_JWK.AUTH_TOKEN]);
 
         return await new Promise((resolve, reject) => {
             jwt.verify(token, pem, {algorithms: ['RS256']}, (err, decodedToken) => {
-                if (this.isTokenValid(decodedToken, tokenISS)) {
+                if (this.isTokenValid(decodedToken)) {
                     resolve(decodedToken);
                 } else {
                     reject(err);
@@ -380,12 +379,12 @@ export class CognitoService implements IAuthService {
         await this.addUserToGroup(signUpModel.email, signUpModel.role);
     }
 
-    private isTokenValid(decodedToken, tokenISS): boolean {
+    private isTokenValid(decodedToken): boolean {
         return (
             decodedToken &&
             this.isTokenNotExpired(decodedToken) &&
             this.isTokenAudienceValid(decodedToken) &&
-            this.isTokenIssuerValid(decodedToken, tokenISS)
+            this.isTokenIssuerValid(decodedToken)
         );
     }
 
@@ -400,7 +399,8 @@ export class CognitoService implements IAuthService {
             : decodedToken.aud === this.config.clientId;
     }
 
-    private isTokenIssuerValid(decodedToken, tokenISS): boolean {
+    private isTokenIssuerValid(decodedToken): boolean {
+        const tokenISS = `https://cognito-idp.${this.config.region}.amazonaws.com/${this.config.userPoolId}`;
         return decodedToken.iss === tokenISS;
     }
 
