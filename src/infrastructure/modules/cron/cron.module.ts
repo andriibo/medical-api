@@ -1,10 +1,10 @@
 import {Module} from '@nestjs/common';
-import {AuthModule} from 'infrastructure/modules';
+import {AuthModule, ProfileModule} from 'infrastructure/modules';
+import {CronService} from 'infrastructure/modules/cron/services/cron.service';
 import {CronUseCasesFactory} from 'infrastructure/modules/cron/factories/cron-use-cases.factory';
-import {CronService} from 'app/modules/cron/services/cron.service';
 
 @Module({
-    imports: [AuthModule],
+    imports: [ProfileModule, AuthModule],
     providers: [
         CronUseCasesFactory,
         {

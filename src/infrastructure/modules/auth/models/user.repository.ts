@@ -71,31 +71,8 @@ export class UserRepository implements IUserRepository {
         return await this.dataSource.manager.findOneBy(UserModel, {email});
     }
 
-    public async getUsersMarkedDeletedAt(): Promise<User[]> {
+    public async getUsersForDeletingMarkedDeletedAt(): Promise<User[]> {
         const time = currentUnixTimestamp() - 30 * 24 * 60 * 60; /* now() - 30 days */
         return await this.dataSource.manager.findBy(UserModel, {deletedAt: LessThan(time)});
-    }
-
-    public async delete(user: UserModel): Promise<void> {
-        const queryRunner = this.dataSource.createQueryRunner();
-
-        await queryRunner.connect();
-        await queryRunner.startTransaction();
-
-        try {
-            await queryRunner.manager
-                .createQueryBuilder()
-                .delete()
-                .from(UserModel)
-                .where('id=:id', {id: user.id})
-                .execute();
-            await this.authEventEmitter.emitUserDeleted(user);
-            await queryRunner.commitTransaction();
-        } catch (err) {
-            await queryRunner.rollbackTransaction();
-            throw err;
-        } finally {
-            await queryRunner.release();
-        }
     }
 }
