@@ -13,5 +13,5 @@ export class VitalDto {
 
     public fall: boolean | null;
 
-    public timestamp: number | null;
+    public timestamp: number;
 }

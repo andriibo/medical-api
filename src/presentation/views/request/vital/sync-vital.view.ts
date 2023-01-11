@@ -1,32 +1,38 @@
 import {ApiProperty} from '@nestjs/swagger';
 import {Type} from 'class-transformer';
-import {ArrayMinSize, IsArray, IsNotEmpty, IsBoolean, IsNumber, ValidateNested} from 'class-validator';
+import {ArrayMinSize, IsArray, IsNotEmpty, IsBoolean, IsNumber, ValidateNested, ValidateIf} from 'class-validator';
 import {SyncVitalDto, VitalDto} from 'domain/dtos/request/vital';
 
 export class VitalView extends VitalDto {
     @ApiProperty({nullable: true})
     @IsNumber()
+    @ValidateIf((object, value) => value !== null)
     public temperature: number | null;
 
     @ApiProperty({nullable: true})
     @IsNumber()
+    @ValidateIf((object, value) => value !== null)
     public hr: number | null;
 
     @ApiProperty({nullable: true})
     @IsNumber()
+    @ValidateIf((object, value) => value !== null)
     public spo: number | null;
 
     @ApiProperty({nullable: true})
     @IsNumber()
+    @ValidateIf((object, value) => value !== null)
     public rr: number | null;
 
     @ApiProperty({nullable: true})
     @IsBoolean()
+    @ValidateIf((object, value) => value !== null)
     public fall: boolean | null;
+
     @ApiProperty()
     @IsNotEmpty()
     @IsNumber()
-    public timestamp: number | null;
+    public timestamp: number;
 }
 
 export class SyncVitalView extends SyncVitalDto {
