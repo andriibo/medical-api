@@ -1,7 +1,7 @@
 import {ApiProperty} from '@nestjs/swagger';
 import {Length, IsEmail, IsNotEmpty, IsIn, MaxLength, IsNumberString} from 'class-validator';
 import {ContactDto} from 'domain/dtos/request/emergency-contact/contact.dto';
-import {MaxPhoneLength, MinPhoneLength} from 'infrastructure/const/phone.const';
+import {MaxPhoneLength, MinPhoneLength} from 'infrastructure/constants/phone.const';
 
 export class CreateContactView extends ContactDto {
     @ApiProperty({minLength: 2, maxLength: 30})
