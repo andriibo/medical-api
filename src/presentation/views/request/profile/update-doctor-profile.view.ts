@@ -1,6 +1,7 @@
 import {ApiProperty} from '@nestjs/swagger';
 import {Length, IsNotEmpty, IsOptional, IsNumberString} from 'class-validator';
 import {UpdateDoctorProfileDto} from 'domain/dtos/request/profile/update-doctor-profile.dto';
+import {MaxPhoneLength, MinPhoneLength} from 'infrastructure/const/phone.const';
 
 export class UpdateDoctorProfileView extends UpdateDoctorProfileDto {
     @ApiProperty({minLength: 1, maxLength: 30})
@@ -13,9 +14,9 @@ export class UpdateDoctorProfileView extends UpdateDoctorProfileDto {
     @Length(1, 30)
     public lastName: string;
 
-    @ApiProperty({minLength: 7, maxLength: 15})
+    @ApiProperty({minLength: MinPhoneLength, maxLength: MaxPhoneLength})
     @IsNotEmpty()
-    @Length(7, 15)
+    @Length(MinPhoneLength, MaxPhoneLength)
     @IsNumberString()
     public phone: string;
 
