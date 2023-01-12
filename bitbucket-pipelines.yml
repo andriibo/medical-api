@@ -31,6 +31,7 @@ definitions:
                 docker compose up -d
                 docker container prune -f
                 docker image prune -a -f
+                docker exec -it medical.api.dev npm install
                 docker exec -it medical.api.dev npm run migration:up
                 docker exec -it medical.api.dev npm run test
                 
