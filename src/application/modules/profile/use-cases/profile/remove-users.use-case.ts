@@ -1,23 +1,26 @@
 import {IUserRepository} from 'app/modules/auth/repositories';
-import {IRemoveDoctorService} from 'app/modules/profile/services/remove-doctor.service';
-import {UserRole} from 'domain/entities/user.entity';
-import {IRemoveCaregiverOrPatientService} from 'app/modules/profile/services/remove-caregiver-or-patient.service';
+import {IRemoveUserService} from 'app/modules/profile/services/remove-user.service';
+import {User, UserRole} from 'domain/entities/user.entity';
 
 export class RemoveUsersUseCase {
     public constructor(
         private readonly userRepository: IUserRepository,
-        private readonly removeCaregiverOrPatientService: IRemoveCaregiverOrPatientService,
-        private readonly removeDoctorService: IRemoveDoctorService,
+        private readonly removeCaregiverOrPatientService: IRemoveUserService,
+        private readonly removeDoctorService: IRemoveUserService,
     ) {}
 
     public async removeMarkedForDeleting(): Promise<void> {
         const users = await this.userRepository.getUsersForDeletingMarkedDeletedAt();
         users.forEach((user) => {
-            if (user.role === UserRole.Doctor) {
-                this.removeDoctorService.delete(user);
-            } else {
-                this.removeCaregiverOrPatientService.delete(user);
-            }
+            this.removeUser(user);
         });
+    }
+
+    private removeUser(user: User): void {
+        if (user.role === UserRole.Doctor) {
+            this.removeDoctorService.delete(user);
+        } else {
+            this.removeCaregiverOrPatientService.delete(user);
+        }
     }
 }

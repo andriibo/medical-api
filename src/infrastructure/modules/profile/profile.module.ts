@@ -19,10 +19,9 @@ import {
 } from './factories';
 import {ProfileSpecification} from 'app/modules/profile/specifications/profile.specification';
 import {RemoveCaregiverOrPatientService} from 'infrastructure/modules/profile/services/remove-caregiver-or-patient.service';
-import {IRemoveCaregiverOrPatientService} from 'app/modules/profile/services/remove-caregiver-or-patient.service';
 import {IAuthService} from 'app/modules/auth/services/auth.service';
 import {DataSource} from 'typeorm';
-import {IRemoveDoctorService} from 'app/modules/profile/services/remove-doctor.service';
+import {IRemoveUserService} from 'app/modules/profile/services/remove-user.service';
 import {RemoveDoctorService} from 'infrastructure/modules/profile/services/remove-doctor.service';
 
 @Module({
@@ -32,7 +31,7 @@ import {RemoveDoctorService} from 'infrastructure/modules/profile/services/remov
         PatientDataAccessModule,
         FileModule,
     ],
-    exports: [IRemoveDoctorService, IRemoveCaregiverOrPatientService],
+    exports: [IRemoveUserService],
     controllers: [PatientController, DoctorController, ProfileController, CaregiverController, GrantedUserController],
     providers: [
         DoctorUseCasesFactory,
@@ -49,16 +48,14 @@ import {RemoveDoctorService} from 'infrastructure/modules/profile/services/remov
             useClass: UserProfileMapper,
         },
         {
-            provide: IRemoveCaregiverOrPatientService,
-            useClass: RemoveCaregiverOrPatientService,
+            provide: IRemoveUserService,
             useFactory: (authService: IAuthService, dataSource: DataSource) => {
                 return new RemoveCaregiverOrPatientService(authService, dataSource);
             },
             inject: [IAuthService, DataSource],
         },
         {
-            provide: IRemoveDoctorService,
-            useClass: RemoveDoctorService,
+            provide: IRemoveUserService,
             useFactory: (authService: IAuthService, dataSource: DataSource) => {
                 return new RemoveDoctorService(authService, dataSource);
             },

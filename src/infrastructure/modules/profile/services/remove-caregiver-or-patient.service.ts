@@ -1,12 +1,12 @@
-import {IRemoveCaregiverOrPatientService} from 'app/modules/profile/services/remove-caregiver-or-patient.service';
 import {DataSource} from 'typeorm';
 import {IAuthService} from 'app/modules/auth/services/auth.service';
 import {User} from 'domain/entities';
 import {UserModel} from 'infrastructure/modules/auth/models';
 import {Inject} from '@nestjs/common';
 import {InjectDataSource} from '@nestjs/typeorm';
+import {IRemoveUserService} from 'app/modules/profile/services/remove-user.service';
 
-export class RemoveCaregiverOrPatientService implements IRemoveCaregiverOrPatientService {
+export class RemoveCaregiverOrPatientService implements IRemoveUserService {
     public constructor(
         @Inject(IAuthService) private readonly authService: IAuthService,
         @InjectDataSource() private readonly dataSource: DataSource,

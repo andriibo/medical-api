@@ -1,12 +1,12 @@
 import {DataSource} from 'typeorm';
 import {IAuthService} from 'app/modules/auth/services/auth.service';
-import {IRemoveDoctorService} from 'app/modules/profile/services/remove-doctor.service';
 import {Inject, Injectable} from '@nestjs/common';
 import {InjectDataSource} from '@nestjs/typeorm';
 import {UserModel} from 'infrastructure/modules/auth/models';
+import {IRemoveUserService} from 'app/modules/profile/services/remove-user.service';
 
 @Injectable()
-export class RemoveDoctorService implements IRemoveDoctorService {
+export class RemoveDoctorService implements IRemoveUserService {
     public constructor(
         @Inject(IAuthService) private readonly authService: IAuthService,
         @InjectDataSource() private readonly dataSource: DataSource,
