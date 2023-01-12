@@ -14,7 +14,7 @@ import {
     MinSBP,
     MinSpO2,
     MinTemp,
-} from 'app/modules/patient-vital-thresholds/templates/default-thresholds.template';
+} from 'domain/constants/thresholds.const';
 
 @Entity('patient_vital_thresholds')
 export class PatientVitalThresholdsModel implements PatientVitalThresholds {
@@ -107,19 +107,19 @@ export class PatientVitalThresholdsModel implements PatientVitalThresholds {
 
     public static getModelWithDefaultValues(): PatientVitalThresholdsModel {
         const model = new PatientVitalThresholdsModel();
-        model.minHr = MinHR.value;
-        model.maxHr = MaxHR.value;
-        model.minTemp = MinTemp.value;
-        model.maxTemp = MaxTemp.value;
-        model.minSpo2 = MinSpO2.value;
-        model.minRr = MinRR.value;
-        model.maxRr = MaxRR.value;
-        model.minDbp = MinDBP.value;
-        model.maxDbp = MaxDBP.value;
-        model.minSbp = MinSBP.value;
-        model.maxSbp = MaxSBP.value;
-        model.minMap = MinMAP.value;
-        model.maxMap = MaxMAP.value;
+        model.minHr = MinHR;
+        model.maxHr = MaxHR;
+        model.minTemp = MinTemp;
+        model.maxTemp = MaxTemp;
+        model.minSpo2 = MinSpO2;
+        model.minRr = MinRR;
+        model.maxRr = MaxRR;
+        model.minDbp = MinDBP;
+        model.maxDbp = MaxDBP;
+        model.minSbp = MinSBP;
+        model.maxSbp = MaxSBP;
+        model.minMap = MinMAP;
+        model.maxMap = MaxMAP;
 
         return model;
     }
