@@ -10,11 +10,7 @@ export class RemoveUsersUseCase {
     public async removeMarkedForDeleting(): Promise<void> {
         const users = await this.userRepository.getUsersForDeletingMarkedDeletedAt();
         users.forEach((user) => {
-            try {
-                this.removeUsersService.delete(user);
-            } catch (error) {
-                throw new Error(error.message);
-            }
+            this.removeUsersService.delete(user);
         });
     }
 }

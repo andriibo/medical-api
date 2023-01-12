@@ -22,11 +22,12 @@ export class RemoveUsersService implements IRemoveUsersService {
                 .execute();
             await this.authService.deleteUser(user);
             await queryRunner.commitTransaction();
+            await queryRunner.release();
         } catch (err) {
             await queryRunner.rollbackTransaction();
-            throw err;
-        } finally {
             await queryRunner.release();
+
+            throw err;
         }
     }
 }
