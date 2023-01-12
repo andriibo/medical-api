@@ -68,7 +68,7 @@ export class UserRepository implements IUserRepository {
     }
 
     public async getUsersForDeletingMarkedDeletedAt(): Promise<User[]> {
-        const time = currentUnixTimestamp(); /* now() - 30 days */
+        const time = currentUnixTimestamp() - 30 * 24 * 60 * 60; /* now() - 30 days */
         return await this.dataSource.manager.findBy(UserModel, {deletedAt: LessThan(time)});
     }
 }
