@@ -18,6 +18,10 @@ import {
     ProfileUseCasesFactory,
 } from './factories';
 import {ProfileSpecification} from 'app/modules/profile/specifications/profile.specification';
+import {RemoveUsersService} from 'infrastructure/modules/profile/services/remove-users.service';
+import {IRemoveUsersService} from 'app/modules/profile/services/remove-users.service';
+import {IAuthService} from 'app/modules/auth/services/auth.service';
+import {DataSource} from 'typeorm';
 
 @Module({
     imports: [
@@ -26,6 +30,7 @@ import {ProfileSpecification} from 'app/modules/profile/specifications/profile.s
         PatientDataAccessModule,
         FileModule,
     ],
+    exports: [IRemoveUsersService],
     controllers: [PatientController, DoctorController, ProfileController, CaregiverController, GrantedUserController],
     providers: [
         DoctorUseCasesFactory,
@@ -40,6 +45,14 @@ import {ProfileSpecification} from 'app/modules/profile/specifications/profile.s
         {
             provide: IUserProfileMapper,
             useClass: UserProfileMapper,
+        },
+        {
+            provide: IRemoveUsersService,
+            useClass: RemoveUsersService,
+            useFactory: (authService: IAuthService, dataSource: DataSource) => {
+                return new RemoveUsersService(authService, dataSource);
+            },
+            inject: [IAuthService, DataSource],
         },
     ],
 })

@@ -26,6 +26,8 @@ import {AssignUserMiddleware} from 'presentation/middlewares/assign-user.middlew
 import {EventEmitterModule} from '@nestjs/event-emitter';
 import {ServeStaticModule} from '@nestjs/serve-static';
 import {join} from 'path';
+import {ScheduleModule} from '@nestjs/schedule';
+import {CronModule} from 'infrastructure/modules/cron/cron.module';
 
 const APP_MODULES_IMPORT = [
     AuthModule,
@@ -42,6 +44,7 @@ const APP_MODULES_IMPORT = [
     PatientVitalThresholdsModule,
     WebsocketModule,
     FileModule,
+    CronModule,
 ];
 
 const GUARDS = [AuthGuard, RolesGuard];
@@ -68,6 +71,7 @@ const INTERCEPTORS = [
             rootPath: join(__dirname, '..', 'static'),
             // exclude: ['/api*'],
         }),
+        ScheduleModule.forRoot(),
         ...APP_MODULES_IMPORT,
     ],
     exports: [TypeOrmModule],

@@ -12,6 +12,8 @@ export interface IUserRepository {
     getByIds(userIds: string[]): Promise<User[]>;
 
     getOneByEmail(email: string): Promise<User>;
+
+    getUsersForDeletingMarkedDeletedAt(): Promise<User[]>;
 }
 
 export const IUserRepository = Symbol('IUserRepository');
