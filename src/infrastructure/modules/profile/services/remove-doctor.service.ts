@@ -1,16 +1,21 @@
 import {DataSource} from 'typeorm';
 import {IAuthService} from 'app/modules/auth/services/auth.service';
-import {User} from 'domain/entities';
 import {IRemoveDoctorService} from 'app/modules/profile/services/remove-doctor.service';
+import {Inject, Injectable} from '@nestjs/common';
+import {InjectDataSource} from '@nestjs/typeorm';
+import {UserModel} from 'infrastructure/modules/auth/models';
 
+@Injectable()
 export class RemoveDoctorService implements IRemoveDoctorService {
-    public constructor(private readonly authService: IAuthService, private readonly dataSource: DataSource) {}
+    public constructor(
+        @Inject(IAuthService) private readonly authService: IAuthService,
+        @InjectDataSource() private readonly dataSource: DataSource,
+    ) {}
 
-    public async delete(doctor: User): Promise<void> {
+    public async delete(doctor: UserModel): Promise<void> {
         doctor.email = null;
         doctor.deletedAt = null;
-        console.log(this.authService);
-        console.log(this.dataSource);
+
         const queryRunner = this.dataSource.createQueryRunner();
         await queryRunner.connect();
         await queryRunner.startTransaction();

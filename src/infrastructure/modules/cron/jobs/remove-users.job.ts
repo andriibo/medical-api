@@ -10,7 +10,7 @@ export class RemoveUsersJob {
         private readonly configService: ConfigService,
     ) {}
 
-    @Cron(CronExpression.EVERY_DAY_AT_MIDNIGHT)
+    @Cron(CronExpression.EVERY_MINUTE)
     public async removeUsersMarkedDeletedAt(): Promise<void> {
         if (!this.configService.get<boolean>('CRON_AVAILABLE')) {
             return;

@@ -14,7 +14,6 @@ export class RemoveUsersUseCase {
         const users = await this.userRepository.getUsersForDeletingMarkedDeletedAt();
         users.forEach((user) => {
             if (user.role === UserRole.Doctor) {
-                console.log(user);
                 this.removeDoctorService.delete(user);
             } else {
                 this.removeCaregiverOrPatientService.delete(user);
