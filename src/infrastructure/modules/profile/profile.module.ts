@@ -18,10 +18,12 @@ import {
     ProfileUseCasesFactory,
 } from './factories';
 import {ProfileSpecification} from 'app/modules/profile/specifications/profile.specification';
-import {RemoveUsersService} from 'infrastructure/modules/profile/services/remove-users.service';
-import {IRemoveUsersService} from 'app/modules/profile/services/remove-users.service';
+import {RemoveCaregiverOrPatientService} from 'infrastructure/modules/profile/services/remove-caregiver-or-patient.service';
+import {IRemoveCaregiverOrPatientService} from 'app/modules/profile/services/remove-caregiver-or-patient.service';
 import {IAuthService} from 'app/modules/auth/services/auth.service';
 import {DataSource} from 'typeorm';
+import {IRemoveDoctorService} from 'app/modules/profile/services/remove-doctor.service';
+import {RemoveDoctorService} from 'infrastructure/modules/profile/services/remove-doctor.service';
 
 @Module({
     imports: [
@@ -30,7 +32,7 @@ import {DataSource} from 'typeorm';
         PatientDataAccessModule,
         FileModule,
     ],
-    exports: [IRemoveUsersService],
+    exports: [IRemoveDoctorService, IRemoveCaregiverOrPatientService],
     controllers: [PatientController, DoctorController, ProfileController, CaregiverController, GrantedUserController],
     providers: [
         DoctorUseCasesFactory,
@@ -47,10 +49,18 @@ import {DataSource} from 'typeorm';
             useClass: UserProfileMapper,
         },
         {
-            provide: IRemoveUsersService,
-            useClass: RemoveUsersService,
+            provide: IRemoveCaregiverOrPatientService,
+            useClass: RemoveCaregiverOrPatientService,
             useFactory: (authService: IAuthService, dataSource: DataSource) => {
-                return new RemoveUsersService(authService, dataSource);
+                return new RemoveCaregiverOrPatientService(authService, dataSource);
+            },
+            inject: [IAuthService, DataSource],
+        },
+        {
+            provide: IRemoveDoctorService,
+            useClass: RemoveDoctorService,
+            useFactory: (authService: IAuthService, dataSource: DataSource) => {
+                return new RemoveDoctorService(authService, dataSource);
             },
             inject: [IAuthService, DataSource],
         },

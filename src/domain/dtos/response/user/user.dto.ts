@@ -3,7 +3,7 @@ import {User} from 'domain/entities';
 export class UserDto {
     public userId: string;
 
-    public email: string;
+    public email: string | null;
 
     public firstName: string;
 

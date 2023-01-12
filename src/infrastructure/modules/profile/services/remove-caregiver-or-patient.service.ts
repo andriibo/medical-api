@@ -1,15 +1,14 @@
-import {IRemoveUsersService} from 'app/modules/profile/services/remove-users.service';
+import {IRemoveCaregiverOrPatientService} from 'app/modules/profile/services/remove-caregiver-or-patient.service';
 import {DataSource} from 'typeorm';
 import {IAuthService} from 'app/modules/auth/services/auth.service';
 import {User} from 'domain/entities';
 import {UserModel} from 'infrastructure/modules/auth/models';
 
-export class RemoveUsersService implements IRemoveUsersService {
-    public constructor(private readonly authService: IAuthService, private dataSource: DataSource) {}
+export class RemoveCaregiverOrPatientService implements IRemoveCaregiverOrPatientService {
+    public constructor(private readonly authService: IAuthService, private readonly dataSource: DataSource) {}
 
     public async delete(user: User): Promise<void> {
         const queryRunner = this.dataSource.createQueryRunner();
-
         await queryRunner.connect();
         await queryRunner.startTransaction();
 

@@ -6,7 +6,7 @@ export class UserView implements UserDto {
     public userId: string;
 
     @ApiProperty()
-    public email: string;
+    public email: string | null;
 
     @ApiProperty()
     public firstName: string;
