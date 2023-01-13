@@ -21,6 +21,12 @@ export class PatientDataAccessSpecification {
             );
         }
 
+        if (this.isUserInactive(doctor)) {
+            throw new PatientDataAccessSpecificationError(
+                `You can\'t invite this user because the user\'s account is currently inactive`,
+            );
+        }
+
         const hasAccess = await this.hasAccessByPatientUserIdAndGrantedUserId(patient.id, doctor.id);
 
         if (hasAccess) {
@@ -37,6 +43,12 @@ export class PatientDataAccessSpecification {
             );
         }
 
+        if (this.isUserInactive(caregiver)) {
+            throw new PatientDataAccessSpecificationError(
+                `You can\'t invite this user because the user\'s account is currently inactive`,
+            );
+        }
+
         const hasAccess = await this.hasAccessByPatientUserIdAndGrantedUserId(patient.id, caregiver.id);
 
         if (hasAccess) {
@@ -50,6 +62,12 @@ export class PatientDataAccessSpecification {
         if (patient.role !== UserRole.Patient) {
             throw new PatientDataAccessSpecificationError(
                 'No patient account with specified email address. Try another one.',
+            );
+        }
+
+        if (this.isUserInactive(patient)) {
+            throw new PatientDataAccessSpecificationError(
+                `You can\'t invite this user because the user\'s account is currently inactive`,
             );
         }
 
@@ -212,5 +230,9 @@ export class PatientDataAccessSpecification {
         }
 
         return true;
+    }
+
+    private isUserInactive(user: User): boolean {
+        return user.deletedAt !== null;
     }
 }

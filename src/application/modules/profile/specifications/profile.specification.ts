@@ -1,5 +1,6 @@
 import {User} from 'domain/entities/user.entity';
 import {ProfileSpecificationError} from 'app/modules/profile/errors';
+import {PatientDataAccessSpecificationError} from "app/modules/patient-data-access/errors";
 
 export class ProfileSpecification {
     public assertUserCanDeleteHisProfile(user: User): void {
