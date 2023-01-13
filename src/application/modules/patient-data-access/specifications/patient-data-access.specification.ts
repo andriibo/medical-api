@@ -21,11 +21,7 @@ export class PatientDataAccessSpecification {
             );
         }
 
-        if (this.isUserInactive(doctor)) {
-            throw new PatientDataAccessSpecificationError(
-                `You can\'t invite this user because the user\'s account is currently inactive`,
-            );
-        }
+        this.assertUserCanInviteActiveUser(doctor);
 
         const hasAccess = await this.hasAccessByPatientUserIdAndGrantedUserId(patient.id, doctor.id);
 
@@ -43,11 +39,7 @@ export class PatientDataAccessSpecification {
             );
         }
 
-        if (this.isUserInactive(caregiver)) {
-            throw new PatientDataAccessSpecificationError(
-                `You can\'t invite this user because the user\'s account is currently inactive`,
-            );
-        }
+        this.assertUserCanInviteActiveUser(caregiver);
 
         const hasAccess = await this.hasAccessByPatientUserIdAndGrantedUserId(patient.id, caregiver.id);
 
@@ -65,11 +57,7 @@ export class PatientDataAccessSpecification {
             );
         }
 
-        if (this.isUserInactive(patient)) {
-            throw new PatientDataAccessSpecificationError(
-                `You can\'t invite this user because the user\'s account is currently inactive`,
-            );
-        }
+        this.assertUserCanInviteActiveUser(patient);
 
         const hasAccess = await this.hasAccessByPatientUserIdAndGrantedUserId(patient.id, grantedUser.id);
 
@@ -232,7 +220,11 @@ export class PatientDataAccessSpecification {
         return true;
     }
 
-    private isUserInactive(user: User): boolean {
-        return user.deletedAt !== null;
+    private assertUserCanInviteActiveUser(user: User): void {
+        if (user.deletedAt !== null) {
+            throw new PatientDataAccessSpecificationError(
+                `You can\'t invite this user because the user\'s account is currently inactive`,
+            );
+        }
     }
 }
