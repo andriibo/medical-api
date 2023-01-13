@@ -21,7 +21,7 @@ export class PatientDataAccessSpecification {
             );
         }
 
-        this.assertUserCanInviteActiveUser(doctor);
+        this.assertUserIsActive(doctor);
 
         const hasAccess = await this.hasAccessByPatientUserIdAndGrantedUserId(patient.id, doctor.id);
 
@@ -39,7 +39,7 @@ export class PatientDataAccessSpecification {
             );
         }
 
-        this.assertUserCanInviteActiveUser(caregiver);
+        this.assertUserIsActive(caregiver);
 
         const hasAccess = await this.hasAccessByPatientUserIdAndGrantedUserId(patient.id, caregiver.id);
 
@@ -57,7 +57,7 @@ export class PatientDataAccessSpecification {
             );
         }
 
-        this.assertUserCanInviteActiveUser(patient);
+        this.assertUserIsActive(patient);
 
         const hasAccess = await this.hasAccessByPatientUserIdAndGrantedUserId(patient.id, grantedUser.id);
 
@@ -220,7 +220,7 @@ export class PatientDataAccessSpecification {
         return true;
     }
 
-    private assertUserCanInviteActiveUser(user: User): void {
+    private assertUserIsActive(user: User): void {
         if (user.deletedAt !== null) {
             throw new PatientDataAccessSpecificationError(
                 `You can\'t invite this user because the user\'s account is currently inactive`,
