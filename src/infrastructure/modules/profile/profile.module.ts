@@ -20,8 +20,8 @@ import {
 import {ProfileSpecification} from 'app/modules/profile/specifications/profile.specification';
 import {IAuthService} from 'app/modules/auth/services/auth.service';
 import {DataSource} from 'typeorm';
-import {IRemoveUserService} from 'app/modules/profile/services/remove-user.service';
-import {RemoveUserService} from 'infrastructure/modules/profile/services/remove-user.service';
+import {RemoveDoctorService} from 'infrastructure/modules/profile/services/remove-doctor.service';
+import {RemoveCaregiverOrPatientService} from 'infrastructure/modules/profile/services/remove-caregiver-or-patient.service';
 
 @Module({
     imports: [
@@ -30,7 +30,7 @@ import {RemoveUserService} from 'infrastructure/modules/profile/services/remove-
         PatientDataAccessModule,
         FileModule,
     ],
-    exports: [IRemoveUserService],
+    exports: ['RemoveDoctorService', 'RemoveCaregiverOrPatientService'],
     controllers: [PatientController, DoctorController, ProfileController, CaregiverController, GrantedUserController],
     providers: [
         DoctorUseCasesFactory,
@@ -47,9 +47,16 @@ import {RemoveUserService} from 'infrastructure/modules/profile/services/remove-
             useClass: UserProfileMapper,
         },
         {
-            provide: IRemoveUserService,
+            provide: 'RemoveDoctorService',
             useFactory: (authService: IAuthService, dataSource: DataSource) => {
-                return new RemoveUserService(authService, dataSource);
+                return new RemoveDoctorService(authService, dataSource);
+            },
+            inject: [IAuthService, DataSource],
+        },
+        {
+            provide: 'RemoveCaregiverOrPatientService',
+            useFactory: (authService: IAuthService, dataSource: DataSource) => {
+                return new RemoveCaregiverOrPatientService(authService, dataSource);
             },
             inject: [IAuthService, DataSource],
         },

@@ -1,7 +1,7 @@
 import {User} from 'domain/entities';
 
 export interface IRemoveUserService {
-    delete(doctor: User): Promise<void>;
+    remove(user: User): Promise<void>;
 }
 
 export const IRemoveUserService = Symbol('IRemoveUserService');
