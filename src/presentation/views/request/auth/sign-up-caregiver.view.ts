@@ -1,6 +1,7 @@
 import {ApiProperty} from '@nestjs/swagger';
 import {Length, IsEmail, IsNotEmpty, MaxLength, IsNumberString} from 'class-validator';
 import {CreateCaregiverDto} from 'domain/dtos/request/auth/create-caregiver.dto';
+import {MaxPhoneLength, MinPhoneLength} from 'domain/constants/phone.const';
 
 export class SignUpCaregiverView extends CreateCaregiverDto {
     @ApiProperty({maxLength: 100})
@@ -19,9 +20,9 @@ export class SignUpCaregiverView extends CreateCaregiverDto {
     @Length(1, 30)
     public lastName: string;
 
-    @ApiProperty({minLength: 11, maxLength: 11})
+    @ApiProperty({minLength: MinPhoneLength, maxLength: MaxPhoneLength})
     @IsNotEmpty()
-    @Length(11, 11)
+    @Length(MinPhoneLength, MaxPhoneLength)
     @IsNumberString()
     public phone: string;
 

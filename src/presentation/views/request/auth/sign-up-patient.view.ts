@@ -15,6 +15,7 @@ import {
 } from 'class-validator';
 import {CreatePatientDto} from 'domain/dtos/request/auth/create-patient.dto';
 import {Transform} from 'class-transformer';
+import {MaxPhoneLength, MinPhoneLength} from 'domain/constants/phone.const';
 
 export class SignUpPatientView extends CreatePatientDto {
     @ApiProperty({maxLength: 100})
@@ -33,9 +34,9 @@ export class SignUpPatientView extends CreatePatientDto {
     @Length(1, 30)
     public lastName: string;
 
-    @ApiProperty({minLength: 11, maxLength: 11})
+    @ApiProperty({minLength: MinPhoneLength, maxLength: MaxPhoneLength})
     @IsNotEmpty()
-    @Length(11, 11)
+    @Length(MinPhoneLength, MaxPhoneLength)
     @IsNumberString()
     public phone: string;
 
