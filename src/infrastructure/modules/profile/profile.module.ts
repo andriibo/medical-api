@@ -18,11 +18,10 @@ import {
     ProfileUseCasesFactory,
 } from './factories';
 import {ProfileSpecification} from 'app/modules/profile/specifications/profile.specification';
-import {RemoveCaregiverOrPatientService} from 'infrastructure/modules/profile/services/remove-caregiver-or-patient.service';
 import {IAuthService} from 'app/modules/auth/services/auth.service';
 import {DataSource} from 'typeorm';
 import {IRemoveUserService} from 'app/modules/profile/services/remove-user.service';
-import {RemoveDoctorService} from 'infrastructure/modules/profile/services/remove-doctor.service';
+import {RemoveUserService} from 'infrastructure/modules/profile/services/remove-user.service';
 
 @Module({
     imports: [
@@ -50,14 +49,7 @@ import {RemoveDoctorService} from 'infrastructure/modules/profile/services/remov
         {
             provide: IRemoveUserService,
             useFactory: (authService: IAuthService, dataSource: DataSource) => {
-                return new RemoveCaregiverOrPatientService(authService, dataSource);
-            },
-            inject: [IAuthService, DataSource],
-        },
-        {
-            provide: IRemoveUserService,
-            useFactory: (authService: IAuthService, dataSource: DataSource) => {
-                return new RemoveDoctorService(authService, dataSource);
+                return new RemoveUserService(authService, dataSource);
             },
             inject: [IAuthService, DataSource],
         },
