@@ -21,6 +21,8 @@ export class PatientDataAccessSpecification {
             );
         }
 
+        this.assertUserIsActive(doctor);
+
         const hasAccess = await this.hasAccessByPatientUserIdAndGrantedUserId(patient.id, doctor.id);
 
         if (hasAccess) {
@@ -37,6 +39,8 @@ export class PatientDataAccessSpecification {
             );
         }
 
+        this.assertUserIsActive(caregiver);
+
         const hasAccess = await this.hasAccessByPatientUserIdAndGrantedUserId(patient.id, caregiver.id);
 
         if (hasAccess) {
@@ -52,6 +56,8 @@ export class PatientDataAccessSpecification {
                 'No patient account with specified email address. Try another one.',
             );
         }
+
+        this.assertUserIsActive(patient);
 
         const hasAccess = await this.hasAccessByPatientUserIdAndGrantedUserId(patient.id, grantedUser.id);
 
@@ -212,5 +218,13 @@ export class PatientDataAccessSpecification {
         }
 
         return true;
+    }
+
+    private assertUserIsActive(user: User): void {
+        if (user.deletedAt !== null || user.email === null) {
+            throw new PatientDataAccessSpecificationError(
+                `You can\'t invite this user because the user\'s account is currently inactive`,
+            );
+        }
     }
 }
