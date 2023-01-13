@@ -221,7 +221,7 @@ export class PatientDataAccessSpecification {
     }
 
     private assertUserIsActive(user: User): void {
-        if (user.deletedAt !== null) {
+        if (user.deletedAt !== null || user.email === null) {
             throw new PatientDataAccessSpecificationError(
                 `You can\'t invite this user because the user\'s account is currently inactive`,
             );
