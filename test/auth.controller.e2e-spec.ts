@@ -54,7 +54,7 @@ const registeredUser: User = {
 describe('AuthController', () => {
     let app: INestApplication;
     beforeAll(async () => {
-        const cognitoService = {
+        const mockedCognitoService = {
             signUp: jest.fn(() => Promise.resolve(authModel)),
             signIn: jest.fn(() => Promise.resolve(authResultModel)),
             getTokenClaims: jest.fn(() => Promise.resolve(tokenClaims)),
@@ -62,10 +62,10 @@ describe('AuthController', () => {
             resendConfirmSignUpCode: jest.fn(() => Promise.resolve(resendConfirmationCodeResultModel)),
             deleteUser: jest.fn(() => Promise.resolve()),
         };
-        const mailSenderService = {
+        const mockedMailSenderService = {
             sendMail: jest.fn(() => Promise.resolve()),
         };
-        const userRepository = {
+        const mockedUserRepository = {
             persist: jest.fn((user: User) => Promise.resolve(user)),
             getOneById: jest.fn(() => Promise.resolve(registeredUser)),
         };
@@ -73,9 +73,9 @@ describe('AuthController', () => {
             imports: [AuthModule, EventEmitterModule.forRoot()],
         })
             .overrideProvider(IAuthService)
-            .useValue(cognitoService)
+            .useValue(mockedCognitoService)
             .overrideProvider(IMailSenderService)
-            .useValue(mailSenderService)
+            .useValue(mockedMailSenderService)
             .overrideProvider(getRepositoryToken(UserModel))
             .useValue({})
             .overrideProvider(getRepositoryToken(DoctorMetadataModel))
@@ -83,7 +83,7 @@ describe('AuthController', () => {
             .overrideProvider(getRepositoryToken(PatientMetadataModel))
             .useValue(null)
             .overrideProvider(IUserRepository)
-            .useValue(userRepository)
+            .useValue(mockedUserRepository)
             .overrideProvider(IPatientMetadataRepository)
             .useValue(null)
             .overrideProvider(IDoctorMetadataRepository)
