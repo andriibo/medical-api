@@ -33,7 +33,7 @@ definitions:
                 docker image prune -a -f
                 docker exec -it medical.api.dev npm install
                 docker exec -it medical.api.dev npm run migration:up
-                docker exec -it medical.api.dev npm run test
+                docker exec -it medical.api.dev npm run test:e2e
                 
 pipelines:
   branches:

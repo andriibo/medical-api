@@ -1,13 +1,20 @@
 import {Test, TestingModule} from '@nestjs/testing';
 import * as request from 'supertest';
-import {AuthResultModel, IAuthModel, ResendConfirmationCodeResultModel} from 'app/modules/auth/models';
+import {
+    AuthResultModel,
+    ForgotPasswordResponseModel,
+    IAuthModel,
+    ResendConfirmationCodeResultModel,
+} from 'app/modules/auth/models';
 import {AuthModel} from 'infrastructure/aws/cognito/auth.model';
 import {INestApplication, ValidationPipe} from '@nestjs/common';
 import {
     AuthUserDto,
+    ConfirmForgotPasswordDto,
     ConfirmSignUpUserDto,
     CreateDoctorDto,
     CreatePatientDto,
+    ForgotPasswordDto,
     ResendSignUpCodeDto,
 } from 'domain/dtos/request/auth';
 import {AuthModule} from 'infrastructure/modules';
@@ -40,6 +47,11 @@ const resendConfirmationCodeResultModel: ResendConfirmationCodeResultModel = {
     deliveryMedium: 'deliveryMedium',
     attributeName: 'attributeName',
 };
+const forgotPasswordResponseModel: ForgotPasswordResponseModel = {
+    destination: 'destination',
+    deliveryMedium: 'deliveryMedium',
+    attributeName: 'attributeName',
+};
 const registeredUser: User = {
     id: '8bfbd95c-c8a5-404b-b3eb-6ac648052ac4',
     email: 'doctor@gmail.com',
@@ -60,6 +72,8 @@ describe('AuthController', () => {
             getTokenClaims: jest.fn(() => Promise.resolve(tokenClaims)),
             confirmSignUp: jest.fn(() => Promise.resolve()),
             resendConfirmSignUpCode: jest.fn(() => Promise.resolve(resendConfirmationCodeResultModel)),
+            forgotPassword: jest.fn(() => Promise.resolve(forgotPasswordResponseModel)),
+            confirmForgotPassword: jest.fn(() => Promise.resolve()),
             deleteUser: jest.fn(() => Promise.resolve()),
         };
         const mockedMailSenderService = {
@@ -168,6 +182,24 @@ describe('AuthController', () => {
             deliveryMedium: resendConfirmationCodeResultModel.deliveryMedium,
             attributeName: resendConfirmationCodeResultModel.attributeName,
         });
+    });
+
+    it(`/forgot-password (POST)`, async () => {
+        const dto = new ForgotPasswordDto();
+        dto.email = 'doctor@gmail.com';
+        return request(app.getHttpServer()).post('/forgot-password').send(dto).expect(200).expect({
+            destination: forgotPasswordResponseModel.destination,
+            deliveryMedium: forgotPasswordResponseModel.deliveryMedium,
+            attributeName: forgotPasswordResponseModel.attributeName,
+        });
+    });
+
+    it(`/forgot-password/confirm (POST)`, async () => {
+        const dto = new ConfirmForgotPasswordDto();
+        dto.email = 'doctor@gmail.com';
+        dto.code = '216493';
+        dto.newPassword = '21649303B@a';
+        return request(app.getHttpServer()).post('/forgot-password/confirm').send(dto).expect(200);
     });
 
     afterAll(async () => {
