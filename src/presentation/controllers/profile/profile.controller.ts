@@ -11,6 +11,7 @@ import {
     FileTypeValidator,
     BadRequestException,
     Patch,
+    Req,
 } from '@nestjs/common';
 import {
     ApiBadRequestResponse,
@@ -25,6 +26,10 @@ import {UploadAvatarProfileView} from 'views/request/profile/upload-avatar-profi
 import {Express} from 'express';
 import {ProfileUseCasesFactory} from 'infrastructure/modules/profile/factories';
 import {Auth} from 'presentation/guards';
+import {ChangeEmailResponseView} from 'views/response/auth';
+import {ChangeEmailView, ChangePasswordView, ConfirmChangeEmailView} from 'views/request/auth';
+import {UserRequest} from 'presentation/middlewares/assign-user.middleware';
+import {ChangeEmailDto, ChangePasswordDto, ConfirmChangeEmailDto} from 'domain/dtos/request/auth';
 
 @Controller()
 @ApiBearerAuth()
@@ -85,5 +90,46 @@ export class ProfileController {
         } catch (error) {
             throw new BadRequestException(error.message);
         }
+    }
+
+    @Auth()
+    @ApiBearerAuth()
+    @Post('change-email')
+    @HttpCode(HttpStatus.OK)
+    @ApiResponse({status: HttpStatus.OK})
+    public async changeEmail(
+        @Req() request: UserRequest,
+        @Body() requestBody: ChangeEmailView,
+    ): Promise<ChangeEmailResponseView> {
+        const useCase = this.profileUseCasesFactory.createChangeEmailUseCase();
+
+        return await useCase.changeEmail(new ChangeEmailDto(requestBody.email, request.user.token));
+    }
+
+    @Auth()
+    @ApiBearerAuth()
+    @Post('change-email/confirm')
+    @HttpCode(HttpStatus.OK)
+    @ApiResponse({status: HttpStatus.OK})
+    public async confirmChangeEmail(
+        @Req() request: UserRequest,
+        @Body() requestBody: ConfirmChangeEmailView,
+    ): Promise<void> {
+        const useCase = this.profileUseCasesFactory.createChangeEmailUseCase();
+
+        await useCase.confirmChangeEmail(new ConfirmChangeEmailDto(requestBody.code, request.user.token));
+    }
+
+    @Auth()
+    @ApiBearerAuth()
+    @Post('change-password')
+    @HttpCode(HttpStatus.OK)
+    @ApiResponse({status: HttpStatus.OK})
+    public async changePassword(@Req() request: UserRequest, @Body() requestBody: ChangePasswordView): Promise<void> {
+        const useCase = this.profileUseCasesFactory.createChangePasswordUseCase();
+
+        return await useCase.changePassword(
+            new ChangePasswordDto(requestBody.currentPassword, requestBody.newPassword, request.user.token),
+        );
     }
 }
