@@ -4,29 +4,29 @@ import {ArrayMinSize, IsArray, IsNotEmpty, IsBoolean, IsNumber, ValidateNested, 
 import {SyncVitalDto, VitalDto} from 'domain/dtos/request/vital';
 
 export class VitalView extends VitalDto {
-    @ApiProperty({nullable: true})
+    @ApiProperty({nullable: true, required: false})
     @IsNumber()
-    @ValidateIf((object, value) => value !== null)
+    @ValidateIf((object, value) => value !== null && value !== undefined)
     public temperature: number | null;
 
-    @ApiProperty({nullable: true})
+    @ApiProperty({nullable: true, required: false})
     @IsNumber()
-    @ValidateIf((object, value) => value !== null)
+    @ValidateIf((object, value) => value !== null && value !== undefined)
     public hr: number | null;
 
-    @ApiProperty({nullable: true})
+    @ApiProperty({nullable: true, required: false})
     @IsNumber()
-    @ValidateIf((object, value) => value !== null)
+    @ValidateIf((object, value) => value !== null && value !== undefined)
     public spo: number | null;
 
-    @ApiProperty({nullable: true})
+    @ApiProperty({nullable: true, required: false})
     @IsNumber()
-    @ValidateIf((object, value) => value !== null)
+    @ValidateIf((object, value) => value !== null && value !== undefined)
     public rr: number | null;
 
-    @ApiProperty({nullable: true})
+    @ApiProperty({nullable: true, required: false})
     @IsBoolean()
-    @ValidateIf((object, value) => value !== null)
+    @ValidateIf((object, value) => value !== null && value !== undefined)
     public fall: boolean | null;
 
     @ApiProperty()
