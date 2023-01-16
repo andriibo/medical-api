@@ -6,27 +6,27 @@ import {SyncVitalDto, VitalDto} from 'domain/dtos/request/vital';
 export class VitalView extends VitalDto {
     @ApiProperty({nullable: true, required: false})
     @IsNumber()
-    @ValidateIf((object, value) => value !== null && value !== undefined)
+    @ValidateIf((object, value) => value != null)
     public temperature: number | null;
 
     @ApiProperty({nullable: true, required: false})
     @IsNumber()
-    @ValidateIf((object, value) => value !== null && value !== undefined)
+    @ValidateIf((object, value) => value != null)
     public hr: number | null;
 
     @ApiProperty({nullable: true, required: false})
     @IsNumber()
-    @ValidateIf((object, value) => value !== null && value !== undefined)
+    @ValidateIf((object, value) => value != null)
     public spo: number | null;
 
     @ApiProperty({nullable: true, required: false})
     @IsNumber()
-    @ValidateIf((object, value) => value !== null && value !== undefined)
+    @ValidateIf((object, value) => value != null)
     public rr: number | null;
 
     @ApiProperty({nullable: true, required: false})
     @IsBoolean()
-    @ValidateIf((object, value) => value !== null && value !== undefined)
+    @ValidateIf((object, value) => value != null)
     public fall: boolean | null;
 
     @ApiProperty()
