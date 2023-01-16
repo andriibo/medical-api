@@ -16,7 +16,9 @@ export class DeleteDataAccessByGrantedUserService {
     public async deleteDataAccess(grantedUser: User, dataAccess: PatientDataAccess): Promise<void> {
         await this.patientDataAccessSpecification.assertGrantedUserCanDeleteAccess(grantedUser, dataAccess);
         await this.patientDataAccessRepository.delete(dataAccess);
-        await this.sendNotification(grantedUser, dataAccess);
+        if (dataAccess.status !== PatientDataAccessStatus.Refused) {
+            await this.sendNotification(grantedUser, dataAccess);
+        }
     }
 
     private async sendNotification(grantedUser: User, dataAccess: PatientDataAccess): Promise<void> {
