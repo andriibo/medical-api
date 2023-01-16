@@ -50,6 +50,7 @@ export class PatientDataAccessRepository implements IPatientDataAccessRepository
             .leftJoinAndSelect('pda.grantedUser', 'user')
             .where('pda.patient_user_id = :patientUserId', {patientUserId})
             .andWhere('user.deleted_at is null')
+            .andWhere('user.email is not null')
             .orderBy({
                 'pda.createdAt': 'DESC',
             })
@@ -62,6 +63,7 @@ export class PatientDataAccessRepository implements IPatientDataAccessRepository
             .leftJoinAndSelect('pda.patientUser', 'user')
             .where('pda.granted_user_id = :grantedUserId', {grantedUserId})
             .andWhere('user.deleted_at is null')
+            .andWhere('user.email is not null')
             .orderBy({
                 'pda.createdAt': 'DESC',
             })
@@ -97,6 +99,7 @@ export class PatientDataAccessRepository implements IPatientDataAccessRepository
             .andWhere('pda.status = :status', {status})
             .andWhere('user.role = :role', {role})
             .andWhere('user.deleted_at is null')
+            .andWhere('user.email is not null')
             .getMany();
     }
 
@@ -112,6 +115,7 @@ export class PatientDataAccessRepository implements IPatientDataAccessRepository
             .andWhere('pda.status = :status', {status})
             .andWhere('user.role = :role', {role})
             .andWhere('user.deleted_at is null')
+            .andWhere('user.email is not null')
             .getMany();
     }
 
@@ -126,6 +130,7 @@ export class PatientDataAccessRepository implements IPatientDataAccessRepository
             .where('pda.granted_user_id = :grantedUserId', {grantedUserId})
             .andWhere('pda.status = :status', {status})
             .andWhere('user.deleted_at is null')
+            .andWhere('user.email is not null')
             .getMany();
     }
 }

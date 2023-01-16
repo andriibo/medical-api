@@ -15,7 +15,6 @@ import {
     ApiBearerAuth,
     ApiForbiddenResponse,
     ApiNotFoundResponse,
-    ApiOperation,
     ApiResponse,
     ApiTags,
     ApiUnauthorizedResponse,
@@ -36,17 +35,6 @@ import {MySuggestedContactDto} from 'domain/dtos/response/suggested-contact/my-s
 export class GrantedUserController {
     public constructor(private readonly grantedUserUseCasesFactory: GrantedUserUseCasesFactory) {}
 
-    @Roles('Doctor')
-    @Post('doctor/suggested-contact')
-    @ApiOperation({
-        deprecated: true,
-        summary: 'Deprecated endpoint. Use POST "/suggested-contact" instead.',
-    })
-    @ApiResponse({status: HttpStatus.CREATED, description: 'Created.'})
-    public async createSuggestedContactDeprecated(@Body() requestBody: CreateSuggestedContactView): Promise<void> {
-        return this.createSuggestedContact(requestBody);
-    }
-
     @Roles('Caregiver', 'Doctor')
     @Post('suggested-contact')
     @ApiResponse({status: HttpStatus.CREATED, description: 'Created.'})
@@ -58,17 +46,6 @@ export class GrantedUserController {
         } catch (error) {
             throw new BadRequestException(error.message);
         }
-    }
-
-    @Roles('Doctor')
-    @Delete('doctor/suggested-contact/:contactId')
-    @ApiOperation({
-        deprecated: true,
-        summary: 'Deprecated endpoint. Use DELETE  "/suggested-contact/{contactId}" instead.',
-    })
-    @ApiResponse({status: HttpStatus.NO_CONTENT, description: 'No content.'})
-    public async deleteSuggestedContactDeprecated(@Param('contactId', ParseUUIDPipe) contactId: string): Promise<void> {
-        return this.deleteSuggestedContact(contactId);
     }
 
     @Roles('Caregiver', 'Doctor')

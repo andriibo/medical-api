@@ -9,7 +9,7 @@ export class UserModel implements User {
     public id: string;
 
     @Column()
-    public email: string;
+    public email: string | null;
 
     @Column({name: 'first_name'})
     public firstName: string;
