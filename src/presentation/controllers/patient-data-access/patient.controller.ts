@@ -11,7 +11,7 @@ import {
     HttpCode,
     Patch,
 } from '@nestjs/common';
-import {ApiBearerAuth, ApiOperation, ApiResponse, ApiTags} from '@nestjs/swagger';
+import {ApiBearerAuth, ApiResponse, ApiTags} from '@nestjs/swagger';
 import {Roles} from 'presentation/guards';
 import {PatientUseCasesFactory} from 'infrastructure/modules/patient-data-access/factories/patient-use-cases.factory';
 import {InitiateDataAccessView} from 'presentation/views/request/data-access';
@@ -23,19 +23,6 @@ import {DataAccessDto} from 'domain/dtos/response/data-access/data-access.dto';
 @ApiTags('Patient Data Access')
 export class PatientController {
     public constructor(private readonly patientUseCasesFactory: PatientUseCasesFactory) {}
-
-    @Roles('Patient')
-    @Post('data-access/initiate')
-    @HttpCode(HttpStatus.CREATED)
-    @HttpCode(HttpStatus.BAD_REQUEST)
-    @ApiOperation({
-        deprecated: true,
-        summary: 'Deprecated endpoint. Use POST "/data-access/initiate-for-doctor".',
-    })
-    @ApiResponse({status: HttpStatus.CREATED})
-    public async initiateDataAccess(@Body() requestBody: InitiateDataAccessView): Promise<void> {
-        await this.initiateDoctorDataAccess(requestBody);
-    }
 
     @Roles('Patient')
     @Post('data-access/initiate-for-doctor')

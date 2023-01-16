@@ -1,5 +1,5 @@
 import {BadRequestException, Controller, Get, HttpCode, HttpStatus, Param, ParseUUIDPipe, Query} from '@nestjs/common';
-import {ApiBearerAuth, ApiOperation, ApiResponse, ApiTags} from '@nestjs/swagger';
+import {ApiBearerAuth, ApiResponse, ApiTags} from '@nestjs/swagger';
 import {GetVitalsByGrantedUserDto} from 'domain/dtos/request/vital';
 import {VitalUseCasesFactory} from 'infrastructure/modules/vitals/factories/vital-use-cases.factory';
 import {Roles} from 'presentation/guards';
@@ -11,21 +11,6 @@ import {GetVitalsView} from 'presentation/views/response/vital';
 @ApiTags('Vitals')
 export class GrantedUserController {
     public constructor(private readonly useCasesFactory: VitalUseCasesFactory) {}
-
-    @Roles('Doctor')
-    @Get('doctor/:userId/vitals')
-    @HttpCode(HttpStatus.OK)
-    @ApiOperation({
-        deprecated: true,
-        summary: 'Deprecated endpoint. Use GET "/patient-vitals/{patientUserId}" instead.',
-    })
-    @ApiResponse({status: HttpStatus.OK, type: GetVitalsView})
-    public async getPatientVitalsDeprecated(
-        @Param('userId', ParseUUIDPipe) userId: string,
-        @Query() query: GetVitalQueryView,
-    ): Promise<GetVitalsView> {
-        return await this.getPatientVitals(userId, query);
-    }
 
     @Roles('Caregiver', 'Doctor')
     @Get('/patient-vitals/:patientUserId')

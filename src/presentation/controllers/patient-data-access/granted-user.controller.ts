@@ -11,7 +11,7 @@ import {
     Get,
     Delete,
 } from '@nestjs/common';
-import {ApiBearerAuth, ApiOperation, ApiResponse, ApiTags} from '@nestjs/swagger';
+import {ApiBearerAuth, ApiResponse, ApiTags} from '@nestjs/swagger';
 import {Roles} from 'presentation/guards';
 import {InitiateDataAccessView} from 'views/request/data-access';
 import {GrantedUserUseCasesFactory} from 'infrastructure/modules/patient-data-access/factories/granted-user-use-cases.factory';
@@ -23,19 +23,6 @@ import {DataAccessDto} from 'domain/dtos/response/data-access/data-access.dto';
 @ApiTags('Patient Data Access')
 export class GrantedUserController {
     public constructor(private readonly grantedUserUseCasesFactory: GrantedUserUseCasesFactory) {}
-
-    @Roles('Doctor')
-    @Post('doctor/data-access/initiate')
-    @HttpCode(HttpStatus.CREATED)
-    @HttpCode(HttpStatus.BAD_REQUEST)
-    @ApiOperation({
-        deprecated: true,
-        summary: 'Deprecated endpoint. Use POST "/data-access/initiate" instead.',
-    })
-    @ApiResponse({status: HttpStatus.CREATED})
-    public async initiateDataAccessDeprecated(@Body() requestBody: InitiateDataAccessView): Promise<void> {
-        await this.initiateDataAccess(requestBody);
-    }
 
     @Roles('Caregiver', 'Doctor')
     @Post('data-access/initiate')
@@ -50,19 +37,6 @@ export class GrantedUserController {
         } catch (error) {
             throw new BadRequestException(error.message);
         }
-    }
-
-    @Roles('Doctor')
-    @Patch('doctor/data-access/refuse/:accessId')
-    @HttpCode(HttpStatus.OK)
-    @HttpCode(HttpStatus.BAD_REQUEST)
-    @ApiOperation({
-        deprecated: true,
-        summary: 'Deprecated endpoint. Use PATCH "/data-access/refuse/{accessId}" instead.',
-    })
-    @ApiResponse({status: HttpStatus.OK})
-    public async refuseDataAccessDeprecated(@Param('accessId', ParseUUIDPipe) accessId: string): Promise<void> {
-        return await this.refuseDataAccess(accessId);
     }
 
     @Roles('Caregiver', 'Doctor')
@@ -80,19 +54,6 @@ export class GrantedUserController {
         }
     }
 
-    @Roles('Doctor')
-    @Patch('doctor/data-access/approve/:accessId')
-    @HttpCode(HttpStatus.OK)
-    @HttpCode(HttpStatus.BAD_REQUEST)
-    @ApiOperation({
-        deprecated: true,
-        summary: 'Deprecated endpoint. Use PATCH "/data-access/approve/{accessId}" instead.',
-    })
-    @ApiResponse({status: HttpStatus.OK})
-    public async approveDataAccessDeprecated(@Param('accessId', ParseUUIDPipe) accessId: string): Promise<void> {
-        return await this.approveDataAccess(accessId);
-    }
-
     @Roles('Caregiver', 'Doctor')
     @Patch('data-access/approve/:accessId')
     @HttpCode(HttpStatus.OK)
@@ -108,18 +69,6 @@ export class GrantedUserController {
         }
     }
 
-    @Roles('Doctor')
-    @Get('doctor/data-accesses')
-    @HttpCode(HttpStatus.OK)
-    @ApiOperation({
-        deprecated: true,
-        summary: 'Deprecated endpoint. Use GET "/data-accesses" instead.',
-    })
-    @ApiResponse({status: HttpStatus.OK, type: [DataAccessView]})
-    public async getDataAccessesDeprecated(): Promise<DataAccessDto[]> {
-        return await this.getDataAccesses();
-    }
-
     @Roles('Caregiver', 'Doctor')
     @Get('data-accesses')
     @HttpCode(HttpStatus.OK)
@@ -128,19 +77,6 @@ export class GrantedUserController {
         const useCase = this.grantedUserUseCasesFactory.createDataAccessListUseCase();
 
         return await useCase.getList();
-    }
-
-    @Roles('Doctor')
-    @Delete('doctor/data-access/:accessId')
-    @HttpCode(HttpStatus.NO_CONTENT)
-    @HttpCode(HttpStatus.BAD_REQUEST)
-    @ApiOperation({
-        deprecated: true,
-        summary: 'Deprecated endpoint. Use DELETE "/data-access/{accessId}" instead.',
-    })
-    @ApiResponse({status: HttpStatus.NO_CONTENT})
-    public async deleteDataAccessDeprecated(@Param('accessId', ParseUUIDPipe) accessId: string): Promise<void> {
-        return this.deleteDataAccess(accessId);
     }
 
     @Roles('Caregiver', 'Doctor')

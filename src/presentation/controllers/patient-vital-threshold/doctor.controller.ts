@@ -1,15 +1,5 @@
-import {
-    BadRequestException,
-    Body,
-    Controller,
-    HttpCode,
-    HttpStatus,
-    Param,
-    ParseUUIDPipe,
-    Patch,
-    Post,
-} from '@nestjs/common';
-import {ApiBearerAuth, ApiOperation, ApiResponse, ApiTags} from '@nestjs/swagger';
+import {BadRequestException, Body, Controller, HttpCode, HttpStatus, Param, ParseUUIDPipe, Post} from '@nestjs/common';
+import {ApiBearerAuth, ApiResponse, ApiTags} from '@nestjs/swagger';
 import {Roles} from 'presentation/guards';
 import {
     UpdateHeartRateView,
@@ -28,22 +18,6 @@ export class DoctorController {
     public constructor(private readonly doctorUseCasesFactory: DoctorUseCasesFactory) {}
 
     @Roles('Doctor')
-    @Patch('blood-pressure/:patientUserId')
-    @ApiOperation({
-        deprecated: true,
-        summary: 'Deprecated endpoint. Use POST "/blood-pressure/{patientUserId}" instead.',
-    })
-    @HttpCode(HttpStatus.OK)
-    @HttpCode(HttpStatus.BAD_REQUEST)
-    @ApiResponse({status: HttpStatus.OK})
-    public async updateBloodPressureDeprecated(
-        @Param('patientUserId', ParseUUIDPipe) patientUserId: string,
-        @Body() requestBody: UpdateBloodPressureView,
-    ): Promise<void> {
-        return await this.updateBloodPressure(patientUserId, requestBody);
-    }
-
-    @Roles('Doctor')
     @Post('blood-pressure/:patientUserId')
     @HttpCode(HttpStatus.OK)
     @HttpCode(HttpStatus.BAD_REQUEST)
@@ -59,22 +33,6 @@ export class DoctorController {
         } catch (error) {
             throw new BadRequestException(error.message);
         }
-    }
-
-    @Roles('Doctor')
-    @Patch('heart-rate/:patientUserId')
-    @ApiOperation({
-        deprecated: true,
-        summary: 'Deprecated endpoint. Use POST "/heart-rate/{patientUserId}" instead.',
-    })
-    @HttpCode(HttpStatus.OK)
-    @HttpCode(HttpStatus.BAD_REQUEST)
-    @ApiResponse({status: HttpStatus.OK})
-    public async updateHeartRateDeprecated(
-        @Param('patientUserId', ParseUUIDPipe) patientUserId: string,
-        @Body() requestBody: UpdateHeartRateView,
-    ): Promise<void> {
-        return await this.updateHeartRate(patientUserId, requestBody);
     }
 
     @Roles('Doctor')
@@ -96,22 +54,6 @@ export class DoctorController {
     }
 
     @Roles('Doctor')
-    @Patch('mean-arterial-pressure/:patientUserId')
-    @ApiOperation({
-        deprecated: true,
-        summary: 'Deprecated endpoint. Use POST "/mean-arterial-pressure/{patientUserId}" instead.',
-    })
-    @HttpCode(HttpStatus.OK)
-    @HttpCode(HttpStatus.BAD_REQUEST)
-    @ApiResponse({status: HttpStatus.OK})
-    public async updateMeanArterialPressureDeprecated(
-        @Param('patientUserId', ParseUUIDPipe) patientUserId: string,
-        @Body() requestBody: UpdateMeanArterialPressureView,
-    ): Promise<void> {
-        return await this.updateMeanArterialPressure(patientUserId, requestBody);
-    }
-
-    @Roles('Doctor')
     @Post('mean-arterial-pressure/:patientUserId')
     @HttpCode(HttpStatus.OK)
     @HttpCode(HttpStatus.BAD_REQUEST)
@@ -127,22 +69,6 @@ export class DoctorController {
         } catch (error) {
             throw new BadRequestException(error.message);
         }
-    }
-
-    @Roles('Doctor')
-    @Patch('oxygen-saturation/:patientUserId')
-    @ApiOperation({
-        deprecated: true,
-        summary: 'Deprecated endpoint. Use POST "/oxygen-saturation/{patientUserId}" instead.',
-    })
-    @HttpCode(HttpStatus.OK)
-    @HttpCode(HttpStatus.BAD_REQUEST)
-    @ApiResponse({status: HttpStatus.OK})
-    public async updateOxygenSaturationDeprecated(
-        @Param('patientUserId', ParseUUIDPipe) patientUserId: string,
-        @Body() requestBody: UpdateOxygenSaturationView,
-    ): Promise<void> {
-        return await this.updateOxygenSaturation(patientUserId, requestBody);
     }
 
     @Roles('Doctor')
@@ -164,22 +90,6 @@ export class DoctorController {
     }
 
     @Roles('Doctor')
-    @Patch('respiration-rate/:patientUserId')
-    @ApiOperation({
-        deprecated: true,
-        summary: 'Deprecated endpoint. Use POST "/respiration-rate/{patientUserId}" instead.',
-    })
-    @HttpCode(HttpStatus.OK)
-    @HttpCode(HttpStatus.BAD_REQUEST)
-    @ApiResponse({status: HttpStatus.OK})
-    public async updateRespirationRateDeprecated(
-        @Param('patientUserId', ParseUUIDPipe) patientUserId: string,
-        @Body() requestBody: UpdateRespirationRateView,
-    ): Promise<void> {
-        return this.updateRespirationRate(patientUserId, requestBody);
-    }
-
-    @Roles('Doctor')
     @Post('respiration-rate/:patientUserId')
     @HttpCode(HttpStatus.OK)
     @HttpCode(HttpStatus.BAD_REQUEST)
@@ -195,22 +105,6 @@ export class DoctorController {
         } catch (error) {
             throw new BadRequestException(error.message);
         }
-    }
-
-    @Roles('Doctor')
-    @Patch('temperature/:patientUserId')
-    @ApiOperation({
-        deprecated: true,
-        summary: 'Deprecated endpoint. Use POST "/temperature/{patientUserId}" instead.',
-    })
-    @HttpCode(HttpStatus.OK)
-    @HttpCode(HttpStatus.BAD_REQUEST)
-    @ApiResponse({status: HttpStatus.OK})
-    public async updateTemperatureDeprecated(
-        @Param('patientUserId', ParseUUIDPipe) patientUserId: string,
-        @Body() requestBody: UpdateTemperatureView,
-    ): Promise<void> {
-        return this.updateTemperature(patientUserId, requestBody);
     }
 
     @Roles('Doctor')
