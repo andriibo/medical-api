@@ -12,19 +12,19 @@ export class VitalModel implements Vital {
     public timestamp: number;
 
     @Column({precision: 5, scale: 2, transformer: new FloatTransformer()})
-    public temperature: number | null;
+    public temperature: number | null = null;
 
     @Column()
-    public hr: number | null;
+    public hr: number | null = null;
 
     @Column()
-    public spo: number | null;
+    public spo: number | null = null;
 
     @Column()
-    public rr: number | null;
+    public rr: number | null = null;
 
     @Column()
-    public fall: boolean | null;
+    public fall: boolean | null = null;
 
     @Column({name: 'user_id'})
     public userId: string;
