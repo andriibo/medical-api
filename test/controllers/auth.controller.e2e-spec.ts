@@ -120,7 +120,7 @@ describe('AuthController', () => {
             .expect(200)
             .expect({
                 token: 'access_token',
-                tokenExpireTime: new Date((currentUnixTimestamp() + 3600) * 1000).toISOString(),
+                tokenExpireTime: new Date(authResultModel.tokenExpireTime * 1000).toISOString(),
                 user: {
                     avatar: registeredUser.avatar,
                     deletedAt: registeredUser.deletedAt,
