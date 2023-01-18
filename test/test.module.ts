@@ -5,37 +5,12 @@ import {IAuthService} from 'app/modules/auth/services/auth.service';
 import {ConfigModule} from '@nestjs/config';
 import {EventEmitterModule} from '@nestjs/event-emitter';
 import {currentUnixTimestamp} from 'app/support/date.helper';
-import {
-    AuthResultModel,
-    ForgotPasswordResponseModel,
-    IAuthModel,
-    ResendConfirmationCodeResultModel,
-} from 'app/modules/auth/models';
-import {AuthModel} from 'infrastructure/aws/cognito/auth.model';
 import {IMailSenderService} from 'app/modules/mail/services/abstract/mail-sender.service';
 
-const authModel: IAuthModel = new AuthModel({
-    UserConfirmed: true,
-    UserSub: '2b9d1770-2ad2-4ac6-bb63-a7e9c1b1f815',
-});
-
-const authResultModel = new AuthResultModel();
-authResultModel.token = 'access_token';
-authResultModel.tokenExpireTime = currentUnixTimestamp() + 3600;
 const tokenClaims = {
     sub: '8bfbd95c-c8a5-404b-b3eb-6ac648052ac4',
     'cognito:groups': ['Doctor'],
-    exp: authResultModel.tokenExpireTime,
-};
-const resendConfirmationCodeResultModel: ResendConfirmationCodeResultModel = {
-    destination: 'destination',
-    deliveryMedium: 'deliveryMedium',
-    attributeName: 'attributeName',
-};
-const forgotPasswordResponseModel: ForgotPasswordResponseModel = {
-    destination: 'destination',
-    deliveryMedium: 'deliveryMedium',
-    attributeName: 'attributeName',
+    exp: currentUnixTimestamp() + 3600,
 };
 
 @Module({
@@ -50,14 +25,7 @@ const forgotPasswordResponseModel: ForgotPasswordResponseModel = {
         {
             provide: IAuthService,
             useValue: {
-                signUp: jest.fn(() => Promise.resolve(authModel)),
-                signIn: jest.fn(() => Promise.resolve(authResultModel)),
                 getTokenClaims: jest.fn(() => Promise.resolve(tokenClaims)),
-                confirmSignUp: jest.fn(() => Promise.resolve()),
-                resendConfirmSignUpCode: jest.fn(() => Promise.resolve(resendConfirmationCodeResultModel)),
-                forgotPassword: jest.fn(() => Promise.resolve(forgotPasswordResponseModel)),
-                confirmForgotPassword: jest.fn(() => Promise.resolve()),
-                deleteUser: jest.fn(() => Promise.resolve()),
             },
         },
         {
