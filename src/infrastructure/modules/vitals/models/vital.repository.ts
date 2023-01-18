@@ -12,19 +12,20 @@ export class VitalRepository implements IVitalRepository {
     public async createRange(vitals: Vital[], user: User): Promise<Vital[]> {
         const vitalsModel = vitals.map((vital) => {
             const vitalModel = new VitalModel();
-            vitalModel.fall = vital.fall;
-            vitalModel.hr = vital.hr;
-            vitalModel.rr = vital.rr;
-            vitalModel.spo = vital.spo;
-            vitalModel.temperature = vital.temperature;
+            vitalModel.fall = vital.fall ?? null;
+            vitalModel.hr = vital.hr ?? null;
+            vitalModel.rr = vital.rr ?? null;
+            vitalModel.spo = vital.spo ?? null;
+            vitalModel.temperature = vital.temperature ?? null;
             vitalModel.timestamp = vital.timestamp;
             vitalModel.user = user;
             vitalModel.userId = user.id;
             vitalModel.id = vital.id;
+
             return vitalModel;
         });
-        const savedVitals = await this.dataSource.manager.save(vitalsModel);
-        return savedVitals;
+
+        return await this.dataSource.manager.save(vitalsModel);
     }
 
     public async getAlreadySavedByUser(userId: string, timestamps: number[]): Promise<Vital[]> {

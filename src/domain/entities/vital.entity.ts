@@ -5,15 +5,15 @@ export interface Vital {
 
     timestamp: number;
 
-    temperature: number;
+    temperature: number | null;
 
-    hr: number;
+    hr: number | null;
 
-    spo: number;
+    spo: number | null;
 
-    rr: number;
+    rr: number | null;
 
-    fall: boolean;
+    fall: boolean | null;
 
     userId: string;
 
