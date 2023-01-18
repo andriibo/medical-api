@@ -140,7 +140,7 @@ describe('PatientController', () => {
             .set('Authorization', 'Bearer patient')
             .expect(200)
             .expect({
-                userId: patientMetadata.userId,
+                userId: patient.id,
                 email: patient.email,
                 firstName: patient.firstName,
                 lastName: patient.lastName,
