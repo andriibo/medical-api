@@ -1,12 +1,5 @@
 import {Test, TestingModule} from '@nestjs/testing';
 import * as request from 'supertest';
-import {
-    AuthResultModel,
-    ForgotPasswordResponseModel,
-    IAuthModel,
-    ResendConfirmationCodeResultModel,
-} from 'app/modules/auth/models';
-import {AuthModel} from 'infrastructure/aws/cognito/auth.model';
 import {INestApplication, ValidationPipe} from '@nestjs/common';
 import {
     AuthUserDto,
@@ -19,15 +12,22 @@ import {
 } from 'domain/dtos/request/auth';
 import {AuthModule} from 'infrastructure/modules';
 import {IUserRepository} from 'app/modules/auth/repositories';
-import {IAuthService} from 'app/modules/auth/services/auth.service';
 import {getRepositoryToken} from '@nestjs/typeorm';
 import {DoctorMetadataModel, PatientMetadataModel, UserModel} from 'infrastructure/modules/auth/models';
 import {User} from 'domain/entities';
-import {IMailSenderService} from 'app/modules/mail/services/abstract/mail-sender.service';
 import {IDoctorMetadataRepository, IPatientMetadataRepository} from 'app/modules/profile/repositories';
-import {EventEmitterModule} from '@nestjs/event-emitter';
 import {CreateCaregiverDto} from 'domain/dtos/request/auth/create-caregiver.dto';
 import {currentUnixTimestamp} from 'app/support/date.helper';
+import {TestModule} from 'tests/test.module';
+import {
+    AuthResultModel,
+    ForgotPasswordResponseModel,
+    IAuthModel,
+    ResendConfirmationCodeResultModel,
+} from 'app/modules/auth/models';
+import {IAuthService} from 'app/modules/auth/services/auth.service';
+import {IMailSenderService} from 'app/modules/mail/services/abstract/mail-sender.service';
+import {AuthModel} from 'infrastructure/aws/cognito/auth.model';
 
 const authModel: IAuthModel = new AuthModel({
     UserConfirmed: true,
@@ -52,6 +52,7 @@ const forgotPasswordResponseModel: ForgotPasswordResponseModel = {
     deliveryMedium: 'deliveryMedium',
     attributeName: 'attributeName',
 };
+
 const registeredUser: User = {
     id: '8bfbd95c-c8a5-404b-b3eb-6ac648052ac4',
     email: 'doctor@gmail.com',
@@ -65,33 +66,33 @@ const registeredUser: User = {
 };
 describe('AuthController', () => {
     let app: INestApplication;
+    const mockedCognitoService = {
+        signUp: jest.fn(() => Promise.resolve(authModel)),
+        signIn: jest.fn(() => Promise.resolve(authResultModel)),
+        getTokenClaims: jest.fn(() => Promise.resolve(tokenClaims)),
+        confirmSignUp: jest.fn(() => Promise.resolve()),
+        resendConfirmSignUpCode: jest.fn(() => Promise.resolve(resendConfirmationCodeResultModel)),
+        forgotPassword: jest.fn(() => Promise.resolve(forgotPasswordResponseModel)),
+        confirmForgotPassword: jest.fn(() => Promise.resolve()),
+        deleteUser: jest.fn(() => Promise.resolve()),
+    };
+    const mockedMailSenderService = {
+        sendMail: jest.fn(() => Promise.resolve()),
+    };
     beforeAll(async () => {
-        const mockedCognitoService = {
-            signUp: jest.fn(() => Promise.resolve(authModel)),
-            signIn: jest.fn(() => Promise.resolve(authResultModel)),
-            getTokenClaims: jest.fn(() => Promise.resolve(tokenClaims)),
-            confirmSignUp: jest.fn(() => Promise.resolve()),
-            resendConfirmSignUpCode: jest.fn(() => Promise.resolve(resendConfirmationCodeResultModel)),
-            forgotPassword: jest.fn(() => Promise.resolve(forgotPasswordResponseModel)),
-            confirmForgotPassword: jest.fn(() => Promise.resolve()),
-            deleteUser: jest.fn(() => Promise.resolve()),
-        };
-        const mockedMailSenderService = {
-            sendMail: jest.fn(() => Promise.resolve()),
-        };
         const mockedUserRepository = {
             persist: jest.fn((user: User) => Promise.resolve(user)),
             getOneById: jest.fn(() => Promise.resolve(registeredUser)),
         };
         const moduleRef: TestingModule = await Test.createTestingModule({
-            imports: [AuthModule, EventEmitterModule.forRoot()],
+            imports: [TestModule, AuthModule],
         })
             .overrideProvider(IAuthService)
             .useValue(mockedCognitoService)
             .overrideProvider(IMailSenderService)
             .useValue(mockedMailSenderService)
             .overrideProvider(getRepositoryToken(UserModel))
-            .useValue({})
+            .useValue(null)
             .overrideProvider(getRepositoryToken(DoctorMetadataModel))
             .useValue(null)
             .overrideProvider(getRepositoryToken(PatientMetadataModel))
@@ -118,8 +119,8 @@ describe('AuthController', () => {
             .send(dto)
             .expect(200)
             .expect({
-                token: authResultModel.token,
-                tokenExpireTime: new Date(tokenClaims.exp * 1000).toISOString(),
+                token: 'access_token',
+                tokenExpireTime: new Date((currentUnixTimestamp() + 3600) * 1000).toISOString(),
                 user: {
                     avatar: registeredUser.avatar,
                     deletedAt: registeredUser.deletedAt,
