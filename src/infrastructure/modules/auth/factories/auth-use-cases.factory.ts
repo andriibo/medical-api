@@ -11,6 +11,7 @@ import {
 } from 'app/modules/auth/use-cases';
 import {IAuthEventEmitter} from 'app/modules/auth/event-emitters/auth.event-emitter';
 import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service';
+import {IFileUrlService} from 'app/modules/profile/services/file-url.service';
 
 @Injectable()
 export class AuthUseCasesFactory {
@@ -20,6 +21,7 @@ export class AuthUseCasesFactory {
         @Inject(IUserEntityMapper) private readonly userEntityMapper: IUserEntityMapper,
         @Inject(IAuthEventEmitter) private readonly authEventEmitter: IAuthEventEmitter,
         @Inject(IAuthedUserService) private readonly authedUserService: IAuthedUserService,
+        @Inject(IFileUrlService) private readonly fileUrlService: IFileUrlService,
     ) {}
 
     public createSignUpUseCase(): SignUpUseCase {
@@ -27,7 +29,7 @@ export class AuthUseCasesFactory {
     }
 
     public createSignInUseCase(): SignInUseCase {
-        return new SignInUseCase(this.authService, this.userRepository);
+        return new SignInUseCase(this.authService, this.userRepository, this.fileUrlService);
     }
 
     public createConfirmSignUpUseCase(): ConfirmSignUpUserUseCase {
