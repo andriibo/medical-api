@@ -134,7 +134,6 @@ describe('GrantedUserController', () => {
     });
 
     it(`/patient-profile/{patientUserId} (GET)`, async () => {
-        console.log(`/patient-profile/${patient.id}`);
         return request(app.getHttpServer())
             .get(`/patient-profile/${patient.id}`)
             .set('Authorization', 'Bearer caregiver')
