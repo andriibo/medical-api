@@ -13,8 +13,8 @@ export class SyncVitalsUseCase {
     public async updateVitals(model: SyncVitalDto): Promise<SyncVitalsDtoResponse> {
         const user = await this.authedUserService.getUser();
         const vitalsToBeSaved = await this.filterVitalsToBeSaved(model.vitals, user);
-
         const savedVitals = await this.vitalRepository.createRange(vitalsToBeSaved, user);
+
         return SyncVitalsDtoResponse.fromVitalsList(savedVitals);
     }
 
