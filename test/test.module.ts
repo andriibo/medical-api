@@ -7,10 +7,23 @@ import {EventEmitterModule} from '@nestjs/event-emitter';
 import {currentUnixTimestamp} from 'app/support/date.helper';
 import {IMailSenderService} from 'app/modules/mail/services/abstract/mail-sender.service';
 
+const exp = currentUnixTimestamp() + 3600;
 const tokenClaims = {
-    sub: '8bfbd95c-c8a5-404b-b3eb-6ac648052ac4',
-    'cognito:groups': ['Doctor'],
-    exp: currentUnixTimestamp() + 3600,
+    doctor: {
+        sub: '8bfbd95c-c8a5-404b-b3eb-6ac648052ac4',
+        'cognito:groups': ['Doctor'],
+        exp: exp,
+    },
+    caregiver: {
+        sub: '4babe90f-b1a3-145e-c0mz-9aq248098ac0',
+        'cognito:groups': ['Caregiver'],
+        exp: exp,
+    },
+    patient: {
+        sub: '5nc3e70a-c1y9-121a-c5mv-5aq272098bp0',
+        'cognito:groups': ['Patient'],
+        exp: exp,
+    },
 };
 
 @Module({
@@ -25,7 +38,7 @@ const tokenClaims = {
         {
             provide: IAuthService,
             useValue: {
-                getTokenClaims: jest.fn(() => Promise.resolve(tokenClaims)),
+                getTokenClaims: jest.fn((role: string) => Promise.resolve(tokenClaims[role])),
             },
         },
         {

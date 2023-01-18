@@ -33,6 +33,7 @@ describe('ProfileController', () => {
         };
         const mockedUserRepository = {
             getOneById: jest.fn(() => Promise.resolve(registeredUser)),
+            persist: jest.fn((user: User) => Promise.resolve(user)),
             updateAvatar: jest.fn(() => Promise.resolve()),
         };
         const moduleRef: TestingModule = await Test.createTestingModule({
@@ -69,8 +70,22 @@ describe('ProfileController', () => {
         return request(app.getHttpServer())
             .post('/avatar/upload')
             .set('Content-Type', 'multipart/form-data')
-            .set('Authorization', 'Bearer test')
+            .set('Authorization', 'Bearer doctor')
             .attach('file', './test/pineapple.png')
+            .expect(200);
+    });
+
+    it(`/my-profile/delete (PATCH)`, async () => {
+        return request(app.getHttpServer())
+            .patch('/my-profile/delete')
+            .set('Authorization', 'Bearer doctor')
+            .expect(200);
+    });
+
+    it(`/my-profile/recovery (PATCH)`, async () => {
+        return request(app.getHttpServer())
+            .patch('/my-profile/recovery')
+            .set('Authorization', 'Bearer doctor')
             .expect(200);
     });
 
