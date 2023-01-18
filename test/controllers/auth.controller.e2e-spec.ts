@@ -179,9 +179,9 @@ describe('AuthController', () => {
         const dto = new ResendSignUpCodeDto();
         dto.email = 'doctor@gmail.com';
         return request(app.getHttpServer()).post('/sign-up/resend-code').send(dto).expect(200).expect({
-            destination: 'destination',
-            deliveryMedium: 'deliveryMedium',
-            attributeName: 'attributeName',
+            destination: resendConfirmationCodeResultModel.destination,
+            deliveryMedium: resendConfirmationCodeResultModel.deliveryMedium,
+            attributeName: resendConfirmationCodeResultModel.attributeName,
         });
     });
 
@@ -189,9 +189,9 @@ describe('AuthController', () => {
         const dto = new ForgotPasswordDto();
         dto.email = 'doctor@gmail.com';
         return request(app.getHttpServer()).post('/forgot-password').send(dto).expect(200).expect({
-            destination: 'destination',
-            deliveryMedium: 'deliveryMedium',
-            attributeName: 'attributeName',
+            destination: forgotPasswordResponseModel.destination,
+            deliveryMedium: forgotPasswordResponseModel.deliveryMedium,
+            attributeName: forgotPasswordResponseModel.attributeName,
         });
     });
 
