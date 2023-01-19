@@ -122,7 +122,7 @@ describe('AuthController', () => {
                 token: 'access_token',
                 tokenExpireTime: new Date(authResultModel.tokenExpireTime * 1000).toISOString(),
                 user: {
-                    avatar: registeredUser.avatar,
+                    avatar: 'https://zenzers-medical-dev.s3.amazonaws.com/avatars/default-avatar.png',
                     deletedAt: registeredUser.deletedAt,
                     userId: registeredUser.id,
                     email: registeredUser.email,
