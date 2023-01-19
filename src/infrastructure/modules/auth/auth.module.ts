@@ -23,9 +23,10 @@ import {AuthEventEmitter} from './event-emitters/auth.event-emitter';
 import {AuthListener} from './listeners/auth.listener';
 import {MailModule} from 'infrastructure/modules/mail/mail.module';
 import {IDoctorMetadataRepository, IPatientMetadataRepository} from 'app/modules/profile/repositories';
+import {FileModule} from 'infrastructure/modules/file/file.module';
 
 @Module({
-    imports: [TypeOrmModule.forFeature([UserModel, DoctorMetadataModel, PatientMetadataModel]), MailModule],
+    imports: [TypeOrmModule.forFeature([UserModel, DoctorMetadataModel, PatientMetadataModel]), MailModule, FileModule],
     exports: [
         IAuthService,
         IAuthedUserService,

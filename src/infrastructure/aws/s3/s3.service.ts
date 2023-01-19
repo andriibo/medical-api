@@ -1,17 +1,13 @@
 import {S3} from 'aws-sdk';
 import {ConfigService} from '@nestjs/config';
 import {IUserAvatarService} from 'app/modules/profile/services/user-avatar.service';
-import {Inject, Injectable} from '@nestjs/common';
-import {IFileNameService} from 'app/modules/profile/services/file-name.service';
+import {Injectable} from '@nestjs/common';
 
 @Injectable()
 export class S3Service implements IUserAvatarService {
     private readonly s3Client: S3;
 
-    public constructor(
-        private configService: ConfigService,
-        @Inject(IFileNameService) private fileNameService: IFileNameService,
-    ) {
+    public constructor(private readonly configService: ConfigService) {
         this.s3Client = new S3({
             region: configService.get<string>('AWS_REGION'),
             accessKeyId: configService.get<string>('AWS_ACCESS_KEY_ID'),
