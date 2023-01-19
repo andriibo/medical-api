@@ -10,6 +10,7 @@ export class CaregiverDto extends UserDto {
         dto.lastName = user.lastName;
         dto.phone = user.phone;
         dto.avatar = user.avatar;
+        dto.deletedAt = user.deletedAt;
 
         return dto;
     }

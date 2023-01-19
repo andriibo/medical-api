@@ -19,4 +19,7 @@ export class CaregiverView extends CaregiverDto {
 
     @ApiProperty()
     public avatar: string;
+
+    @ApiProperty()
+    public deletedAt: number | null;
 }

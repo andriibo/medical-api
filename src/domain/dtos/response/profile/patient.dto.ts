@@ -27,6 +27,7 @@ export class PatientDto extends UserDto {
         dto.height = metadata.height;
         dto.weight = metadata.weight;
         dto.avatar = user.avatar;
+        dto.deletedAt = user.deletedAt;
 
         return dto;
     }
