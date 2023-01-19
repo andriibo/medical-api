@@ -1,4 +1,4 @@
-import {forwardRef, Module} from '@nestjs/common';
+import {Module} from '@nestjs/common';
 import {AuthController} from 'controllers/auth.controller';
 import {IUserRepository} from 'app/modules/auth/repositories';
 import {IAuthService} from 'app/modules/auth/services/auth.service';
@@ -23,14 +23,10 @@ import {AuthEventEmitter} from './event-emitters/auth.event-emitter';
 import {AuthListener} from './listeners/auth.listener';
 import {MailModule} from 'infrastructure/modules/mail/mail.module';
 import {IDoctorMetadataRepository, IPatientMetadataRepository} from 'app/modules/profile/repositories';
-import {FileModule} from 'infrastructure/modules';
+import {FileModule} from 'infrastructure/modules/file/file.module';
 
 @Module({
-    imports: [
-        TypeOrmModule.forFeature([UserModel, DoctorMetadataModel, PatientMetadataModel]),
-        MailModule,
-        forwardRef(() => FileModule),
-    ],
+    imports: [TypeOrmModule.forFeature([UserModel, DoctorMetadataModel, PatientMetadataModel]), MailModule, FileModule],
     exports: [
         IAuthService,
         IAuthedUserService,
