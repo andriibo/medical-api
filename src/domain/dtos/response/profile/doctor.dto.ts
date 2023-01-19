@@ -18,6 +18,7 @@ export class DoctorDto extends UserDto {
         dto.phone = user.phone;
         dto.institution = metadata.institution;
         dto.avatar = user.avatar;
+        dto.deletedAt = user.deletedAt;
 
         return dto;
     }

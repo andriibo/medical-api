@@ -22,4 +22,7 @@ export class DoctorView extends DoctorDto {
 
     @ApiProperty()
     public avatar: string;
+
+    @ApiProperty()
+    public deletedAt: number | null;
 }
