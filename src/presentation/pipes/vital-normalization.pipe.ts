@@ -14,11 +14,11 @@ export class VitalNormalizationPipe implements PipeTransform<SyncVitalDto, SyncV
         return model;
     }
 
-    private normilizeValue(value: number, min: number, max: number): number {
-        if (value >= max) {
+    private normilizeValue(value: number | null, min: number, max: number): number | null {
+        if (value !== null && value >= max) {
             return max;
         }
-        if (value <= min) {
+        if (value !== null && value <= min) {
             return min;
         }
 
