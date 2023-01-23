@@ -10,6 +10,6 @@ export class PatientStatusRepository implements IPatientStatusRepository {
     public constructor(@InjectDataSource() private dataSource: DataSource) {}
 
     public async getByPatientUserId(patientUserId: string): Promise<PatientStatus> {
-        return await this.dataSource.manager.findOneByOrFail(PatientStatusModel, {patientUserId});
+        return await this.dataSource.manager.findOneBy(PatientStatusModel, {patientUserId});
     }
 }
