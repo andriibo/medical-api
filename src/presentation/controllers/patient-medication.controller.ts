@@ -15,7 +15,7 @@ import {Roles} from 'presentation/guards';
 import {PatientMedicationUseCasesFactory} from 'infrastructure/modules/patient-medication/factories/patient-medication-use-cases.factory';
 import {CreateMedicationView} from 'presentation/views/request/patient-medication/create-medication.view';
 import {MedicationDto} from 'domain/dtos/response/patient-medication/medication.dto';
-import {MedicationView} from 'views/response/patient-medication';
+import {PatientMedicationView} from 'views/response/patient-medication';
 
 @Controller()
 @ApiBearerAuth()
@@ -41,7 +41,7 @@ export class PatientMedicationController {
     @Roles('Caregiver', 'Doctor', 'Patient')
     @Get('patient-medications/:patientUserId')
     @HttpCode(HttpStatus.OK)
-    @ApiResponse({status: HttpStatus.OK, type: [MedicationView]})
+    @ApiResponse({status: HttpStatus.OK, type: [PatientMedicationView]})
     public async getPatientMedications(
         @Param('patientUserId', ParseUUIDPipe) patientUserId: string,
     ): Promise<MedicationDto[]> {
