@@ -18,11 +18,11 @@ export class UserView implements UserDto {
     public phone: string;
 
     @ApiProperty()
-    public avatar: string | null;
+    public avatar: string;
 
     @ApiProperty()
     public role: string;
 
-    @ApiProperty()
+    @ApiProperty({nullable: true})
     public deletedAt: number | null;
 }

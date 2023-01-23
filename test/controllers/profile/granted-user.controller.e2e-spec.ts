@@ -34,6 +34,7 @@ const patient: User = {
     role: 'Patient',
     createdAt: '2022-10-10 07:31:17.016236',
     deletedAt: null,
+    vitals: [],
 };
 
 const patientMetadata: PatientMetadata = {
@@ -129,6 +130,7 @@ describe('GrantedUserController', () => {
                     avatar: 'https://zenzers-medical-dev.s3.amazonaws.com/avatars/default-avatar.png',
                     deletedAt: null,
                     accessId: patientDataAccess.id,
+                    lastConnected: null,
                 },
             ]);
     });

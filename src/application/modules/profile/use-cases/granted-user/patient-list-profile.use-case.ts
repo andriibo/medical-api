@@ -27,6 +27,9 @@ export class PatientListProfileUseCase {
             );
             dto.avatar = this.fileUrlService.createUrlToUserAvatar(dto.avatar);
             dto.accessId = patientDataAccess.id;
+            dto.lastConnected = patientDataAccess.patientUser.vitals.length
+                ? patientDataAccess.patientUser.vitals[0].timestamp
+                : null;
 
             return dto;
         });

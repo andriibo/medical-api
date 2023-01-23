@@ -20,6 +20,6 @@ export class CaregiverView extends CaregiverDto {
     @ApiProperty()
     public avatar: string;
 
-    @ApiProperty()
+    @ApiProperty({nullable: true})
     public deletedAt: number | null;
 }
