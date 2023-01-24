@@ -4,8 +4,8 @@ import {PatientDataAccess, PatientDataAccessStatus} from 'domain/entities/patien
 import {MyPatientDto} from 'domain/dtos/response/profile/my-patient.dto';
 import {sortUserDtosByName} from 'app/support/sort.helper';
 import {IFileUrlService} from 'app/modules/profile/services/file-url.service';
-import {Vital} from 'domain/entities';
 import {IVitalRepository} from 'app/modules/vitals/repositories';
+import {VitalUserLastConnectedModel} from 'app/modules/vitals/models/vital-user-last-connected.model';
 
 export class PatientListProfileUseCase {
     public constructor(
@@ -23,6 +23,7 @@ export class PatientListProfileUseCase {
             PatientDataAccessStatus.Approved,
         );
         const vitals = await this.getVitals(items);
+        console.log(vitals);
         const lastConnectedUsers = {};
         vitals.map((vital) => (lastConnectedUsers[vital.user_id] = vital.timestamp));
         const myPatients = items.map((patientDataAccess) => {
@@ -44,7 +45,7 @@ export class PatientListProfileUseCase {
         return sortUserDtosByName(myPatients) as MyPatientDto[];
     }
 
-    private async getVitals(items: PatientDataAccess[]): Promise<{user_id: string; timestamp: number}[]> {
+    private async getVitals(items: PatientDataAccess[]): Promise<VitalUserLastConnectedModel[]> {
         const userIds = items.map((item) => item.patientUserId);
 
         return await this.vitalRepository.getLastVitalsByUserIds(userIds);

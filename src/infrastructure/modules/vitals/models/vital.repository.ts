@@ -4,6 +4,7 @@ import {Between, DataSource, In} from 'typeorm';
 import {User, Vital} from 'domain/entities';
 import {IVitalRepository} from 'app/modules/vitals/repositories';
 import {VitalModel} from './vital.model';
+import {VitalUserLastConnectedModel} from 'app/modules/vitals/models/vital-user-last-connected.model';
 
 @Injectable()
 export class VitalRepository implements IVitalRepository {
@@ -42,7 +43,7 @@ export class VitalRepository implements IVitalRepository {
         });
     }
 
-    public async getLastVitalsByUserIds(userIds: string[]): Promise<{user_id: string; timestamp: number}[]> {
+    public async getLastVitalsByUserIds(userIds: string[]): Promise<VitalUserLastConnectedModel[]> {
         if (!userIds.length) {
             return [];
         }
