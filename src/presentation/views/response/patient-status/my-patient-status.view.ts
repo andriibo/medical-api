@@ -5,6 +5,6 @@ export class MyPatientStatusView implements MyPatientStatusDto {
     @ApiProperty()
     public status: string;
 
-    @ApiProperty()
-    public setAt: number;
+    @ApiProperty({nullable: true})
+    public setAt: number | null;
 }

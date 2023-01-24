@@ -1,10 +1,9 @@
 import {PatientStatus, PatientStatusEnum} from 'domain/entities/patient-status.entity';
-import {currentUnixTimestamp} from 'app/support/date.helper';
 
 export class MyPatientStatusDto {
     public status: string;
 
-    public setAt: number;
+    public setAt: number | null;
 
     public static fromPatientStatus(patientStatus: PatientStatus): MyPatientStatusDto {
         const dto = new MyPatientStatusDto();
@@ -17,7 +16,7 @@ export class MyPatientStatusDto {
     public static getDtoWithDefaultValues(): MyPatientStatusDto {
         const dto = new MyPatientStatusDto();
         dto.status = PatientStatusEnum.Normal;
-        dto.setAt = currentUnixTimestamp();
+        dto.setAt = null;
 
         return dto;
     }
