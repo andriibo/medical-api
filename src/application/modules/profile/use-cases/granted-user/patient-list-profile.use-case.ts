@@ -22,11 +22,11 @@ export class PatientListProfileUseCase {
             user.id,
             PatientDataAccessStatus.Approved,
         );
-        const result = await this.getUsersLastConnectionTime(items);
-        const usersLastConnectionTime = {};
-        result.map(
+        const usersLastConnectionTime = await this.getUsersLastConnectionTime(items);
+        const indexedUsersLastConnectionTime = {};
+        usersLastConnectionTime.map(
             (userLastConnectionTime) =>
-                (usersLastConnectionTime[userLastConnectionTime.userId] = userLastConnectionTime.timestamp),
+                (indexedUsersLastConnectionTime[userLastConnectionTime.userId] = userLastConnectionTime.timestamp),
         );
         const myPatients = items.map((patientDataAccess) => {
             const dto = MyPatientDto.fromUserAndPatientMetadata(
@@ -35,8 +35,8 @@ export class PatientListProfileUseCase {
             );
             dto.avatar = this.fileUrlService.createUrlToUserAvatar(dto.avatar);
             dto.accessId = patientDataAccess.id;
-            if (patientDataAccess.patientUserId in usersLastConnectionTime) {
-                dto.lastConnected = usersLastConnectionTime[patientDataAccess.patientUserId];
+            if (patientDataAccess.patientUserId in indexedUsersLastConnectionTime) {
+                dto.lastConnected = indexedUsersLastConnectionTime[patientDataAccess.patientUserId];
             } else {
                 dto.lastConnected = null;
             }
