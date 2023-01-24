@@ -4,6 +4,7 @@ import {Between, DataSource, In} from 'typeorm';
 import {User, Vital} from 'domain/entities';
 import {IVitalRepository} from 'app/modules/vitals/repositories';
 import {VitalModel} from './vital.model';
+import {UserLastConnectionTime} from 'domain/entities/user-last-connection-time';
 
 @Injectable()
 export class VitalRepository implements IVitalRepository {
@@ -40,6 +41,19 @@ export class VitalRepository implements IVitalRepository {
             userId: userId,
             timestamp: Between<number>(this.toTimestamp(startDate), this.toTimestamp(endDate)),
         });
+    }
+
+    public async getLastConnectionTimeByUserIds(userIds: string[]): Promise<UserLastConnectionTime[]> {
+        if (!userIds.length) {
+            return [];
+        }
+
+        return await this.dataSource
+            .createQueryBuilder(VitalModel, 'vital')
+            .select('user_id as "userId", MAX(timestamp) as timestamp')
+            .where({userId: In(userIds)})
+            .groupBy('user_id')
+            .getRawMany();
     }
 
     private toTimestamp(date: Date): number {

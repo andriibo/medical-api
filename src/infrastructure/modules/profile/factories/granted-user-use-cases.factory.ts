@@ -7,6 +7,7 @@ import {PatientListProfileUseCase} from 'app/modules/profile/use-cases/granted-u
 import {IFileUrlService} from 'app/modules/profile/services/file-url.service';
 import {PatientDataAccessSpecification} from 'app/modules/patient-data-access/specifications/patient-data-access.specification';
 import {PatientProfileUseCase} from 'app/modules/profile/use-cases/granted-user/patient-profile.use-case';
+import {IVitalRepository} from 'app/modules/vitals/repositories';
 
 @Injectable()
 export class GrantedUserUseCasesFactory {
@@ -19,6 +20,7 @@ export class GrantedUserUseCasesFactory {
         @Inject(IFileUrlService) private readonly fileUrlService: IFileUrlService,
         @Inject(PatientDataAccessSpecification)
         private readonly patientDataAccessSpecification: PatientDataAccessSpecification,
+        @Inject(IVitalRepository) private readonly vitalRepository: IVitalRepository,
     ) {}
 
     public createPatientListUseCase(): PatientListProfileUseCase {
@@ -26,6 +28,7 @@ export class GrantedUserUseCasesFactory {
             this.authedUserService,
             this.patientDataAccessRepository,
             this.fileUrlService,
+            this.vitalRepository,
         );
     }
 
