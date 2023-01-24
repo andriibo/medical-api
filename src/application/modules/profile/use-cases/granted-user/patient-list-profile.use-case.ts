@@ -23,7 +23,6 @@ export class PatientListProfileUseCase {
             PatientDataAccessStatus.Approved,
         );
         const vitals = await this.getVitals(items);
-        console.log(vitals);
         const lastConnectedUsers = {};
         vitals.map((vital) => (lastConnectedUsers[vital.user_id] = vital.timestamp));
         const myPatients = items.map((patientDataAccess) => {
