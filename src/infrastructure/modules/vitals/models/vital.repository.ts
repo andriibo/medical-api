@@ -52,7 +52,7 @@ export class VitalRepository implements IVitalRepository {
             .createQueryBuilder(VitalModel, 'vital')
             .select('user_id as "userId", MAX(timestamp) as timestamp')
             .where({userId: In(userIds)})
-            .groupBy('"userId"')
+            .groupBy('user_id')
             .getRawMany();
     }
 

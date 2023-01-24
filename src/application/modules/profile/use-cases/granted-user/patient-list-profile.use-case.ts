@@ -22,9 +22,12 @@ export class PatientListProfileUseCase {
             user.id,
             PatientDataAccessStatus.Approved,
         );
-        const vitals = await this.getUsersLastConnectionTime(items);
+        const result = await this.getUsersLastConnectionTime(items);
         const usersLastConnectionTime = {};
-        vitals.map((vital) => (usersLastConnectionTime[vital.userId] = vital.timestamp));
+        result.map(
+            (userLastConnectionTime) =>
+                (usersLastConnectionTime[userLastConnectionTime.userId] = userLastConnectionTime.timestamp),
+        );
         const myPatients = items.map((patientDataAccess) => {
             const dto = MyPatientDto.fromUserAndPatientMetadata(
                 patientDataAccess.patientUser,
