@@ -5,7 +5,6 @@ import {MyPatientDto} from 'domain/dtos/response/profile/my-patient.dto';
 import {sortUserDtosByName} from 'app/support/sort.helper';
 import {IFileUrlService} from 'app/modules/profile/services/file-url.service';
 import {IVitalRepository} from 'app/modules/vitals/repositories';
-import {UserLastConnectionTime} from 'domain/entities/user-last-connection-time';
 
 export class PatientListProfileUseCase {
     public constructor(
@@ -22,12 +21,7 @@ export class PatientListProfileUseCase {
             user.id,
             PatientDataAccessStatus.Approved,
         );
-        const usersLastConnectionTime = await this.getUsersLastConnectionTime(items);
-        const indexedUsersLastConnectionTime = {};
-        usersLastConnectionTime.map(
-            (userLastConnectionTime) =>
-                (indexedUsersLastConnectionTime[userLastConnectionTime.userId] = userLastConnectionTime.timestamp),
-        );
+        const indexedUsersLastConnectionTime = await this.getIndexedUsersLastConnectionTime(items);
         const myPatients = items.map((patientDataAccess) => {
             const dto = MyPatientDto.fromUserAndPatientMetadata(
                 patientDataAccess.patientUser,
@@ -45,9 +39,15 @@ export class PatientListProfileUseCase {
         return sortUserDtosByName(myPatients) as MyPatientDto[];
     }
 
-    private async getUsersLastConnectionTime(items: PatientDataAccess[]): Promise<UserLastConnectionTime[]> {
+    private async getIndexedUsersLastConnectionTime(items: PatientDataAccess[]): Promise<object> {
         const userIds = items.map((item) => item.patientUserId);
+        const usersLastConnectionTime = await this.vitalRepository.getLastConnectionTimeByUserIds(userIds);
+        const indexedUsersLastConnectionTime = {};
+        usersLastConnectionTime.map(
+            (userLastConnectionTime) =>
+                (indexedUsersLastConnectionTime[userLastConnectionTime.userId] = userLastConnectionTime.timestamp),
+        );
 
-        return await this.vitalRepository.getLastConnectionTimeByUserIds(userIds);
+        return indexedUsersLastConnectionTime;
     }
 }
