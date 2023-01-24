@@ -23,9 +23,8 @@ export class PatientListProfileUseCase {
             PatientDataAccessStatus.Approved,
         );
         const vitals = await this.getVitals(items);
-        const indexedVitals = {};
-        vitals.map((vital) => (indexedVitals[vital.userId] = vital));
-
+        const lastConnectedUsers = {};
+        vitals.map((vital) => (lastConnectedUsers[vital.user_id] = vital.timestamp));
         const myPatients = items.map((patientDataAccess) => {
             const dto = MyPatientDto.fromUserAndPatientMetadata(
                 patientDataAccess.patientUser,
@@ -33,8 +32,8 @@ export class PatientListProfileUseCase {
             );
             dto.avatar = this.fileUrlService.createUrlToUserAvatar(dto.avatar);
             dto.accessId = patientDataAccess.id;
-            if (patientDataAccess.patientUserId in indexedVitals) {
-                dto.lastConnected = indexedVitals[patientDataAccess[patientDataAccess.patientUserId]].timestamp;
+            if (patientDataAccess.patientUserId in lastConnectedUsers) {
+                dto.lastConnected = lastConnectedUsers[patientDataAccess.patientUserId];
             } else {
                 dto.lastConnected = null;
             }
@@ -45,7 +44,7 @@ export class PatientListProfileUseCase {
         return sortUserDtosByName(myPatients) as MyPatientDto[];
     }
 
-    private async getVitals(items: PatientDataAccess[]): Promise<Vital[]> {
+    private async getVitals(items: PatientDataAccess[]): Promise<{user_id: string; timestamp: number}[]> {
         const userIds = items.map((item) => item.patientUserId);
 
         return await this.vitalRepository.getLastVitalsByUserIds(userIds);

@@ -42,17 +42,17 @@ export class VitalRepository implements IVitalRepository {
         });
     }
 
-    public async getLastVitalsByUserIds(userIds: string[]): Promise<Vital[]> {
+    public async getLastVitalsByUserIds(userIds: string[]): Promise<{user_id: string; timestamp: number}[]> {
         if (!userIds.length) {
             return [];
         }
 
         return await this.dataSource
             .createQueryBuilder(VitalModel, 'vital')
+            .select('user_id, MAX(timestamp) as timestamp')
+            .where({userId: In(userIds)})
             .groupBy('user_id')
-            .where('user_id', In(userIds))
-            .orderBy('timestamp', 'DESC')
-            .getMany();
+            .getRawMany();
     }
 
     private toTimestamp(date: Date): number {
