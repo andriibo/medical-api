@@ -10,6 +10,7 @@ import {PatientDataAccessModule} from 'infrastructure/modules/patient-data-acces
 @Module({
     imports: [TypeOrmModule.forFeature([VitalModel]), AuthModule, PatientDataAccessModule],
     controllers: [PatientController, GrantedUserController],
+    exports: [IVitalRepository],
     providers: [
         VitalUseCasesFactory,
         {

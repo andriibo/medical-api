@@ -7,6 +7,7 @@ import {UserProfileMapper} from './mappers/user-profile.mapper';
 import {AuthModule} from 'infrastructure/modules/auth/auth.module';
 import {PatientDataAccessModule} from 'infrastructure/modules/patient-data-access/patient-data-access.module';
 import {FileModule} from 'infrastructure/modules/file/file.module';
+import {VitalModule} from 'infrastructure/modules/vitals/vital.module';
 import {ProfileController} from 'controllers/profile/profile.controller';
 import {CaregiverController} from 'controllers/profile/caregiver.controller';
 import {GrantedUserController} from 'controllers/profile/granted-user.controller';
@@ -29,6 +30,7 @@ import {RemoveCaregiverOrPatientService} from 'infrastructure/modules/profile/se
         AuthModule,
         PatientDataAccessModule,
         FileModule,
+        VitalModule,
     ],
     exports: ['RemoveDoctorService', 'RemoveCaregiverOrPatientService'],
     controllers: [PatientController, DoctorController, ProfileController, CaregiverController, GrantedUserController],
