@@ -4,7 +4,7 @@ import {Between, DataSource, In} from 'typeorm';
 import {User, Vital} from 'domain/entities';
 import {IVitalRepository} from 'app/modules/vitals/repositories';
 import {VitalModel} from './vital.model';
-import {VitalUserLastConnectedModel} from 'app/modules/vitals/models/vital-user-last-connected.model';
+import {UserLastConnectionTime} from 'domain/entities/user-last-connection-time';
 
 @Injectable()
 export class VitalRepository implements IVitalRepository {
@@ -43,16 +43,16 @@ export class VitalRepository implements IVitalRepository {
         });
     }
 
-    public async getLastVitalsByUserIds(userIds: string[]): Promise<VitalUserLastConnectedModel[]> {
+    public async getLastConnectionTimeByUserIds(userIds: string[]): Promise<UserLastConnectionTime[]> {
         if (!userIds.length) {
             return [];
         }
 
         return await this.dataSource
             .createQueryBuilder(VitalModel, 'vital')
-            .select('user_id, MAX(timestamp) as timestamp')
+            .select('user_id as "userId", MAX(timestamp) as timestamp')
             .where({userId: In(userIds)})
-            .groupBy('user_id')
+            .groupBy('"userId"')
             .getRawMany();
     }
 
