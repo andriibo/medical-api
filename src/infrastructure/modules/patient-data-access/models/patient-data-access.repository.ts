@@ -127,12 +127,10 @@ export class PatientDataAccessRepository implements IPatientDataAccessRepository
             .createQueryBuilder(PatientDataAccessModel, 'pda')
             .leftJoinAndSelect('pda.patientUser', 'user')
             .leftJoinAndSelect('user.patientMetadata', 'metadata')
-            .leftJoinAndSelect('user.vitals', 'vitals')
             .where('pda.granted_user_id = :grantedUserId', {grantedUserId})
             .andWhere('pda.status = :status', {status})
             .andWhere('user.deleted_at is null')
             .andWhere('user.email is not null')
-            .orderBy('vitals.timestamp', 'DESC')
             .getMany();
     }
 }

@@ -1,8 +1,7 @@
-import {Entity, Column, PrimaryGeneratedColumn, OneToOne, OneToMany} from 'typeorm';
+import {Entity, Column, PrimaryGeneratedColumn, OneToOne} from 'typeorm';
 import {User} from 'domain/entities';
 import {DoctorMetadataModel} from 'infrastructure/modules/auth/models/doctor-metadata.model';
 import {PatientMetadataModel} from 'infrastructure/modules/auth/models/patient-metadata.model';
-import {VitalModel} from 'infrastructure/modules/vitals/models';
 
 @Entity('user')
 export class UserModel implements User {
@@ -38,7 +37,4 @@ export class UserModel implements User {
 
     @OneToOne(() => PatientMetadataModel, (metadata) => metadata.user)
     public patientMetadata?: PatientMetadataModel | null;
-
-    @OneToMany(() => VitalModel, (vital) => vital.user)
-    public vitals?: VitalModel[];
 }

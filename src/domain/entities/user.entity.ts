@@ -1,6 +1,5 @@
 import {DoctorMetadata} from 'domain/entities/doctor-metadata.entity';
 import {PatientMetadata} from 'domain/entities/patient-metadata.entity';
-import {Vital} from 'domain/entities/vital.entity';
 
 export enum UserRole {
     Caregiver = 'Caregiver',
@@ -30,6 +29,4 @@ export interface User {
     doctorMetadata?: DoctorMetadata | null;
 
     patientMetadata?: PatientMetadata | null;
-
-    vitals?: Vital[];
 }

@@ -29,7 +29,7 @@ export class VitalModel implements Vital {
     @Column({name: 'user_id'})
     public userId: string;
 
-    @ManyToOne(() => UserModel, (user) => user.vitals)
+    @ManyToOne(() => UserModel)
     @JoinColumn({name: 'user_id', referencedColumnName: 'id'})
     public user: UserModel;
 }
