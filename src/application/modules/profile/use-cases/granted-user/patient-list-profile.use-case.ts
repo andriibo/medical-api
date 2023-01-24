@@ -37,8 +37,6 @@ export class PatientListProfileUseCase {
             dto.accessId = patientDataAccess.id;
             if (patientDataAccess.patientUserId in indexedUsersLastConnectionTime) {
                 dto.lastConnected = indexedUsersLastConnectionTime[patientDataAccess.patientUserId];
-            } else {
-                dto.lastConnected = null;
             }
 
             return dto;
