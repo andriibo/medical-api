@@ -5,6 +5,8 @@ import {PatientStatusModel, PatientStatusRepository} from 'infrastructure/module
 import {PatientStatusController} from 'controllers/patient-status.controller';
 import {PatientStatusUseCasesFactory} from 'infrastructure/modules/patient-status/factories/patient-status-use-cases.factory';
 import {IPatientStatusRepository} from 'app/modules/patient-status/repositories';
+import {IPatientStatusEntityMapper} from 'app/modules/patient-status/mappers/patient-status-entity.mapper';
+import {PatientStatusModelMapper} from 'infrastructure/modules/patient-status/mappers/patient-status-model.mapper';
 
 @Module({
     imports: [TypeOrmModule.forFeature([PatientStatusModel]), AuthModule],
@@ -14,6 +16,10 @@ import {IPatientStatusRepository} from 'app/modules/patient-status/repositories'
         {
             provide: IPatientStatusRepository,
             useClass: PatientStatusRepository,
+        },
+        {
+            provide: IPatientStatusEntityMapper,
+            useClass: PatientStatusModelMapper,
         },
     ],
 })

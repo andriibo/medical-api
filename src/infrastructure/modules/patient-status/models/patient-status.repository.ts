@@ -12,4 +12,8 @@ export class PatientStatusRepository implements IPatientStatusRepository {
     public async getByPatientUserId(patientUserId: string): Promise<PatientStatus> {
         return await this.dataSource.manager.findOneBy(PatientStatusModel, {patientUserId});
     }
+
+    public async persist(entity: PatientStatusModel): Promise<PatientStatus> {
+        return await this.dataSource.manager.save(entity);
+    }
 }
