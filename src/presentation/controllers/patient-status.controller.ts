@@ -27,7 +27,7 @@ export class PatientStatusController {
     @Put('my-status/normal')
     @HttpCode(HttpStatus.OK)
     @ApiResponse({status: HttpStatus.OK})
-    public async myPatientStatusNormal(): Promise<void> {
+    public async setPatientStatusNormal(): Promise<void> {
         const useCase = this.patientStatusUseCasesFactory.createMyPatientStatusNormalUseCase();
         await useCase.setStatusNormal();
     }
