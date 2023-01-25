@@ -37,6 +37,7 @@ describe('PatientStatusController', () => {
         };
         const mockedPatientStatusRepository = {
             getByPatientUserId: jest.fn(() => Promise.resolve(patientStatus)),
+            persist: jest.fn(() => Promise.resolve()),
         };
         const moduleRef: TestingModule = await Test.createTestingModule({
             imports: [TestModule, PatientStatusModule],
@@ -73,6 +74,13 @@ describe('PatientStatusController', () => {
                 status: patientStatus.status,
                 setAt: patientStatus.setAt,
             });
+    });
+
+    it(`/patient/my-status/normal (PUT)`, async () => {
+        return request(app.getHttpServer())
+            .put('/patient/my-status/normal')
+            .set('Authorization', 'Bearer patient')
+            .expect(200);
     });
 
     afterAll(async () => {
