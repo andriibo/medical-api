@@ -5,7 +5,7 @@ import {PatientMedicationModule} from 'infrastructure/modules';
 import {IUserRepository} from 'app/modules/auth/repositories';
 import {getRepositoryToken} from '@nestjs/typeorm';
 import {DoctorMetadataModel, PatientMetadataModel, UserModel} from 'infrastructure/modules/auth/models';
-import {PatientDataAccess, User} from 'domain/entities';
+import {PatientDataAccess, PatientMedication, User} from 'domain/entities';
 import {IDoctorMetadataRepository, IPatientMetadataRepository} from 'app/modules/profile/repositories';
 import {TestModule} from 'tests/test.module';
 import {MedicationDto} from 'domain/dtos/request/patient-medication/medication.dto';
@@ -44,17 +44,29 @@ const patientDataAccess: PatientDataAccess = {
     status: 'Approved',
     createdAt: new Date().toISOString(),
 };
+const patientMedication: PatientMedication = {
+    id: 'eee3adc4-9e36-4bb1-8911-e2161a2a3975',
+    patientUserId: patient.id,
+    genericName: 'Generic Name',
+    brandNames: ['One', 'Two'],
+    createdBy: patient.id,
+    createdAt: '2022-10-10 07:31:17.016236',
+};
 describe('PatientMedicationController', () => {
     let app: INestApplication;
     beforeAll(async () => {
         const mockedUserRepository = {
             getOneById: jest.fn(() => Promise.resolve(patient)),
+            getByIds: jest.fn(() => Promise.resolve([patient])),
         };
         const mockedPatientDataAccessRepository = {
             getOneByPatientUserIdAndGrantedUserId: jest.fn(() => Promise.resolve(patientDataAccess)),
         };
         const mockedPatientMedicationRepository = {
             create: jest.fn(() => Promise.resolve()),
+            getOneById: jest.fn(() => Promise.resolve(patientMedication)),
+            getByPatientUserId: jest.fn(() => Promise.resolve([patientMedication])),
+            delete: jest.fn(() => Promise.resolve()),
         };
         const moduleRef: TestingModule = await Test.createTestingModule({
             imports: [TestModule, PatientMedicationModule],
@@ -96,6 +108,38 @@ describe('PatientMedicationController', () => {
             .set('Authorization', 'Bearer patient')
             .send(dto)
             .expect(201);
+    });
+
+    it(`/patient-medications/:patientUserId (GET)`, async () => {
+        return request(app.getHttpServer())
+            .get(`/patient-medications/${patient.id}`)
+            .set('Authorization', 'Bearer doctor')
+            .expect(200)
+            .expect([
+                {
+                    genericName: patientMedication.genericName,
+                    brandNames: patientMedication.brandNames,
+                    medicationId: patientMedication.id,
+                    createdAt: patientMedication.createdAt,
+                    createdByUser: {
+                        userId: patient.id,
+                        email: patient.email,
+                        firstName: patient.firstName,
+                        lastName: patient.lastName,
+                        phone: patient.phone,
+                        avatar: patient.avatar,
+                        role: patient.role,
+                        deletedAt: patient.deletedAt,
+                    },
+                },
+            ]);
+    });
+
+    it(`/patient-medication/:medicationId (DELETE)`, async () => {
+        return request(app.getHttpServer())
+            .delete(`/patient-medication/${patientMedication.id}`)
+            .set('Authorization', 'Bearer patient')
+            .expect(204);
     });
 
     afterAll(async () => {
