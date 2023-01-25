@@ -31,4 +31,13 @@ export class PatientStatusController {
         const useCase = this.patientStatusUseCasesFactory.createMyPatientStatusNormalUseCase();
         await useCase.setStatusNormal();
     }
+
+    @Roles('Patient')
+    @Put('my-status/abnormal')
+    @HttpCode(HttpStatus.OK)
+    @ApiResponse({status: HttpStatus.OK})
+    public async setPatientStatusAbnormal(): Promise<void> {
+        const useCase = this.patientStatusUseCasesFactory.createMyPatientStatusAbnormalUseCase();
+        await useCase.setStatusAbnormal();
+    }
 }
