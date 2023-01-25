@@ -68,7 +68,7 @@ export class ProfileController {
     @ApiResponse({status: HttpStatus.OK, description: 'OK.'})
     @ApiBadRequestResponse({description: 'Bad request.'})
     public async deleteProfile() {
-        const useCase = this.profileUseCasesFactory.createDeleteProfile();
+        const useCase = this.profileUseCasesFactory.createDeleteMyProfile();
 
         try {
             await useCase.deleteProfile();

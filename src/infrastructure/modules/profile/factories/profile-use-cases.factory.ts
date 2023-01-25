@@ -4,7 +4,7 @@ import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service'
 import {UploadUserAvatarUseCase} from 'app/modules/profile/use-cases/profile/upload-user-avatar.use-case';
 import {IUserAvatarService} from 'app/modules/profile/services/user-avatar.service';
 import {IFileNameService} from 'app/modules/profile/services/file-name.service';
-import {DeleteProfileUseCase} from 'app/modules/profile/use-cases/profile';
+import {DeleteMyProfileUseCase} from 'app/modules/profile/use-cases/profile';
 import {ProfileSpecification} from 'app/modules/profile/specifications/profile.specification';
 import {RecoverMyProfileUseCase} from 'app/modules/profile/use-cases/profile/recover-my-profile.use-case';
 import {ChangeEmailUseCase} from 'app/modules/profile/use-cases/profile/change-email.use-case';
@@ -31,8 +31,8 @@ export class ProfileUseCasesFactory {
         );
     }
 
-    public createDeleteProfile(): DeleteProfileUseCase {
-        return new DeleteProfileUseCase(this.userRepository, this.authedUserService, this.profileSpecification);
+    public createDeleteMyProfile(): DeleteMyProfileUseCase {
+        return new DeleteMyProfileUseCase(this.userRepository, this.authedUserService, this.profileSpecification);
     }
 
     public createRecoverMyProfile(): RecoverMyProfileUseCase {
