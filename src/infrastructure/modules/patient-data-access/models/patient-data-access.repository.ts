@@ -49,8 +49,6 @@ export class PatientDataAccessRepository implements IPatientDataAccessRepository
             .createQueryBuilder(PatientDataAccessModel, 'pda')
             .leftJoinAndSelect('pda.grantedUser', 'user', 'user.deleted_at is null and user.email is not null')
             .where('pda.patient_user_id = :patientUserId', {patientUserId})
-            .andWhere('user.deleted_at is null')
-            .andWhere('user.email is not null')
             .orderBy({
                 'pda.createdAt': 'DESC',
             })
