@@ -83,6 +83,13 @@ describe('PatientStatusController', () => {
             .expect(200);
     });
 
+    it(`/patient/my-status/abnormal (PUT)`, async () => {
+        return request(app.getHttpServer())
+            .put('/patient/my-status/abnormal')
+            .set('Authorization', 'Bearer patient')
+            .expect(200);
+    });
+
     afterAll(async () => {
         await app.close();
     });
