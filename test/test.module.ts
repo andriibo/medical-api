@@ -20,7 +20,7 @@ const tokenClaims = {
         exp: exp,
     },
     patient: {
-        sub: '5nc3e70a-c1y9-121a-c5mv-5aq272098bp0',
+        sub: 'bd58571c-c935-41e9-9e08-a8d4e0e93f5f',
         'cognito:groups': ['Patient'],
         exp: exp,
     },
