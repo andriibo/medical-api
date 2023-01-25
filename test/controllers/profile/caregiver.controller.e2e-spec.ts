@@ -11,6 +11,8 @@ import {PatientDataAccessModel} from 'infrastructure/modules/patient-data-access
 import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repositories';
 import {TestModule} from 'tests/test.module';
 import {UpdateCaregiverProfileDto} from 'domain/dtos/request/profile';
+import {VitalModel} from 'infrastructure/modules/vitals/models';
+import {IVitalRepository} from 'app/modules/vitals/repositories';
 
 const caregiver: User = {
     id: '2rc8q18o-c1v2-199c-c8ma-9cf142780lb0',
@@ -52,6 +54,8 @@ describe('CaregiverController', () => {
             .useValue(null)
             .overrideProvider(getRepositoryToken(PatientDataAccessModel))
             .useValue(null)
+            .overrideProvider(getRepositoryToken(VitalModel))
+            .useValue(null)
             .overrideProvider(IUserRepository)
             .useValue(mockedUserRepository)
             .overrideProvider(IPatientMetadataRepository)
@@ -59,6 +63,8 @@ describe('CaregiverController', () => {
             .overrideProvider(IDoctorMetadataRepository)
             .useValue(null)
             .overrideProvider(IPatientDataAccessRepository)
+            .useValue(null)
+            .overrideProvider(IVitalRepository)
             .useValue(null)
             .compile();
 

@@ -13,4 +13,8 @@ export class PatientStatusUseCasesFactory {
     public createMyPatientStatusUseCase(): PatientStatusUseCase {
         return new PatientStatusUseCase(this.authedUserService, this.patientStatusRepository);
     }
+
+    public createChangeMyPatientStatusNormalUseCase(): PatientStatusUseCase {
+        return new PatientStatusUseCase(this.authedUserService, this.patientStatusRepository);
+    }
 }

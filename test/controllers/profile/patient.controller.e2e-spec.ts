@@ -12,6 +12,8 @@ import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repo
 import {TestModule} from 'tests/test.module';
 import {currentUnixTimestamp} from 'app/support/date.helper';
 import {UpdatePatientProfileDto} from 'domain/dtos/request/profile';
+import {VitalModel} from 'infrastructure/modules/vitals/models';
+import {IVitalRepository} from 'app/modules/vitals/repositories';
 
 const patient: User = {
     id: '5nc3e70a-c1y9-121a-c5mv-5aq272098bp0',
@@ -119,6 +121,8 @@ describe('PatientController', () => {
             .useValue(null)
             .overrideProvider(getRepositoryToken(PatientDataAccessModel))
             .useValue(null)
+            .overrideProvider(getRepositoryToken(VitalModel))
+            .useValue(null)
             .overrideProvider(IUserRepository)
             .useValue(mockedUserRepository)
             .overrideProvider(IPatientMetadataRepository)
@@ -127,6 +131,8 @@ describe('PatientController', () => {
             .useValue(null)
             .overrideProvider(IPatientDataAccessRepository)
             .useValue(mockedPatientDataAccessRepository)
+            .overrideProvider(IVitalRepository)
+            .useValue(null)
             .compile();
 
         app = moduleRef.createNestApplication();

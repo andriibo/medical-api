@@ -11,6 +11,8 @@ import {PatientDataAccessModel} from 'infrastructure/modules/patient-data-access
 import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repositories';
 import {TestModule} from 'tests/test.module';
 import {currentUnixTimestamp} from 'app/support/date.helper';
+import {IVitalRepository} from 'app/modules/vitals/repositories';
+import {VitalModel} from 'infrastructure/modules/vitals/models';
 
 const caregiver: User = {
     id: '4babe90f-b1a3-145e-c0mz-9aq248098ac0',
@@ -34,7 +36,6 @@ const patient: User = {
     role: 'Patient',
     createdAt: '2022-10-10 07:31:17.016236',
     deletedAt: null,
-    vitals: [],
 };
 
 const patientMetadata: PatientMetadata = {
@@ -62,6 +63,8 @@ const patientDataAccess: PatientDataAccess = {
     patientUser: patient,
 };
 
+const usersLastConnectionTime = [{userId: '5nc3e70a-c1y9-121a-c5mv-5aq272098bp0', timestamp: currentUnixTimestamp()}];
+
 describe('GrantedUserController', () => {
     let app: INestApplication;
     beforeAll(async () => {
@@ -76,6 +79,9 @@ describe('GrantedUserController', () => {
         };
         const mockedPatientMetadataRepository = {
             getOneById: jest.fn(() => Promise.resolve(patientMetadata)),
+        };
+        const mockedVitalRepository = {
+            getLastConnectionTimeByUserIds: jest.fn(() => Promise.resolve(usersLastConnectionTime)),
         };
         const mockedPatientDataAccessRepository = {
             getByGrantedUserIdAndStatus: jest.fn(() => Promise.resolve([patientDataAccess])),
@@ -96,6 +102,8 @@ describe('GrantedUserController', () => {
             .useValue(null)
             .overrideProvider(getRepositoryToken(PatientDataAccessModel))
             .useValue(null)
+            .overrideProvider(getRepositoryToken(VitalModel))
+            .useValue(null)
             .overrideProvider(IUserRepository)
             .useValue(mockedUserRepository)
             .overrideProvider(IPatientMetadataRepository)
@@ -104,6 +112,8 @@ describe('GrantedUserController', () => {
             .useValue(null)
             .overrideProvider(IPatientDataAccessRepository)
             .useValue(mockedPatientDataAccessRepository)
+            .overrideProvider(IVitalRepository)
+            .useValue(mockedVitalRepository)
             .compile();
 
         app = moduleRef.createNestApplication();
