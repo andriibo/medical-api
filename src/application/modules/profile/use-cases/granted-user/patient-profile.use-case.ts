@@ -16,13 +16,13 @@ export class PatientProfileUseCase {
     ) {}
 
     public async getProfileInfo(patientUserId: string): Promise<PatientDto> {
-        const doctor = await this.authedUserService.getUser();
+        const user = await this.authedUserService.getUser();
         const patient = await this.userRepository.getOneById(patientUserId);
         if (patient === null) {
             throw new EntityNotFoundError('Patient Not Found.');
         }
 
-        await this.patientDataAccessSpecification.assertGrantedUserHasAccess(doctor, patient.id);
+        await this.patientDataAccessSpecification.assertGrantedUserHasAccess(user, patient.id);
 
         const patientMetadata = await this.patientMetadataRepository.getOneById(patient.id);
 
