@@ -2,7 +2,7 @@ import {Entity, Column, PrimaryColumn, OneToOne, JoinColumn} from 'typeorm';
 import {PatientDataAccess} from 'domain/entities/patient-data-access.entity';
 import {UserModel} from 'infrastructure/modules/auth/models';
 
-@Entity('patient_data_access')
+@Entity('patient_relationship')
 export class PatientDataAccessModel implements PatientDataAccess {
     @PrimaryColumn('uuid')
     public id: string;
