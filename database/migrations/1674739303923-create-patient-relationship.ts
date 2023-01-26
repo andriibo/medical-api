@@ -15,6 +15,7 @@ export class createPatientRelationship1674739303923 implements MigrationInterfac
         await queryRunner.query(
             `UPDATE "patient_relationship" SET "patient_category" = 'Normal' WHERE "patient_category" IS NULL`,
         );
+        await queryRunner.query(`ALTER TABLE "patient_relationship" ALTER COLUMN "patient_category" SET NOT NULL `);
         await queryRunner.query(`ALTER TABLE "patient_relationship" ADD COLUMN "patient_category_updated_at" integer`);
     }
 
