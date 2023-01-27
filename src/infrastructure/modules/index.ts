@@ -13,6 +13,7 @@ import {PatientVitalThresholdsModule} from './patient-vital-thresholds/patient-v
 import {WebsocketModule} from './websocket.module';
 import {FileModule} from './file/file.module';
 import {PatientStatusModule} from './patient-status/patient-status.module';
+import {PatientCategoryModule} from './patient-category/patient-category.module';
 
 export {
     AuthModule,
@@ -30,4 +31,5 @@ export {
     WebsocketModule,
     FileModule,
     PatientStatusModule,
+    PatientCategoryModule,
 };
