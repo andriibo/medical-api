@@ -19,7 +19,7 @@ import {
 @Entity('patient_vital_thresholds')
 export class PatientVitalThresholdsModel implements PatientVitalThresholds {
     @PrimaryGeneratedColumn()
-    public id: number;
+    public id: string;
 
     @Column({name: 'patient_user_id'})
     public patientUserId: string;
