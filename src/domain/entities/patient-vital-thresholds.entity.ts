@@ -1,5 +1,5 @@
 export interface PatientVitalThresholds {
-    id: number;
+    id: string;
 
     patientUserId: string;
 
