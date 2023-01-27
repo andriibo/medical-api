@@ -1,13 +1,13 @@
-import {Entity, Column, PrimaryColumn, OneToOne, JoinColumn} from 'typeorm';
+import {Entity, Column, OneToOne, JoinColumn} from 'typeorm';
 import {PatientCategory} from 'domain/entities/patient-category.entity';
 import {UserModel} from 'infrastructure/modules/auth/models';
 
 @Entity('patient_relationship')
 export class PatientCategoryModel implements PatientCategory {
-    @PrimaryColumn('uuid', {name: 'patient_user_id'})
+    @Column('uuid', {name: 'patient_user_id'})
     public patientUserId: string;
 
-    @PrimaryColumn('uuid', {name: 'granted_user_id'})
+    @Column('uuid', {name: 'granted_user_id'})
     public grantedUserId: string;
 
     @Column()
