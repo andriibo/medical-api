@@ -3,7 +3,7 @@ import {PatientCategory} from 'domain/entities/patient-category.entity';
 export class PatientCategoryDto {
     public patientUserId: string;
     public category: string;
-    public setAt: number;
+    public setAt: number | null;
 
     public static fromPatientCategory(entity: PatientCategory): PatientCategoryDto {
         const dto = new PatientCategoryDto();

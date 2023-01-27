@@ -9,7 +9,10 @@ import {PatientCategory} from 'domain/entities/patient-category.entity';
 export class PatientCategoryRepository implements IPatientCategoryRepository {
     public constructor(@InjectDataSource() private dataSource: DataSource) {}
 
-    public async getByPatientUserId(patientUserId: string): Promise<PatientCategory> {
-        return await this.dataSource.manager.findOneBy(PatientCategoryModel, {patientUserId});
+    public async getByPatientUserIdAndGrantedUserId(
+        patientUserId: string,
+        grantedUserId: string,
+    ): Promise<PatientCategory> {
+        return await this.dataSource.manager.findOneBy(PatientCategoryModel, {patientUserId, grantedUserId});
     }
 }

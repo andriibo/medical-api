@@ -9,5 +9,5 @@ export class PatientCategoryView implements PatientCategoryDto {
     public category: string;
 
     @ApiProperty()
-    public setAt: number;
+    public setAt: number | null;
 }

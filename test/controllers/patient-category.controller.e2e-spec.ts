@@ -15,17 +15,6 @@ import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repo
 import {PatientCategoryModel} from 'infrastructure/modules/patient-category/models';
 import {PatientDataAccessModel} from 'infrastructure/modules/patient-data-access/models';
 
-const doctor: User = {
-    id: '8bfbd95c-c8a5-404b-b3eb-6ac648052ac4',
-    email: 'doctor@gmail.com',
-    firstName: 'Marc',
-    lastName: 'Goldman',
-    phone: '2930412345',
-    avatar: null,
-    role: 'Doctor',
-    createdAt: '2022-10-10 07:31:17.016236',
-    deletedAt: null,
-};
 const patient: User = {
     id: '862108e8-32f6-4d37-840e-2db213f0c2fe',
     email: 'patient@gmail.com',
@@ -37,20 +26,16 @@ const patient: User = {
     createdAt: '2022-10-10 07:31:17.016236',
     deletedAt: null,
 };
-const users = {
-    '862108e8-32f6-4d37-840e-2db213f0c2fe': patient,
-    '8bfbd95c-c8a5-404b-b3eb-6ac648052ac4': doctor,
-};
+
 const patientDataAccess: PatientDataAccess = {
     id: '17c3e70s-b0w2-126s-c8mo-1cq901092qm9',
     patientUserId: patient.id,
-    grantedUserId: doctor.id,
+    grantedUserId: '8bfbd95c-c8a5-404b-b3eb-6ac648052ac4',
     direction: 'ToPatient',
     status: 'Approved',
     createdAt: new Date().toISOString(),
 };
 const patientCategory: PatientCategory = {
-    id: 'f10df8d9-1b14-4e6a-a3b3-2d4b822dec10',
     patientUserId: patient.id,
     category: 'Normal',
     patientCategoryUpdatedAt: currentUnixTimestamp(),
@@ -59,10 +44,10 @@ describe('PatientCategoryController', () => {
     let app: INestApplication;
     beforeAll(async () => {
         const mockedUserRepository = {
-            getOneById: jest.fn((userId: string) => Promise.resolve(users[userId])),
+            getOneById: jest.fn(() => Promise.resolve(patient)),
         };
         const mockedPatientCategoryRepository = {
-            getByPatientUserId: jest.fn(() => Promise.resolve(patientCategory)),
+            getByPatientUserIdAndGrantedUserId: jest.fn(() => Promise.resolve(patientCategory)),
         };
         const mockedPatientDataAccessRepository = {
             getOneByPatientUserIdAndGrantedUserId: jest.fn(() => Promise.resolve(patientDataAccess)),
