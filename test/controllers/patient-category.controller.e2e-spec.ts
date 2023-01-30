@@ -96,7 +96,7 @@ describe('PatientCategoryController', () => {
             });
     });
 
-    it(`/patient-category/normal/:patientUserId (GET)`, async () => {
+    it(`/patient-category/normal/:patientUserId (PATCH)`, async () => {
         return request(app.getHttpServer())
             .patch(`/patient-category/normal/${patient.id}`)
             .set('Authorization', 'Bearer doctor')
