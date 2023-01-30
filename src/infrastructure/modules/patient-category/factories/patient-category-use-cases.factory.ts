@@ -3,6 +3,8 @@ import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service'
 import {IPatientCategoryRepository} from 'app/modules/patient-category/repositories';
 import {PatientCategoryUseCase} from 'app/modules/patient-category/use-cases';
 import {PatientDataAccessSpecification} from 'app/modules/patient-data-access/specifications/patient-data-access.specification';
+import {PatientCategoryNormalUseCase} from 'app/modules/patient-category/use-cases/patient-category-normal.use-case';
+import {PatientCategorySpecification} from 'app/modules/patient-category/specifications/patient-category.specification';
 
 @Injectable()
 export class PatientCategoryUseCasesFactory {
@@ -11,6 +13,8 @@ export class PatientCategoryUseCasesFactory {
         @Inject(PatientDataAccessSpecification)
         private readonly patientDataAccessSpecification: PatientDataAccessSpecification,
         @Inject(IPatientCategoryRepository) private readonly patientCategoryRepository: IPatientCategoryRepository,
+        @Inject(PatientCategorySpecification)
+        private readonly patientCategorySpecification: PatientCategorySpecification,
     ) {}
 
     public createPatientCategoryUseCase(): PatientCategoryUseCase {
@@ -18,6 +22,15 @@ export class PatientCategoryUseCasesFactory {
             this.authedUserService,
             this.patientDataAccessSpecification,
             this.patientCategoryRepository,
+        );
+    }
+
+    public createPatientCategoryNormalUseCase(): PatientCategoryNormalUseCase {
+        return new PatientCategoryNormalUseCase(
+            this.authedUserService,
+            this.patientDataAccessSpecification,
+            this.patientCategoryRepository,
+            this.patientCategorySpecification,
         );
     }
 }

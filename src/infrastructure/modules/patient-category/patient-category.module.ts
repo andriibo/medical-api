@@ -5,6 +5,7 @@ import {PatientCategoryModel, PatientCategoryRepository} from 'infrastructure/mo
 import {IPatientCategoryRepository} from 'app/modules/patient-category/repositories';
 import {PatientCategoryController} from 'controllers/patient-category.controller';
 import {PatientCategoryUseCasesFactory} from 'infrastructure/modules/patient-category/factories/patient-category-use-cases.factory';
+import {PatientCategorySpecification} from 'app/modules/patient-category/specifications/patient-category.specification';
 
 @Module({
     imports: [TypeOrmModule.forFeature([PatientCategoryModel]), AuthModule, PatientDataAccessModule],
@@ -14,6 +15,10 @@ import {PatientCategoryUseCasesFactory} from 'infrastructure/modules/patient-cat
         {
             provide: IPatientCategoryRepository,
             useClass: PatientCategoryRepository,
+        },
+        {
+            provide: PatientCategorySpecification,
+            useClass: PatientCategorySpecification,
         },
     ],
 })
