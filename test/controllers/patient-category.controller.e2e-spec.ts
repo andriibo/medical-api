@@ -48,6 +48,7 @@ describe('PatientCategoryController', () => {
             getOneById: jest.fn(() => Promise.resolve(patient)),
         };
         const mockedPatientCategoryRepository = {
+            update: jest.fn(() => Promise.resolve()),
             getByPatientUserIdAndGrantedUserId: jest.fn(() => Promise.resolve(patientCategory)),
         };
         const mockedPatientDataAccessRepository = {
@@ -93,6 +94,13 @@ describe('PatientCategoryController', () => {
                 category: patientCategory.category,
                 setAt: patientCategory.patientCategoryUpdatedAt,
             });
+    });
+
+    it(`/patient-category/normal/:patientUserId (PATCH)`, async () => {
+        return request(app.getHttpServer())
+            .patch(`/patient-category/normal/${patient.id}`)
+            .set('Authorization', 'Bearer doctor')
+            .expect(200);
     });
 
     afterAll(async () => {

@@ -9,6 +9,10 @@ import {PatientCategory} from 'domain/entities/patient-category.entity';
 export class PatientCategoryRepository implements IPatientCategoryRepository {
     public constructor(@InjectDataSource() private dataSource: DataSource) {}
 
+    public async update(patientCategory: PatientCategoryModel): Promise<void> {
+        await this.dataSource.manager.save(patientCategory);
+    }
+
     public async getByPatientUserIdAndGrantedUserId(
         patientUserId: string,
         grantedUserId: string,
