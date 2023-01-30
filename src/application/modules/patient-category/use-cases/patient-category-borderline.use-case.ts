@@ -21,7 +21,7 @@ export class PatientCategoryBorderlineUseCase {
         const patientCategory = await this.getCategory(patientUserId, grantedUser.id);
         this.patientCategorySpecification.assertGrantedUserCanSetBorderline(patientCategory);
 
-        patientCategory.category = PatientCategoryEnum.Borderline;
+        patientCategory.patientCategory = PatientCategoryEnum.Borderline;
         patientCategory.patientCategoryUpdatedAt = currentUnixTimestamp();
         await this.patientCategoryRepository.update(patientCategory);
     }

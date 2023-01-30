@@ -38,7 +38,7 @@ const patientDataAccess: PatientDataAccess = {
 const patientCategory: PatientCategory = {
     id: '3db4ddee-78b7-42d3-bb79-c38c9f5b770d',
     patientUserId: patient.id,
-    category: 'Normal',
+    patientCategory: 'Normal',
     patientCategoryUpdatedAt: currentUnixTimestamp(),
 };
 
@@ -92,7 +92,7 @@ describe('PatientCategoryController', () => {
             .expect(200)
             .expect({
                 patientUserId: patientCategory.patientUserId,
-                category: patientCategory.category,
+                category: patientCategory.patientCategory,
                 setAt: patientCategory.patientCategoryUpdatedAt,
             });
     });
@@ -105,7 +105,7 @@ describe('PatientCategoryController', () => {
     });
 
     it(`/patient-category/borderline/:patientUserId (PATCH)`, async () => {
-        patientCategory.category = 'Abnormal';
+        patientCategory.patientCategory = 'Abnormal';
         return request(app.getHttpServer())
             .patch(`/patient-category/borderline/${patient.id}`)
             .set('Authorization', 'Bearer doctor')
