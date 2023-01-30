@@ -7,12 +7,16 @@ import {DoctorUseCasesFactory, PatientUseCasesFactory, GrantedUserUseCasesFactor
 import {AuthModule, PatientDataAccessModule} from 'infrastructure/modules';
 import {PatientVitalThresholdsSpecification} from 'app/modules/patient-vital-thresholds/specifications/patient-vital-thresholds.specification';
 import {PatientDataAccessSpecification} from 'app/modules/patient-data-access/specifications/patient-data-access.specification';
-import {IPatientVitalThresholdsEntityMapper} from 'app/modules/patient-vital-thresholds/mappers/patient-vital-thresholds-entity.mapper';
-import {PatientVitalThresholdsEntityMapper} from './mappers/patient-vital-thresholds-model.mapper';
 import {GrantedUserController} from 'controllers/patient-vital-threshold/granted-user.controller';
+import {PatientVitalThresholdsIndependentModule} from './patient-vital-thresholds.ind.module';
 
 @Module({
-    imports: [TypeOrmModule.forFeature([PatientVitalThresholdsModel]), AuthModule, PatientDataAccessModule],
+    imports: [
+        TypeOrmModule.forFeature([PatientVitalThresholdsModel]),
+        AuthModule,
+        PatientDataAccessModule,
+        PatientVitalThresholdsIndependentModule,
+    ],
     controllers: [DoctorController, PatientController, GrantedUserController],
     providers: [
         DoctorUseCasesFactory,
@@ -21,10 +25,6 @@ import {GrantedUserController} from 'controllers/patient-vital-threshold/granted
         {
             provide: IPatientVitalThresholdsRepository,
             useClass: PatientVitalThresholdsRepository,
-        },
-        {
-            provide: IPatientVitalThresholdsEntityMapper,
-            useClass: PatientVitalThresholdsEntityMapper,
         },
         {
             provide: PatientVitalThresholdsSpecification,

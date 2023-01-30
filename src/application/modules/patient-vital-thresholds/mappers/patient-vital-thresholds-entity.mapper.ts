@@ -39,6 +39,8 @@ export interface IPatientVitalThresholdsEntityMapper {
         patientVitalThresholds: PatientVitalThresholds,
         doctor: User,
     ): PatientVitalThresholds;
+
+    mapDefaultByPatient(patient: User): PatientVitalThresholds;
 }
 
 export const IPatientVitalThresholdsEntityMapper = Symbol('IPatientVitalThresholdsEntityMapper');

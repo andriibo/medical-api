@@ -2,6 +2,8 @@ import {UserDto} from 'domain/dtos/response/user/user.dto';
 import {PatientVitalThresholds, User} from 'domain/entities';
 
 export class PatientVitalThresholdsDto {
+    public thresholdsId: string;
+
     public minHr: number;
 
     public maxHr: number;
@@ -64,6 +66,7 @@ export class PatientVitalThresholdsDto {
         users.map((user) => (indexedUsers[user.id] = user));
 
         const dto = new PatientVitalThresholdsDto();
+        dto.thresholdsId = thresholds.id;
         dto.minHr = thresholds.minHr;
         dto.maxHr = thresholds.maxHr;
         dto.hrSetBy = indexedUsers[thresholds.hrSetBy] ? UserDto.fromUser(indexedUsers[thresholds.hrSetBy]) : null;

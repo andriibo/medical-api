@@ -94,6 +94,13 @@ export class PatientVitalThresholdsEntityMapper implements IPatientVitalThreshol
         return patientVitalThresholds;
     }
 
+    public mapDefaultByPatient(patient: User): PatientVitalThresholds {
+        const patientVitalThresholds = PatientVitalThresholdsModel.getModelWithDefaultValues();
+        patientVitalThresholds.patientUserId = patient.id;
+
+        return patientVitalThresholds;
+    }
+
     private mapByEntity(entity: PatientVitalThresholds): PatientVitalThresholds {
         const model = new PatientVitalThresholdsModel();
         model.minHr = entity.minHr;

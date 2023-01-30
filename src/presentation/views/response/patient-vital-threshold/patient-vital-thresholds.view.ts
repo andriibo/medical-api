@@ -4,6 +4,9 @@ import {PatientVitalThresholdsDto} from 'domain/dtos/response/patient-vital-thre
 
 export class PatientVitalThresholdsView implements PatientVitalThresholdsDto {
     @ApiProperty()
+    public thresholdsId: string;
+
+    @ApiProperty()
     public minHr: number;
 
     @ApiProperty()

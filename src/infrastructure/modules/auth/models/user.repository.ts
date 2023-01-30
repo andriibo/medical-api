@@ -6,36 +6,41 @@ import {UserModel} from './user.model';
 import {User} from 'domain/entities';
 import {EntityNotFoundError} from 'app/errors';
 import {currentUnixTimestamp} from 'app/support/date.helper';
+import {EntityManager} from 'typeorm/entity-manager/EntityManager';
+import {PatientVitalThresholdsModel} from 'infrastructure/modules/patient-vital-thresholds/models';
 
 @Injectable()
 export class UserRepository implements IUserRepository {
     public constructor(@InjectDataSource() private dataSource: DataSource) {}
 
-    public async persist(entity: UserModel): Promise<User> {
-        const queryRunner = this.dataSource.createQueryRunner();
-
-        await queryRunner.connect();
-        await queryRunner.startTransaction();
-
-        try {
-            const persistedEntity = await queryRunner.manager.save(entity);
-            if (entity.patientMetadata) {
-                await queryRunner.manager.save(entity.patientMetadata);
+    public async insertPatient(patient: UserModel, vitalThresholds: PatientVitalThresholdsModel): Promise<User> {
+        const performQueries = async function (manager: EntityManager): Promise<User> {
+            const persistedEntity = await manager.save(patient);
+            if (patient.patientMetadata) {
+                await manager.save(patient.patientMetadata);
             }
-            if (entity.doctorMetadata) {
-                await queryRunner.manager.save(entity.doctorMetadata);
-            }
-
-            await queryRunner.commitTransaction();
-            await queryRunner.release();
+            await manager.save(vitalThresholds);
 
             return persistedEntity;
-        } catch (err) {
-            await queryRunner.rollbackTransaction();
-            await queryRunner.release();
+        };
 
-            throw err;
-        }
+        return await this.performInTransaction(performQueries);
+    }
+
+    public async persist(entity: UserModel): Promise<User> {
+        const performQueries = async function (manager: EntityManager): Promise<User> {
+            const persistedEntity = await manager.save(entity);
+            if (entity.patientMetadata) {
+                await manager.save(entity.patientMetadata);
+            }
+            if (entity.doctorMetadata) {
+                await manager.save(entity.doctorMetadata);
+            }
+
+            return persistedEntity;
+        };
+
+        return await this.performInTransaction(performQueries);
     }
 
     public async updateAvatar(entity: User): Promise<void> {
@@ -70,5 +75,26 @@ export class UserRepository implements IUserRepository {
     public async getUsersForDeletingMarkedDeletedAt(): Promise<User[]> {
         const time = currentUnixTimestamp() - 30 * 24 * 60 * 60; /* now() - 30 days */
         return await this.dataSource.manager.findBy(UserModel, {deletedAt: LessThan(time)});
+    }
+
+    private async performInTransaction(performQueries: (manager: EntityManager) => Promise<User>): Promise<User> {
+        const queryRunner = this.dataSource.createQueryRunner();
+
+        await queryRunner.connect();
+        await queryRunner.startTransaction();
+
+        try {
+            const persistedEntity = await performQueries(queryRunner.manager);
+
+            await queryRunner.commitTransaction();
+            await queryRunner.release();
+
+            return persistedEntity;
+        } catch (err) {
+            await queryRunner.rollbackTransaction();
+            await queryRunner.release();
+
+            throw err;
+        }
     }
 }

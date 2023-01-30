@@ -44,9 +44,9 @@ export class AuthController {
     @HttpCode(HttpStatus.CREATED)
     @ApiResponse({status: HttpStatus.CREATED})
     public async signUpPatient(@Body() requestBody: SignUpPatientView): Promise<void> {
-        const useCase = this.authUseCasesFactory.createSignUpUseCase();
+        const useCase = this.authUseCasesFactory.createPatientSignUpUseCase();
 
-        await useCase.signUpPatient(requestBody);
+        await useCase.signUp(requestBody);
     }
 
     @Post('caregiver/sign-up')

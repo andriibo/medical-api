@@ -24,9 +24,15 @@ import {AuthListener} from './listeners/auth.listener';
 import {MailModule} from 'infrastructure/modules/mail/mail.module';
 import {IDoctorMetadataRepository, IPatientMetadataRepository} from 'app/modules/profile/repositories';
 import {FileModule} from 'infrastructure/modules/file/file.module';
+import {PatientVitalThresholdsIndependentModule} from 'infrastructure/modules/patient-vital-thresholds/patient-vital-thresholds.ind.module';
 
 @Module({
-    imports: [TypeOrmModule.forFeature([UserModel, DoctorMetadataModel, PatientMetadataModel]), MailModule, FileModule],
+    imports: [
+        TypeOrmModule.forFeature([UserModel, DoctorMetadataModel, PatientMetadataModel]),
+        MailModule,
+        FileModule,
+        PatientVitalThresholdsIndependentModule,
+    ],
     exports: [
         IAuthService,
         IAuthedUserService,

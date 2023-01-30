@@ -1,6 +1,8 @@
-import {User} from 'domain/entities/user.entity';
+import {PatientVitalThresholds, User} from 'domain/entities';
 
 export interface IUserRepository {
+    insertPatient(patient: User, vitalThresholds: PatientVitalThresholds): Promise<User>;
+
     persist(entity: User): Promise<User>;
 
     updateAvatar(entity: User): Promise<void>;
