@@ -9,7 +9,7 @@ export interface PatientCategory {
 
     patientUserId: string;
 
-    category: string;
+    patientCategory: string;
 
     patientCategoryUpdatedAt: number | null;
 }

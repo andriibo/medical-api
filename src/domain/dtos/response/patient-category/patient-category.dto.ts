@@ -8,7 +8,7 @@ export class PatientCategoryDto {
     public static fromPatientCategory(entity: PatientCategory): PatientCategoryDto {
         const dto = new PatientCategoryDto();
         dto.patientUserId = entity.patientUserId;
-        dto.category = entity.category;
+        dto.category = entity.patientCategory;
         dto.setAt = entity.patientCategoryUpdatedAt;
 
         return dto;

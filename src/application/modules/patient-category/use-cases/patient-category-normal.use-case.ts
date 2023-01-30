@@ -21,7 +21,7 @@ export class PatientCategoryNormalUseCase {
         const patientCategory = await this.getCategory(patientUserId, grantedUser.id);
         this.patientCategorySpecification.assertGrantedUserCanSetNormal(patientCategory);
 
-        patientCategory.category = PatientCategoryEnum.Normal;
+        patientCategory.patientCategory = PatientCategoryEnum.Normal;
         patientCategory.patientCategoryUpdatedAt = currentUnixTimestamp();
         await this.patientCategoryRepository.update(patientCategory);
     }

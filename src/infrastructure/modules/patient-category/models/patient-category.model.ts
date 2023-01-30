@@ -13,8 +13,8 @@ export class PatientCategoryModel implements PatientCategory {
     @Column('uuid', {name: 'granted_user_id'})
     public grantedUserId: string;
 
-    @Column()
-    public category: string;
+    @Column({name: 'patient_category'})
+    public patientCategory: string;
 
     @Column({name: 'patient_category_updated_at'})
     public patientCategoryUpdatedAt: number | null;
