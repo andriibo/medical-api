@@ -50,4 +50,20 @@ export class PatientCategoryController {
             throw new BadRequestException(error.message);
         }
     }
+
+    @Roles('Caregiver', 'Doctor')
+    @Patch('borderline/:patientUserId')
+    @HttpCode(HttpStatus.OK)
+    @ApiResponse({status: HttpStatus.OK})
+    public async setPatientCategoryBorderline(
+        @Param('patientUserId', ParseUUIDPipe) patientUserId: string,
+    ): Promise<void> {
+        const useCase = this.patientCategoryUseCasesFactory.createPatientCategoryBorderlineUseCase();
+
+        try {
+            await useCase.setBorderline(patientUserId);
+        } catch (error) {
+            throw new BadRequestException(error.message);
+        }
+    }
 }

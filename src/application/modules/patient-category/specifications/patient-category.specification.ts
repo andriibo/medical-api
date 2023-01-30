@@ -7,4 +7,10 @@ export class PatientCategorySpecification {
             throw new PatientDataAccessSpecificationError('This action is not allowed.');
         }
     }
+
+    public assertGrantedUserCanSetBorderline(patientCategory: PatientCategory): void {
+        if (patientCategory.category !== PatientCategoryEnum.Abnormal) {
+            throw new PatientDataAccessSpecificationError('This action is not allowed.');
+        }
+    }
 }

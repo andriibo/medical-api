@@ -41,6 +41,7 @@ const patientCategory: PatientCategory = {
     category: 'Normal',
     patientCategoryUpdatedAt: currentUnixTimestamp(),
 };
+
 describe('PatientCategoryController', () => {
     let app: INestApplication;
     beforeAll(async () => {
@@ -96,9 +97,17 @@ describe('PatientCategoryController', () => {
             });
     });
 
-    it(`/patient-category/normal/:patientUserId (GET)`, async () => {
+    it(`/patient-category/normal/:patientUserId (PATCH)`, async () => {
         return request(app.getHttpServer())
             .patch(`/patient-category/normal/${patient.id}`)
+            .set('Authorization', 'Bearer doctor')
+            .expect(200);
+    });
+
+    it(`/patient-category/borderline/:patientUserId (PATCH)`, async () => {
+        patientCategory.category = 'Abnormal';
+        return request(app.getHttpServer())
+            .patch(`/patient-category/borderline/${patient.id}`)
             .set('Authorization', 'Bearer doctor')
             .expect(200);
     });
