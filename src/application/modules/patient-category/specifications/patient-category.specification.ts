@@ -1,10 +1,10 @@
-import {PatientDataAccessSpecificationError} from 'app/modules/patient-data-access/errors';
 import {PatientCategory, PatientCategoryEnum} from 'domain/entities/patient-category.entity';
+import {PatientCategorySpecificationError} from 'app/modules/patient-category/errors';
 
 export class PatientCategorySpecification {
     public assertGrantedUserCanSetNormal(patientCategory: PatientCategory): void {
         if (patientCategory.category !== PatientCategoryEnum.Normal) {
-            throw new PatientDataAccessSpecificationError('This action is not allowed.');
+            throw new PatientCategorySpecificationError('This action is not allowed.');
         }
     }
 }
