@@ -13,6 +13,8 @@ import {TestModule} from 'tests/test.module';
 import {UpdateDoctorProfileDto} from 'domain/dtos/request/profile';
 import {VitalModel} from 'infrastructure/modules/vitals/models';
 import {IVitalRepository} from 'app/modules/vitals/repositories';
+import {PatientCategoryModel} from 'infrastructure/modules/patient-category/models';
+import {IPatientCategoryRepository} from 'app/modules/patient-category/repositories';
 
 const doctor: User = {
     id: '1nc5e10o-b1w9-239h-c7mk-9af242088lw0',
@@ -63,6 +65,8 @@ describe('DoctorController', () => {
             .useValue(null)
             .overrideProvider(getRepositoryToken(PatientDataAccessModel))
             .useValue(null)
+            .overrideProvider(getRepositoryToken(PatientCategoryModel))
+            .useValue(null)
             .overrideProvider(getRepositoryToken(VitalModel))
             .useValue(null)
             .overrideProvider(IUserRepository)
@@ -72,6 +76,8 @@ describe('DoctorController', () => {
             .overrideProvider(IDoctorMetadataRepository)
             .useValue(mockedDoctorMetadataRepository)
             .overrideProvider(IPatientDataAccessRepository)
+            .useValue(null)
+            .overrideProvider(IPatientCategoryRepository)
             .useValue(null)
             .overrideProvider(IVitalRepository)
             .useValue(null)

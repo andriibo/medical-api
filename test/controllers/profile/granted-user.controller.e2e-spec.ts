@@ -13,6 +13,9 @@ import {TestModule} from 'tests/test.module';
 import {currentUnixTimestamp} from 'app/support/date.helper';
 import {IVitalRepository} from 'app/modules/vitals/repositories';
 import {VitalModel} from 'infrastructure/modules/vitals/models';
+import {PatientCategoryModel} from 'infrastructure/modules/patient-category/models';
+import {PatientCategory} from 'domain/entities/patient-category.entity';
+import {IPatientCategoryRepository} from 'app/modules/patient-category/repositories';
 
 const caregiver: User = {
     id: '4babe90f-b1a3-145e-c0mz-9aq248098ac0',
@@ -63,6 +66,13 @@ const patientDataAccess: PatientDataAccess = {
     patientUser: patient,
 };
 
+const patientCategory: PatientCategory = {
+    id: '17c3e70s-b0w2-126s-c8mo-1cq901092qm9',
+    patientUserId: patient.id,
+    patientCategory: 'Normal',
+    patientCategoryUpdatedAt: currentUnixTimestamp(),
+};
+
 const usersLastConnectionTime = [{userId: '5nc3e70a-c1y9-121a-c5mv-5aq272098bp0', timestamp: currentUnixTimestamp()}];
 
 describe('GrantedUserController', () => {
@@ -76,6 +86,9 @@ describe('GrantedUserController', () => {
         };
         const mockedUserRepository = {
             getOneById: jest.fn((userId: string) => Promise.resolve(users[userId])),
+        };
+        const mockedPatientCategoryRepository = {
+            getByPatientUserIdsAndGrantedUserId: jest.fn(() => Promise.resolve([patientCategory])),
         };
         const mockedPatientMetadataRepository = {
             getOneById: jest.fn(() => Promise.resolve(patientMetadata)),
@@ -102,6 +115,8 @@ describe('GrantedUserController', () => {
             .useValue(null)
             .overrideProvider(getRepositoryToken(PatientDataAccessModel))
             .useValue(null)
+            .overrideProvider(getRepositoryToken(PatientCategoryModel))
+            .useValue(null)
             .overrideProvider(getRepositoryToken(VitalModel))
             .useValue(null)
             .overrideProvider(IUserRepository)
@@ -112,6 +127,8 @@ describe('GrantedUserController', () => {
             .useValue(null)
             .overrideProvider(IPatientDataAccessRepository)
             .useValue(mockedPatientDataAccessRepository)
+            .overrideProvider(IPatientCategoryRepository)
+            .useValue(mockedPatientCategoryRepository)
             .overrideProvider(IVitalRepository)
             .useValue(mockedVitalRepository)
             .compile();
@@ -141,6 +158,7 @@ describe('GrantedUserController', () => {
                     deletedAt: null,
                     accessId: patientDataAccess.id,
                     lastConnected: null,
+                    category: patientCategory.patientCategory,
                 },
             ]);
     });
