@@ -9,6 +9,7 @@ import {PatientCategorySpecification} from 'app/modules/patient-category/specifi
 
 @Module({
     imports: [TypeOrmModule.forFeature([PatientCategoryModel]), AuthModule, PatientDataAccessModule],
+    exports: [IPatientCategoryRepository],
     controllers: [PatientCategoryController],
     providers: [
         PatientCategoryUseCasesFactory,

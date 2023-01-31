@@ -19,7 +19,7 @@ export class PatientCategoryUseCase {
     }
 
     private async getCategory(patientUserId: string, grantedUserId: string): Promise<PatientCategoryDto> {
-        const patientCategory = await this.patientCategoryRepository.getByPatientUserIdAndGrantedUserId(
+        const patientCategory = await this.patientCategoryRepository.getOneByPatientUserIdAndGrantedUserId(
             patientUserId,
             grantedUserId,
         );
