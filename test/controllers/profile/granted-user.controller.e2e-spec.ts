@@ -89,6 +89,7 @@ describe('GrantedUserController', () => {
         };
         const mockedPatientCategoryRepository = {
             getByPatientUserIdsAndGrantedUserId: jest.fn(() => Promise.resolve([patientCategory])),
+            getOneByPatientUserIdAndGrantedUserId: jest.fn(() => Promise.resolve(patientCategory)),
         };
         const mockedPatientMetadataRepository = {
             getOneById: jest.fn(() => Promise.resolve(patientMetadata)),
@@ -180,6 +181,8 @@ describe('GrantedUserController', () => {
                 gender: patientMetadata.gender,
                 avatar: 'https://zenzers-medical-dev.s3.amazonaws.com/avatars/default-avatar.png',
                 deletedAt: null,
+                lastConnected: null,
+                category: patientCategory.patientCategory,
             });
     });
 
