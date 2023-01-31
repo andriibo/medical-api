@@ -1,10 +1,11 @@
 import {IUserRepository} from 'app/modules/auth/repositories';
 import {IPatientMetadataRepository} from 'app/modules/profile/repositories';
 import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service';
-import {PatientDto} from 'domain/dtos/response/profile/patient.dto';
 import {PatientDataAccessSpecification} from 'app/modules/patient-data-access/specifications/patient-data-access.specification';
 import {EntityNotFoundError} from 'app/errors/entity-not-found.error';
 import {IFileUrlService} from 'app/modules/profile/services/file-url.service';
+import {IPatientCategoryRepository} from 'app/modules/patient-category/repositories';
+import {MyPatientDto} from 'domain/dtos/response/profile/my-patient.dto';
 
 export class PatientProfileUseCase {
     public constructor(
@@ -13,21 +14,25 @@ export class PatientProfileUseCase {
         private readonly patientMetadataRepository: IPatientMetadataRepository,
         private readonly patientDataAccessSpecification: PatientDataAccessSpecification,
         private readonly fileUrlService: IFileUrlService,
+        private readonly patientCategoryRepository: IPatientCategoryRepository,
     ) {}
 
-    public async getProfileInfo(patientUserId: string): Promise<PatientDto> {
-        const user = await this.authedUserService.getUser();
+    public async getProfileInfo(patientUserId: string): Promise<MyPatientDto> {
+        const grantedUser = await this.authedUserService.getUser();
         const patient = await this.userRepository.getOneById(patientUserId);
         if (patient === null) {
             throw new EntityNotFoundError('Patient Not Found.');
         }
 
-        await this.patientDataAccessSpecification.assertGrantedUserHasAccess(user, patient.id);
-
+        await this.patientDataAccessSpecification.assertGrantedUserHasAccess(grantedUser, patient.id);
+        const patientCategory = await this.patientCategoryRepository.getByPatientUserIdAndGrantedUserId(
+            patientUserId,
+            grantedUser.id,
+        );
         const patientMetadata = await this.patientMetadataRepository.getOneById(patient.id);
-
-        const dto = PatientDto.fromUserAndPatientMetadata(patient, patientMetadata);
+        const dto = MyPatientDto.fromUserAndPatientMetadata(patient, patientMetadata);
         dto.avatar = this.fileUrlService.createUrlToUserAvatar(dto.avatar);
+        dto.category = patientCategory.patientCategory;
 
         return dto;
     }

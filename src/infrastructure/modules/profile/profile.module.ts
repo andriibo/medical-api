@@ -37,6 +37,7 @@ import {PatientCategoryModule} from 'infrastructure/modules/patient-category/pat
         AuthModule,
         PatientDataAccessModule,
         PatientCategoryModule,
+        PatientCategoryModule,
         FileModule,
         VitalModule,
     ],

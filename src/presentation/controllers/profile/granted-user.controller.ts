@@ -4,8 +4,6 @@ import {Roles} from 'presentation/guards';
 import {MyPatientView} from 'views/response/profile/my-patient.view';
 import {MyPatientDto} from 'domain/dtos/response/profile/my-patient.dto';
 import {GrantedUserUseCasesFactory} from 'infrastructure/modules/profile/factories';
-import {PatientView} from 'views/response/user';
-import {PatientDto} from 'domain/dtos/response/profile/patient.dto';
 
 @Controller()
 @ApiBearerAuth()
@@ -28,8 +26,10 @@ export class GrantedUserController {
     @Get('patient-profile/:patientUserId')
     @HttpCode(HttpStatus.OK)
     @HttpCode(HttpStatus.BAD_REQUEST)
-    @ApiResponse({status: HttpStatus.OK, type: PatientView})
-    public async getPatientProfile(@Param('patientUserId', ParseUUIDPipe) patientUserId: string): Promise<PatientDto> {
+    @ApiResponse({status: HttpStatus.OK, type: MyPatientView})
+    public async getPatientProfile(
+        @Param('patientUserId', ParseUUIDPipe) patientUserId: string,
+    ): Promise<MyPatientDto> {
         const useCase = this.grantedUserUseCasesFactory.createGetPatientProfileUseCase();
 
         try {
