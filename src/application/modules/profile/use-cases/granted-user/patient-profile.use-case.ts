@@ -6,6 +6,7 @@ import {EntityNotFoundError} from 'app/errors/entity-not-found.error';
 import {IFileUrlService} from 'app/modules/profile/services/file-url.service';
 import {IPatientCategoryRepository} from 'app/modules/patient-category/repositories';
 import {MyPatientDto} from 'domain/dtos/response/profile/my-patient.dto';
+import {User} from 'domain/entities';
 
 export class PatientProfileUseCase {
     public constructor(
@@ -25,9 +26,14 @@ export class PatientProfileUseCase {
         }
 
         await this.patientDataAccessSpecification.assertGrantedUserHasAccess(grantedUser, patient.id);
+
+        return await this.getMyPatientDto(patient, grantedUser.id);
+    }
+
+    private async getMyPatientDto(patient: User, grantedUserId: string): Promise<MyPatientDto> {
         const patientCategory = await this.patientCategoryRepository.getOneByPatientUserIdAndGrantedUserId(
-            patientUserId,
-            grantedUser.id,
+            patient.id,
+            grantedUserId,
         );
         const patientMetadata = await this.patientMetadataRepository.getOneById(patient.id);
         const dto = MyPatientDto.fromUserAndPatientMetadata(patient, patientMetadata);
