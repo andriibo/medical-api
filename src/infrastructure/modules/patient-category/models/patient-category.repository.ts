@@ -24,6 +24,9 @@ export class PatientCategoryRepository implements IPatientCategoryRepository {
         patientUserIds: string[],
         grantedUserId: string,
     ): Promise<PatientCategory[]> {
+        if (!patientUserIds.length) {
+            return [];
+        }
         return await this.dataSource.manager.findBy(PatientCategoryModel, {
             patientUserId: In(patientUserIds),
             grantedUserId,

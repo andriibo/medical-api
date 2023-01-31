@@ -41,7 +41,7 @@ import {PatientCategoryModule} from 'infrastructure/modules/patient-category/pat
         FileModule,
         VitalModule,
     ],
-    exports: ['RemoveDoctorService', 'RemoveCaregiverOrPatientService', IMyPatientsService],
+    exports: ['RemoveDoctorService', 'RemoveCaregiverOrPatientService'],
     controllers: [PatientController, DoctorController, ProfileController, CaregiverController, GrantedUserController],
     providers: [
         DoctorUseCasesFactory,
