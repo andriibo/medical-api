@@ -15,10 +15,10 @@ export class PatientListProfileUseCase {
     ) {}
 
     public async getMyPatientList(): Promise<MyPatientDto[]> {
-        const user = await this.authedUserService.getUser();
+        const grantedUser = await this.authedUserService.getUser();
 
         const items = await this.patientDataAccessRepository.getByGrantedUserIdAndStatus(
-            user.id,
+            grantedUser.id,
             PatientDataAccessStatus.Approved,
         );
         const indexedUsersLastConnectionTime = await this.getIndexedUsersLastConnectionTime(items);
@@ -29,6 +29,7 @@ export class PatientListProfileUseCase {
             );
             dto.avatar = this.fileUrlService.createUrlToUserAvatar(dto.avatar);
             dto.accessId = patientDataAccess.id;
+            dto.category = patientDataAccess.patientCategory;
             if (patientDataAccess.patientUserId in indexedUsersLastConnectionTime) {
                 dto.lastConnected = indexedUsersLastConnectionTime[patientDataAccess.patientUserId];
             }

@@ -26,6 +26,8 @@ export interface PatientDataAccess {
 
     status: string;
 
+    patientCategory: string;
+
     createdAt: string;
 
     grantedUser?: User | null;

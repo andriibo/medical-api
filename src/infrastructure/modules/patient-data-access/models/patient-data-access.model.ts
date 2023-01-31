@@ -25,6 +25,9 @@ export class PatientDataAccessModel implements PatientDataAccess {
     @Column()
     public status: string;
 
+    @Column({name: 'patient_category'})
+    public patientCategory: string;
+
     @Column({name: 'created_at'})
     public createdAt: string;
 

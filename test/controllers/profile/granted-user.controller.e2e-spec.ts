@@ -59,6 +59,7 @@ const patientDataAccess: PatientDataAccess = {
     grantedUserId: caregiver.id,
     direction: 'FromPatient',
     status: 'Approved',
+    patientCategory: 'Normal',
     createdAt: new Date().toISOString(),
     patientUser: patient,
 };
@@ -141,6 +142,7 @@ describe('GrantedUserController', () => {
                     deletedAt: null,
                     accessId: patientDataAccess.id,
                     lastConnected: null,
+                    category: patientDataAccess.patientCategory,
                 },
             ]);
     });

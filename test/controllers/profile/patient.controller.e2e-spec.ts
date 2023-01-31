@@ -73,6 +73,7 @@ const patientDataAccessForDoctor: PatientDataAccess = {
     grantedUserId: doctor.id,
     direction: 'ToPatient',
     status: 'Approved',
+    patientCategory: 'Normal',
     createdAt: new Date().toISOString(),
     grantedUser: doctor,
 };
@@ -83,6 +84,7 @@ const patientDataAccessForCaregiver: PatientDataAccess = {
     grantedUserId: caregiver.id,
     direction: 'ToPatient',
     status: 'Approved',
+    patientCategory: 'Normal',
     createdAt: new Date().toISOString(),
     grantedUser: caregiver,
 };

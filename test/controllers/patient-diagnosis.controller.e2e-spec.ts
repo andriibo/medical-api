@@ -42,6 +42,7 @@ const patientDataAccess: PatientDataAccess = {
     grantedUserId: doctor.id,
     direction: 'FromPatient',
     status: 'Approved',
+    patientCategory: 'Normal',
     createdAt: new Date().toISOString(),
 };
 const patientDiagnosis: PatientDiagnosis = {
