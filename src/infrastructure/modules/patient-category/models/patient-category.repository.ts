@@ -1,6 +1,6 @@
 import {Injectable} from '@nestjs/common';
 import {InjectDataSource} from '@nestjs/typeorm';
-import {DataSource} from 'typeorm';
+import {DataSource, In} from 'typeorm';
 import {PatientCategoryModel} from './patient-category.model';
 import {IPatientCategoryRepository} from 'app/modules/patient-category/repositories';
 import {PatientCategory} from 'domain/entities/patient-category.entity';
@@ -13,10 +13,23 @@ export class PatientCategoryRepository implements IPatientCategoryRepository {
         await this.dataSource.manager.save(patientCategory);
     }
 
-    public async getByPatientUserIdAndGrantedUserId(
+    public async getOneByPatientUserIdAndGrantedUserId(
         patientUserId: string,
         grantedUserId: string,
     ): Promise<PatientCategory> {
         return await this.dataSource.manager.findOneBy(PatientCategoryModel, {patientUserId, grantedUserId});
+    }
+
+    public async getByPatientUserIdsAndGrantedUserId(
+        patientUserIds: string[],
+        grantedUserId: string,
+    ): Promise<PatientCategory[]> {
+        if (!patientUserIds.length) {
+            return [];
+        }
+        return await this.dataSource.manager.findBy(PatientCategoryModel, {
+            patientUserId: In(patientUserIds),
+            grantedUserId,
+        });
     }
 }

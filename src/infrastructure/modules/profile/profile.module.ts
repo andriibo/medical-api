@@ -23,12 +23,20 @@ import {IAuthService} from 'app/modules/auth/services/auth.service';
 import {DataSource} from 'typeorm';
 import {RemoveDoctorService} from 'infrastructure/modules/profile/services/remove-doctor.service';
 import {RemoveCaregiverOrPatientService} from 'infrastructure/modules/profile/services/remove-caregiver-or-patient.service';
+import {IMyPatientsService} from 'app/modules/profile/services/my-patients.service';
+import {MyPatientsService} from 'infrastructure/modules/profile/services/my-patients.service';
+import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repositories';
+import {IPatientCategoryRepository} from 'app/modules/patient-category/repositories';
+import {IFileUrlService} from 'app/modules/profile/services/file-url.service';
+import {IVitalRepository} from 'app/modules/vitals/repositories';
+import {PatientCategoryModule} from 'infrastructure/modules/patient-category/patient-category.module';
 
 @Module({
     imports: [
         TypeOrmModule.forFeature([UserModel, DoctorMetadataModel, PatientMetadataModel]),
         AuthModule,
         PatientDataAccessModule,
+        PatientCategoryModule,
         FileModule,
         VitalModule,
     ],
@@ -61,6 +69,23 @@ import {RemoveCaregiverOrPatientService} from 'infrastructure/modules/profile/se
                 return new RemoveCaregiverOrPatientService(authService, dataSource);
             },
             inject: [IAuthService, DataSource],
+        },
+        {
+            provide: IMyPatientsService,
+            useFactory: (
+                patientDataAccessRepository: IPatientDataAccessRepository,
+                patientCategoryRepository: IPatientCategoryRepository,
+                fileUrlService: IFileUrlService,
+                vitalRepository: IVitalRepository,
+            ) => {
+                return new MyPatientsService(
+                    patientDataAccessRepository,
+                    patientCategoryRepository,
+                    fileUrlService,
+                    vitalRepository,
+                );
+            },
+            inject: [IPatientDataAccessRepository, IPatientCategoryRepository, IFileUrlService, IVitalRepository],
         },
     ],
 })

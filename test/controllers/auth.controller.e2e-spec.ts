@@ -28,6 +28,7 @@ import {
 import {IAuthService} from 'app/modules/auth/services/auth.service';
 import {IMailSenderService} from 'app/modules/mail/services/abstract/mail-sender.service';
 import {AuthModel} from 'infrastructure/aws/cognito/auth.model';
+import {PatientCategoryModel} from 'infrastructure/modules/patient-category/models';
 
 const authModel: IAuthModel = new AuthModel({
     UserConfirmed: true,
@@ -81,6 +82,7 @@ describe('AuthController', () => {
     };
     beforeAll(async () => {
         const mockedUserRepository = {
+            insertPatient: jest.fn((user: User) => Promise.resolve(user)),
             persist: jest.fn((user: User) => Promise.resolve(user)),
             getOneById: jest.fn(() => Promise.resolve(registeredUser)),
         };
@@ -96,6 +98,8 @@ describe('AuthController', () => {
             .overrideProvider(getRepositoryToken(DoctorMetadataModel))
             .useValue(null)
             .overrideProvider(getRepositoryToken(PatientMetadataModel))
+            .useValue(null)
+            .overrideProvider(getRepositoryToken(PatientCategoryModel))
             .useValue(null)
             .overrideProvider(IUserRepository)
             .useValue(mockedUserRepository)

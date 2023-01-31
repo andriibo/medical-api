@@ -1,53 +1,16 @@
 import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service';
-import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repositories';
-import {PatientDataAccess, PatientDataAccessStatus} from 'domain/entities/patient-data-access.entity';
 import {MyPatientDto} from 'domain/dtos/response/profile/my-patient.dto';
-import {sortUserDtosByName} from 'app/support/sort.helper';
-import {IFileUrlService} from 'app/modules/profile/services/file-url.service';
-import {IVitalRepository} from 'app/modules/vitals/repositories';
+import {IMyPatientsService} from 'app/modules/profile/services/my-patients.service';
 
 export class PatientListProfileUseCase {
     public constructor(
         private readonly authedUserService: IAuthedUserService,
-        private readonly patientDataAccessRepository: IPatientDataAccessRepository,
-        private readonly fileUrlService: IFileUrlService,
-        private readonly vitalRepository: IVitalRepository,
+        private readonly myPatientsService: IMyPatientsService,
     ) {}
 
     public async getMyPatientList(): Promise<MyPatientDto[]> {
-        const user = await this.authedUserService.getUser();
+        const grantedUser = await this.authedUserService.getUser();
 
-        const items = await this.patientDataAccessRepository.getByGrantedUserIdAndStatus(
-            user.id,
-            PatientDataAccessStatus.Approved,
-        );
-        const indexedUsersLastConnectionTime = await this.getIndexedUsersLastConnectionTime(items);
-        const myPatients = items.map((patientDataAccess) => {
-            const dto = MyPatientDto.fromUserAndPatientMetadata(
-                patientDataAccess.patientUser,
-                patientDataAccess.patientUser.patientMetadata,
-            );
-            dto.avatar = this.fileUrlService.createUrlToUserAvatar(dto.avatar);
-            dto.accessId = patientDataAccess.id;
-            if (patientDataAccess.patientUserId in indexedUsersLastConnectionTime) {
-                dto.lastConnected = indexedUsersLastConnectionTime[patientDataAccess.patientUserId];
-            }
-
-            return dto;
-        });
-
-        return sortUserDtosByName(myPatients) as MyPatientDto[];
-    }
-
-    private async getIndexedUsersLastConnectionTime(items: PatientDataAccess[]): Promise<object> {
-        const userIds = items.map((item) => item.patientUserId);
-        const usersLastConnectionTime = await this.vitalRepository.getLastConnectionTimeByUserIds(userIds);
-        const indexedUsersLastConnectionTime = {};
-        usersLastConnectionTime.map(
-            (userLastConnectionTime) =>
-                (indexedUsersLastConnectionTime[userLastConnectionTime.userId] = userLastConnectionTime.timestamp),
-        );
-
-        return indexedUsersLastConnectionTime;
+        return await this.myPatientsService.getMyPatients(grantedUser.id);
     }
 }

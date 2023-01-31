@@ -50,7 +50,7 @@ describe('PatientCategoryController', () => {
         };
         const mockedPatientCategoryRepository = {
             update: jest.fn(() => Promise.resolve()),
-            getByPatientUserIdAndGrantedUserId: jest.fn(() => Promise.resolve(patientCategory)),
+            getOneByPatientUserIdAndGrantedUserId: jest.fn(() => Promise.resolve(patientCategory)),
         };
         const mockedPatientDataAccessRepository = {
             getOneByPatientUserIdAndGrantedUserId: jest.fn(() => Promise.resolve(patientDataAccess)),

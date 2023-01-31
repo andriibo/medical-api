@@ -27,7 +27,7 @@ export class PatientCategoryNormalUseCase {
     }
 
     private async getCategory(patientUserId: string, grantedUserId: string): Promise<PatientCategory> {
-        const patientCategory = await this.patientCategoryRepository.getByPatientUserIdAndGrantedUserId(
+        const patientCategory = await this.patientCategoryRepository.getOneByPatientUserIdAndGrantedUserId(
             patientUserId,
             grantedUserId,
         );
