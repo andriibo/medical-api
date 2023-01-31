@@ -1,17 +1,6 @@
 import {User} from 'domain/entities/user.entity';
 
-export enum PatientDataAccessRequestDirection {
-    FromPatient = 'FromPatient',
-    ToPatient = 'ToPatient',
-}
-
-export enum PatientDataAccessStatus {
-    Approved = 'Approved',
-    Initiated = 'Initiated',
-    Refused = 'Refused',
-}
-
-export interface PatientDataAccess {
+export interface PatientRelationship {
     id: string;
 
     patientUserId?: string;
@@ -26,7 +15,11 @@ export interface PatientDataAccess {
 
     status: string;
 
+    patientCategory: string;
+
     createdAt: string;
+
+    patientCategoryUpdatedAt: number | null;
 
     grantedUser?: User | null;
 

@@ -1,17 +1,17 @@
-import {Entity, Column, PrimaryColumn, OneToOne, JoinColumn} from 'typeorm';
-import {PatientDataAccess} from 'domain/entities/patient-data-access.entity';
+import {Entity, Column, OneToOne, JoinColumn, PrimaryColumn} from 'typeorm';
 import {UserModel} from 'infrastructure/modules/auth/models';
+import {PatientRelationship} from 'domain/entities/patient-relationship.entity';
 
 @Entity('patient_relationship')
-export class PatientDataAccessModel implements PatientDataAccess {
+export class PatientRelationshipModel implements PatientRelationship {
     @PrimaryColumn('uuid')
     public id: string;
 
-    @Column('uuid', {name: 'patient_user_id', nullable: true})
-    public patientUserId?: string;
+    @Column('uuid', {name: 'patient_user_id'})
+    public patientUserId: string;
 
-    @Column('uuid', {name: 'granted_user_id', nullable: true})
-    public grantedUserId?: string;
+    @Column('uuid', {name: 'granted_user_id'})
+    public grantedUserId: string;
 
     @Column({name: 'granted_email', nullable: true})
     public grantedEmail?: string;
@@ -25,8 +25,14 @@ export class PatientDataAccessModel implements PatientDataAccess {
     @Column()
     public status: string;
 
+    @Column({name: 'patient_category'})
+    public patientCategory: string;
+
     @Column({name: 'created_at'})
     public createdAt: string;
+
+    @Column({name: 'patient_category_updated_at'})
+    public patientCategoryUpdatedAt: number | null;
 
     @OneToOne(() => UserModel)
     @JoinColumn({name: 'patient_user_id'})

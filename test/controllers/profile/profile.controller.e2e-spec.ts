@@ -12,6 +12,8 @@ import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repo
 import {TestModule} from 'tests/test.module';
 import {VitalModel} from 'infrastructure/modules/vitals/models';
 import {IVitalRepository} from 'app/modules/vitals/repositories';
+import {PatientRelationshipModel} from 'infrastructure/modules/patient-relationship/models';
+import {IPatientRelationshipRepository} from 'app/modules/patient-relationship/repositories';
 
 const registeredUser: User = {
     id: '8bfbd95c-c8a5-404b-b3eb-6ac648052ac4',
@@ -53,6 +55,8 @@ describe('ProfileController', () => {
             .useValue(null)
             .overrideProvider(getRepositoryToken(PatientDataAccessModel))
             .useValue(null)
+            .overrideProvider(getRepositoryToken(PatientRelationshipModel))
+            .useValue(null)
             .overrideProvider(getRepositoryToken(VitalModel))
             .useValue(null)
             .overrideProvider(IUserRepository)
@@ -62,6 +66,8 @@ describe('ProfileController', () => {
             .overrideProvider(IDoctorMetadataRepository)
             .useValue(null)
             .overrideProvider(IPatientDataAccessRepository)
+            .useValue(null)
+            .overrideProvider(IPatientRelationshipRepository)
             .useValue(null)
             .overrideProvider(IVitalRepository)
             .useValue(null)

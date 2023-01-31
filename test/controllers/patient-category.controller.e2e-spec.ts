@@ -33,7 +33,6 @@ const patientDataAccess: PatientDataAccess = {
     grantedUserId: '8bfbd95c-c8a5-404b-b3eb-6ac648052ac4',
     direction: 'ToPatient',
     status: 'Approved',
-    patientCategory: 'Normal',
     createdAt: new Date().toISOString(),
 };
 const patientCategory: PatientCategory = {
