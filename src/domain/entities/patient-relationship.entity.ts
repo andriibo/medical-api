@@ -27,7 +27,5 @@ export interface PatientRelationship {
 
     patientCategoryUpdatedAt: number | null;
 
-    grantedUser?: User | null;
-
     patientUser?: User | null;
 }

@@ -37,8 +37,4 @@ export class PatientRelationshipModel implements PatientRelationship {
     @OneToOne(() => UserModel)
     @JoinColumn({name: 'patient_user_id'})
     patientUser?: UserModel | null;
-
-    @OneToOne(() => UserModel)
-    @JoinColumn({name: 'granted_user_id'})
-    public grantedUser?: UserModel | null;
 }
