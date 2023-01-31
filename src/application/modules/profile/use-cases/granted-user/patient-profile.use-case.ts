@@ -25,7 +25,7 @@ export class PatientProfileUseCase {
         }
 
         await this.patientDataAccessSpecification.assertGrantedUserHasAccess(grantedUser, patient.id);
-        const patientCategory = await this.patientCategoryRepository.getByPatientUserIdAndGrantedUserId(
+        const patientCategory = await this.patientCategoryRepository.getOneByPatientUserIdAndGrantedUserId(
             patientUserId,
             grantedUser.id,
         );
