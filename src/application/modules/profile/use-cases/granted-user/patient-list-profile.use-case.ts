@@ -24,16 +24,16 @@ export class PatientListProfileUseCase {
         );
 
         const indexedUsersLastConnectionTime = await this.getIndexedUsersLastConnectionTime(items);
-        const myPatients = items.map((patientDataAccess) => {
+        const myPatients = items.map((patientRelationship) => {
             const dto = MyPatientDto.fromUserAndPatientMetadata(
-                patientDataAccess.patientUser,
-                patientDataAccess.patientUser.patientMetadata,
+                patientRelationship.patientUser,
+                patientRelationship.patientUser.patientMetadata,
             );
             dto.avatar = this.fileUrlService.createUrlToUserAvatar(dto.avatar);
-            dto.accessId = patientDataAccess.id;
-            dto.category = patientDataAccess.patientCategory;
-            if (patientDataAccess.patientUserId in indexedUsersLastConnectionTime) {
-                dto.lastConnected = indexedUsersLastConnectionTime[patientDataAccess.patientUserId];
+            dto.accessId = patientRelationship.id;
+            dto.category = patientRelationship.patientCategory;
+            if (patientRelationship.patientUserId in indexedUsersLastConnectionTime) {
+                dto.lastConnected = indexedUsersLastConnectionTime[patientRelationship.patientUserId];
             }
 
             return dto;
