@@ -8,16 +8,16 @@ export class PatientRelationshipModel implements PatientRelationship {
     public id: string;
 
     @Column('uuid', {name: 'patient_user_id'})
-    public patientUserId: string;
+    public patientUserId: string | null;
 
     @Column('uuid', {name: 'granted_user_id'})
-    public grantedUserId: string;
+    public grantedUserId: string | null;
 
     @Column({name: 'granted_email', nullable: true})
-    public grantedEmail?: string;
+    public grantedEmail: string | null;
 
     @Column({name: 'patient_email', nullable: true})
-    public patientEmail?: string;
+    public patientEmail: string | null;
 
     @Column()
     public direction: string;

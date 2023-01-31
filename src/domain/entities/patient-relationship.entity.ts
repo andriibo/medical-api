@@ -1,15 +1,21 @@
 import {User} from 'domain/entities/user.entity';
 
+export enum PatientRelationshipStatus {
+    Approved = 'Approved',
+    Initiated = 'Initiated',
+    Refused = 'Refused',
+}
+
 export interface PatientRelationship {
     id: string;
 
-    patientUserId?: string;
+    patientUserId: string | null;
 
-    grantedUserId?: string;
+    grantedUserId: string | null;
 
-    grantedEmail?: string;
+    grantedEmail: string | null;
 
-    patientEmail?: string;
+    patientEmail: string | null;
 
     direction: string;
 

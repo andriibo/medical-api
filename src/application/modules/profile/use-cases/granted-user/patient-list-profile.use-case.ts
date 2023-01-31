@@ -1,10 +1,11 @@
 import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service';
-import {PatientDataAccess, PatientDataAccessStatus} from 'domain/entities/patient-data-access.entity';
+import {PatientDataAccess} from 'domain/entities/patient-data-access.entity';
 import {MyPatientDto} from 'domain/dtos/response/profile/my-patient.dto';
 import {sortUserDtosByName} from 'app/support/sort.helper';
 import {IFileUrlService} from 'app/modules/profile/services/file-url.service';
 import {IVitalRepository} from 'app/modules/vitals/repositories';
 import {IPatientRelationshipRepository} from 'app/modules/patient-relationship/repositories';
+import {PatientRelationshipStatus} from 'domain/entities/patient-relationship.entity';
 
 export class PatientListProfileUseCase {
     public constructor(
@@ -19,7 +20,7 @@ export class PatientListProfileUseCase {
 
         const items = await this.patientRelationshipRepository.getByGrantedUserIdAndStatus(
             grantedUser.id,
-            PatientDataAccessStatus.Approved,
+            PatientRelationshipStatus.Approved,
         );
 
         const indexedUsersLastConnectionTime = await this.getIndexedUsersLastConnectionTime(items);

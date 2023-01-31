@@ -3,8 +3,7 @@ import {InjectDataSource} from '@nestjs/typeorm';
 import {DataSource} from 'typeorm';
 import {PatientRelationshipModel} from './patient-relationship.model';
 import {IPatientRelationshipRepository} from 'app/modules/patient-relationship/repositories';
-import {PatientRelationship} from 'domain/entities/patient-relationship.entity';
-import {PatientDataAccessStatus} from 'domain/entities/patient-data-access.entity';
+import {PatientRelationship, PatientRelationshipStatus} from 'domain/entities/patient-relationship.entity';
 
 @Injectable()
 export class PatientRelationshipRepository implements IPatientRelationshipRepository {
@@ -12,7 +11,7 @@ export class PatientRelationshipRepository implements IPatientRelationshipReposi
 
     public async getByGrantedUserIdAndStatus(
         grantedUserId: string,
-        status: PatientDataAccessStatus,
+        status: PatientRelationshipStatus,
     ): Promise<PatientRelationship[]> {
         return await this.dataSource
             .createQueryBuilder(PatientRelationshipModel, 'pr')

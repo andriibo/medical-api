@@ -1,8 +1,10 @@
-import {PatientRelationship} from 'domain/entities/patient-relationship.entity';
-import {PatientDataAccessStatus} from 'domain/entities/patient-data-access.entity';
+import {PatientRelationship, PatientRelationshipStatus} from 'domain/entities/patient-relationship.entity';
 
 export interface IPatientRelationshipRepository {
-    getByGrantedUserIdAndStatus(grantedUserId: string, status: PatientDataAccessStatus): Promise<PatientRelationship[]>;
+    getByGrantedUserIdAndStatus(
+        grantedUserId: string,
+        status: PatientRelationshipStatus,
+    ): Promise<PatientRelationship[]>;
 }
 
 export const IPatientRelationshipRepository = Symbol('IPatientRelationshipRepository');
