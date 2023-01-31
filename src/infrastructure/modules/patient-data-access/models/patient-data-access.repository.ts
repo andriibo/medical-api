@@ -114,19 +114,4 @@ export class PatientDataAccessRepository implements IPatientDataAccessRepository
             .andWhere('user.email is not null')
             .getMany();
     }
-
-    public async getByGrantedUserIdAndStatus(
-        grantedUserId: string,
-        status: PatientDataAccessStatus,
-    ): Promise<PatientDataAccess[]> {
-        return await this.dataSource
-            .createQueryBuilder(PatientDataAccessModel, 'pda')
-            .leftJoinAndSelect('pda.patientUser', 'user')
-            .leftJoinAndSelect('user.patientMetadata', 'metadata')
-            .where('pda.granted_user_id = :grantedUserId', {grantedUserId})
-            .andWhere('pda.status = :status', {status})
-            .andWhere('user.deleted_at is null')
-            .andWhere('user.email is not null')
-            .getMany();
-    }
 }

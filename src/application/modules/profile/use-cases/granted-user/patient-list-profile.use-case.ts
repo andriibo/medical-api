@@ -1,36 +1,39 @@
 import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service';
-import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repositories';
-import {PatientDataAccess, PatientDataAccessStatus} from 'domain/entities/patient-data-access.entity';
+import {PatientDataAccess} from 'domain/entities/patient-data-access.entity';
 import {MyPatientDto} from 'domain/dtos/response/profile/my-patient.dto';
 import {sortUserDtosByName} from 'app/support/sort.helper';
 import {IFileUrlService} from 'app/modules/profile/services/file-url.service';
 import {IVitalRepository} from 'app/modules/vitals/repositories';
+import {IPatientRelationshipRepository} from 'app/modules/patient-relationship/repositories';
+import {PatientRelationshipStatus} from 'domain/entities/patient-relationship.entity';
 
 export class PatientListProfileUseCase {
     public constructor(
         private readonly authedUserService: IAuthedUserService,
-        private readonly patientDataAccessRepository: IPatientDataAccessRepository,
+        private readonly patientRelationshipRepository: IPatientRelationshipRepository,
         private readonly fileUrlService: IFileUrlService,
         private readonly vitalRepository: IVitalRepository,
     ) {}
 
     public async getMyPatientList(): Promise<MyPatientDto[]> {
-        const user = await this.authedUserService.getUser();
+        const grantedUser = await this.authedUserService.getUser();
 
-        const items = await this.patientDataAccessRepository.getByGrantedUserIdAndStatus(
-            user.id,
-            PatientDataAccessStatus.Approved,
+        const items = await this.patientRelationshipRepository.getByGrantedUserIdAndStatus(
+            grantedUser.id,
+            PatientRelationshipStatus.Approved,
         );
+
         const indexedUsersLastConnectionTime = await this.getIndexedUsersLastConnectionTime(items);
-        const myPatients = items.map((patientDataAccess) => {
+        const myPatients = items.map((patientRelationship) => {
             const dto = MyPatientDto.fromUserAndPatientMetadata(
-                patientDataAccess.patientUser,
-                patientDataAccess.patientUser.patientMetadata,
+                patientRelationship.patientUser,
+                patientRelationship.patientUser.patientMetadata,
             );
             dto.avatar = this.fileUrlService.createUrlToUserAvatar(dto.avatar);
-            dto.accessId = patientDataAccess.id;
-            if (patientDataAccess.patientUserId in indexedUsersLastConnectionTime) {
-                dto.lastConnected = indexedUsersLastConnectionTime[patientDataAccess.patientUserId];
+            dto.accessId = patientRelationship.id;
+            dto.category = patientRelationship.patientCategory;
+            if (patientRelationship.patientUserId in indexedUsersLastConnectionTime) {
+                dto.lastConnected = indexedUsersLastConnectionTime[patientRelationship.patientUserId];
             }
 
             return dto;

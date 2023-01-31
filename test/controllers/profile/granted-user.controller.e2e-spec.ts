@@ -13,6 +13,9 @@ import {TestModule} from 'tests/test.module';
 import {currentUnixTimestamp} from 'app/support/date.helper';
 import {IVitalRepository} from 'app/modules/vitals/repositories';
 import {VitalModel} from 'infrastructure/modules/vitals/models';
+import {PatientRelationshipModel} from 'infrastructure/modules/patient-relationship/models';
+import {PatientRelationship} from 'domain/entities/patient-relationship.entity';
+import {IPatientRelationshipRepository} from 'app/modules/patient-relationship/repositories';
 
 const caregiver: User = {
     id: '4babe90f-b1a3-145e-c0mz-9aq248098ac0',
@@ -60,6 +63,16 @@ const patientDataAccess: PatientDataAccess = {
     direction: 'FromPatient',
     status: 'Approved',
     createdAt: new Date().toISOString(),
+};
+const patientRelationship: PatientRelationship = {
+    id: '17c3e70s-b0w2-126s-c8mo-1cq901092qm9',
+    patientUserId: patient.id,
+    grantedUserId: caregiver.id,
+    direction: 'FromPatient',
+    status: 'Approved',
+    patientCategory: 'Normal',
+    patientCategoryUpdatedAt: currentUnixTimestamp(),
+    createdAt: new Date().toISOString(),
     patientUser: patient,
 };
 
@@ -84,8 +97,10 @@ describe('GrantedUserController', () => {
             getLastConnectionTimeByUserIds: jest.fn(() => Promise.resolve(usersLastConnectionTime)),
         };
         const mockedPatientDataAccessRepository = {
-            getByGrantedUserIdAndStatus: jest.fn(() => Promise.resolve([patientDataAccess])),
             getOneByPatientUserIdAndGrantedUserId: jest.fn(() => Promise.resolve(patientDataAccess)),
+        };
+        const mockedPatientRelationshipRepository = {
+            getByGrantedUserIdAndStatus: jest.fn(() => Promise.resolve([patientRelationship])),
         };
         const moduleRef: TestingModule = await Test.createTestingModule({
             imports: [TestModule, ProfileModule],
@@ -102,6 +117,8 @@ describe('GrantedUserController', () => {
             .useValue(null)
             .overrideProvider(getRepositoryToken(PatientDataAccessModel))
             .useValue(null)
+            .overrideProvider(getRepositoryToken(PatientRelationshipModel))
+            .useValue(null)
             .overrideProvider(getRepositoryToken(VitalModel))
             .useValue(null)
             .overrideProvider(IUserRepository)
@@ -112,6 +129,8 @@ describe('GrantedUserController', () => {
             .useValue(null)
             .overrideProvider(IPatientDataAccessRepository)
             .useValue(mockedPatientDataAccessRepository)
+            .overrideProvider(IPatientRelationshipRepository)
+            .useValue(mockedPatientRelationshipRepository)
             .overrideProvider(IVitalRepository)
             .useValue(mockedVitalRepository)
             .compile();
@@ -139,8 +158,9 @@ describe('GrantedUserController', () => {
                     gender: patientMetadata.gender,
                     avatar: 'https://zenzers-medical-dev.s3.amazonaws.com/avatars/default-avatar.png',
                     deletedAt: null,
-                    accessId: patientDataAccess.id,
+                    accessId: patientRelationship.id,
                     lastConnected: null,
+                    category: patientRelationship.patientCategory,
                 },
             ]);
     });

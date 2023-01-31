@@ -8,4 +8,7 @@ export class MyPatientView extends PatientView implements MyPatientDto {
 
     @ApiProperty({nullable: true})
     public lastConnected: number | null;
+
+    @ApiProperty()
+    public category: string;
 }
