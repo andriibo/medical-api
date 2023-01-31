@@ -14,8 +14,6 @@ import {currentUnixTimestamp} from 'app/support/date.helper';
 import {UpdatePatientProfileDto} from 'domain/dtos/request/profile';
 import {VitalModel} from 'infrastructure/modules/vitals/models';
 import {IVitalRepository} from 'app/modules/vitals/repositories';
-import {PatientRelationshipModel} from 'infrastructure/modules/patient-relationship/models';
-import {IPatientRelationshipRepository} from 'app/modules/patient-relationship/repositories';
 
 const patient: User = {
     id: '5nc3e70a-c1y9-121a-c5mv-5aq272098bp0',
@@ -123,8 +121,6 @@ describe('PatientController', () => {
             .useValue(null)
             .overrideProvider(getRepositoryToken(PatientDataAccessModel))
             .useValue(null)
-            .overrideProvider(getRepositoryToken(PatientRelationshipModel))
-            .useValue(null)
             .overrideProvider(getRepositoryToken(VitalModel))
             .useValue(null)
             .overrideProvider(IUserRepository)
@@ -135,8 +131,6 @@ describe('PatientController', () => {
             .useValue(null)
             .overrideProvider(IPatientDataAccessRepository)
             .useValue(mockedPatientDataAccessRepository)
-            .overrideProvider(IPatientRelationshipRepository)
-            .useValue(null)
             .overrideProvider(IVitalRepository)
             .useValue(null)
             .compile();

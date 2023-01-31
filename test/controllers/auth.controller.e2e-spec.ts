@@ -81,7 +81,6 @@ describe('AuthController', () => {
     };
     beforeAll(async () => {
         const mockedUserRepository = {
-            insertPatient: jest.fn((user: User) => Promise.resolve(user)),
             persist: jest.fn((user: User) => Promise.resolve(user)),
             getOneById: jest.fn(() => Promise.resolve(registeredUser)),
         };

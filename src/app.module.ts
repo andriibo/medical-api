@@ -23,7 +23,6 @@ import {
     FileModule,
     PatientStatusModule,
     PatientCategoryModule,
-    PatientRelationshipModule,
 } from 'infrastructure/modules';
 import {AssignUserMiddleware} from 'presentation/middlewares/assign-user.middleware';
 import {EventEmitterModule} from '@nestjs/event-emitter';
@@ -50,7 +49,6 @@ const APP_MODULES_IMPORT = [
     CronModule,
     PatientStatusModule,
     PatientCategoryModule,
-    PatientRelationshipModule,
 ];
 
 const GUARDS = [AuthGuard, RolesGuard];

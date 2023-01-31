@@ -23,14 +23,12 @@ import {IAuthService} from 'app/modules/auth/services/auth.service';
 import {DataSource} from 'typeorm';
 import {RemoveDoctorService} from 'infrastructure/modules/profile/services/remove-doctor.service';
 import {RemoveCaregiverOrPatientService} from 'infrastructure/modules/profile/services/remove-caregiver-or-patient.service';
-import {PatientRelationshipModule} from 'infrastructure/modules/patient-relationship/patient-relationship.module';
 
 @Module({
     imports: [
         TypeOrmModule.forFeature([UserModel, DoctorMetadataModel, PatientMetadataModel]),
         AuthModule,
         PatientDataAccessModule,
-        PatientRelationshipModule,
         FileModule,
         VitalModule,
     ],
