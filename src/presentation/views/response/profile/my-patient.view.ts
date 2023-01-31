@@ -10,6 +10,6 @@ export class MyPatientView extends PatientView implements MyPatientDto {
     @ApiProperty({nullable: true})
     public lastConnected: number | null;
 
-    @ApiProperty({enum: PatientCategoryEnum, nullable: true})
-    public category: string | null;
+    @ApiProperty({enum: PatientCategoryEnum})
+    public category: string;
 }

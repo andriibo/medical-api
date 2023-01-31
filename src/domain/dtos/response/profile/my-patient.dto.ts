@@ -5,5 +5,5 @@ export class MyPatientDto extends PatientDto {
 
     public lastConnected: number | null = null;
 
-    public category: string | null = null;
+    public category: string;
 }
