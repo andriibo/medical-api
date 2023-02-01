@@ -32,7 +32,7 @@ const patient: User = {
 const patientDataAccess: PatientDataAccess = {
     id: '17c3e70s-b0w2-126s-c8mo-1cq901092qm9',
     patientUserId: patient.id,
-    grantedUserId: '8bfbd95c-c8a5-404b-b3eb-6ac648052ac4',
+    grantedUserId: '862108e8-32f6-4d37-840e-2db213f0c2fe',
     direction: 'ToPatient',
     status: 'Approved',
     createdAt: new Date().toISOString(),

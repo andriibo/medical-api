@@ -16,7 +16,10 @@ export class PatientCategoryNormalUseCase {
 
     public async setNormal(patientUserId: string): Promise<void> {
         const grantedUser = await this.authedUserService.getUser();
-        await this.patientDataAccessSpecification.assertGrantedUserIdHasAccess(grantedUser.id, patientUserId);
+        await this.patientDataAccessSpecification.assertAccessIsOpenByGrantedUserIdAndPatientUserId(
+            grantedUser.id,
+            patientUserId,
+        );
 
         const patientCategory = await this.getCategory(patientUserId, grantedUser.id);
         this.patientCategorySpecification.assertGrantedUserCanSetNormal(patientCategory);

@@ -87,7 +87,10 @@ export class WsPatientDataAccessGuard implements CanActivate {
         }
 
         try {
-            await this.patientDataAccessSpecification.assertGrantedUserIdHasAccess(requestUserId, patientUserId);
+            await this.patientDataAccessSpecification.assertAccessIsOpenByGrantedUserIdAndPatientUserId(
+                requestUserId,
+                patientUserId,
+            );
         } catch (error) {
             if (error instanceof PatientDataAccessSpecificationError) {
                 throw new WsException(new UnauthorizedException());
