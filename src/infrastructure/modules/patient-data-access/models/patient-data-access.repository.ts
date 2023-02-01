@@ -115,22 +115,30 @@ export class PatientDataAccessRepository implements IPatientDataAccessRepository
             .getMany();
     }
 
-    public async getApprovedByGrantedUserIdAndPatientUserId(
+    public async getByGrantedUserIdAndStatus(
         grantedUserId: string,
-        patientUserId?: string,
+        status: PatientDataAccessStatus,
     ): Promise<PatientDataAccess[]> {
-        const status = PatientDataAccessStatus.Approved;
-        const query = this.dataSource
+        return await this.dataSource
             .createQueryBuilder(PatientDataAccessModel, 'pda')
             .leftJoinAndSelect('pda.patientUser', 'user')
             .leftJoinAndSelect('user.patientMetadata', 'metadata')
             .where({grantedUserId, status})
             .andWhere('user.deleted_at is null')
-            .andWhere('user.email is not null');
-        if (patientUserId) {
-            query.andWhere({patientUserId});
-        }
+            .andWhere('user.email is not null')
+            .getMany();
+    }
 
-        return await query.getMany();
+    public async getOneApprovedByGrantedUserIdAndPatientUserId(
+        grantedUserId: string,
+        patientUserId: string,
+    ): Promise<PatientDataAccess> {
+        const status = PatientDataAccessStatus.Approved;
+        return await this.dataSource
+            .createQueryBuilder(PatientDataAccessModel, 'pda')
+            .leftJoinAndSelect('pda.patientUser', 'user')
+            .leftJoinAndSelect('user.patientMetadata', 'metadata')
+            .where({grantedUserId, patientUserId, status})
+            .getOne();
     }
 }

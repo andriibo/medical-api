@@ -98,7 +98,8 @@ describe('GrantedUserController', () => {
         };
         const mockedPatientDataAccessRepository = {
             getOneByPatientUserIdAndGrantedUserId: jest.fn(() => Promise.resolve(patientDataAccess)),
-            getApprovedByGrantedUserIdAndPatientUserId: jest.fn(() => Promise.resolve([patientDataAccess])),
+            getOneApprovedByGrantedUserIdAndPatientUserId: jest.fn(() => Promise.resolve(patientDataAccess)),
+            getByGrantedUserIdAndStatus: jest.fn(() => Promise.resolve([patientDataAccess])),
         };
         const moduleRef: TestingModule = await Test.createTestingModule({
             imports: [TestModule, ProfileModule],

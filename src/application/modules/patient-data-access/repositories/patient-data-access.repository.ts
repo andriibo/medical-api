@@ -33,10 +33,12 @@ export interface IPatientDataAccessRepository {
         status: PatientDataAccessStatus,
     ): Promise<PatientDataAccess[]>;
 
-    getApprovedByGrantedUserIdAndPatientUserId(
+    getByGrantedUserIdAndStatus(grantedUserId: string, status: PatientDataAccessStatus): Promise<PatientDataAccess[]>;
+
+    getOneApprovedByGrantedUserIdAndPatientUserId(
         grantedUserId: string,
-        patientUserId?: string,
-    ): Promise<PatientDataAccess[]>;
+        patientUserId: string,
+    ): Promise<PatientDataAccess>;
 }
 
 export const IPatientDataAccessRepository = Symbol('IPatientDataAccessRepository');
