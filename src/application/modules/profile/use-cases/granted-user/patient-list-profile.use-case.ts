@@ -13,11 +13,11 @@ export class PatientListProfileUseCase {
 
     public async getMyPatientList(): Promise<MyPatientDto[]> {
         const grantedUser = await this.authedUserService.getUser();
-        const accesses = await this.patientDataAccessRepository.getByGrantedUserIdAndStatus(
+        const dataAccesses = await this.patientDataAccessRepository.getByGrantedUserIdAndStatus(
             grantedUser.id,
             PatientDataAccessStatus.Approved,
         );
 
-        return await this.myPatientsService.getMyPatients(accesses);
+        return await this.myPatientsService.getMyPatients(dataAccesses);
     }
 }
