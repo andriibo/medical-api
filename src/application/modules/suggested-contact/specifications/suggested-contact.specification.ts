@@ -6,7 +6,7 @@ export class SuggestedContactSpecification {
     public constructor(private readonly patientDataAccessSpecification: PatientDataAccessSpecification) {}
 
     public async assertUserCanCreateContact(user: User, patientUserId: string): Promise<void> {
-        await this.patientDataAccessSpecification.assertGrantedUserHasAccess(user, patientUserId);
+        await this.patientDataAccessSpecification.assertGrantedUserIdHasAccess(user.id, patientUserId);
     }
 
     public assertUserCanDeleteContact(grantedUser: User, suggestedContact: SuggestedContact): void {
