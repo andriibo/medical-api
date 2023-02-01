@@ -5,6 +5,9 @@ export class PatientVitalThresholdsSpecification {
     public constructor(private readonly patientDataAccessSpecification: PatientDataAccessSpecification) {}
 
     public async assertGrantedUserCanOperateThreshold(user: User, patientUserId: string): Promise<void> {
-        await this.patientDataAccessSpecification.assertGrantedUserIdHasAccess(user.id, patientUserId);
+        await this.patientDataAccessSpecification.assertAccessIsOpenByGrantedUserIdAndPatientUserId(
+            user.id,
+            patientUserId,
+        );
     }
 }

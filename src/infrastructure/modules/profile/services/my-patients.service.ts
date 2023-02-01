@@ -1,7 +1,7 @@
 import {Inject} from '@nestjs/common';
 import {IMyPatientsService} from 'app/modules/profile/services/my-patients.service';
 import {MyPatientDto} from 'domain/dtos/response/profile/my-patient.dto';
-import {PatientDataAccessStatus} from 'domain/entities/patient-data-access.entity';
+import {PatientDataAccess} from 'domain/entities/patient-data-access.entity';
 import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repositories';
 import {IPatientCategoryRepository} from 'app/modules/patient-category/repositories';
 import {IFileUrlService} from 'app/modules/profile/services/file-url.service';
@@ -17,15 +17,15 @@ export class MyPatientsService implements IMyPatientsService {
         @Inject(IVitalRepository) private readonly vitalRepository: IVitalRepository,
     ) {}
 
-    public async getMyPatients(grantedUserId: string): Promise<MyPatientDto[]> {
-        const items = await this.patientDataAccessRepository.getByGrantedUserIdAndStatus(
-            grantedUserId,
-            PatientDataAccessStatus.Approved,
-        );
-        const patientIds = items.map((item) => item.patientUserId);
+    public async getMyPatients(dataAccesses: PatientDataAccess[]): Promise<MyPatientDto[]> {
+        if (!dataAccesses.length) {
+            return [];
+        }
+        const patientIds = dataAccesses.map((item) => item.patientUserId);
         const indexedUsersLastConnectionTime = await this.getIndexedUsersLastConnectionTime(patientIds);
+        const grantedUserId = dataAccesses[0].grantedUserId;
         const indexedPatientCategories = await this.getIndexedPatientCategories(patientIds, grantedUserId);
-        const myPatients = items.map((patientDataAccess) => {
+        const myPatients = dataAccesses.map((patientDataAccess) => {
             const dto = MyPatientDto.fromUserAndPatientMetadata(
                 patientDataAccess.patientUser,
                 patientDataAccess.patientUser.patientMetadata,
