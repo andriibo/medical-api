@@ -12,6 +12,10 @@ import {PatientStatusModel} from 'infrastructure/modules/patient-status/models';
 import {IPatientStatusRepository} from 'app/modules/patient-status/repositories';
 import {PatientStatus} from 'domain/entities/patient-status.entity';
 import {currentUnixTimestamp} from 'app/support/date.helper';
+import {PatientCategoryModel} from 'infrastructure/modules/patient-category/models';
+import {PatientDataAccessModel} from 'infrastructure/modules/patient-data-access/models';
+import {IPatientCategoryRepository} from 'app/modules/patient-category/repositories';
+import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repositories';
 
 const registeredUser: User = {
     id: '5nc3e70a-c1y9-121a-c5mv-5aq272098bp0',
@@ -39,6 +43,9 @@ describe('PatientStatusController', () => {
             getByPatientUserId: jest.fn(() => Promise.resolve(patientStatus)),
             persist: jest.fn(() => Promise.resolve()),
         };
+        const mockedPatientCategoryRepository = {
+            updateNormalByPatientUserId: jest.fn(() => Promise.resolve()),
+        };
         const moduleRef: TestingModule = await Test.createTestingModule({
             imports: [TestModule, PatientStatusModule],
         })
@@ -50,6 +57,10 @@ describe('PatientStatusController', () => {
             .useValue(null)
             .overrideProvider(getRepositoryToken(PatientStatusModel))
             .useValue(null)
+            .overrideProvider(getRepositoryToken(PatientCategoryModel))
+            .useValue(null)
+            .overrideProvider(getRepositoryToken(PatientDataAccessModel))
+            .useValue(null)
             .overrideProvider(IUserRepository)
             .useValue(mockedUserRepository)
             .overrideProvider(IPatientMetadataRepository)
@@ -58,6 +69,10 @@ describe('PatientStatusController', () => {
             .useValue(null)
             .overrideProvider(IPatientStatusRepository)
             .useValue(mockedPatientStatusRepository)
+            .overrideProvider(IPatientCategoryRepository)
+            .useValue(mockedPatientCategoryRepository)
+            .overrideProvider(IPatientDataAccessRepository)
+            .useValue(null)
             .compile();
 
         app = moduleRef.createNestApplication();
