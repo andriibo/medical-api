@@ -22,7 +22,7 @@ export class PatientProfileUseCase {
             throw new EntityNotFoundError('Patient Not Found.');
         }
 
-        await this.patientDataAccessSpecification.assertGrantedUserHasAccess(user, patient.id);
+        await this.patientDataAccessSpecification.assertGrantedUserIdHasAccess(user.id, patient.id);
 
         const patientMetadata = await this.patientMetadataRepository.getOneById(patient.id);
 

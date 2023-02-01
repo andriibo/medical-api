@@ -21,7 +21,7 @@ export class GetVitalsUseCase {
     public async getVitalsByGrantedUser(dto: GetVitalsByGrantedUserDto): Promise<VitalsDto> {
         const grantedUser = await this.authedUserService.getUser();
 
-        await this.patientDataAccessSpecification.assertGrantedUserHasAccess(grantedUser, dto.patientUserId);
+        await this.patientDataAccessSpecification.assertGrantedUserIdHasAccess(grantedUser.id, dto.patientUserId);
         const vitals = await this.vitalRepository.getByUserIdForInterval(dto.patientUserId, dto.startDate, dto.endDate);
 
         return VitalsDto.fromVitalsList(vitals);
