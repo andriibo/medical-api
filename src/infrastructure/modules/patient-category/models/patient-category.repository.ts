@@ -3,7 +3,7 @@ import {InjectDataSource} from '@nestjs/typeorm';
 import {DataSource, In} from 'typeorm';
 import {PatientCategoryModel} from './patient-category.model';
 import {IPatientCategoryRepository} from 'app/modules/patient-category/repositories';
-import {PatientCategory, PatientCategoryEnum} from 'domain/entities/patient-category.entity';
+import {PatientCategory} from 'domain/entities/patient-category.entity';
 
 @Injectable()
 export class PatientCategoryRepository implements IPatientCategoryRepository {
@@ -11,19 +11,6 @@ export class PatientCategoryRepository implements IPatientCategoryRepository {
 
     public async update(entity: PatientCategoryModel | PatientCategory[]): Promise<void> {
         await this.dataSource.manager.save(entity);
-    }
-
-    public async updateNormalByPatientUserId(
-        patientUserId: string,
-        patientCategory: PatientCategoryEnum,
-        patientCategoryUpdatedAt: number,
-    ): Promise<void> {
-        await this.dataSource
-            .createQueryBuilder()
-            .update(PatientCategoryModel)
-            .set({patientCategory, patientCategoryUpdatedAt: patientCategoryUpdatedAt})
-            .where({patientUserId, patientCategory: PatientCategoryEnum.Normal})
-            .execute();
     }
 
     public async getOneByPatientUserIdAndGrantedUserId(
