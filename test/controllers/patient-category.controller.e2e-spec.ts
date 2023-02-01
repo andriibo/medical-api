@@ -14,6 +14,8 @@ import {PatientCategory} from 'domain/entities/patient-category.entity';
 import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repositories';
 import {PatientCategoryModel} from 'infrastructure/modules/patient-category/models';
 import {PatientDataAccessModel} from 'infrastructure/modules/patient-data-access/models';
+import {PatientStatusModel} from 'infrastructure/modules/patient-status/models';
+import {IPatientStatusRepository} from 'app/modules/patient-status/repositories';
 
 const patient: User = {
     id: '862108e8-32f6-4d37-840e-2db213f0c2fe',
@@ -68,6 +70,8 @@ describe('PatientCategoryController', () => {
             .useValue(null)
             .overrideProvider(getRepositoryToken(PatientDataAccessModel))
             .useValue(null)
+            .overrideProvider(getRepositoryToken(PatientStatusModel))
+            .useValue(null)
             .overrideProvider(IUserRepository)
             .useValue(mockedUserRepository)
             .overrideProvider(IPatientMetadataRepository)
@@ -78,6 +82,8 @@ describe('PatientCategoryController', () => {
             .useValue(mockedPatientCategoryRepository)
             .overrideProvider(IPatientDataAccessRepository)
             .useValue(mockedPatientDataAccessRepository)
+            .overrideProvider(IPatientStatusRepository)
+            .useValue(null)
             .compile();
 
         app = moduleRef.createNestApplication();

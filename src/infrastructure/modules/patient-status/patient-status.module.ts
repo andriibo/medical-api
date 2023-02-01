@@ -10,6 +10,7 @@ import {PatientStatusModelMapper} from 'infrastructure/modules/patient-status/ma
 
 @Module({
     imports: [TypeOrmModule.forFeature([PatientStatusModel]), AuthModule],
+    exports: [IPatientStatusRepository],
     controllers: [PatientStatusController],
     providers: [
         PatientStatusUseCasesFactory,

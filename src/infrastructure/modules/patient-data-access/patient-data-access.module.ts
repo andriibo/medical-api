@@ -1,4 +1,4 @@
-import {Module} from '@nestjs/common';
+import {forwardRef, Module} from '@nestjs/common';
 import {PatientController} from 'controllers/patient-data-access';
 import {IUserRepository} from 'app/modules/auth/repositories';
 import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repositories';
@@ -25,9 +25,22 @@ import {AccessToPatientBindingService} from 'app/modules/patient-data-access/ser
 import {GrantedUserController} from 'controllers/patient-data-access/granted-user.controller';
 import {AccessForRegisteredCaregiverService} from 'app/modules/patient-data-access/services/access-for-registered-caregiver.service';
 import {AccessForUnregisteredCaregiverService} from 'app/modules/patient-data-access/services/access-for-unregistered-caregiver.service';
+import {IDataAccessApprovedService} from 'app/modules/patient-data-access/services/data-access-approved.service';
+import {DataAccessApprovedService} from 'infrastructure/modules/patient-data-access/services/data-access-approved.service';
+import {IPatientStatusRepository} from 'app/modules/patient-status/repositories';
+import {IPatientCategoryRepository} from 'app/modules/patient-category/repositories';
+import {PatientStatusModule} from 'infrastructure/modules/patient-status/patient-status.module';
+import {PatientCategoryModule} from 'infrastructure/modules/patient-category/patient-category.module';
 
 @Module({
-    imports: [TypeOrmModule.forFeature([PatientDataAccessModel]), MailModule, AuthModule, FileModule],
+    imports: [
+        TypeOrmModule.forFeature([PatientDataAccessModel]),
+        MailModule,
+        AuthModule,
+        FileModule,
+        PatientStatusModule,
+        forwardRef(() => PatientCategoryModule),
+    ],
     exports: [IPatientDataAccessRepository, PatientDataAccessSpecification],
     controllers: [PatientController, GrantedUserController],
     providers: [
@@ -245,6 +258,16 @@ import {AccessForUnregisteredCaregiverService} from 'app/modules/patient-data-ac
                 PatientDataAccessSpecification,
                 IPatientDataAccessEventEmitter,
             ],
+        },
+        {
+            provide: IDataAccessApprovedService,
+            useFactory: (
+                patientStatusRepository: IPatientStatusRepository,
+                patientCategoryRepository: IPatientCategoryRepository,
+            ) => {
+                return new DataAccessApprovedService(patientStatusRepository, patientCategoryRepository);
+            },
+            inject: [IPatientStatusRepository, IPatientCategoryRepository],
         },
     ],
 })
