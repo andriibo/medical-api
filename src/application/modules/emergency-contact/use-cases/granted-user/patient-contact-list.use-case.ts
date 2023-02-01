@@ -18,7 +18,10 @@ export class PatientContactListUseCase {
         const grantedUser = await this.authedUserService.getUser();
         const patient = await this.getPatient(patientUserId);
 
-        await this.patientDataAccessSpecification.assertGrantedUserIdHasAccess(grantedUser.id, patient.id);
+        await this.patientDataAccessSpecification.assertAccessIsOpenByGrantedUserIdAndPatientUserId(
+            grantedUser.id,
+            patient.id,
+        );
 
         const items = await this.emergencyContactRepository.getByUserId(patient.id);
 
