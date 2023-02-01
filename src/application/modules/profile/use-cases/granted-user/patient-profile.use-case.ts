@@ -20,7 +20,7 @@ export class PatientProfileUseCase {
                 grantedUser.id,
                 patientUserId,
             );
-        await this.patientDataAccessSpecification.assertGrantedUserHasAccess(dataAccess);
+        this.patientDataAccessSpecification.assertGrantedUserHasAccess(dataAccess);
 
         const myPatients = await this.myPatientsService.getMyPatients([dataAccess]);
         if (!myPatients.length) {

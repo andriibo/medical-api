@@ -177,7 +177,7 @@ export class PatientDataAccessSpecification {
         }
     }
 
-    public async assertGrantedUserHasAccess(dataAccess: PatientDataAccess): Promise<void> {
+    public assertGrantedUserHasAccess(dataAccess: PatientDataAccess): void {
         const isAccessStatusApproved = dataAccess.status === PatientDataAccessStatus.Approved;
 
         if (!isAccessStatusApproved) {
@@ -187,12 +187,7 @@ export class PatientDataAccessSpecification {
 
     public async assertGrantedUserIdHasAccess(grantedUserId: string, patientUserId: string): Promise<void> {
         const dataAccess = await this.getAccessByPatientUserIdAndGrantedUserId(patientUserId, grantedUserId);
-
-        const isAccessStatusApproved = dataAccess.status === PatientDataAccessStatus.Approved;
-
-        if (!isAccessStatusApproved) {
-            throw new PatientDataAccessSpecificationError('Access Is Absent.');
-        }
+        this.assertGrantedUserHasAccess(dataAccess);
     }
 
     private async getAccessByPatientUserIdAndGrantedUserId(
