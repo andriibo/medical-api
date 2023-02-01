@@ -89,7 +89,6 @@ describe('GrantedUserController', () => {
         };
         const mockedPatientCategoryRepository = {
             getByPatientUserIdsAndGrantedUserId: jest.fn(() => Promise.resolve([patientCategory])),
-            getOneByPatientUserIdAndGrantedUserId: jest.fn(() => Promise.resolve(patientCategory)),
         };
         const mockedPatientMetadataRepository = {
             getOneById: jest.fn(() => Promise.resolve(patientMetadata)),
@@ -98,8 +97,8 @@ describe('GrantedUserController', () => {
             getLastConnectionTimeByUserIds: jest.fn(() => Promise.resolve(usersLastConnectionTime)),
         };
         const mockedPatientDataAccessRepository = {
-            getByGrantedUserIdAndStatus: jest.fn(() => Promise.resolve([patientDataAccess])),
             getOneByPatientUserIdAndGrantedUserId: jest.fn(() => Promise.resolve(patientDataAccess)),
+            getApprovedByGrantedUserIdAndPatientUserId: jest.fn(() => Promise.resolve([patientDataAccess])),
         };
         const moduleRef: TestingModule = await Test.createTestingModule({
             imports: [TestModule, ProfileModule],
@@ -170,6 +169,7 @@ describe('GrantedUserController', () => {
             .set('Authorization', 'Bearer caregiver')
             .expect(200)
             .expect({
+                accessId: patientDataAccess.id,
                 userId: patient.id,
                 email: patient.email,
                 firstName: patient.firstName,

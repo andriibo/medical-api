@@ -21,6 +21,7 @@ export class PatientProfileUseCase {
             grantedUser.id,
             patientUserId,
         );
+
         const myPatients = await this.myPatientsService.getMyPatients(items, grantedUser.id);
         if (!myPatients.length) {
             throw new EntityNotFoundError('Patient Not Found.');
