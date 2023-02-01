@@ -16,7 +16,7 @@ export class PatientCategoryBorderlineUseCase {
 
     public async setBorderline(patientUserId: string): Promise<void> {
         const grantedUser = await this.authedUserService.getUser();
-        await this.patientDataAccessSpecification.assertGrantedUserHasAccess(grantedUser, patientUserId);
+        await this.patientDataAccessSpecification.assertGrantedUserIdHasAccess(grantedUser.id, patientUserId);
 
         const patientCategory = await this.getCategory(patientUserId, grantedUser.id);
         this.patientCategorySpecification.assertGrantedUserCanSetBorderline(patientCategory);

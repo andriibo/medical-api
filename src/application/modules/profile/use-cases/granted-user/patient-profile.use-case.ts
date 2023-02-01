@@ -15,7 +15,7 @@ export class PatientProfileUseCase {
 
     public async getProfileInfo(patientUserId: string): Promise<MyPatientDto> {
         const grantedUser = await this.authedUserService.getUser();
-        await this.patientDataAccessSpecification.assertGrantedUserHasAccess(grantedUser, patientUserId);
+        await this.patientDataAccessSpecification.assertGrantedUserIdHasAccess(grantedUser.id, patientUserId);
         const access = await this.patientDataAccessRepository.getOneApprovedByGrantedUserIdAndPatientUserId(
             grantedUser.id,
             patientUserId,

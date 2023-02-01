@@ -13,7 +13,7 @@ export class PatientCategoryUseCase {
 
     public async getPatientCategory(patientUserId: string): Promise<PatientCategoryDto> {
         const grantedUser = await this.authedUserService.getUser();
-        await this.patientDataAccessSpecification.assertGrantedUserHasAccess(grantedUser, patientUserId);
+        await this.patientDataAccessSpecification.assertGrantedUserIdHasAccess(grantedUser.id, patientUserId);
 
         return await this.getCategory(patientUserId, grantedUser.id);
     }
