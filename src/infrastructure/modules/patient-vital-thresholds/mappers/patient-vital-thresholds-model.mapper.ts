@@ -6,7 +6,7 @@ import {currentUnixTimestamp} from 'app/support/date.helper';
 import {MinMaxThresholdDto} from 'domain/dtos/request/patient-vital-threshold/min-max-threshold.dto';
 import {MinThresholdDto} from 'domain/dtos/request/patient-vital-threshold/min-threshold.dto';
 
-export class PatientVitalThresholdsEntityMapper implements IPatientVitalThresholdsEntityMapper {
+export class PatientVitalThresholdsModelMapper implements IPatientVitalThresholdsEntityMapper {
     public mapByBloodPressureDto(
         dto: BloodPressureThresholdsDto,
         patientVitalThresholds: PatientVitalThresholds,

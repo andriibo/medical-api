@@ -5,7 +5,7 @@ import {TypeOrmModule} from '@nestjs/typeorm';
 import {PatientMedicationModel, PatientMedicationRepository} from './models';
 import {PatientMedicationUseCasesFactory} from './factories/patient-medication-use-cases.factory';
 import {IPatientMedicationEntityMapper} from 'app/modules/patient-medication/mappers/patient-medication-entity.mapper';
-import {PatientMedicationEntityMapper} from './mappers/patient-medication-model.mapper';
+import {PatientMedicationModelMapper} from './mappers/patient-medication-model.mapper';
 import {AuthModule, PatientDataAccessModule} from 'infrastructure/modules';
 import {PatientMedicationSpecification} from 'app/modules/patient-medication/specifications/patient-medication.specification';
 import {PatientDataAccessSpecification} from 'app/modules/patient-data-access/specifications/patient-data-access.specification';
@@ -21,7 +21,7 @@ import {PatientDataAccessSpecification} from 'app/modules/patient-data-access/sp
         },
         {
             provide: IPatientMedicationEntityMapper,
-            useClass: PatientMedicationEntityMapper,
+            useClass: PatientMedicationModelMapper,
         },
         {
             provide: PatientMedicationSpecification,

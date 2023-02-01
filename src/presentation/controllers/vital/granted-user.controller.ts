@@ -1,10 +1,10 @@
 import {BadRequestException, Controller, Get, HttpCode, HttpStatus, Param, ParseUUIDPipe, Query} from '@nestjs/common';
 import {ApiBearerAuth, ApiResponse, ApiTags} from '@nestjs/swagger';
 import {GetVitalsByGrantedUserDto} from 'domain/dtos/request/vital';
-import {VitalUseCasesFactory} from 'infrastructure/modules/vitals/factories/vital-use-cases.factory';
+import {VitalUseCasesFactory} from 'infrastructure/modules/vital/factories/vital-use-cases.factory';
 import {Roles} from 'presentation/guards';
-import {GetVitalQueryView} from 'presentation/views/request/vital';
-import {GetVitalsView} from 'presentation/views/response/vital';
+import {GetVitalsQueryView} from 'presentation/views/request/vital';
+import {VitalsView} from 'presentation/views/response/vital';
 
 @Controller()
 @ApiBearerAuth()
@@ -15,12 +15,12 @@ export class GrantedUserController {
     @Roles('Caregiver', 'Doctor')
     @Get('/patient-vitals/:patientUserId')
     @HttpCode(HttpStatus.OK)
-    @ApiResponse({status: HttpStatus.OK, type: GetVitalsView})
+    @ApiResponse({status: HttpStatus.OK, type: VitalsView})
     public async getPatientVitals(
         @Param('patientUserId', ParseUUIDPipe) patientUserId: string,
-        @Query() query: GetVitalQueryView,
-    ): Promise<GetVitalsView> {
-        const useCase = this.useCasesFactory.getVitals();
+        @Query() query: GetVitalsQueryView,
+    ): Promise<VitalsView> {
+        const useCase = this.useCasesFactory.createGetVitalsUseCase();
 
         try {
             return await useCase.getVitalsByGrantedUser(

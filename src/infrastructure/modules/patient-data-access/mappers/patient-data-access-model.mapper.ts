@@ -3,7 +3,7 @@ import {PatientDataAccessStatus, PatientDataAccess} from 'domain/entities/patien
 import {PatientDataAccessModel} from 'infrastructure/modules/patient-data-access/models';
 import {IPatientDataAccessEntityMapper} from 'app/modules/patient-data-access/mappers/patient-data-access-entity.mapper';
 
-export class PatientDataAccessEntityMapper implements IPatientDataAccessEntityMapper {
+export class PatientDataAccessModelMapper implements IPatientDataAccessEntityMapper {
     public mapByPatientAndGrantedUser(patient: User, grantedUser: User): PatientDataAccess {
         const access = new PatientDataAccessModel();
         access.patientUserId = patient.id;
