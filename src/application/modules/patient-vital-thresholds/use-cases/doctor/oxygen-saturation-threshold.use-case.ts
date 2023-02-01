@@ -2,7 +2,7 @@ import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service'
 import {IPatientVitalThresholdsRepository} from 'app/modules/patient-vital-thresholds/repositories';
 import {PatientVitalThresholdsSpecification} from 'app/modules/patient-vital-thresholds/specifications/patient-vital-thresholds.specification';
 import {IPatientVitalThresholdsEntityMapper} from 'app/modules/patient-vital-thresholds/mappers/patient-vital-thresholds-entity.mapper';
-import {MinThresholdDto} from 'domain/dtos/request/patient-vital-threshold/min-threshold.dto';
+import {MinThresholdDto} from 'domain/dtos/request/patient-vital-thresholds/min-threshold.dto';
 
 export class OxygenSaturationThresholdUseCase {
     public constructor(

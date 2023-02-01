@@ -1,9 +1,9 @@
 import {BadRequestException, Controller, Get, HttpCode, HttpStatus, Param, ParseUUIDPipe} from '@nestjs/common';
 import {ApiBearerAuth, ApiResponse, ApiTags} from '@nestjs/swagger';
 import {Roles} from 'presentation/guards';
-import {PatientVitalThresholdsView} from 'views/response/patient-vital-threshold/patient-vital-thresholds.view';
+import {PatientVitalThresholdsView} from 'views/response/patient-vital-thresholds/patient-vital-thresholds.view';
 import {GrantedUserUseCasesFactory} from 'infrastructure/modules/patient-vital-thresholds/factories';
-import {PatientVitalThresholdsDto} from 'domain/dtos/response/patient-vital-threshold/patient-vital-thresholds.dto';
+import {PatientVitalThresholdsDto} from 'domain/dtos/response/patient-vital-thresholds/patient-vital-thresholds.dto';
 
 @Controller()
 @ApiBearerAuth()

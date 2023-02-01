@@ -1,10 +1,10 @@
 import {IPatientVitalThresholdsEntityMapper} from 'app/modules/patient-vital-thresholds/mappers/patient-vital-thresholds-entity.mapper';
 import {PatientVitalThresholds, User} from 'domain/entities';
 import {PatientVitalThresholdsModel} from 'infrastructure/modules/patient-vital-thresholds/models';
-import {BloodPressureThresholdsDto} from 'domain/dtos/request/patient-vital-threshold/blood-pressure-thresholds.dto';
+import {BloodPressureThresholdsDto} from 'domain/dtos/request/patient-vital-thresholds/blood-pressure-thresholds.dto';
 import {currentUnixTimestamp} from 'app/support/date.helper';
-import {MinMaxThresholdDto} from 'domain/dtos/request/patient-vital-threshold/min-max-threshold.dto';
-import {MinThresholdDto} from 'domain/dtos/request/patient-vital-threshold/min-threshold.dto';
+import {MinMaxThresholdDto} from 'domain/dtos/request/patient-vital-thresholds/min-max-threshold.dto';
+import {MinThresholdDto} from 'domain/dtos/request/patient-vital-thresholds/min-threshold.dto';
 
 export class PatientVitalThresholdsModelMapper implements IPatientVitalThresholdsEntityMapper {
     public mapByBloodPressureDto(

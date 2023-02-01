@@ -1,6 +1,6 @@
 import {ApiProperty} from '@nestjs/swagger';
 import {IsNotEmpty, Min, Max} from 'class-validator';
-import {BloodPressureThresholdsDto} from 'domain/dtos/request/patient-vital-threshold/blood-pressure-thresholds.dto';
+import {BloodPressureThresholdsDto} from 'domain/dtos/request/patient-vital-thresholds/blood-pressure-thresholds.dto';
 import {IsGreaterThan} from 'infrastructure/validators/is-greater-than';
 import {MinDBP, MaxDBP, MinSBP, MaxSBP} from 'domain/constants/thresholds.const';
 

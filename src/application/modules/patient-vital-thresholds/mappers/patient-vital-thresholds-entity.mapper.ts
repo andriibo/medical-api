@@ -1,7 +1,7 @@
 import {PatientVitalThresholds, User} from 'domain/entities';
-import {BloodPressureThresholdsDto} from 'domain/dtos/request/patient-vital-threshold/blood-pressure-thresholds.dto';
-import {MinMaxThresholdDto} from 'domain/dtos/request/patient-vital-threshold/min-max-threshold.dto';
-import {MinThresholdDto} from 'domain/dtos/request/patient-vital-threshold/min-threshold.dto';
+import {BloodPressureThresholdsDto} from 'domain/dtos/request/patient-vital-thresholds/blood-pressure-thresholds.dto';
+import {MinMaxThresholdDto} from 'domain/dtos/request/patient-vital-thresholds/min-max-threshold.dto';
+import {MinThresholdDto} from 'domain/dtos/request/patient-vital-thresholds/min-threshold.dto';
 
 export interface IPatientVitalThresholdsEntityMapper {
     mapByBloodPressureDto(

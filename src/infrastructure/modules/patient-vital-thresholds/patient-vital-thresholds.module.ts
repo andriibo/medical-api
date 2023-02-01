@@ -1,5 +1,5 @@
 import {Module} from '@nestjs/common';
-import {DoctorController, PatientController} from 'controllers/patient-vital-threshold';
+import {DoctorController, PatientController} from 'controllers/patient-vital-thresholds';
 import {IPatientVitalThresholdsRepository} from 'app/modules/patient-vital-thresholds/repositories';
 import {TypeOrmModule} from '@nestjs/typeorm';
 import {PatientVitalThresholdsModel, PatientVitalThresholdsRepository} from './models';
@@ -7,7 +7,7 @@ import {DoctorUseCasesFactory, PatientUseCasesFactory, GrantedUserUseCasesFactor
 import {AuthModule, PatientDataAccessModule} from 'infrastructure/modules';
 import {PatientVitalThresholdsSpecification} from 'app/modules/patient-vital-thresholds/specifications/patient-vital-thresholds.specification';
 import {PatientDataAccessSpecification} from 'app/modules/patient-data-access/specifications/patient-data-access.specification';
-import {GrantedUserController} from 'controllers/patient-vital-threshold/granted-user.controller';
+import {GrantedUserController} from 'controllers/patient-vital-thresholds/granted-user.controller';
 import {PatientVitalThresholdsIndependentModule} from './patient-vital-thresholds.ind.module';
 
 @Module({
