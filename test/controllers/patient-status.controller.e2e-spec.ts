@@ -16,8 +16,9 @@ import {PatientCategoryModel} from 'infrastructure/modules/patient-category/mode
 import {PatientDataAccessModel} from 'infrastructure/modules/patient-data-access/models';
 import {IPatientCategoryRepository} from 'app/modules/patient-category/repositories';
 import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repositories';
+import {PatientCategory} from 'domain/entities/patient-category.entity';
 
-const registeredUser: User = {
+const patient: User = {
     id: '5nc3e70a-c1y9-121a-c5mv-5aq272098bp0',
     email: 'patient@gmail.com',
     firstName: 'Marc',
@@ -28,8 +29,16 @@ const registeredUser: User = {
     createdAt: '2022-10-10 07:31:17.016236',
     deletedAt: null,
 };
+const patientCategory: PatientCategory = {
+    id: '3db4ddee-78b7-42d3-bb79-c38c9f5b770d',
+    patientUserId: patient.id,
+    grantedUserId: '8bfbd95c-c8a5-404b-b3eb-6ac648052ac4',
+    patientCategory: 'Normal',
+    patientCategoryUpdatedAt: currentUnixTimestamp(),
+};
+
 const patientStatus: PatientStatus = {
-    patientUserId: registeredUser.id,
+    patientUserId: patient.id,
     status: 'Normal',
     setAt: currentUnixTimestamp(),
 };
@@ -37,14 +46,15 @@ describe('PatientStatusController', () => {
     let app: INestApplication;
     beforeAll(async () => {
         const mockedUserRepository = {
-            getOneById: jest.fn(() => Promise.resolve(registeredUser)),
+            getOneById: jest.fn(() => Promise.resolve(patient)),
         };
         const mockedPatientStatusRepository = {
             getByPatientUserId: jest.fn(() => Promise.resolve(patientStatus)),
             persist: jest.fn(() => Promise.resolve()),
         };
         const mockedPatientCategoryRepository = {
-            updateNormalByPatientUserId: jest.fn(() => Promise.resolve()),
+            getNormalByPatientUserId: jest.fn(() => Promise.resolve([patientCategory])),
+            update: jest.fn(() => Promise.resolve()),
         };
         const moduleRef: TestingModule = await Test.createTestingModule({
             imports: [TestModule, PatientStatusModule],

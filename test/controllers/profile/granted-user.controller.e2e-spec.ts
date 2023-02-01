@@ -69,6 +69,7 @@ const patientDataAccess: PatientDataAccess = {
 const patientCategory: PatientCategory = {
     id: '17c3e70s-b0w2-126s-c8mo-1cq901092qm9',
     patientUserId: patient.id,
+    grantedUserId: caregiver.id,
     patientCategory: 'Normal',
     patientCategoryUpdatedAt: currentUnixTimestamp(),
 };
