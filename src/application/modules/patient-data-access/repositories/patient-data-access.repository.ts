@@ -35,7 +35,7 @@ export interface IPatientDataAccessRepository {
 
     getByGrantedUserIdAndStatus(grantedUserId: string, status: PatientDataAccessStatus): Promise<PatientDataAccess[]>;
 
-    getOneJoinedPatientWithMetadataByGrantedUserIdAndPatientUserId(
+    getOneWithPatientAndMetadataByGrantedUserIdAndPatientUserId(
         grantedUserId: string,
         patientUserId: string,
     ): Promise<PatientDataAccess>;

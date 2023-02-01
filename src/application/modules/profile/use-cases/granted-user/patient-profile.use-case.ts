@@ -16,11 +16,11 @@ export class PatientProfileUseCase {
     public async getProfileInfo(patientUserId: string): Promise<MyPatientDto> {
         const grantedUser = await this.authedUserService.getUser();
         const dataAccess =
-            await this.patientDataAccessRepository.getOneJoinedPatientWithMetadataByGrantedUserIdAndPatientUserId(
+            await this.patientDataAccessRepository.getOneWithPatientAndMetadataByGrantedUserIdAndPatientUserId(
                 grantedUser.id,
                 patientUserId,
             );
-        this.patientDataAccessSpecification.assertGrantedUserHasAccess(dataAccess);
+        this.patientDataAccessSpecification.assertAccessIsOpenByGrantedUserIdAndAccess(grantedUser.id, dataAccess);
 
         const myPatients = await this.myPatientsService.getMyPatients([dataAccess]);
         if (!myPatients.length) {

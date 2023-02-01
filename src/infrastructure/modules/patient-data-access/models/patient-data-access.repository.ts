@@ -129,16 +129,15 @@ export class PatientDataAccessRepository implements IPatientDataAccessRepository
             .getMany();
     }
 
-    public async getOneJoinedPatientWithMetadataByGrantedUserIdAndPatientUserId(
+    public async getOneWithPatientAndMetadataByGrantedUserIdAndPatientUserId(
         grantedUserId: string,
         patientUserId: string,
     ): Promise<PatientDataAccess> {
-        const status = PatientDataAccessStatus.Approved;
         return await this.dataSource
             .createQueryBuilder(PatientDataAccessModel, 'pda')
             .leftJoinAndSelect('pda.patientUser', 'user')
             .leftJoinAndSelect('user.patientMetadata', 'metadata')
-            .where({grantedUserId, patientUserId, status})
+            .where({grantedUserId, patientUserId})
             .getOne();
     }
 }

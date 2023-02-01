@@ -177,17 +177,28 @@ export class PatientDataAccessSpecification {
         }
     }
 
-    public assertGrantedUserHasAccess(dataAccess: PatientDataAccess): void {
-        const isAccessStatusApproved = dataAccess.status === PatientDataAccessStatus.Approved;
+    public assertAccessIsOpenByGrantedUserIdAndAccess(
+        grantedUserId: string,
+        dataAccess: PatientDataAccess | null,
+    ): void {
+        if (dataAccess === null) {
+            throw new PatientDataAccessSpecificationError('Access Is Absent.');
+        }
+
+        const isAccessStatusApproved =
+            dataAccess.status === PatientDataAccessStatus.Approved && dataAccess.grantedUserId === grantedUserId;
 
         if (!isAccessStatusApproved) {
             throw new PatientDataAccessSpecificationError('Access Is Absent.');
         }
     }
 
-    public async assertGrantedUserIdHasAccess(grantedUserId: string, patientUserId: string): Promise<void> {
+    public async assertAccessIsOpenByGrantedUserIdAndPatientUserId(
+        grantedUserId: string,
+        patientUserId: string,
+    ): Promise<void> {
         const dataAccess = await this.getAccessByPatientUserIdAndGrantedUserId(patientUserId, grantedUserId);
-        this.assertGrantedUserHasAccess(dataAccess);
+        this.assertAccessIsOpenByGrantedUserIdAndAccess(grantedUserId, dataAccess);
     }
 
     private async getAccessByPatientUserIdAndGrantedUserId(
