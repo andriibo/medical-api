@@ -123,10 +123,21 @@ export class PatientDataAccessRepository implements IPatientDataAccessRepository
             .createQueryBuilder(PatientDataAccessModel, 'pda')
             .leftJoinAndSelect('pda.patientUser', 'user')
             .leftJoinAndSelect('user.patientMetadata', 'metadata')
-            .where('pda.granted_user_id = :grantedUserId', {grantedUserId})
-            .andWhere('pda.status = :status', {status})
+            .where({grantedUserId, status})
             .andWhere('user.deleted_at is null')
             .andWhere('user.email is not null')
             .getMany();
+    }
+
+    public async getOneWithPatientAndMetadataByGrantedUserIdAndPatientUserId(
+        grantedUserId: string,
+        patientUserId: string,
+    ): Promise<PatientDataAccess> {
+        return await this.dataSource
+            .createQueryBuilder(PatientDataAccessModel, 'pda')
+            .leftJoinAndSelect('pda.patientUser', 'user')
+            .leftJoinAndSelect('user.patientMetadata', 'metadata')
+            .where({grantedUserId, patientUserId})
+            .getOne();
     }
 }

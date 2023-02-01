@@ -98,8 +98,11 @@ describe('GrantedUserController', () => {
             getLastConnectionTimeByUserIds: jest.fn(() => Promise.resolve(usersLastConnectionTime)),
         };
         const mockedPatientDataAccessRepository = {
-            getByGrantedUserIdAndStatus: jest.fn(() => Promise.resolve([patientDataAccess])),
             getOneByPatientUserIdAndGrantedUserId: jest.fn(() => Promise.resolve(patientDataAccess)),
+            getOneWithPatientAndMetadataByGrantedUserIdAndPatientUserId: jest.fn(() =>
+                Promise.resolve(patientDataAccess),
+            ),
+            getByGrantedUserIdAndStatus: jest.fn(() => Promise.resolve([patientDataAccess])),
         };
         const moduleRef: TestingModule = await Test.createTestingModule({
             imports: [TestModule, ProfileModule],
@@ -170,6 +173,7 @@ describe('GrantedUserController', () => {
             .set('Authorization', 'Bearer caregiver')
             .expect(200)
             .expect({
+                accessId: patientDataAccess.id,
                 userId: patient.id,
                 email: patient.email,
                 firstName: patient.firstName,
@@ -181,6 +185,8 @@ describe('GrantedUserController', () => {
                 gender: patientMetadata.gender,
                 avatar: 'https://zenzers-medical-dev.s3.amazonaws.com/avatars/default-avatar.png',
                 deletedAt: null,
+                lastConnected: null,
+                category: patientCategory.patientCategory,
             });
     });
 

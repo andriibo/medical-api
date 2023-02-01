@@ -34,6 +34,11 @@ export interface IPatientDataAccessRepository {
     ): Promise<PatientDataAccess[]>;
 
     getByGrantedUserIdAndStatus(grantedUserId: string, status: PatientDataAccessStatus): Promise<PatientDataAccess[]>;
+
+    getOneWithPatientAndMetadataByGrantedUserIdAndPatientUserId(
+        grantedUserId: string,
+        patientUserId: string,
+    ): Promise<PatientDataAccess>;
 }
 
 export const IPatientDataAccessRepository = Symbol('IPatientDataAccessRepository');

@@ -10,7 +10,10 @@ export class PatientMedicationSpecification {
             return;
         }
 
-        await this.patientDataAccessSpecification.assertGrantedUserIdHasAccess(user.id, patientUserId);
+        await this.patientDataAccessSpecification.assertAccessIsOpenByGrantedUserIdAndPatientUserId(
+            user.id,
+            patientUserId,
+        );
     }
 
     private isUserPatientAndOwner(user: User, patientUserId: string): boolean {

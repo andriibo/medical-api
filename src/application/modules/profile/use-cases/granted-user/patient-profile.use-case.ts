@@ -1,34 +1,32 @@
-import {IUserRepository} from 'app/modules/auth/repositories';
-import {IPatientMetadataRepository} from 'app/modules/profile/repositories';
 import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service';
-import {PatientDto} from 'domain/dtos/response/profile/patient.dto';
 import {PatientDataAccessSpecification} from 'app/modules/patient-data-access/specifications/patient-data-access.specification';
-import {EntityNotFoundError} from 'app/errors/entity-not-found.error';
-import {IFileUrlService} from 'app/modules/profile/services/file-url.service';
+import {MyPatientDto} from 'domain/dtos/response/profile/my-patient.dto';
+import {IMyPatientsService} from 'app/modules/profile/services/my-patients.service';
+import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repositories';
+import {EntityNotFoundError} from 'app/errors';
 
 export class PatientProfileUseCase {
     public constructor(
-        private readonly userRepository: IUserRepository,
         private readonly authedUserService: IAuthedUserService,
-        private readonly patientMetadataRepository: IPatientMetadataRepository,
         private readonly patientDataAccessSpecification: PatientDataAccessSpecification,
-        private readonly fileUrlService: IFileUrlService,
+        private readonly patientDataAccessRepository: IPatientDataAccessRepository,
+        private readonly myPatientsService: IMyPatientsService,
     ) {}
 
-    public async getProfileInfo(patientUserId: string): Promise<PatientDto> {
-        const user = await this.authedUserService.getUser();
-        const patient = await this.userRepository.getOneById(patientUserId);
-        if (patient === null) {
+    public async getProfileInfo(patientUserId: string): Promise<MyPatientDto> {
+        const grantedUser = await this.authedUserService.getUser();
+        const dataAccess =
+            await this.patientDataAccessRepository.getOneWithPatientAndMetadataByGrantedUserIdAndPatientUserId(
+                grantedUser.id,
+                patientUserId,
+            );
+        this.patientDataAccessSpecification.assertAccessIsOpenByGrantedUserIdAndAccess(grantedUser.id, dataAccess);
+
+        const myPatients = await this.myPatientsService.getMyPatients([dataAccess]);
+        if (!myPatients.length) {
             throw new EntityNotFoundError('Patient Not Found.');
         }
 
-        await this.patientDataAccessSpecification.assertGrantedUserIdHasAccess(user.id, patient.id);
-
-        const patientMetadata = await this.patientMetadataRepository.getOneById(patient.id);
-
-        const dto = PatientDto.fromUserAndPatientMetadata(patient, patientMetadata);
-        dto.avatar = this.fileUrlService.createUrlToUserAvatar(dto.avatar);
-
-        return dto;
+        return myPatients[0];
     }
 }
