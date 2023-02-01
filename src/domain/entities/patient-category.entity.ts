@@ -9,6 +9,8 @@ export interface PatientCategory {
 
     patientUserId: string;
 
+    grantedUserId: string;
+
     patientCategory: string;
 
     patientCategoryUpdatedAt: number | null;

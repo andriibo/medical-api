@@ -5,6 +5,7 @@ import {IPatientStatusRepository} from 'app/modules/patient-status/repositories'
 import {PatientStatusNormalUseCase} from 'app/modules/patient-status/use-cases/patient-status-normal.use-case';
 import {IPatientStatusEntityMapper} from 'app/modules/patient-status/mappers/patient-status-entity.mapper';
 import {PatientStatusAbnormalUseCase} from 'app/modules/patient-status/use-cases/patient-status-abnormal.use-case';
+import {IPatientCategoryRepository} from 'app/modules/patient-category/repositories';
 
 @Injectable()
 export class PatientStatusUseCasesFactory {
@@ -12,6 +13,7 @@ export class PatientStatusUseCasesFactory {
         @Inject(IAuthedUserService) private readonly authedUserService: IAuthedUserService,
         @Inject(IPatientStatusRepository) private readonly patientStatusRepository: IPatientStatusRepository,
         @Inject(IPatientStatusEntityMapper) private readonly patientStatusMapper: IPatientStatusEntityMapper,
+        @Inject(IPatientCategoryRepository) private readonly patientCategoryRepository: IPatientCategoryRepository,
     ) {}
 
     public createMyPatientStatusUseCase(): PatientStatusUseCase {
@@ -31,6 +33,7 @@ export class PatientStatusUseCasesFactory {
             this.authedUserService,
             this.patientStatusRepository,
             this.patientStatusMapper,
+            this.patientCategoryRepository,
         );
     }
 }
