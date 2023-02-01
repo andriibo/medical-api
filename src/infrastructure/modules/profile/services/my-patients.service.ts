@@ -17,9 +17,13 @@ export class MyPatientsService implements IMyPatientsService {
         @Inject(IVitalRepository) private readonly vitalRepository: IVitalRepository,
     ) {}
 
-    public async getMyPatients(accesses: PatientDataAccess[], grantedUserId: string): Promise<MyPatientDto[]> {
+    public async getMyPatients(accesses: PatientDataAccess[]): Promise<MyPatientDto[]> {
+        if (!accesses.length) {
+            return [];
+        }
         const patientIds = accesses.map((item) => item.patientUserId);
         const indexedUsersLastConnectionTime = await this.getIndexedUsersLastConnectionTime(patientIds);
+        const grantedUserId = accesses[0].grantedUserId;
         const indexedPatientCategories = await this.getIndexedPatientCategories(patientIds, grantedUserId);
         const myPatients = accesses.map((patientDataAccess) => {
             const dto = MyPatientDto.fromUserAndPatientMetadata(

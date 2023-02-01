@@ -18,6 +18,6 @@ export class PatientListProfileUseCase {
             PatientDataAccessStatus.Approved,
         );
 
-        return await this.myPatientsService.getMyPatients(accesses, grantedUser.id);
+        return await this.myPatientsService.getMyPatients(accesses);
     }
 }

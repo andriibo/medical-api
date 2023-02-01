@@ -129,7 +129,7 @@ export class PatientDataAccessRepository implements IPatientDataAccessRepository
             .getMany();
     }
 
-    public async getOneApprovedByGrantedUserIdAndPatientUserId(
+    public async getOneJoinedPatientWithMetadataByGrantedUserIdAndPatientUserId(
         grantedUserId: string,
         patientUserId: string,
     ): Promise<PatientDataAccess> {
