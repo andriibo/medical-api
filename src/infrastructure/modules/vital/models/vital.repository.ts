@@ -1,8 +1,8 @@
 import {Injectable} from '@nestjs/common';
 import {InjectDataSource} from '@nestjs/typeorm';
 import {Between, DataSource, In} from 'typeorm';
-import {User, Vital} from 'domain/entities';
-import {IVitalRepository} from 'app/modules/vitals/repositories';
+import {Vital} from 'domain/entities';
+import {IVitalRepository} from 'app/modules/vital/repositories';
 import {VitalModel} from './vital.model';
 import {UserLastConnectionTime} from 'domain/entities/user-last-connection-time';
 
@@ -10,33 +10,18 @@ import {UserLastConnectionTime} from 'domain/entities/user-last-connection-time'
 export class VitalRepository implements IVitalRepository {
     public constructor(@InjectDataSource() private dataSource: DataSource) {}
 
-    public async createRange(vitals: Vital[], user: User): Promise<Vital[]> {
-        const vitalsModel = vitals.map((vital) => {
-            const vitalModel = new VitalModel();
-            vitalModel.fall = vital.fall ?? null;
-            vitalModel.hr = vital.hr ?? null;
-            vitalModel.rr = vital.rr ?? null;
-            vitalModel.spo = vital.spo ?? null;
-            vitalModel.temperature = vital.temperature ?? null;
-            vitalModel.timestamp = vital.timestamp;
-            vitalModel.user = user;
-            vitalModel.userId = user.id;
-            vitalModel.id = vital.id;
-
-            return vitalModel;
-        });
-
-        return await this.dataSource.manager.save(vitalsModel);
+    public async insertVitals(vitalsGroup: VitalModel[]): Promise<void> {
+        await this.dataSource.manager.insert(VitalModel, vitalsGroup);
     }
 
-    public async getAlreadySavedByUser(userId: string, timestamps: number[]): Promise<Vital[]> {
+    public async getByUserIdAndTimestamps(userId: string, timestamps: number[]): Promise<Vital[]> {
         return await this.dataSource.manager.findBy(VitalModel, {
             userId: userId,
             timestamp: In(timestamps),
         });
     }
 
-    public async getByUserForInterval(userId: string, startDate: Date, endDate: Date): Promise<Vital[]> {
+    public async getByUserIdForInterval(userId: string, startDate: Date, endDate: Date): Promise<Vital[]> {
         return await this.dataSource.manager.findBy(VitalModel, {
             userId: userId,
             timestamp: Between<number>(this.toTimestamp(startDate), this.toTimestamp(endDate)),

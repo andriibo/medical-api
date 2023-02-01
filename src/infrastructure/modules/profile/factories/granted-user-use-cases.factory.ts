@@ -7,7 +7,7 @@ import {PatientListProfileUseCase} from 'app/modules/profile/use-cases/granted-u
 import {IFileUrlService} from 'app/modules/profile/services/file-url.service';
 import {PatientDataAccessSpecification} from 'app/modules/patient-data-access/specifications/patient-data-access.specification';
 import {PatientProfileUseCase} from 'app/modules/profile/use-cases/granted-user/patient-profile.use-case';
-import {IVitalRepository} from 'app/modules/vitals/repositories';
+import {IVitalRepository} from 'app/modules/vital/repositories';
 import {IMyPatientsService} from 'app/modules/profile/services/my-patients.service';
 
 @Injectable()

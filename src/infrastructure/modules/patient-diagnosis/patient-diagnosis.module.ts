@@ -5,7 +5,7 @@ import {PatientDiagnosisModel, PatientDiagnosisRepository} from './models';
 import {TypeOrmModule} from '@nestjs/typeorm';
 import {PatientDiagnosisUseCasesFactory} from './factories/patient-diagnosis-use-cases.factory';
 import {IPatientDiagnosisEntityMapper} from 'app/modules/patient-diagnosis/mappers/patient-diagnosis-entity.mapper';
-import {PatientDiagnosisEntityMapper} from './mappers/patient-diagnosis-model.mapper';
+import {PatientDiagnosisModelMapper} from './mappers/patient-diagnosis-model.mapper';
 import {AuthModule, PatientDataAccessModule} from 'infrastructure/modules';
 import {PatientDiagnosisSpecification} from 'app/modules/patient-diagnosis/specifications/patient-diagnosis.specification';
 import {PatientDataAccessSpecification} from 'app/modules/patient-data-access/specifications/patient-data-access.specification';
@@ -21,7 +21,7 @@ import {PatientDataAccessSpecification} from 'app/modules/patient-data-access/sp
         },
         {
             provide: IPatientDiagnosisEntityMapper,
-            useClass: PatientDiagnosisEntityMapper,
+            useClass: PatientDiagnosisModelMapper,
         },
         {
             provide: PatientDiagnosisSpecification,

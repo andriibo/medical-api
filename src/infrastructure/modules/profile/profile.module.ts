@@ -7,7 +7,7 @@ import {UserProfileMapper} from './mappers/user-profile.mapper';
 import {AuthModule} from 'infrastructure/modules/auth/auth.module';
 import {PatientDataAccessModule} from 'infrastructure/modules/patient-data-access/patient-data-access.module';
 import {FileModule} from 'infrastructure/modules/file/file.module';
-import {VitalModule} from 'infrastructure/modules/vitals/vital.module';
+import {VitalModule} from 'infrastructure/modules/vital/vital.module';
 import {ProfileController} from 'controllers/profile/profile.controller';
 import {CaregiverController} from 'controllers/profile/caregiver.controller';
 import {GrantedUserController} from 'controllers/profile/granted-user.controller';
@@ -28,7 +28,7 @@ import {MyPatientsService} from 'infrastructure/modules/profile/services/my-pati
 import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repositories';
 import {IPatientCategoryRepository} from 'app/modules/patient-category/repositories';
 import {IFileUrlService} from 'app/modules/profile/services/file-url.service';
-import {IVitalRepository} from 'app/modules/vitals/repositories';
+import {IVitalRepository} from 'app/modules/vital/repositories';
 import {PatientCategoryModule} from 'infrastructure/modules/patient-category/patient-category.module';
 
 @Module({

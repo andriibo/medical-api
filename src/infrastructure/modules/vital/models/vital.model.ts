@@ -12,22 +12,37 @@ export class VitalModel implements Vital {
     public timestamp: number;
 
     @Column({precision: 5, scale: 2, transformer: new FloatTransformer()})
-    public temperature: number | null = null;
+    public temp: number | null = null;
+
+    @Column({name: 'is_temp_normal'})
+    public isTempNormal: boolean | null;
 
     @Column()
     public hr: number | null = null;
 
+    @Column({name: 'is_hr_normal'})
+    public isHrNormal: boolean | null;
+
     @Column()
-    public spo: number | null = null;
+    public spo2: number | null = null;
+
+    @Column({name: 'is_spo2_normal'})
+    public isSpo2Normal: boolean | null;
 
     @Column()
     public rr: number | null = null;
+
+    @Column({name: 'is_rr_normal'})
+    public isRrNormal: boolean | null;
 
     @Column()
     public fall: boolean | null = null;
 
     @Column({name: 'user_id'})
     public userId: string;
+
+    @Column({name: 'thresholds_id'})
+    public thresholdsId: string;
 
     @ManyToOne(() => UserModel)
     @JoinColumn({name: 'user_id', referencedColumnName: 'id'})

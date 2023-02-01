@@ -1,11 +1,11 @@
 import {BadRequestException, Body, Controller, Get, HttpCode, HttpStatus, Post, Query} from '@nestjs/common';
 import {ApiBearerAuth, ApiResponse, ApiTags} from '@nestjs/swagger';
 import {GetVitalsByPatientDto} from 'domain/dtos/request/vital';
-import {VitalUseCasesFactory} from 'infrastructure/modules/vitals/factories/vital-use-cases.factory';
+import {VitalUseCasesFactory} from 'infrastructure/modules/vital/factories/vital-use-cases.factory';
 import {Roles} from 'presentation/guards';
 import {VitalNormalizationPipe} from 'presentation/pipes/vital-normalization.pipe';
-import {GetVitalQueryView, SyncVitalView} from 'presentation/views/request/vital';
-import {GetVitalsView, SyncVitalsView as SyncVitalResponseView} from 'presentation/views/response/vital';
+import {GetVitalsQueryView, SyncVitalsView} from 'presentation/views/request/vital';
+import {VitalsView} from 'presentation/views/response/vital';
 
 @Controller('patient')
 @ApiBearerAuth()
@@ -17,9 +17,9 @@ export class PatientController {
     @Post('vitals')
     @HttpCode(HttpStatus.OK)
     @HttpCode(HttpStatus.BAD_REQUEST)
-    @ApiResponse({status: HttpStatus.OK, type: SyncVitalResponseView})
-    public async syncVitals(@Body(VitalNormalizationPipe) requestBody: SyncVitalView): Promise<SyncVitalResponseView> {
-        const useCase = this.useCasesFactory.syncPatientVitals();
+    @ApiResponse({status: HttpStatus.OK})
+    public async syncVitals(@Body(VitalNormalizationPipe) requestBody: SyncVitalsView): Promise<void> {
+        const useCase = this.useCasesFactory.createSyncPatientVitalsUseCase();
 
         try {
             return await useCase.updateVitals(requestBody);
@@ -31,9 +31,9 @@ export class PatientController {
     @Roles('Patient')
     @Get('my-vitals')
     @HttpCode(HttpStatus.OK)
-    @ApiResponse({status: HttpStatus.OK, type: GetVitalsView})
-    public async getMyVitals(@Query() query: GetVitalQueryView): Promise<GetVitalsView> {
-        const useCase = this.useCasesFactory.getVitals();
+    @ApiResponse({status: HttpStatus.OK, type: VitalsView})
+    public async getMyVitals(@Query() query: GetVitalsQueryView): Promise<VitalsView> {
+        const useCase = this.useCasesFactory.createGetVitalsUseCase();
 
         try {
             return await useCase.getVitalsByPatient(new GetVitalsByPatientDto(query.startDate, query.endDate));

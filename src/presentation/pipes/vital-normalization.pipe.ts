@@ -1,14 +1,14 @@
 import {PipeTransform, Injectable} from '@nestjs/common';
-import {SyncVitalDto} from 'domain/dtos/request/vital';
+import {SyncVitalsDto} from 'domain/dtos/request/vital';
 
 @Injectable()
-export class VitalNormalizationPipe implements PipeTransform<SyncVitalDto, SyncVitalDto> {
-    public transform(model: SyncVitalDto) {
+export class VitalNormalizationPipe implements PipeTransform<SyncVitalsDto, SyncVitalsDto> {
+    public transform(model: SyncVitalsDto) {
         model.vitals.forEach((vital) => {
             vital.hr = this.normilizeValue(vital.hr, 0, 250);
             vital.rr = this.normilizeValue(vital.rr, 0, 100);
-            vital.spo = this.normilizeValue(vital.spo, 0, 100);
-            vital.temperature = this.normilizeValue(vital.temperature, 0, 100);
+            vital.spo2 = this.normilizeValue(vital.spo2, 0, 100);
+            vital.temp = this.normilizeValue(vital.temp, 0, 100);
         });
 
         return model;

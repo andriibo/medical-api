@@ -5,7 +5,7 @@ import {PatientDataAccessStatus} from 'domain/entities/patient-data-access.entit
 import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repositories';
 import {IPatientCategoryRepository} from 'app/modules/patient-category/repositories';
 import {IFileUrlService} from 'app/modules/profile/services/file-url.service';
-import {IVitalRepository} from 'app/modules/vitals/repositories';
+import {IVitalRepository} from 'app/modules/vital/repositories';
 import {sortUserDtosByName} from 'app/support/sort.helper';
 
 export class MyPatientsService implements IMyPatientsService {

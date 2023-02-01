@@ -1,8 +1,8 @@
-import {IVitalRepository} from 'app/modules/vitals/repositories';
+import {IVitalRepository} from 'app/modules/vital/repositories';
 import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service';
 import {PatientDataAccessSpecification} from 'app/modules/patient-data-access/specifications/patient-data-access.specification';
 import {GetVitalsByGrantedUserDto, GetVitalsByPatientDto} from 'domain/dtos/request/vital';
-import {GetVitalsDto as GetVitalsResponseDto} from 'domain/dtos/response/vital/';
+import {VitalsDto} from 'domain/dtos/response/vital/';
 
 export class GetVitalsUseCase {
     public constructor(
@@ -11,19 +11,19 @@ export class GetVitalsUseCase {
         private readonly patientDataAccessSpecification: PatientDataAccessSpecification,
     ) {}
 
-    public async getVitalsByPatient(dto: GetVitalsByPatientDto): Promise<GetVitalsResponseDto> {
+    public async getVitalsByPatient(dto: GetVitalsByPatientDto): Promise<VitalsDto> {
         const user = await this.authedUserService.getUser();
-        const vitals = await this.vitalRepository.getByUserForInterval(user.id, dto.startDate, dto.endDate);
+        const vitals = await this.vitalRepository.getByUserIdForInterval(user.id, dto.startDate, dto.endDate);
 
-        return GetVitalsResponseDto.fromVitalsList(vitals);
+        return VitalsDto.fromVitalsList(vitals);
     }
 
-    public async getVitalsByGrantedUser(dto: GetVitalsByGrantedUserDto): Promise<GetVitalsResponseDto> {
+    public async getVitalsByGrantedUser(dto: GetVitalsByGrantedUserDto): Promise<VitalsDto> {
         const grantedUser = await this.authedUserService.getUser();
 
         await this.patientDataAccessSpecification.assertGrantedUserHasAccess(grantedUser, dto.patientUserId);
-        const vitals = await this.vitalRepository.getByUserForInterval(dto.patientUserId, dto.startDate, dto.endDate);
+        const vitals = await this.vitalRepository.getByUserIdForInterval(dto.patientUserId, dto.startDate, dto.endDate);
 
-        return GetVitalsResponseDto.fromVitalsList(vitals);
+        return VitalsDto.fromVitalsList(vitals);
     }
 }

@@ -1,5 +1,5 @@
 import {AuthModule} from './auth/auth.module';
-import {VitalModule} from './vitals/vital.module';
+import {VitalModule} from './vital/vital.module';
 import {PatientDataAccessModule} from './patient-data-access/patient-data-access.module';
 import {EmergencyContactModule} from './emergency-contact/emergency-contact.module';
 import {SuggestedContactModule} from './suggected-contact/suggested-contact.module';

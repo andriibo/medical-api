@@ -5,17 +5,27 @@ export interface Vital {
 
     timestamp: number;
 
-    temperature: number | null;
+    temp: number | null;
+
+    isTempNormal: boolean | null;
 
     hr: number | null;
 
-    spo: number | null;
+    isHrNormal: boolean | null;
+
+    spo2: number | null;
+
+    isSpo2Normal: boolean | null;
 
     rr: number | null;
+
+    isRrNormal: boolean | null;
 
     fall: boolean | null;
 
     userId: string;
+
+    thresholdsId: string;
 
     user: User;
 }
