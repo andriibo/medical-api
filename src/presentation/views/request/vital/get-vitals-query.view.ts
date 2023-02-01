@@ -1,7 +1,7 @@
 import {ApiProperty} from '@nestjs/swagger';
 import {IsDateString, IsNotEmpty} from 'class-validator';
 
-export class GetVitalQueryView {
+export class GetVitalsQueryView {
     @ApiProperty()
     @IsNotEmpty()
     @IsDateString()

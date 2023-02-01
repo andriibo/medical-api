@@ -5,25 +5,40 @@ export class VitalDto {
 
     public timestamp: number;
 
-    public temperature: number;
+    public temp: number | null;
 
-    public hr: number;
+    public isTempNormal: boolean | null;
 
-    public spo: number;
+    public hr: number | null;
 
-    public rr: number;
+    public isHrNormal: boolean | null;
 
-    public fall: boolean;
+    public spo2: number | null;
+
+    public isSpo2Normal: boolean | null;
+
+    public rr: number | null;
+
+    public isRrNormal: boolean | null;
+
+    public fall: boolean | null;
+
+    public thresholdsId: string;
 
     public static fromVital(vital: Vital): VitalDto {
         const dto = new VitalDto();
         dto.vitalId = vital.id;
         dto.timestamp = vital.timestamp;
-        dto.temperature = vital.temperature;
+        dto.temp = vital.temp;
+        dto.isTempNormal = vital.isTempNormal;
         dto.hr = vital.hr;
-        dto.spo = vital.spo;
+        dto.isHrNormal = vital.isHrNormal;
+        dto.spo2 = vital.spo2;
+        dto.isSpo2Normal = vital.isSpo2Normal;
         dto.rr = vital.rr;
+        dto.isRrNormal = vital.isRrNormal;
         dto.fall = vital.fall;
+        dto.thresholdsId = vital.thresholdsId;
 
         return dto;
     }

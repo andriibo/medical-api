@@ -19,7 +19,7 @@ export class DoctorUseCasesFactory {
         @Inject(IPatientVitalThresholdsRepository)
         private readonly patientVitalThresholdsRepository: IPatientVitalThresholdsRepository,
         @Inject(IPatientVitalThresholdsEntityMapper)
-        private readonly PatientVitalThresholdsEntityMapper: IPatientVitalThresholdsEntityMapper,
+        private readonly patientVitalThresholdsEntityMapper: IPatientVitalThresholdsEntityMapper,
         @Inject(PatientVitalThresholdsSpecification)
         private readonly patientVitalThresholdSpecification: PatientVitalThresholdsSpecification,
     ) {}
@@ -28,7 +28,7 @@ export class DoctorUseCasesFactory {
         return new HeartRateThresholdsUseCase(
             this.authedUserService,
             this.patientVitalThresholdsRepository,
-            this.PatientVitalThresholdsEntityMapper,
+            this.patientVitalThresholdsEntityMapper,
             this.patientVitalThresholdSpecification,
         );
     }
@@ -37,7 +37,7 @@ export class DoctorUseCasesFactory {
         return new TemperatureThresholdsUseCase(
             this.authedUserService,
             this.patientVitalThresholdsRepository,
-            this.PatientVitalThresholdsEntityMapper,
+            this.patientVitalThresholdsEntityMapper,
             this.patientVitalThresholdSpecification,
         );
     }
@@ -46,7 +46,7 @@ export class DoctorUseCasesFactory {
         return new RespirationRateThresholdsUseCase(
             this.authedUserService,
             this.patientVitalThresholdsRepository,
-            this.PatientVitalThresholdsEntityMapper,
+            this.patientVitalThresholdsEntityMapper,
             this.patientVitalThresholdSpecification,
         );
     }
@@ -55,7 +55,7 @@ export class DoctorUseCasesFactory {
         return new OxygenSaturationThresholdUseCase(
             this.authedUserService,
             this.patientVitalThresholdsRepository,
-            this.PatientVitalThresholdsEntityMapper,
+            this.patientVitalThresholdsEntityMapper,
             this.patientVitalThresholdSpecification,
         );
     }
@@ -64,7 +64,7 @@ export class DoctorUseCasesFactory {
         return new BloodPressureThresholdsUseCase(
             this.authedUserService,
             this.patientVitalThresholdsRepository,
-            this.PatientVitalThresholdsEntityMapper,
+            this.patientVitalThresholdsEntityMapper,
             this.patientVitalThresholdSpecification,
         );
     }
@@ -73,7 +73,7 @@ export class DoctorUseCasesFactory {
         return new MeanArterialPressureThresholdsUseCase(
             this.authedUserService,
             this.patientVitalThresholdsRepository,
-            this.PatientVitalThresholdsEntityMapper,
+            this.patientVitalThresholdsEntityMapper,
             this.patientVitalThresholdSpecification,
         );
     }

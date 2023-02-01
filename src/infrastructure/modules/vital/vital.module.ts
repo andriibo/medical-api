@@ -1,11 +1,13 @@
 import {Module} from '@nestjs/common';
 import {TypeOrmModule} from '@nestjs/typeorm';
-import {IVitalRepository} from 'app/modules/vitals/repositories';
+import {IVitalRepository} from 'app/modules/vital/repositories';
 import {GrantedUserController, PatientController} from 'controllers/vital';
 import {VitalUseCasesFactory} from './factories/vital-use-cases.factory';
 import {VitalModel, VitalRepository} from './models';
 import {AuthModule} from 'infrastructure/modules/auth/auth.module';
 import {PatientDataAccessModule} from 'infrastructure/modules/patient-data-access/patient-data-access.module';
+import {IVitalEntityMapper} from 'app/modules/vital/mappers/vital-entity.mapper';
+import {VitalModelMapper} from './mappers/vital-model.mapper';
 
 @Module({
     imports: [TypeOrmModule.forFeature([VitalModel]), AuthModule, PatientDataAccessModule],
@@ -16,6 +18,10 @@ import {PatientDataAccessModule} from 'infrastructure/modules/patient-data-acces
         {
             provide: IVitalRepository,
             useClass: VitalRepository,
+        },
+        {
+            provide: IVitalEntityMapper,
+            useClass: VitalModelMapper,
         },
     ],
 })

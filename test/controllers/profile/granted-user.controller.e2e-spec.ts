@@ -11,8 +11,8 @@ import {PatientDataAccessModel} from 'infrastructure/modules/patient-data-access
 import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repositories';
 import {TestModule} from 'tests/test.module';
 import {currentUnixTimestamp} from 'app/support/date.helper';
-import {IVitalRepository} from 'app/modules/vitals/repositories';
-import {VitalModel} from 'infrastructure/modules/vitals/models';
+import {IVitalRepository} from 'app/modules/vital/repositories';
+import {VitalModel} from 'infrastructure/modules/vital/models';
 import {PatientCategoryModel} from 'infrastructure/modules/patient-category/models';
 import {PatientCategory} from 'domain/entities/patient-category.entity';
 import {IPatientCategoryRepository} from 'app/modules/patient-category/repositories';

@@ -1,5 +1,4 @@
-import {GetVitalsDto} from './get-vitals.dto';
-import {SyncVitalsDto} from './sync-vitals.dto';
+import {VitalsDto} from './vitals.dto';
 import {VitalDto} from './vital.dto';
 
-export {GetVitalsDto, SyncVitalsDto, VitalDto};
+export {VitalsDto, VitalDto};

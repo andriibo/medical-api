@@ -1,4 +1,4 @@
-import {GetVitalQueryView} from './get-vital-query.view';
-import {SyncVitalView} from './sync-vital.view';
+import {GetVitalsQueryView} from './get-vitals-query.view';
+import {SyncVitalsView} from './sync-vitals.view';
 
-export {GetVitalQueryView, SyncVitalView};
+export {GetVitalsQueryView, SyncVitalsView};

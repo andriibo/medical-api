@@ -3,7 +3,7 @@ import {IPatientMedicationEntityMapper} from 'app/modules/patient-medication/map
 import {PatientMedication} from 'domain/entities';
 import {MedicationDto} from 'domain/dtos/request/patient-medication/medication.dto';
 
-export class PatientMedicationEntityMapper implements IPatientMedicationEntityMapper {
+export class PatientMedicationModelMapper implements IPatientMedicationEntityMapper {
     public mapByMedicationDto(medicationDto: MedicationDto): PatientMedication {
         const patientMedication = new PatientMedicationModel();
         patientMedication.patientUserId = medicationDto.patientUserId;

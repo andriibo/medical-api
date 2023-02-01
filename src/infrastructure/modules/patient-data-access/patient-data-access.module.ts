@@ -6,7 +6,7 @@ import {TypeOrmModule} from '@nestjs/typeorm';
 import {PatientDataAccessModel, PatientDataAccessRepository} from './models';
 import {PatientUseCasesFactory, GrantedUserUseCasesFactory} from './factories';
 import {IPatientDataAccessEntityMapper} from 'app/modules/patient-data-access/mappers/patient-data-access-entity.mapper';
-import {PatientDataAccessEntityMapper} from './mappers/patient-data-access-model.mapper';
+import {PatientDataAccessModelMapper} from './mappers/patient-data-access-model.mapper';
 import {AuthModule} from 'infrastructure/modules/auth/auth.module';
 import {MailModule} from 'infrastructure/modules/mail/mail.module';
 import {FileModule} from 'infrastructure/modules/file/file.module';
@@ -40,7 +40,7 @@ import {AccessForUnregisteredCaregiverService} from 'app/modules/patient-data-ac
         },
         {
             provide: IPatientDataAccessEntityMapper,
-            useClass: PatientDataAccessEntityMapper,
+            useClass: PatientDataAccessModelMapper,
         },
         {
             provide: IPatientDataAccessEventEmitter,
