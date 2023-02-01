@@ -19,10 +19,12 @@ export class PatientStatusAbnormalUseCase {
         const patientStatusModel = this.patientStatusMapper.mapByPatientAndStatus(patient, PatientStatusEnum.Abnormal);
 
         await this.patientStatusRepository.persist(patientStatusModel);
-        await this.patientCategoryRepository.updateNormalByPatientUserId(
-            patient.id,
-            PatientCategoryEnum.Abnormal,
-            currentUnixTimestamp(),
-        );
+        const patientCategories = await this.patientCategoryRepository.getNormalByPatientUserId(patient.id);
+        patientCategories.map((item) => {
+            item.patientCategory = PatientCategoryEnum.Abnormal;
+            item.patientCategoryUpdatedAt = currentUnixTimestamp();
+        });
+
+        await this.patientCategoryRepository.update(patientCategories);
     }
 }

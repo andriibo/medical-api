@@ -9,8 +9,8 @@ import {PatientCategory, PatientCategoryEnum} from 'domain/entities/patient-cate
 export class PatientCategoryRepository implements IPatientCategoryRepository {
     public constructor(@InjectDataSource() private dataSource: DataSource) {}
 
-    public async update(patientCategory: PatientCategoryModel): Promise<void> {
-        await this.dataSource.manager.save(patientCategory);
+    public async update(entity: PatientCategoryModel | PatientCategory[]): Promise<void> {
+        await this.dataSource.manager.save(entity);
     }
 
     public async updateNormalByPatientUserId(
@@ -43,6 +43,12 @@ export class PatientCategoryRepository implements IPatientCategoryRepository {
         return await this.dataSource.manager.findBy(PatientCategoryModel, {
             patientUserId: In(patientUserIds),
             grantedUserId,
+        });
+    }
+
+    public async getNormalByPatientUserId(patientUserId: string): Promise<PatientCategory[]> {
+        return await this.dataSource.manager.findBy(PatientCategoryModel, {
+            patientUserId: patientUserId,
         });
     }
 }
