@@ -7,7 +7,7 @@ import {PatientVitalThresholdsDto} from 'domain/dtos/response/patient-vital-thre
 
 @Controller()
 @ApiBearerAuth()
-@ApiTags('Patient Vital Threshold')
+@ApiTags('Patient Vital Thresholds')
 export class GrantedUserController {
     public constructor(private readonly grantedUserUseCasesFactory: GrantedUserUseCasesFactory) {}
 

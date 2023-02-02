@@ -1,8 +1,11 @@
 import {VitalDto} from './vital.dto';
 import {Vital} from 'domain/entities';
+import {PatientVitalThresholdsDto} from 'domain/dtos/response/patient-vital-thresholds/patient-vital-thresholds.dto';
 
 export class VitalsDto {
-    public vitals: VitalDto[];
+    public vitals: VitalDto[] = [];
+
+    public thresholds: PatientVitalThresholdsDto[] = [];
 
     public static fromVitals(vital: Vital[]): VitalsDto {
         const dto = new VitalsDto();

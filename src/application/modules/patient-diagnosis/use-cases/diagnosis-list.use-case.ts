@@ -4,7 +4,6 @@ import {IPatientDiagnosisRepository} from 'app/modules/patient-diagnosis/reposit
 import {PatientDiagnosisSpecification} from 'app/modules/patient-diagnosis/specifications/patient-diagnosis.specification';
 import {IUserRepository} from 'app/modules/auth/repositories';
 import {DiagnosisDto} from 'domain/dtos/response/patient-diagnosis/diagnosis.dto';
-import {arrayUnique} from 'app/support/array.helper';
 import {UserDto} from 'domain/dtos/response/user/user.dto';
 
 export class DiagnosisListUseCase {
@@ -38,6 +37,6 @@ export class DiagnosisListUseCase {
     private async getUsers(items: PatientDiagnosis[]): Promise<User[]> {
         const userIds = items.map((item) => item.createdBy);
 
-        return await this.userRepository.getByIds(arrayUnique(userIds));
+        return await this.userRepository.getByIds(userIds);
     }
 }

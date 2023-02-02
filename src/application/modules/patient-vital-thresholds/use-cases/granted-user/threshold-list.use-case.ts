@@ -1,7 +1,6 @@
 import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service';
 import {PatientVitalThresholds, User} from 'domain/entities';
 import {IUserRepository} from 'app/modules/auth/repositories';
-import {arrayUnique} from 'app/support/array.helper';
 import {IPatientVitalThresholdsRepository} from 'app/modules/patient-vital-thresholds/repositories';
 import {PatientVitalThresholdsSpecification} from 'app/modules/patient-vital-thresholds/specifications/patient-vital-thresholds.specification';
 import {PatientVitalThresholdsDto} from 'domain/dtos/response/patient-vital-thresholds/patient-vital-thresholds.dto';
@@ -37,6 +36,6 @@ export class ThresholdListUseCase {
             thresholds.mapSetBy,
         ].filter((setBy) => setBy !== null);
 
-        return await this.userRepository.getByIds(arrayUnique(userIds));
+        return await this.userRepository.getByIds(userIds);
     }
 }

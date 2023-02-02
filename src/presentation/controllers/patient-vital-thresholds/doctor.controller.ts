@@ -13,7 +13,7 @@ import {DoctorUseCasesFactory} from 'infrastructure/modules/patient-vital-thresh
 
 @Controller('doctor')
 @ApiBearerAuth()
-@ApiTags('Patient Vital Threshold')
+@ApiTags('Patient Vital Thresholds')
 export class DoctorController {
     public constructor(private readonly doctorUseCasesFactory: DoctorUseCasesFactory) {}
 
