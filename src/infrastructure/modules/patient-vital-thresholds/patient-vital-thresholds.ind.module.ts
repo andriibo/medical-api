@@ -3,9 +3,14 @@ import {IPatientVitalThresholdsEntityMapper} from 'app/modules/patient-vital-thr
 import {PatientVitalThresholdsModelMapper} from './mappers/patient-vital-thresholds-model.mapper';
 import {IPatientVitalThresholdsRepository} from 'app/modules/patient-vital-thresholds/repositories';
 import {PatientVitalThresholdsRepository} from 'infrastructure/modules/patient-vital-thresholds/models';
+import {PatientOwnsThresholdsSpecification} from 'app/modules/patient-vital-thresholds/specifications/patient-owns-thresholds.specification';
 
 @Module({
-    exports: [IPatientVitalThresholdsEntityMapper, IPatientVitalThresholdsRepository],
+    exports: [
+        IPatientVitalThresholdsEntityMapper,
+        IPatientVitalThresholdsRepository,
+        PatientOwnsThresholdsSpecification,
+    ],
     providers: [
         {
             provide: IPatientVitalThresholdsEntityMapper,
@@ -14,6 +19,13 @@ import {PatientVitalThresholdsRepository} from 'infrastructure/modules/patient-v
         {
             provide: IPatientVitalThresholdsRepository,
             useClass: PatientVitalThresholdsRepository,
+        },
+        {
+            provide: PatientOwnsThresholdsSpecification,
+            useFactory: (patientVitalThresholdsRepository: IPatientVitalThresholdsRepository) => {
+                return new PatientOwnsThresholdsSpecification(patientVitalThresholdsRepository);
+            },
+            inject: [IPatientVitalThresholdsRepository],
         },
     ],
 })

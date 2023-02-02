@@ -14,7 +14,7 @@ export class TemperatureThresholdsUseCase {
 
     public async createNewThresholds(patientUserId: string, dto: MinMaxThresholdDto): Promise<void> {
         const doctor = await this.authedUserService.getUser();
-        await this.thresholdsSpecification.assertGrantedUserCanOperateThreshold(doctor, patientUserId);
+        await this.thresholdsSpecification.assertGrantedUserCanOperateThresholds(doctor, patientUserId);
 
         const patientThresholds = await this.thresholdsRepository.getCurrentThresholdsByPatientUserId(patientUserId);
         const modifiedPatientThresholds = this.thresholdsMapper.mapByMinMaxTemperatureDto(

@@ -11,3 +11,15 @@ export function getFirstByPropValue<T extends object>(objects: T[], propName: st
 
     return null;
 }
+
+export function indexObjects(objects: object[], propName: string): object {
+    const indexedObjects = {};
+
+    objects.map((object) => {
+        if (propName in object) {
+            indexedObjects[object[propName]] = object;
+        }
+    });
+
+    return indexedObjects;
+}

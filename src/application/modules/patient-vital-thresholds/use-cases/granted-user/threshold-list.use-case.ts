@@ -16,7 +16,7 @@ export class ThresholdListUseCase {
     public async getList(patientUserId: string): Promise<PatientVitalThresholdsDto> {
         const user = await this.authedUserService.getUser();
 
-        await this.thresholdSpecification.assertGrantedUserCanOperateThreshold(user, patientUserId);
+        await this.thresholdSpecification.assertGrantedUserCanOperateThresholds(user, patientUserId);
 
         const thresholds = await this.thresholdsRepository.getCurrentThresholdsByPatientUserId(patientUserId);
 

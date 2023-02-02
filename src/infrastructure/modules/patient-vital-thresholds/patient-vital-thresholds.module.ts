@@ -16,6 +16,7 @@ import {PatientVitalThresholdsIndependentModule} from './patient-vital-threshold
         PatientDataAccessModule,
         PatientVitalThresholdsIndependentModule,
     ],
+    exports: [PatientVitalThresholdsSpecification],
     controllers: [DoctorController, PatientController, GrantedUserController],
     providers: [
         DoctorUseCasesFactory,
