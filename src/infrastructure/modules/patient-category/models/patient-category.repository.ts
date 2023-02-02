@@ -3,7 +3,7 @@ import {InjectDataSource} from '@nestjs/typeorm';
 import {DataSource, In} from 'typeorm';
 import {PatientCategoryModel} from './patient-category.model';
 import {IPatientCategoryRepository} from 'app/modules/patient-category/repositories';
-import {PatientCategory} from 'domain/entities/patient-category.entity';
+import {PatientCategory, PatientCategoryEnum} from 'domain/entities/patient-category.entity';
 
 @Injectable()
 export class PatientCategoryRepository implements IPatientCategoryRepository {
@@ -36,6 +36,7 @@ export class PatientCategoryRepository implements IPatientCategoryRepository {
     public async getNormalByPatientUserId(patientUserId: string): Promise<PatientCategory[]> {
         return await this.dataSource.manager.findBy(PatientCategoryModel, {
             patientUserId: patientUserId,
+            patientCategory: PatientCategoryEnum.Normal,
         });
     }
 }
