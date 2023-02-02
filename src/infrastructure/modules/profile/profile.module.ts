@@ -25,7 +25,6 @@ import {RemoveDoctorService} from 'infrastructure/modules/profile/services/remov
 import {RemoveCaregiverOrPatientService} from 'infrastructure/modules/profile/services/remove-caregiver-or-patient.service';
 import {IMyPatientsService} from 'app/modules/profile/services/my-patients.service';
 import {MyPatientsService} from 'infrastructure/modules/profile/services/my-patients.service';
-import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repositories';
 import {IPatientCategoryRepository} from 'app/modules/patient-category/repositories';
 import {IFileUrlService} from 'app/modules/profile/services/file-url.service';
 import {IVitalRepository} from 'app/modules/vital/repositories';
@@ -35,8 +34,8 @@ import {PatientCategoryModule} from 'infrastructure/modules/patient-category/pat
     imports: [
         TypeOrmModule.forFeature([UserModel, DoctorMetadataModel, PatientMetadataModel]),
         AuthModule,
-        PatientDataAccessModule,
         PatientCategoryModule,
+        PatientDataAccessModule,
         FileModule,
         VitalModule,
     ],
@@ -73,19 +72,13 @@ import {PatientCategoryModule} from 'infrastructure/modules/patient-category/pat
         {
             provide: IMyPatientsService,
             useFactory: (
-                patientDataAccessRepository: IPatientDataAccessRepository,
                 patientCategoryRepository: IPatientCategoryRepository,
                 fileUrlService: IFileUrlService,
                 vitalRepository: IVitalRepository,
             ) => {
-                return new MyPatientsService(
-                    patientDataAccessRepository,
-                    patientCategoryRepository,
-                    fileUrlService,
-                    vitalRepository,
-                );
+                return new MyPatientsService(patientCategoryRepository, fileUrlService, vitalRepository);
             },
-            inject: [IPatientDataAccessRepository, IPatientCategoryRepository, IFileUrlService, IVitalRepository],
+            inject: [IPatientCategoryRepository, IFileUrlService, IVitalRepository],
         },
     ],
 })
