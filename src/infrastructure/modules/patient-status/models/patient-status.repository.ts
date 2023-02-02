@@ -4,7 +4,6 @@ import {DataSource} from 'typeorm';
 import {PatientStatusModel} from './patient-status.model';
 import {PatientStatus} from 'domain/entities/patient-status.entity';
 import {IPatientStatusRepository} from 'app/modules/patient-status/repositories';
-import {currentUnixTimestamp} from 'app/support/date.helper';
 
 @Injectable()
 export class PatientStatusRepository implements IPatientStatusRepository {
@@ -13,9 +12,7 @@ export class PatientStatusRepository implements IPatientStatusRepository {
     public async getByPatientUserId(patientUserId: string): Promise<PatientStatus> {
         let entity = await this.dataSource.manager.findOneBy(PatientStatusModel, {patientUserId});
         if (entity === null) {
-            entity = PatientStatusModel.getModelWithDefaultValues();
-            entity.patientUserId = patientUserId;
-            entity.setAt = currentUnixTimestamp();
+            entity = PatientStatusModel.getModelWithDefaultValues(patientUserId);
         }
 
         return entity;
