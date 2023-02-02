@@ -1,32 +1,33 @@
 import {ApiProperty} from '@nestjs/swagger';
 import {VitalsDto, VitalDto} from 'domain/dtos/response/vital';
+import {PatientVitalThresholdsView} from 'views/response/patient-vital-thresholds/patient-vital-thresholds.view';
 
 export class VitalView extends VitalDto {
-    @ApiProperty()
+    @ApiProperty({nullable: true})
     public temp: number | null;
 
-    @ApiProperty()
+    @ApiProperty({nullable: true})
     public isTempNormal: boolean | null;
 
-    @ApiProperty()
+    @ApiProperty({nullable: true})
     public hr: number | null;
 
-    @ApiProperty()
+    @ApiProperty({nullable: true})
     public isHrNormal: boolean | null;
 
-    @ApiProperty()
+    @ApiProperty({nullable: true})
     public spo2: number | null;
 
-    @ApiProperty()
+    @ApiProperty({nullable: true})
     public isSpo2Normal: boolean | null;
 
-    @ApiProperty()
+    @ApiProperty({nullable: true})
     public rr: number | null;
 
-    @ApiProperty()
+    @ApiProperty({nullable: true})
     public isRrNormal: boolean | null;
 
-    @ApiProperty()
+    @ApiProperty({nullable: true})
     public fall: boolean | null;
 
     @ApiProperty()
@@ -37,6 +38,9 @@ export class VitalView extends VitalDto {
 }
 
 export class VitalsView extends VitalsDto {
-    @ApiProperty()
+    @ApiProperty({isArray: true, type: VitalView})
     public vitals: VitalView[] = [];
+
+    @ApiProperty({isArray: true, type: PatientVitalThresholdsView})
+    public thresholds: PatientVitalThresholdsView[] = [];
 }

@@ -8,6 +8,7 @@ import {EntityNotFoundError} from 'app/errors';
 import {currentUnixTimestamp} from 'app/support/date.helper';
 import {EntityManager} from 'typeorm/entity-manager/EntityManager';
 import {PatientVitalThresholdsModel} from 'infrastructure/modules/patient-vital-thresholds/models';
+import {arrayUnique} from 'app/support/array.helper';
 
 @Injectable()
 export class UserRepository implements IUserRepository {
@@ -65,7 +66,9 @@ export class UserRepository implements IUserRepository {
             return [];
         }
 
-        return await this.dataSource.manager.findBy(UserModel, {id: In(ids)});
+        return await this.dataSource.manager.findBy(UserModel, {
+            id: In(arrayUnique(ids)),
+        });
     }
 
     public async getOneByEmail(email: string): Promise<User> {

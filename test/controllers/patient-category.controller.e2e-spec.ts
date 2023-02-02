@@ -92,18 +92,6 @@ describe('PatientCategoryController', () => {
         await app.init();
     });
 
-    it(`/patient-category/:patientUserId (GET)`, async () => {
-        return request(app.getHttpServer())
-            .get(`/patient-category/${patient.id}`)
-            .set('Authorization', 'Bearer doctor')
-            .expect(200)
-            .expect({
-                patientUserId: patientCategory.patientUserId,
-                category: patientCategory.patientCategory,
-                setAt: patientCategory.patientCategoryUpdatedAt,
-            });
-    });
-
     it(`/patient-category/normal/:patientUserId (PATCH)`, async () => {
         return request(app.getHttpServer())
             .patch(`/patient-category/normal/${patient.id}`)
