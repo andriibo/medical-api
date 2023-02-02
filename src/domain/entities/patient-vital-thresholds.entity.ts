@@ -56,4 +56,6 @@ export interface PatientVitalThresholds {
     mapSetBy: string | null;
 
     mapSetAt: number | null;
+
+    createdAt: string;
 }

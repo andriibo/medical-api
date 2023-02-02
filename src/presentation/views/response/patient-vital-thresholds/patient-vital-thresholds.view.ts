@@ -1,6 +1,6 @@
 import {ApiProperty} from '@nestjs/swagger';
 import {UserView} from 'presentation/views/response/user';
-import {PatientVitalThresholdsDto} from 'domain/dtos/response/patient-vital-threshold/patient-vital-thresholds.dto';
+import {PatientVitalThresholdsDto} from 'domain/dtos/response/patient-vital-thresholds/patient-vital-thresholds.dto';
 
 export class PatientVitalThresholdsView implements PatientVitalThresholdsDto {
     @ApiProperty()

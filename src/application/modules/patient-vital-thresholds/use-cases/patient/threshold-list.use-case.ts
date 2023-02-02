@@ -3,7 +3,7 @@ import {PatientVitalThresholds, User} from 'domain/entities';
 import {IUserRepository} from 'app/modules/auth/repositories';
 import {arrayUnique} from 'app/support/array.helper';
 import {IPatientVitalThresholdsRepository} from 'app/modules/patient-vital-thresholds/repositories';
-import {PatientVitalThresholdsDto} from 'domain/dtos/response/patient-vital-threshold/patient-vital-thresholds.dto';
+import {PatientVitalThresholdsDto} from 'domain/dtos/response/patient-vital-thresholds/patient-vital-thresholds.dto';
 
 export class ThresholdListUseCase {
     public constructor(

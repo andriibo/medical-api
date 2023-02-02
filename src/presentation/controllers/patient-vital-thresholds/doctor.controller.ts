@@ -8,7 +8,7 @@ import {
     UpdateOxygenSaturationView,
     UpdateBloodPressureView,
     UpdateMeanArterialPressureView,
-} from 'views/request/patient-vital-threshold';
+} from 'views/request/patient-vital-thresholds';
 import {DoctorUseCasesFactory} from 'infrastructure/modules/patient-vital-thresholds/factories/doctor-use-cases.factory';
 
 @Controller('doctor')

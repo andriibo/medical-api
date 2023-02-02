@@ -17,7 +17,7 @@ export class PatientVitalThresholdsRepository implements IPatientVitalThresholds
         return await this.dataSource.manager.findOne(PatientVitalThresholdsModel, {
             where: {patientUserId},
             order: {
-                id: 'DESC',
+                createdAt: 'DESC',
             },
         });
     }

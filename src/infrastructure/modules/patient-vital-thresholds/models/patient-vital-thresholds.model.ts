@@ -105,6 +105,9 @@ export class PatientVitalThresholdsModel implements PatientVitalThresholds {
     @Column({name: 'map_set_at'})
     mapSetAt: number | null = null;
 
+    @Column({name: 'created_at'})
+    public createdAt: string;
+
     public static getModelWithDefaultValues(): PatientVitalThresholdsModel {
         const model = new PatientVitalThresholdsModel();
         model.minHr = MinHR;
