@@ -49,6 +49,7 @@ export class PatientCategoryRepository implements IPatientCategoryRepository {
     public async getNormalByPatientUserId(patientUserId: string): Promise<PatientCategory[]> {
         return await this.dataSource.manager.findBy(PatientCategoryModel, {
             patientUserId: patientUserId,
+            patientCategory: PatientCategoryEnum.Normal,
         });
     }
 }
