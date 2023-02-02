@@ -1,5 +1,5 @@
 import {Entity, Column, PrimaryColumn} from 'typeorm';
-import {PatientStatus} from 'domain/entities/patient-status.entity';
+import {PatientStatus, PatientStatusEnum} from 'domain/entities/patient-status.entity';
 
 @Entity('patient_status')
 export class PatientStatusModel implements PatientStatus {
@@ -11,4 +11,11 @@ export class PatientStatusModel implements PatientStatus {
 
     @Column({name: 'set_at'})
     public setAt: number;
+
+    public static getModelWithDefaultValues(): PatientStatusModel {
+        const model = new PatientStatusModel();
+        model.status = PatientStatusEnum.Normal;
+
+        return model;
+    }
 }
