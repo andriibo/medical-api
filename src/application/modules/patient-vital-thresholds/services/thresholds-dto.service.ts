@@ -14,14 +14,14 @@ export class ThresholdsDtoService {
     public async createDtosByThresholdsGroup(
         thresholdsGroup: PatientVitalThresholds[],
     ): Promise<PatientVitalThresholdsDto[]> {
-        const users = await this.getUsersWhoSetThreshold(thresholdsGroup);
+        const users = await this.getUsersWhoSetThresholds(thresholdsGroup);
 
         return thresholdsGroup.map((thresholds) => {
             return PatientVitalThresholdsDto.fromPatientVitalThresholds(thresholds, users);
         });
     }
 
-    private async getUsersWhoSetThreshold(thresholdsGroup: PatientVitalThresholds[]): Promise<User[]> {
+    private async getUsersWhoSetThresholds(thresholdsGroup: PatientVitalThresholds[]): Promise<User[]> {
         const userIds = this.extractUserIds(thresholdsGroup);
 
         return await this.userRepository.getByIds(userIds);

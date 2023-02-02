@@ -37,9 +37,9 @@ export class GetVitalsUseCase {
 
     private async getVitalsDto(vitals: Vital[]): Promise<VitalsDto> {
         const vitalsDto = VitalsDto.fromVitals(vitals);
-        const thresholds = await this.getThresholdsGroup(vitalsDto);
+        const thresholdsGroup = await this.getThresholdsGroup(vitalsDto);
 
-        vitalsDto.thresholds = await this.thresholdsDtoService.createDtosByThresholdsGroup(thresholds);
+        vitalsDto.thresholds = await this.thresholdsDtoService.createDtosByThresholdsGroup(thresholdsGroup);
 
         return vitalsDto;
     }
