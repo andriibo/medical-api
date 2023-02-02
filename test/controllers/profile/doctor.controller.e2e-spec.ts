@@ -15,6 +15,8 @@ import {VitalModel} from 'infrastructure/modules/vital/models';
 import {IVitalRepository} from 'app/modules/vital/repositories';
 import {PatientCategoryModel} from 'infrastructure/modules/patient-category/models';
 import {IPatientCategoryRepository} from 'app/modules/patient-category/repositories';
+import {PatientStatusModel} from 'infrastructure/modules/patient-status/models';
+import {IPatientStatusRepository} from 'app/modules/patient-status/repositories';
 
 const doctor: User = {
     id: '1nc5e10o-b1w9-239h-c7mk-9af242088lw0',
@@ -67,6 +69,8 @@ describe('DoctorController', () => {
             .useValue(null)
             .overrideProvider(getRepositoryToken(PatientCategoryModel))
             .useValue(null)
+            .overrideProvider(getRepositoryToken(PatientStatusModel))
+            .useValue(null)
             .overrideProvider(getRepositoryToken(VitalModel))
             .useValue(null)
             .overrideProvider(IUserRepository)
@@ -78,6 +82,8 @@ describe('DoctorController', () => {
             .overrideProvider(IPatientDataAccessRepository)
             .useValue(null)
             .overrideProvider(IPatientCategoryRepository)
+            .useValue(null)
+            .overrideProvider(IPatientStatusRepository)
             .useValue(null)
             .overrideProvider(IVitalRepository)
             .useValue(null)

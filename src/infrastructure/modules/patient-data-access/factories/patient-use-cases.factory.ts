@@ -16,6 +16,7 @@ import {RefuseDataAccessUseCase} from 'app/modules/patient-data-access/use-cases
 import {IFileUrlService} from 'app/modules/profile/services/file-url.service';
 import {AccessForRegisteredCaregiverService} from 'app/modules/patient-data-access/services/access-for-registered-caregiver.service';
 import {AccessForUnregisteredCaregiverService} from 'app/modules/patient-data-access/services/access-for-unregistered-caregiver.service';
+import {IPatientDataAccessEventEmitter} from 'app/modules/patient-data-access/event-emitters/patient-data-access.event-emitter';
 
 @Injectable()
 export class PatientUseCasesFactory {
@@ -37,6 +38,8 @@ export class PatientUseCasesFactory {
         @Inject(DeleteDataAccessByPatientService)
         private readonly deleteDataAccessByPatientService: DeleteDataAccessByPatientService,
         @Inject(IFileUrlService) private readonly fileUrlService: IFileUrlService,
+        @Inject(IPatientDataAccessEventEmitter)
+        private readonly patientDataAccessEventEmitter: IPatientDataAccessEventEmitter,
     ) {}
 
     public createInitiateDataAccessForDoctorUseCase(): InitiateDataAccessUseCase {
@@ -70,6 +73,7 @@ export class PatientUseCasesFactory {
             this.patientDataAccessRepository,
             this.authedUserService,
             this.patientDataAccessSpecification,
+            this.patientDataAccessEventEmitter,
         );
     }
 

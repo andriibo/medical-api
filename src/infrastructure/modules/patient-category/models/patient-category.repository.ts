@@ -13,6 +13,19 @@ export class PatientCategoryRepository implements IPatientCategoryRepository {
         await this.dataSource.manager.save(entity);
     }
 
+    public async updateCategoryAndUpdatedAtById(
+        patientCategory: PatientCategoryEnum,
+        patientCategoryUpdatedAt: number,
+        id: string,
+    ): Promise<void> {
+        await this.dataSource
+            .createQueryBuilder()
+            .update(PatientCategoryModel)
+            .set({patientCategory, patientCategoryUpdatedAt})
+            .where({id})
+            .execute();
+    }
+
     public async getOneByPatientUserIdAndGrantedUserId(
         patientUserId: string,
         grantedUserId: string,

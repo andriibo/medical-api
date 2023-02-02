@@ -1,9 +1,10 @@
-import {User} from 'domain/entities';
+import {PatientDataAccess, User} from 'domain/entities';
 import {Inject, Injectable} from '@nestjs/common';
 import {OnEvent} from '@nestjs/event-emitter';
 import {AccessToGrantedUserBindingService} from 'app/modules/patient-data-access/services/access-to-granted-user-binding.service';
 import {IMailService} from 'app/modules/mail/services/abstract/mail.service';
 import {AccessToPatientBindingService} from 'app/modules/patient-data-access/services/access-to-patient-binding.service';
+import {IDataAccessApprovedService} from 'app/modules/patient-data-access/services/data-access-approved.service';
 
 @Injectable()
 export class PatientDataAccessListener {
@@ -13,6 +14,8 @@ export class PatientDataAccessListener {
         private accessToGrantedUserBindingService: AccessToGrantedUserBindingService,
         @Inject(AccessToPatientBindingService)
         private accessToPatientBindingService: AccessToPatientBindingService,
+        @Inject(IDataAccessApprovedService)
+        private dataAccessApprovedService: IDataAccessApprovedService,
     ) {}
 
     @OnEvent('patient-initiated-data-access-for-unregistered-doctor')
@@ -81,5 +84,10 @@ export class PatientDataAccessListener {
     @OnEvent('data-access-withdrawn-by-granted-user')
     public async handleAccessWithdrawnByGrantedUser(grantedUser: User, patientEmail: string): Promise<void> {
         await this.mailService.sendNotificationThatGrantedUserWithdrawnDataAccess(grantedUser, patientEmail);
+    }
+
+    @OnEvent('data-access-approved')
+    public async handleAccessApproved(dataAccess: PatientDataAccess): Promise<void> {
+        await this.dataAccessApprovedService.handle(dataAccess);
     }
 }

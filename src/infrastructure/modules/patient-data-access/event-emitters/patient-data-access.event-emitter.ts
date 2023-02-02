@@ -1,4 +1,4 @@
-import {User} from 'domain/entities';
+import {PatientDataAccess, User} from 'domain/entities';
 import {IPatientDataAccessEventEmitter} from 'app/modules/patient-data-access/event-emitters/patient-data-access.event-emitter';
 import {EventEmitter2} from '@nestjs/event-emitter';
 import {Injectable} from '@nestjs/common';
@@ -69,5 +69,9 @@ export class PatientDataAccessEventEmitter implements IPatientDataAccessEventEmi
 
     public async emitAccessWithdrawnByGrantedUser(grantedUser: User, patientEmail: string): Promise<void> {
         await this.eventEmitter.emit('data-access-withdrawn-by-granted-user', grantedUser, patientEmail);
+    }
+
+    public async emitDataAccessApproved(dataAccess: PatientDataAccess): Promise<void> {
+        await this.eventEmitter.emit('data-access-approved', dataAccess);
     }
 }

@@ -13,6 +13,10 @@ import {PatientMedicationModel} from 'infrastructure/modules/patient-medication/
 import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repositories';
 import {PatientDataAccessModel} from 'infrastructure/modules/patient-data-access/models';
 import {IPatientMedicationRepository} from 'app/modules/patient-medication/repositories';
+import {PatientStatusModel} from 'infrastructure/modules/patient-status/models';
+import {PatientCategoryModel} from 'infrastructure/modules/patient-category/models';
+import {IPatientStatusRepository} from 'app/modules/patient-status/repositories';
+import {IPatientCategoryRepository} from 'app/modules/patient-category/repositories';
 
 const patient: User = {
     id: 'bd58571c-c935-41e9-9e08-a8d4e0e93f5f',
@@ -81,6 +85,10 @@ describe('PatientMedicationController', () => {
             .useValue(null)
             .overrideProvider(getRepositoryToken(PatientDataAccessModel))
             .useValue(null)
+            .overrideProvider(getRepositoryToken(PatientStatusModel))
+            .useValue(null)
+            .overrideProvider(getRepositoryToken(PatientCategoryModel))
+            .useValue(null)
             .overrideProvider(IUserRepository)
             .useValue(mockedUserRepository)
             .overrideProvider(IPatientMetadataRepository)
@@ -91,6 +99,10 @@ describe('PatientMedicationController', () => {
             .useValue(mockedPatientDataAccessRepository)
             .overrideProvider(IPatientMedicationRepository)
             .useValue(mockedPatientMedicationRepository)
+            .overrideProvider(IPatientStatusRepository)
+            .useValue(null)
+            .overrideProvider(IPatientCategoryRepository)
+            .useValue(null)
             .compile();
 
         app = moduleRef.createNestApplication();

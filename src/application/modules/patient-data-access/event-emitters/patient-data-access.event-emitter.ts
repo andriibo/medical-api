@@ -1,4 +1,4 @@
-import {User} from 'domain/entities';
+import {PatientDataAccess, User} from 'domain/entities';
 
 export interface IPatientDataAccessEventEmitter {
     emitPatientInitiatedAccessForUnregisteredDoctor(patient: User, doctorEmail: string): void;
@@ -20,6 +20,8 @@ export interface IPatientDataAccessEventEmitter {
     emitAccessDeletedByGrantedUser(grantedUser: User, patientEmail: string): void;
 
     emitAccessWithdrawnByGrantedUser(grantedUser: User, patientEmail: string): void;
+
+    emitDataAccessApproved(dataAccess: PatientDataAccess): Promise<void>;
 }
 
 export const IPatientDataAccessEventEmitter = Symbol('IPatientDataAccessEventEmitter');
