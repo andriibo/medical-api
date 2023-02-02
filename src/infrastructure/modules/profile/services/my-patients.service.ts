@@ -2,7 +2,6 @@ import {Inject} from '@nestjs/common';
 import {IMyPatientsService} from 'app/modules/profile/services/my-patients.service';
 import {MyPatientDto} from 'domain/dtos/response/profile/my-patient.dto';
 import {PatientDataAccess} from 'domain/entities/patient-data-access.entity';
-import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repositories';
 import {IPatientCategoryRepository} from 'app/modules/patient-category/repositories';
 import {IFileUrlService} from 'app/modules/profile/services/file-url.service';
 import {IVitalRepository} from 'app/modules/vital/repositories';
@@ -10,8 +9,6 @@ import {sortUserDtosByName} from 'app/support/sort.helper';
 
 export class MyPatientsService implements IMyPatientsService {
     public constructor(
-        @Inject(IPatientDataAccessRepository)
-        private readonly patientDataAccessRepository: IPatientDataAccessRepository,
         @Inject(IPatientCategoryRepository) private readonly patientCategoryRepository: IPatientCategoryRepository,
         @Inject(IFileUrlService) private readonly fileUrlService: IFileUrlService,
         @Inject(IVitalRepository) private readonly vitalRepository: IVitalRepository,
