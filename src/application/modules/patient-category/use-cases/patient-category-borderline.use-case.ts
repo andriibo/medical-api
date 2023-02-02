@@ -1,7 +1,6 @@
 import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service';
 import {IPatientCategoryRepository} from 'app/modules/patient-category/repositories';
 import {EntityNotFoundError} from 'app/errors';
-import {PatientDataAccessSpecification} from 'app/modules/patient-data-access/specifications/patient-data-access.specification';
 import {PatientCategory, PatientCategoryEnum} from 'domain/entities/patient-category.entity';
 import {currentUnixTimestamp} from 'app/support/date.helper';
 import {PatientCategorySpecification} from 'app/modules/patient-category/specifications/patient-category.specification';
@@ -9,18 +8,12 @@ import {PatientCategorySpecification} from 'app/modules/patient-category/specifi
 export class PatientCategoryBorderlineUseCase {
     public constructor(
         private readonly authedUserService: IAuthedUserService,
-        private readonly patientDataAccessSpecification: PatientDataAccessSpecification,
         private readonly patientCategoryRepository: IPatientCategoryRepository,
         private readonly patientCategorySpecification: PatientCategorySpecification,
     ) {}
 
     public async setBorderline(patientUserId: string): Promise<void> {
         const grantedUser = await this.authedUserService.getUser();
-        await this.patientDataAccessSpecification.assertAccessIsOpenByGrantedUserIdAndPatientUserId(
-            grantedUser.id,
-            patientUserId,
-        );
-
         const patientCategory = await this.getCategory(patientUserId, grantedUser.id);
         this.patientCategorySpecification.assertGrantedUserCanSetBorderline(patientCategory);
 

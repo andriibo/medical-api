@@ -14,6 +14,7 @@ import {
 import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repositories';
 import {IFileUrlService} from 'app/modules/profile/services/file-url.service';
 import {DeleteDataAccessByGrantedUserService} from 'app/modules/patient-data-access/services/delete-data-access-by-granted-user.service';
+import {IPatientDataAccessEventEmitter} from 'app/modules/patient-data-access/event-emitters/patient-data-access.event-emitter';
 
 @Injectable()
 export class GrantedUserUseCasesFactory {
@@ -31,6 +32,8 @@ export class GrantedUserUseCasesFactory {
         @Inject(IFileUrlService) private readonly fileUrlService: IFileUrlService,
         @Inject(DeleteDataAccessByGrantedUserService)
         private readonly deleteDataAccessByGrantedUserService: DeleteDataAccessByGrantedUserService,
+        @Inject(IPatientDataAccessEventEmitter)
+        private readonly patientDataAccessEventEmitter: IPatientDataAccessEventEmitter,
     ) {}
 
     public createInitiateDataAccessUseCase(): InitiateDataAccessUseCase {
@@ -55,6 +58,7 @@ export class GrantedUserUseCasesFactory {
             this.patientDataAccessRepository,
             this.authedUserService,
             this.patientDataAccessSpecification,
+            this.patientDataAccessEventEmitter,
         );
     }
 

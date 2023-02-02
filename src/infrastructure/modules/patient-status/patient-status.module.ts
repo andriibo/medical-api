@@ -11,6 +11,7 @@ import {PatientCategoryModule} from 'infrastructure/modules/patient-category/pat
 
 @Module({
     imports: [TypeOrmModule.forFeature([PatientStatusModel]), AuthModule, PatientCategoryModule],
+    exports: [IPatientStatusRepository],
     controllers: [PatientStatusController],
     providers: [
         PatientStatusUseCasesFactory,

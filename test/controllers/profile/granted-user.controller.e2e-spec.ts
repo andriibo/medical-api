@@ -16,6 +16,8 @@ import {VitalModel} from 'infrastructure/modules/vital/models';
 import {PatientCategoryModel} from 'infrastructure/modules/patient-category/models';
 import {PatientCategory} from 'domain/entities/patient-category.entity';
 import {IPatientCategoryRepository} from 'app/modules/patient-category/repositories';
+import {PatientStatusModel} from 'infrastructure/modules/patient-status/models';
+import {IPatientStatusRepository} from 'app/modules/patient-status/repositories';
 
 const caregiver: User = {
     id: '4babe90f-b1a3-145e-c0mz-9aq248098ac0',
@@ -121,6 +123,8 @@ describe('GrantedUserController', () => {
             .useValue(null)
             .overrideProvider(getRepositoryToken(PatientCategoryModel))
             .useValue(null)
+            .overrideProvider(getRepositoryToken(PatientStatusModel))
+            .useValue(null)
             .overrideProvider(getRepositoryToken(VitalModel))
             .useValue(null)
             .overrideProvider(IUserRepository)
@@ -133,6 +137,8 @@ describe('GrantedUserController', () => {
             .useValue(mockedPatientDataAccessRepository)
             .overrideProvider(IPatientCategoryRepository)
             .useValue(mockedPatientCategoryRepository)
+            .overrideProvider(IPatientStatusRepository)
+            .useValue(null)
             .overrideProvider(IVitalRepository)
             .useValue(mockedVitalRepository)
             .compile();
