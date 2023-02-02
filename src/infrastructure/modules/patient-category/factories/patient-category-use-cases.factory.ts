@@ -1,7 +1,7 @@
 import {Inject, Injectable} from '@nestjs/common';
 import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service';
 import {IPatientCategoryRepository} from 'app/modules/patient-category/repositories';
-import {PatientCategoryBorderlineUseCase, PatientCategoryUseCase} from 'app/modules/patient-category/use-cases';
+import {PatientCategoryBorderlineUseCase} from 'app/modules/patient-category/use-cases';
 import {PatientDataAccessSpecification} from 'app/modules/patient-data-access/specifications/patient-data-access.specification';
 import {PatientCategoryNormalUseCase} from 'app/modules/patient-category/use-cases/patient-category-normal.use-case';
 import {PatientCategorySpecification} from 'app/modules/patient-category/specifications/patient-category.specification';
@@ -16,14 +16,6 @@ export class PatientCategoryUseCasesFactory {
         @Inject(PatientCategorySpecification)
         private readonly patientCategorySpecification: PatientCategorySpecification,
     ) {}
-
-    public createPatientCategoryUseCase(): PatientCategoryUseCase {
-        return new PatientCategoryUseCase(
-            this.authedUserService,
-            this.patientDataAccessSpecification,
-            this.patientCategoryRepository,
-        );
-    }
 
     public createPatientCategoryNormalUseCase(): PatientCategoryNormalUseCase {
         return new PatientCategoryNormalUseCase(
