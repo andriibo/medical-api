@@ -1,4 +1,4 @@
-import {forwardRef, Module} from '@nestjs/common';
+import {Module} from '@nestjs/common';
 import {PatientController} from 'controllers/patient-data-access';
 import {IUserRepository} from 'app/modules/auth/repositories';
 import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repositories';
@@ -39,7 +39,7 @@ import {PatientCategoryModule} from 'infrastructure/modules/patient-category/pat
         AuthModule,
         FileModule,
         PatientStatusModule,
-        forwardRef(() => PatientCategoryModule),
+        PatientCategoryModule,
     ],
     exports: [IPatientDataAccessRepository, PatientDataAccessSpecification],
     controllers: [PatientController, GrantedUserController],

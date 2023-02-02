@@ -1,6 +1,6 @@
-import {forwardRef, Module} from '@nestjs/common';
+import {Module} from '@nestjs/common';
 import {TypeOrmModule} from '@nestjs/typeorm';
-import {AuthModule, PatientDataAccessModule} from 'infrastructure/modules';
+import {AuthModule} from 'infrastructure/modules/auth/auth.module';
 import {PatientCategoryModel, PatientCategoryRepository} from 'infrastructure/modules/patient-category/models';
 import {IPatientCategoryRepository} from 'app/modules/patient-category/repositories';
 import {PatientCategoryController} from 'controllers/patient-category.controller';
@@ -8,7 +8,7 @@ import {PatientCategoryUseCasesFactory} from 'infrastructure/modules/patient-cat
 import {PatientCategorySpecification} from 'app/modules/patient-category/specifications/patient-category.specification';
 
 @Module({
-    imports: [TypeOrmModule.forFeature([PatientCategoryModel]), AuthModule, forwardRef(() => PatientDataAccessModule)],
+    imports: [TypeOrmModule.forFeature([PatientCategoryModel]), AuthModule],
     exports: [IPatientCategoryRepository],
     controllers: [PatientCategoryController],
     providers: [
