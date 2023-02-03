@@ -4,13 +4,14 @@ import {IUserRepository} from 'app/modules/auth/repositories';
 import {IPatientVitalThresholdsRepository} from 'app/modules/patient-vital-thresholds/repositories';
 import {PatientVitalThresholdsSpecification} from 'app/modules/patient-vital-thresholds/specifications/patient-vital-thresholds.specification';
 import {PatientVitalThresholdsDto} from 'domain/dtos/response/patient-vital-thresholds/patient-vital-thresholds.dto';
+import {ThresholdsDtoService} from 'app/modules/patient-vital-thresholds/services/thresholds-dto.service';
 
 export class ThresholdListUseCase {
     public constructor(
         private readonly authedUserService: IAuthedUserService,
-        private readonly userRepository: IUserRepository,
         private readonly thresholdsRepository: IPatientVitalThresholdsRepository,
         private readonly thresholdSpecification: PatientVitalThresholdsSpecification,
+        private readonly thresholdsDtoService: ThresholdsDtoService,
     ) {}
 
     public async getList(patientUserId: string): Promise<PatientVitalThresholdsDto> {
@@ -20,22 +21,6 @@ export class ThresholdListUseCase {
 
         const thresholds = await this.thresholdsRepository.getCurrentThresholdsByPatientUserId(patientUserId);
 
-        const users = await this.getUsersWhoSetThreshold(thresholds);
-
-        return PatientVitalThresholdsDto.fromPatientVitalThresholds(thresholds, users);
-    }
-
-    private async getUsersWhoSetThreshold(thresholds: PatientVitalThresholds): Promise<User[]> {
-        const userIds = [
-            thresholds.hrSetBy,
-            thresholds.tempSetBy,
-            thresholds.spo2SetBy,
-            thresholds.rrSetBy,
-            thresholds.dbpSetBy,
-            thresholds.sbpSetBy,
-            thresholds.mapSetBy,
-        ].filter((setBy) => setBy !== null);
-
-        return await this.userRepository.getByIds(userIds);
+        return await this.thresholdsDtoService.createDtoByThresholds(thresholds);
     }
 }
