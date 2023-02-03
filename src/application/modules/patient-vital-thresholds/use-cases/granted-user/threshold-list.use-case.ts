@@ -1,18 +1,18 @@
 import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service';
 import {PatientVitalThresholds, User} from 'domain/entities';
-import {IUserRepository} from 'app/modules/auth/repositories';
 import {IPatientVitalThresholdsRepository} from 'app/modules/patient-vital-thresholds/repositories';
 import {PatientVitalThresholdsSpecification} from 'app/modules/patient-vital-thresholds/specifications/patient-vital-thresholds.specification';
 import {PatientVitalThresholdsDto} from 'domain/dtos/response/patient-vital-thresholds/patient-vital-thresholds.dto';
+import {ThresholdsDtoService} from 'app/modules/patient-vital-thresholds/services/thresholds-dto.service';
 import {IVitalRepository} from 'app/modules/vital/repositories';
 
 export class ThresholdListUseCase {
     public constructor(
         private readonly authedUserService: IAuthedUserService,
-        private readonly userRepository: IUserRepository,
         private readonly thresholdsRepository: IPatientVitalThresholdsRepository,
         private readonly thresholdSpecification: PatientVitalThresholdsSpecification,
         private readonly vitalRepository: IVitalRepository,
+        private readonly thresholdsDtoService: ThresholdsDtoService,
     ) {}
 
     public async getList(patientUserId: string): Promise<PatientVitalThresholdsDto> {
@@ -22,9 +22,8 @@ export class ThresholdListUseCase {
 
         const thresholds = await this.thresholdsRepository.getCurrentThresholdsByPatientUserId(patientUserId);
         const vitalsCount = this.vitalRepository.getCountByThresholdsId(thresholds.id);
-        const users = await this.getUsersWhoSetThreshold(thresholds);
 
-        const dto = PatientVitalThresholdsDto.fromPatientVitalThresholds(thresholds, users);
+        const dto = await this.thresholdsDtoService.createDtoByThresholds(thresholds);
         dto.isPending = !vitalsCount;
 
         return dto;
