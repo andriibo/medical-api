@@ -58,6 +58,8 @@ export class PatientVitalThresholdsDto {
 
     public mapSetAt: number | null;
 
+    public isPending = false;
+
     public static fromPatientVitalThresholds(
         thresholds: PatientVitalThresholds,
         users: User[],
