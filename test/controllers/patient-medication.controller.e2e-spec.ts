@@ -17,6 +17,7 @@ import {PatientStatusModel} from 'infrastructure/modules/patient-status/models';
 import {PatientCategoryModel} from 'infrastructure/modules/patient-category/models';
 import {IPatientStatusRepository} from 'app/modules/patient-status/repositories';
 import {IPatientCategoryRepository} from 'app/modules/patient-category/repositories';
+import {IPatientVitalThresholdsRepository} from 'app/modules/patient-vital-thresholds/repositories';
 
 const patient: User = {
     id: 'bd58571c-c935-41e9-9e08-a8d4e0e93f5f',
@@ -102,6 +103,8 @@ describe('PatientMedicationController', () => {
             .overrideProvider(IPatientStatusRepository)
             .useValue(null)
             .overrideProvider(IPatientCategoryRepository)
+            .useValue(null)
+            .overrideProvider(IPatientVitalThresholdsRepository)
             .useValue(null)
             .compile();
 
