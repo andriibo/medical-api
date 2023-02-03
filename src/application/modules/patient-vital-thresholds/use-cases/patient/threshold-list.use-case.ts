@@ -16,10 +16,10 @@ export class ThresholdListUseCase {
         const user = await this.authedUserService.getUser();
 
         const thresholds = await this.thresholdRepository.getCurrentThresholdsByPatientUserId(user.id);
-        const vitalsCount = this.vitalRepository.getCountByThresholdsId(thresholds.id);
+        const vitalsQuantity = this.vitalRepository.countByThresholdsId(thresholds.id);
 
         const dto = await this.thresholdsDtoService.createDtoByThresholds(thresholds);
-        dto.isPending = !vitalsCount;
+        dto.isPending = !vitalsQuantity;
 
         return dto;
     }

@@ -1,5 +1,4 @@
 import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service';
-import {PatientVitalThresholds, User} from 'domain/entities';
 import {IPatientVitalThresholdsRepository} from 'app/modules/patient-vital-thresholds/repositories';
 import {PatientVitalThresholdsSpecification} from 'app/modules/patient-vital-thresholds/specifications/patient-vital-thresholds.specification';
 import {PatientVitalThresholdsDto} from 'domain/dtos/response/patient-vital-thresholds/patient-vital-thresholds.dto';
@@ -11,8 +10,8 @@ export class ThresholdListUseCase {
         private readonly authedUserService: IAuthedUserService,
         private readonly thresholdsRepository: IPatientVitalThresholdsRepository,
         private readonly thresholdSpecification: PatientVitalThresholdsSpecification,
-        private readonly vitalRepository: IVitalRepository,
         private readonly thresholdsDtoService: ThresholdsDtoService,
+        private readonly vitalRepository: IVitalRepository,
     ) {}
 
     public async getList(patientUserId: string): Promise<PatientVitalThresholdsDto> {
@@ -21,25 +20,11 @@ export class ThresholdListUseCase {
         await this.thresholdSpecification.assertGrantedUserCanOperateThresholds(user, patientUserId);
 
         const thresholds = await this.thresholdsRepository.getCurrentThresholdsByPatientUserId(patientUserId);
-        const vitalsCount = this.vitalRepository.getCountByThresholdsId(thresholds.id);
+        const vitalsQuantity = this.vitalRepository.countByThresholdsId(thresholds.id);
 
         const dto = await this.thresholdsDtoService.createDtoByThresholds(thresholds);
-        dto.isPending = !vitalsCount;
+        dto.isPending = !vitalsQuantity;
 
         return dto;
-    }
-
-    private async getUsersWhoSetThreshold(thresholds: PatientVitalThresholds): Promise<User[]> {
-        const userIds = [
-            thresholds.hrSetBy,
-            thresholds.tempSetBy,
-            thresholds.spo2SetBy,
-            thresholds.rrSetBy,
-            thresholds.dbpSetBy,
-            thresholds.sbpSetBy,
-            thresholds.mapSetBy,
-        ].filter((setBy) => setBy !== null);
-
-        return await this.userRepository.getByIds(userIds);
     }
 }

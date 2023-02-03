@@ -41,7 +41,7 @@ export class VitalRepository implements IVitalRepository {
             .getRawMany();
     }
 
-    public async getCountByThresholdsId(thresholdsId: string): Promise<number> {
+    public async countByThresholdsId(thresholdsId: string): Promise<number> {
         return await this.dataSource.manager.countBy(VitalModel, {
             thresholdsId: thresholdsId,
         });
