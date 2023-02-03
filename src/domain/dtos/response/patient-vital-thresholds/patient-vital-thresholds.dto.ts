@@ -58,7 +58,7 @@ export class PatientVitalThresholdsDto {
 
     public mapSetAt: number | null;
 
-    public isPending: boolean;
+    public isPending = false;
 
     public static fromPatientVitalThresholds(
         thresholds: PatientVitalThresholds,
@@ -100,7 +100,6 @@ export class PatientVitalThresholdsDto {
         dto.maxMap = thresholds.maxMap;
         dto.mapSetBy = indexedUsers[thresholds.mapSetBy] ? UserDto.fromUser(indexedUsers[thresholds.mapSetBy]) : null;
         dto.mapSetAt = thresholds.mapSetAt;
-        dto.isPending = false;
 
         return dto;
     }
