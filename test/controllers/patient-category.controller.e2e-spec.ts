@@ -16,6 +16,7 @@ import {PatientCategoryModel} from 'infrastructure/modules/patient-category/mode
 import {PatientDataAccessModel} from 'infrastructure/modules/patient-data-access/models';
 import {PatientStatusModel} from 'infrastructure/modules/patient-status/models';
 import {IPatientStatusRepository} from 'app/modules/patient-status/repositories';
+import {IPatientVitalThresholdsRepository} from 'app/modules/patient-vital-thresholds/repositories';
 
 const patient: User = {
     id: '862108e8-32f6-4d37-840e-2db213f0c2fe',
@@ -41,7 +42,7 @@ const patientCategory: PatientCategory = {
     id: '3db4ddee-78b7-42d3-bb79-c38c9f5b770d',
     patientUserId: patient.id,
     grantedUserId: '8bfbd95c-c8a5-404b-b3eb-6ac648052ac4',
-    patientCategory: 'Normal',
+    patientCategory: 'Abnormal',
     patientCategoryUpdatedAt: currentUnixTimestamp(),
 };
 
@@ -84,6 +85,8 @@ describe('PatientCategoryController', () => {
             .overrideProvider(IPatientDataAccessRepository)
             .useValue(mockedPatientDataAccessRepository)
             .overrideProvider(IPatientStatusRepository)
+            .useValue(null)
+            .overrideProvider(IPatientVitalThresholdsRepository)
             .useValue(null)
             .compile();
 

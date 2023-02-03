@@ -17,6 +17,7 @@ import {PatientCategoryModel} from 'infrastructure/modules/patient-category/mode
 import {IPatientCategoryRepository} from 'app/modules/patient-category/repositories';
 import {PatientStatusModel} from 'infrastructure/modules/patient-status/models';
 import {IPatientStatusRepository} from 'app/modules/patient-status/repositories';
+import {IPatientVitalThresholdsRepository} from 'app/modules/patient-vital-thresholds/repositories';
 
 const caregiver: User = {
     id: '2rc8q18o-c1v2-199c-c8ma-9cf142780lb0',
@@ -77,6 +78,8 @@ describe('CaregiverController', () => {
             .overrideProvider(IPatientStatusRepository)
             .useValue(null)
             .overrideProvider(IVitalRepository)
+            .useValue(null)
+            .overrideProvider(IPatientVitalThresholdsRepository)
             .useValue(null)
             .compile();
 

@@ -10,6 +10,7 @@ import {IDoctorMetadataRepository, IPatientMetadataRepository} from 'app/modules
 import {TestModule} from 'tests/test.module';
 import {MedicationModel} from 'infrastructure/modules/medication/models/medication.model';
 import {IMedicationRepository} from 'app/modules/medication/repositories';
+import {IPatientVitalThresholdsRepository} from 'app/modules/patient-vital-thresholds/repositories';
 
 const registeredUser: User = {
     id: '8bfbd95c-c8a5-404b-b3eb-6ac648052ac4',
@@ -56,6 +57,8 @@ describe('MedicationController', () => {
             .useValue(null)
             .overrideProvider(IMedicationRepository)
             .useValue(mockedMedicationRepository)
+            .overrideProvider(IPatientVitalThresholdsRepository)
+            .useValue(null)
             .compile();
 
         app = moduleRef.createNestApplication();

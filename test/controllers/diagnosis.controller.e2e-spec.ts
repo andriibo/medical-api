@@ -10,6 +10,7 @@ import {IDoctorMetadataRepository, IPatientMetadataRepository} from 'app/modules
 import {TestModule} from 'tests/test.module';
 import {DiagnosisModel} from 'infrastructure/modules/diagnosis/models/diagnosis.model';
 import {IDiagnosisRepository} from 'app/modules/diagnosis/repositories';
+import {IPatientVitalThresholdsRepository} from 'app/modules/patient-vital-thresholds/repositories';
 
 const registeredUser: User = {
     id: '8bfbd95c-c8a5-404b-b3eb-6ac648052ac4',
@@ -55,6 +56,8 @@ describe('DiagnosisController', () => {
             .useValue(null)
             .overrideProvider(IDiagnosisRepository)
             .useValue(mockedDiagnosisRepository)
+            .overrideProvider(IPatientVitalThresholdsRepository)
+            .useValue(null)
             .compile();
 
         app = moduleRef.createNestApplication();

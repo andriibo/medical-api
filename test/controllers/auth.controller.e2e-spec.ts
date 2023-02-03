@@ -29,6 +29,7 @@ import {IAuthService} from 'app/modules/auth/services/auth.service';
 import {IMailSenderService} from 'app/modules/mail/services/abstract/mail-sender.service';
 import {AuthModel} from 'infrastructure/aws/cognito/auth.model';
 import {PatientCategoryModel} from 'infrastructure/modules/patient-category/models';
+import {IPatientVitalThresholdsRepository} from 'app/modules/patient-vital-thresholds/repositories';
 
 const authModel: IAuthModel = new AuthModel({
     UserConfirmed: true,
@@ -106,6 +107,8 @@ describe('AuthController', () => {
             .overrideProvider(IPatientMetadataRepository)
             .useValue(null)
             .overrideProvider(IDoctorMetadataRepository)
+            .useValue(null)
+            .overrideProvider(IPatientVitalThresholdsRepository)
             .useValue(null)
             .compile();
 
