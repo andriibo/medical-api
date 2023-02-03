@@ -6,6 +6,7 @@ export interface IVitalRepository {
     getByUserIdAndTimestamps(userId: string, timestamps: number[]): Promise<Vital[]>;
     getByUserIdForInterval(userId: string, startDate: Date, endDate: Date): Promise<Vital[]>;
     getLastConnectionTimeByUserIds(userIds: string[]): Promise<UserLastConnectionTime[]>;
+    getCountByThresholdsId(thresholdsId: string): Promise<number>;
 }
 
 export const IVitalRepository = Symbol('IVitalRepository');

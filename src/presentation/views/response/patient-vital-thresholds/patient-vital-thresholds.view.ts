@@ -86,4 +86,7 @@ export class PatientVitalThresholdsView implements PatientVitalThresholdsDto {
 
     @ApiProperty({nullable: true})
     public mapSetAt: number | null;
+
+    @ApiProperty()
+    public isPending: boolean;
 }
