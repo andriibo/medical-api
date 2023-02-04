@@ -22,9 +22,12 @@ export class VitalRepository implements IVitalRepository {
     }
 
     public async getByUserIdForInterval(userId: string, startDate: Date, endDate: Date): Promise<Vital[]> {
-        return await this.dataSource.manager.findBy(VitalModel, {
-            userId: userId,
-            timestamp: Between<number>(this.toTimestamp(startDate), this.toTimestamp(endDate)),
+        return await this.dataSource.manager.find(VitalModel, {
+            where: {
+                userId: userId,
+                timestamp: Between<number>(this.toTimestamp(startDate), this.toTimestamp(endDate)),
+            },
+            order: {timestamp: 'DESC'},
         });
     }
 
