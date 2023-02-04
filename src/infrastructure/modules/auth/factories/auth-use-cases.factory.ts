@@ -43,7 +43,7 @@ export class AuthUseCasesFactory {
     }
 
     public createSignInUseCase(): SignInUseCase {
-        return new SignInUseCase(this.authService, this.userRepository, this.fileUrlService);
+        return new SignInUseCase(this.authService, this.userRepository, this.fileUrlService, this.authedUserService);
     }
 
     public createConfirmSignUpUseCase(): ConfirmSignUpUserUseCase {
