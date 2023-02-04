@@ -3,11 +3,13 @@ import {DoctorController, PatientController} from 'controllers/patient-vital-thr
 import {TypeOrmModule} from '@nestjs/typeorm';
 import {PatientVitalThresholdsModel} from './models';
 import {DoctorUseCasesFactory, PatientUseCasesFactory, GrantedUserUseCasesFactory} from './factories';
-import {AuthModule, PatientDataAccessModule} from 'infrastructure/modules';
 import {PatientVitalThresholdsSpecification} from 'app/modules/patient-vital-thresholds/specifications/patient-vital-thresholds.specification';
 import {PatientDataAccessSpecification} from 'app/modules/patient-data-access/specifications/patient-data-access.specification';
 import {GrantedUserController} from 'controllers/patient-vital-thresholds/granted-user.controller';
 import {PatientVitalThresholdsIndependentModule} from './patient-vital-thresholds.ind.module';
+import {AuthModule} from 'infrastructure/modules/auth/auth.module';
+import {PatientDataAccessModule} from 'infrastructure/modules/patient-data-access/patient-data-access.module';
+import {VitalModule} from 'infrastructure/modules/vital/vital.module';
 
 @Module({
     imports: [
@@ -15,6 +17,7 @@ import {PatientVitalThresholdsIndependentModule} from './patient-vital-threshold
         AuthModule,
         PatientDataAccessModule,
         PatientVitalThresholdsIndependentModule,
+        VitalModule,
     ],
     exports: [PatientVitalThresholdsSpecification],
     controllers: [DoctorController, PatientController, GrantedUserController],
