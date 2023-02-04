@@ -20,7 +20,7 @@ export class ThresholdListUseCase {
         await this.thresholdSpecification.assertGrantedUserCanOperateThresholds(user, patientUserId);
 
         const thresholds = await this.thresholdsRepository.getCurrentThresholdsByPatientUserId(patientUserId);
-        const vitalsQuantity = this.vitalRepository.countByThresholdsId(thresholds.id);
+        const vitalsQuantity = await this.vitalRepository.countByThresholdsId(thresholds.id);
 
         const dto = await this.thresholdsDtoService.createDtoByThresholds(thresholds);
         dto.isPending = !vitalsQuantity;
