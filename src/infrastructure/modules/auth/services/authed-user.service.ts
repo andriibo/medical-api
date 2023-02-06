@@ -28,10 +28,10 @@ export class AuthedUserService implements IAuthedUserService {
     public async syncUserEmailWithExternalProvider(externalProviderEmail: string): Promise<void> {
         const user = await this.getUser();
         user.email = externalProviderEmail;
-        this.userRepository.persist(user);
+        await this.userRepository.persist(user);
     }
 
-    public async getUserByToken(token: string, tokenClaims: object): Promise<UserSignedInDto> {
+    public async getUserByTokenAndTokenClaims(token: string, tokenClaims: object): Promise<UserSignedInDto> {
         const tokenClaimsModel = TokenClaimsModel.fromCognitoResponse(tokenClaims);
         const user = await this.userRepository.getOneById(tokenClaimsModel.getUserId());
         user.avatar = this.fileUrlService.createUrlToUserAvatar(user.avatar);

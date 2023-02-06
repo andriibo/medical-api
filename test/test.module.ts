@@ -38,7 +38,7 @@ const tokenClaims = {
         {
             provide: IAuthService,
             useValue: {
-                getUserByToken: jest.fn((role: string) => Promise.resolve(tokenClaims[role])),
+                getTokenClaimsByToken: jest.fn((role: string) => Promise.resolve(tokenClaims[role])),
             },
         },
         {

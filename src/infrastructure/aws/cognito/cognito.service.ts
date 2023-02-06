@@ -171,7 +171,7 @@ export class CognitoService implements IAuthService {
         }
     }
 
-    public async getUserByToken(token: string): Promise<any> {
+    public async getTokenClaimsByToken(token: string): Promise<any> {
         const userPoolJwk = JSON.parse(this.configService.get<string>('AWS_COGNITO_JWKS'));
         const pem = jwkToBuffer(userPoolJwk.keys[USER_POOL_JWK.AUTH_TOKEN]);
 
