@@ -15,7 +15,7 @@ export class DataAccessListUseCase {
 
     public async getList(): Promise<DataAccessDto[]> {
         const grantedUser = await this.authedUserService.getUser();
-        const items = await this.patientDataAccessRepository.getByGrantedUserId(grantedUser.id);
+        const items = await this.patientDataAccessRepository.getWithPatientUserByGrantedUserId(grantedUser.id);
 
         return items.map((item) => {
             const dto = DataAccessDto.fromPatientDataAccess(item);

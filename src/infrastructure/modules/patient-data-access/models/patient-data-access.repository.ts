@@ -44,22 +44,24 @@ export class PatientDataAccessRepository implements IPatientDataAccessRepository
         return await this.dataSource.manager.findOneBy(PatientDataAccessModel, {grantedUserId, patientEmail});
     }
 
-    public async getByPatientUserId(patientUserId: string): Promise<PatientDataAccess[]> {
+    public async getWithGrantedUserByPatientUserId(patientUserId: string): Promise<PatientDataAccess[]> {
         return await this.dataSource
             .createQueryBuilder(PatientDataAccessModel, 'pda')
-            .leftJoinAndSelect('pda.grantedUser', 'user', 'user.deleted_at is null and user.email is not null')
-            .where('pda.patient_user_id = :patientUserId', {patientUserId})
+            .leftJoinAndSelect('pda.grantedUser', 'user')
+            .where({patientUserId})
+            .andWhere('pda.granted_email is not null or (user.deleted_at is null and user.email is not null)')
             .orderBy({
                 'pda.createdAt': 'DESC',
             })
             .getMany();
     }
 
-    public async getByGrantedUserId(grantedUserId: string): Promise<PatientDataAccess[]> {
+    public async getWithPatientUserByGrantedUserId(grantedUserId: string): Promise<PatientDataAccess[]> {
         return await this.dataSource
             .createQueryBuilder(PatientDataAccessModel, 'pda')
-            .leftJoinAndSelect('pda.patientUser', 'user', 'user.deleted_at is null and user.email is not null')
-            .where('pda.granted_user_id = :grantedUserId', {grantedUserId})
+            .leftJoinAndSelect('pda.patientUser', 'user')
+            .where({grantedUserId})
+            .andWhere('pda.patient_email is not null or (user.deleted_at is null and user.email is not null)')
             .orderBy({
                 'pda.createdAt': 'DESC',
             })
