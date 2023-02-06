@@ -47,19 +47,23 @@ export class PatientDataAccessRepository implements IPatientDataAccessRepository
     public async getByPatientUserId(patientUserId: string): Promise<PatientDataAccess[]> {
         return await this.dataSource
             .createQueryBuilder(PatientDataAccessModel, 'pda')
-            .leftJoinAndSelect('pda.grantedUser', 'user', 'user.deleted_at is null and user.email is not null')
+            .leftJoinAndSelect('pda.grantedUser', 'user')
             .where('pda.patient_user_id = :patientUserId', {patientUserId})
             .orderBy({
                 'pda.createdAt': 'DESC',
             })
+            .andWhere('pda.granted_email is not null')
+            .orWhere('(user.deleted_at is null and user.email is not null)')
             .getMany();
     }
 
     public async getByGrantedUserId(grantedUserId: string): Promise<PatientDataAccess[]> {
         return await this.dataSource
             .createQueryBuilder(PatientDataAccessModel, 'pda')
-            .leftJoinAndSelect('pda.patientUser', 'user', 'user.deleted_at is null and user.email is not null')
-            .where('pda.granted_user_id = :grantedUserId', {grantedUserId})
+            .leftJoinAndSelect('pda.patientUser', 'user')
+            .where({grantedUserId})
+            .andWhere('pda.patient_email is not null')
+            .orWhere('(user.deleted_at is null and user.email is not null)')
             .orderBy({
                 'pda.createdAt': 'DESC',
             })
