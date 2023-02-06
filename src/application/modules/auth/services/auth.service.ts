@@ -20,7 +20,7 @@ export interface IAuthService {
     signUp(signUpModel: SignUpModel): Promise<IAuthModel>;
     confirmSignUp(user: ConfirmSignUpModel): Promise<void>;
     resendConfirmSignUpCode(email: string): Promise<ResendConfirmationCodeResultModel>;
-    getTokenClaims(token: string): Promise<string[]>;
+    getUserByToken(token: string): Promise<string[]>;
     getUserAttributes(accessToken: string): Promise<UserAttributesModel>;
     deleteUser(user: User): Promise<void>;
     forgotPassword(email: string): Promise<ForgotPasswordResponseModel>;

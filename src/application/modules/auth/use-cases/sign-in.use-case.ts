@@ -12,8 +12,8 @@ export class SignInUseCase {
 
     public async signInUser(dto: AuthUserDto): Promise<UserSignedInDto> {
         const authResult = await this.authService.signIn(SignInModel.fromAuthUserDto(dto));
-        const tokenClaims = await this.authService.getTokenClaims(authResult.token);
+        const tokenClaims = await this.authService.getUserByToken(authResult.token);
 
-        return await this.authedUserService.getSignedUserByTokenClaims(authResult.token, tokenClaims);
+        return await this.authedUserService.getUserByToken(authResult.token, tokenClaims);
     }
 }

@@ -12,7 +12,7 @@ export class RequestUserService {
         const token: string = this.extractToken(headers);
 
         try {
-            const tokenClaims = await this.authService.getTokenClaims(token);
+            const tokenClaims = await this.authService.getUserByToken(token);
 
             return {
                 token,

@@ -31,7 +31,7 @@ export class AuthedUserService implements IAuthedUserService {
         this.userRepository.persist(user);
     }
 
-    public async getSignedUserByTokenClaims(token: string, tokenClaims: object): Promise<UserSignedInDto> {
+    public async getUserByToken(token: string, tokenClaims: object): Promise<UserSignedInDto> {
         const tokenClaimsModel = TokenClaimsModel.fromCognitoResponse(tokenClaims);
         const user = await this.userRepository.getOneById(tokenClaimsModel.getUserId());
         user.avatar = this.fileUrlService.createUrlToUserAvatar(user.avatar);
