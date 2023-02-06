@@ -48,7 +48,7 @@ export class PatientDataAccessRepository implements IPatientDataAccessRepository
         return await this.dataSource
             .createQueryBuilder(PatientDataAccessModel, 'pda')
             .leftJoinAndSelect('pda.grantedUser', 'user')
-            .where({patientUserId})
+            .where('pda.patient_user_id = :patientUserId', {patientUserId})
             .andWhere('pda.granted_email is not null or (user.deleted_at is null and user.email is not null)')
             .orderBy({
                 'pda.createdAt': 'DESC',
@@ -60,7 +60,7 @@ export class PatientDataAccessRepository implements IPatientDataAccessRepository
         return await this.dataSource
             .createQueryBuilder(PatientDataAccessModel, 'pda')
             .leftJoinAndSelect('pda.patientUser', 'user')
-            .where({grantedUserId})
+            .where('pda.granted_user_id = :grantedUserId', {grantedUserId})
             .andWhere('pda.patient_email is not null or (user.deleted_at is null and user.email is not null)')
             .orderBy({
                 'pda.createdAt': 'DESC',
