@@ -8,6 +8,7 @@ import {ConfigService} from '@nestjs/config';
 import {MailService} from 'app/modules/mail/services/mail.service';
 import {MailhogService} from './services/mailhog.service';
 import {MailServiceConfig} from './mail-service.config';
+import {BranchIoService} from 'infrastructure/services/branch-io.service';
 
 @Module({
     imports: [
@@ -16,7 +17,7 @@ import {MailServiceConfig} from './mail-service.config';
             defaults: {...mailOptions},
         }),
     ],
-    exports: [IMailService, IMailSenderService],
+    exports: [IMailService, IMailSenderService, BranchIoService],
     providers: [
         {
             provide: IMailSenderService,
@@ -35,10 +36,17 @@ import {MailServiceConfig} from './mail-service.config';
         },
         {
             provide: IMailService,
-            useFactory: (mailSenderService: IMailSenderService) => {
-                return new MailService(mailSenderService);
+            useFactory: (mailSenderService: IMailSenderService, branchIoService: BranchIoService) => {
+                return new MailService(mailSenderService, branchIoService);
             },
             inject: [IMailSenderService],
+        },
+        {
+            provide: BranchIoService,
+            useFactory: (configService: ConfigService) => {
+                return new BranchIoService(configService);
+            },
+            inject: [ConfigService],
         },
     ],
 })
