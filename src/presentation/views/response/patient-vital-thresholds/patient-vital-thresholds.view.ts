@@ -88,5 +88,8 @@ export class PatientVitalThresholdsView implements PatientVitalThresholdsDto {
     public mapSetAt: number | null;
 
     @ApiProperty()
+    public createdAt: number;
+
+    @ApiProperty()
     public isPending: boolean;
 }

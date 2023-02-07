@@ -58,6 +58,8 @@ export class PatientVitalThresholdsDto {
 
     public mapSetAt: number | null;
 
+    public createdAt: number;
+
     public isPending = false;
 
     public static fromPatientVitalThresholds(
@@ -100,6 +102,7 @@ export class PatientVitalThresholdsDto {
         dto.maxMap = thresholds.maxMap;
         dto.mapSetBy = indexedUsers[thresholds.mapSetBy] ? UserDto.fromUser(indexedUsers[thresholds.mapSetBy]) : null;
         dto.mapSetAt = thresholds.mapSetAt;
+        dto.createdAt = new Date(thresholds.createdAt).getTime() / 1000;
 
         return dto;
     }
