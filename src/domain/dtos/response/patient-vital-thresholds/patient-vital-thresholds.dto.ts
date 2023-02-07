@@ -1,5 +1,6 @@
 import {UserDto} from 'domain/dtos/response/user/user.dto';
 import {PatientVitalThresholds, User} from 'domain/entities';
+import {convertToUnixTimestamp} from 'app/support/date.helper';
 
 export class PatientVitalThresholdsDto {
     public thresholdsId: string;
@@ -102,7 +103,7 @@ export class PatientVitalThresholdsDto {
         dto.maxMap = thresholds.maxMap;
         dto.mapSetBy = indexedUsers[thresholds.mapSetBy] ? UserDto.fromUser(indexedUsers[thresholds.mapSetBy]) : null;
         dto.mapSetAt = thresholds.mapSetAt;
-        dto.createdAt = new Date(thresholds.createdAt).getTime() / 1000;
+        dto.createdAt = convertToUnixTimestamp(thresholds.createdAt);
 
         return dto;
     }
