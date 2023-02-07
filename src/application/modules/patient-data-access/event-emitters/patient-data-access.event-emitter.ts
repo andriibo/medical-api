@@ -21,7 +21,7 @@ export interface IPatientDataAccessEventEmitter {
 
     emitAccessWithdrawnByGrantedUser(grantedUser: User, patientEmail: string): void;
 
-    emitDataAccessApproved(dataAccess: PatientDataAccess): Promise<void>;
+    emitDataAccessApproved(dataAccess: PatientDataAccess): void;
 }
 
 export const IPatientDataAccessEventEmitter = Symbol('IPatientDataAccessEventEmitter');
