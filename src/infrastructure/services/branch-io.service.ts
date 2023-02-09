@@ -1,12 +1,15 @@
 import * as branchio from 'branchio-sdk';
 import {ConfigService} from '@nestjs/config';
+import {UserRole} from 'domain/entities/user.entity';
+import {IBranchIoService} from 'app/modules/mail/services/branch-io.service';
+import {Inject} from '@nestjs/common';
 
-export class BranchIoService {
+export class BranchIoService implements IBranchIoService {
     private readonly client: any;
     private readonly mobileAppUrl: string;
     private readonly webAppUrl: string;
 
-    public constructor(private readonly configService: ConfigService) {
+    public constructor(@Inject(ConfigService) private readonly configService: ConfigService) {
         this.client = branchio({
             appId: configService.get<string>('BRANCH_IO_APP_ID'),
             key: configService.get<string>('BRANCH_IO_KEY'),
@@ -19,8 +22,8 @@ export class BranchIoService {
     public async signUpLinkForPatient(email: string): Promise<string> {
         const marketingTitle = 'patient invite';
         const desktopUrl = `${this.webAppUrl}/sign-up-patient?email=${email}`;
-        const iosDeeplinkPath = `${this.mobileAppUrl}auth?email=${email}`;
-        const androidDeeplinkPath = `${this.mobileAppUrl}auth?email=${email}`;
+        const iosDeeplinkPath = `${this.mobileAppUrl}auth?email=${email}&role=${UserRole.Patient}`;
+        const androidDeeplinkPath = `${this.mobileAppUrl}auth?email=${email}&role=${UserRole.Patient}`;
 
         return await this.sendRequest(marketingTitle, desktopUrl, iosDeeplinkPath, androidDeeplinkPath);
     }
@@ -28,8 +31,8 @@ export class BranchIoService {
     public async signUpLinkForCaregiver(email: string): Promise<string> {
         const marketingTitle = 'caregiver invite';
         const desktopUrl = `${this.webAppUrl}/sign-up-caregiver?email=${email}`;
-        const iosDeeplinkPath = `${this.mobileAppUrl}auth?email=${email}`;
-        const androidDeeplinkPath = `${this.mobileAppUrl}auth?email=${email}`;
+        const iosDeeplinkPath = `${this.mobileAppUrl}auth?email=${email}&role=${UserRole.Caregiver}`;
+        const androidDeeplinkPath = `${this.mobileAppUrl}auth?email=${email}&role=${UserRole.Caregiver}`;
 
         return await this.sendRequest(marketingTitle, desktopUrl, iosDeeplinkPath, androidDeeplinkPath);
     }
@@ -37,8 +40,8 @@ export class BranchIoService {
     public async signUpLinkForDoctor(email: string): Promise<string> {
         const marketingTitle = 'doctor invite';
         const desktopUrl = `${this.webAppUrl}/sign-up-doctor?email=${email}`;
-        const iosDeeplinkPath = `${this.mobileAppUrl}auth?email=${email}`;
-        const androidDeeplinkPath = `${this.mobileAppUrl}auth?email=${email}`;
+        const iosDeeplinkPath = `${this.mobileAppUrl}auth?email=${email}&role=${UserRole.Doctor}`;
+        const androidDeeplinkPath = `${this.mobileAppUrl}auth?email=${email}&role=${UserRole.Doctor}`;
 
         return await this.sendRequest(marketingTitle, desktopUrl, iosDeeplinkPath, androidDeeplinkPath);
     }

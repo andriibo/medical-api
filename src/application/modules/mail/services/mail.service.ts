@@ -2,12 +2,13 @@ import {IMailSenderService} from 'app/modules/mail/services/abstract/mail-sender
 import {User} from 'domain/entities';
 import {IMailService} from 'app/modules/mail/services/abstract/mail.service';
 import {Email} from 'app/modules/mail/models';
-import {BranchIoService} from 'infrastructure/services/branch-io.service';
+import {IBranchIoService} from 'app/modules/mail/services/branch-io.service';
+import {Inject} from '@nestjs/common';
 
 export class MailService implements IMailService {
     public constructor(
-        private readonly mailerService: IMailSenderService,
-        private readonly branchIoService: BranchIoService,
+        @Inject(IMailSenderService) private readonly mailerService: IMailSenderService,
+        @Inject(IBranchIoService) private readonly branchIoService: IBranchIoService,
     ) {}
 
     public async sendInviteToSignUpFromPatientToDoctor(patient: User, toEmail: string): Promise<void> {
