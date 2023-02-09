@@ -5,6 +5,7 @@ export class BranchIoService {
     private readonly client: any;
     private readonly mobileAppUrl: string;
     private readonly webAppUrl: string;
+
     public constructor(private readonly configService: ConfigService) {
         this.client = branchio({
             appId: configService.get<string>('BRANCH_IO_APP_ID'),
