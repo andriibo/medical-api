@@ -9,7 +9,7 @@ import {PatientVitalThresholds, User, Vital} from 'domain/entities';
 import {IDoctorMetadataRepository, IPatientMetadataRepository} from 'app/modules/profile/repositories';
 import {TestModule} from 'tests/test.module';
 import {SyncVitalsDto, VitalDto} from 'domain/dtos/request/vital';
-import {currentUnixTimestamp} from 'app/support/date.helper';
+import {convertToUnixTimestamp, currentUnixTimestamp} from 'app/support/date.helper';
 import {VitalModel} from 'infrastructure/modules/vital/models';
 import {IPatientVitalThresholdsRepository} from 'app/modules/patient-vital-thresholds/repositories';
 import {PatientDataAccessModel} from 'infrastructure/modules/patient-data-access/models';
@@ -214,6 +214,7 @@ describe('PatientController', () => {
                         maxMap: patientVitalThresholds.maxMap,
                         mapSetBy: patientVitalThresholds.mapSetBy,
                         mapSetAt: patientVitalThresholds.mapSetAt,
+                        createdAt: convertToUnixTimestamp(patientVitalThresholds.createdAt),
                     },
                 ],
             });
