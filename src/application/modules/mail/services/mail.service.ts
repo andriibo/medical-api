@@ -7,11 +7,11 @@ import {BranchIoService} from 'infrastructure/services/branch-io.service';
 export class MailService implements IMailService {
     public constructor(
         private readonly mailerService: IMailSenderService,
-        private readonly branchService: BranchIoService,
+        private readonly branchIoService: BranchIoService,
     ) {}
 
     public async sendInviteToSignUpFromPatientToDoctor(patient: User, toEmail: string): Promise<void> {
-        const deepLink = await this.branchService.signUpLinkForDoctor(toEmail);
+        const deepLink = await this.branchIoService.signUpLinkForDoctor(toEmail);
 
         const mail: Email = {
             to: toEmail,
@@ -23,7 +23,7 @@ export class MailService implements IMailService {
     }
 
     public async sendInviteToSignUpFromPatientToCaregiver(patient: User, toEmail: string): Promise<void> {
-        const deepLink = await this.branchService.signUpLinkForCaregiver(toEmail);
+        const deepLink = await this.branchIoService.signUpLinkForCaregiver(toEmail);
 
         const mail: Email = {
             to: toEmail,
@@ -35,7 +35,7 @@ export class MailService implements IMailService {
     }
 
     public async sendInviteToSignUpFromGrantedUserToPatient(grantedUser: User, toEmail: string): Promise<void> {
-        const deepLink = await this.branchService.signUpLinkForPatient(toEmail);
+        const deepLink = await this.branchIoService.signUpLinkForPatient(toEmail);
 
         const mail: Email = {
             to: toEmail,

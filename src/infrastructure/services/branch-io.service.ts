@@ -18,34 +18,34 @@ export class BranchIoService {
 
     public async signUpLinkForPatient(email: string): Promise<string> {
         const marketingTitle = 'patient invite';
-        const deeplinkPath = `${this.webAppUrl}/sign-up-patient?email=${email}`;
+        const desktopUrl = `${this.webAppUrl}/sign-up-patient?email=${email}`;
         const iosDeeplinkPath = `${this.mobileAppUrl}auth?email=${email}`;
         const androidDeeplinkPath = `${this.mobileAppUrl}auth?email=${email}`;
 
-        return await this.sendRequest(marketingTitle, deeplinkPath, iosDeeplinkPath, androidDeeplinkPath);
+        return await this.sendRequest(marketingTitle, desktopUrl, iosDeeplinkPath, androidDeeplinkPath);
     }
 
     public async signUpLinkForCaregiver(email: string): Promise<string> {
         const marketingTitle = 'caregiver invite';
-        const deeplinkPath = `${this.webAppUrl}/sign-up-caregiver?email=${email}`;
+        const desktopUrl = `${this.webAppUrl}/sign-up-caregiver?email=${email}`;
         const iosDeeplinkPath = `${this.mobileAppUrl}auth?email=${email}`;
         const androidDeeplinkPath = `${this.mobileAppUrl}auth?email=${email}`;
 
-        return await this.sendRequest(marketingTitle, deeplinkPath, iosDeeplinkPath, androidDeeplinkPath);
+        return await this.sendRequest(marketingTitle, desktopUrl, iosDeeplinkPath, androidDeeplinkPath);
     }
 
     public async signUpLinkForDoctor(email: string): Promise<string> {
         const marketingTitle = 'doctor invite';
-        const deeplinkPath = `${this.webAppUrl}/sign-up-doctor?email=${email}`;
+        const desktopUrl = `${this.webAppUrl}/sign-up-doctor?email=${email}`;
         const iosDeeplinkPath = `${this.mobileAppUrl}auth?email=${email}`;
         const androidDeeplinkPath = `${this.mobileAppUrl}auth?email=${email}`;
 
-        return await this.sendRequest(marketingTitle, deeplinkPath, iosDeeplinkPath, androidDeeplinkPath);
+        return await this.sendRequest(marketingTitle, desktopUrl, iosDeeplinkPath, androidDeeplinkPath);
     }
 
     private async sendRequest(
         marketingTitle: string,
-        deeplinkPath: string,
+        desktopUrl: string,
         iosDeeplinkPath: string,
         androidDeeplinkPath: string,
     ): Promise<string> {
@@ -55,7 +55,7 @@ export class BranchIoService {
                 $og_description: 'Description',
                 $og_image_url: `${this.webAppUrl}/favicon.png`,
                 $marketing_title: marketingTitle,
-                $deeplink_path: deeplinkPath,
+                $desktop_url: desktopUrl,
                 $ios_deeplink_path: iosDeeplinkPath,
                 $android_deeplink_path: androidDeeplinkPath,
             },

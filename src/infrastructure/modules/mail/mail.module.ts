@@ -39,7 +39,7 @@ import {BranchIoService} from 'infrastructure/services/branch-io.service';
             useFactory: (mailSenderService: IMailSenderService, branchIoService: BranchIoService) => {
                 return new MailService(mailSenderService, branchIoService);
             },
-            inject: [IMailSenderService],
+            inject: [IMailSenderService, BranchIoService],
         },
         {
             provide: BranchIoService,
