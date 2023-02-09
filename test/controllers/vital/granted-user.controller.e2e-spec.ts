@@ -17,7 +17,7 @@ import {PatientStatusModel} from 'infrastructure/modules/patient-status/models';
 import {IPatientStatusRepository} from 'app/modules/patient-status/repositories';
 import {IPatientVitalThresholdsRepository} from 'app/modules/patient-vital-thresholds/repositories';
 import {PatientDataAccess, PatientVitalThresholds, User, Vital} from 'domain/entities';
-import {currentUnixTimestamp} from 'app/support/date.helper';
+import {convertToUnixTimestamp, currentUnixTimestamp} from 'app/support/date.helper';
 
 const patient: User = {
     id: 'bd58571c-c935-41e9-9e08-a8d4e0e93f5f',
@@ -210,6 +210,7 @@ describe('GrantedUserController', () => {
                         maxMap: patientVitalThresholds.maxMap,
                         mapSetBy: patientVitalThresholds.mapSetBy,
                         mapSetAt: patientVitalThresholds.mapSetAt,
+                        createdAt: convertToUnixTimestamp(patientVitalThresholds.createdAt),
                     },
                 ],
             });
