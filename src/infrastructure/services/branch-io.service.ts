@@ -46,6 +46,24 @@ export class BranchIoService implements IDeepLinkService {
         return await this.sendRequest(marketingTitle, desktopUrl, iosDeeplinkPath, androidDeeplinkPath);
     }
 
+    public async getRequestsLinkForGrantedUser(): Promise<string> {
+        const marketingTitle = 'grantedUser requests';
+        const desktopUrl = `${this.webAppUrl}/requests`;
+        const iosDeeplinkPath = `${this.mobileAppUrl}waiting-room`;
+        const androidDeeplinkPath = `${this.mobileAppUrl}waiting-room`;
+
+        return await this.sendRequest(marketingTitle, desktopUrl, iosDeeplinkPath, androidDeeplinkPath);
+    }
+
+    public async getRequestsLinkForPatient(): Promise<string> {
+        const marketingTitle = 'patient requests';
+        const desktopUrl = `${this.webAppUrl}/requests`;
+        const iosDeeplinkPath = `${this.mobileAppUrl}waiting-room`;
+        const androidDeeplinkPath = `${this.mobileAppUrl}waiting-room`;
+
+        return await this.sendRequest(marketingTitle, desktopUrl, iosDeeplinkPath, androidDeeplinkPath);
+    }
+
     private async sendRequest(
         marketingTitle: string,
         desktopUrl: string,

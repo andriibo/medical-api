@@ -51,7 +51,7 @@ export class MailService implements IMailService {
         patient: User,
         toEmail: string,
     ): Promise<void> {
-        const deepLink = `zenzerapp://waiting-room`;
+        const deepLink = await this.deepLinkService.getRequestsLinkForGrantedUser();
 
         const mail: Email = {
             to: toEmail,
@@ -66,7 +66,7 @@ export class MailService implements IMailService {
         patient: User,
         toEmail: string,
     ): Promise<void> {
-        const deepLink = `zenzerapp://waiting-room`;
+        const deepLink = await this.deepLinkService.getRequestsLinkForGrantedUser();
 
         const mail: Email = {
             to: toEmail,
@@ -81,7 +81,7 @@ export class MailService implements IMailService {
         grantedUser: User,
         toEmail: string,
     ): Promise<void> {
-        const deepLink = `zenzerapp://waiting-room`;
+        const deepLink = await this.deepLinkService.getRequestsLinkForPatient();
 
         const mail: Email = {
             to: toEmail,
