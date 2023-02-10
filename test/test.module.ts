@@ -5,7 +5,7 @@ import {IAuthService} from 'app/modules/auth/services/auth.service';
 import {ConfigModule} from '@nestjs/config';
 import {EventEmitterModule} from '@nestjs/event-emitter';
 import {currentUnixTimestamp} from 'app/support/date.helper';
-import {IMailSenderService} from 'app/modules/mail/services/abstract/mail-sender.service';
+import {IMailSender} from 'app/modules/mail/services/abstract/mail-sender';
 
 const exp = currentUnixTimestamp() + 3600;
 const tokenClaims = {
@@ -49,7 +49,7 @@ const tokenClaims = {
             inject: [IAuthService],
         },
         {
-            provide: IMailSenderService,
+            provide: IMailSender,
             useValue: {
                 sendMail: jest.fn(() => Promise.resolve()),
             },

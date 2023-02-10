@@ -1,6 +1,6 @@
 import {Module} from '@nestjs/common';
 import {MailerModule, MailerService} from '@nestjs-modules/mailer';
-import {IMailSenderService} from 'app/modules/mail/services/abstract/mail-sender.service';
+import {IMailSender} from 'app/modules/mail/services/abstract/mail-sender';
 import {transportOptions, mailOptions} from 'config/mail.config';
 import {SesService} from 'infrastructure/aws/ses/ses.service';
 import {IMailService} from 'app/modules/mail/services/abstract/mail.service';
@@ -18,10 +18,10 @@ import {IDeepLinkService} from 'app/modules/mail/services/deep-link.service';
             defaults: {...mailOptions},
         }),
     ],
-    exports: [IMailService, IMailSenderService],
+    exports: [IMailService, IMailSender],
     providers: [
         {
-            provide: IMailSenderService,
+            provide: IMailSender,
             useFactory: (mailerService: MailerService, configService: ConfigService) => {
                 const mailService = configService.get<MailServiceConfig>('MAIL_SERVICE');
                 if (mailService === MailServiceConfig.Amazon_SES) {
@@ -37,10 +37,10 @@ import {IDeepLinkService} from 'app/modules/mail/services/deep-link.service';
         },
         {
             provide: IMailService,
-            useFactory: (mailSenderService: IMailSenderService, deepLinkService: IDeepLinkService) => {
-                return new MailService(mailSenderService, deepLinkService);
+            useFactory: (mailSender: IMailSender, deepLinkService: IDeepLinkService) => {
+                return new MailService(mailSender, deepLinkService);
             },
-            inject: [IMailSenderService, IDeepLinkService],
+            inject: [IMailSender, IDeepLinkService],
         },
         {
             provide: IDeepLinkService,

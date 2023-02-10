@@ -1,5 +1,5 @@
 import {Injectable} from '@nestjs/common';
-import {IMailSenderService} from 'app/modules/mail/services/abstract/mail-sender.service';
+import {IMailSender} from 'app/modules/mail/services/abstract/mail-sender';
 import {SendEmailCommand, SESClient} from '@aws-sdk/client-ses';
 import {ConfigService} from '@nestjs/config';
 import {Email} from 'app/modules/mail/models';
@@ -13,7 +13,7 @@ interface AwsProviderConfig {
 }
 
 @Injectable()
-export class SesService implements IMailSenderService {
+export class SesService implements IMailSender {
     private readonly config: AwsProviderConfig;
     private readonly sesClient: SESClient;
 

@@ -26,7 +26,7 @@ import {
     ResendConfirmationCodeResultModel,
 } from 'app/modules/auth/models';
 import {IAuthService} from 'app/modules/auth/services/auth.service';
-import {IMailSenderService} from 'app/modules/mail/services/abstract/mail-sender.service';
+import {IMailSender} from 'app/modules/mail/services/abstract/mail-sender';
 import {AuthModel} from 'infrastructure/aws/cognito/auth.model';
 import {PatientCategoryModel} from 'infrastructure/modules/patient-category/models';
 import {IPatientVitalThresholdsRepository} from 'app/modules/patient-vital-thresholds/repositories';
@@ -92,7 +92,7 @@ describe('AuthController', () => {
         })
             .overrideProvider(IAuthService)
             .useValue(mockedCognitoService)
-            .overrideProvider(IMailSenderService)
+            .overrideProvider(IMailSender)
             .useValue(mockedMailSenderService)
             .overrideProvider(getRepositoryToken(UserModel))
             .useValue(null)
