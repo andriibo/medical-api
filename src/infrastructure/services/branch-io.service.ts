@@ -55,7 +55,7 @@ export class BranchIoService implements IDeepLinkService {
         const {url} = await this.client.link({
             data: {
                 $og_title: 'Zenzers Medical',
-                $og_description: 'Description',
+                $og_description: 'Your personal healthcare network',
                 $og_image_url: `${this.webAppUrl}/favicon.png`,
                 $marketing_title: marketingTitle,
                 $desktop_url: desktopUrl,
