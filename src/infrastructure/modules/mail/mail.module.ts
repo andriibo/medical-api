@@ -1,6 +1,6 @@
 import {Module} from '@nestjs/common';
 import {MailerModule, MailerService} from '@nestjs-modules/mailer';
-import {IMailSenderService} from 'app/modules/mail/services/abstract/mail-sender.service';
+import {IMailSender} from 'app/modules/mail/services/abstract/mail-sender';
 import {transportOptions, mailOptions} from 'config/mail.config';
 import {SesService} from 'infrastructure/aws/ses/ses.service';
 import {IMailService} from 'app/modules/mail/services/abstract/mail.service';
@@ -8,6 +8,8 @@ import {ConfigService} from '@nestjs/config';
 import {MailService} from 'app/modules/mail/services/mail.service';
 import {MailhogService} from './services/mailhog.service';
 import {MailServiceConfig} from './mail-service.config';
+import {BranchIoService} from 'infrastructure/services/branch-io.service';
+import {IDeepLinkService} from 'app/modules/mail/services/deep-link.service';
 
 @Module({
     imports: [
@@ -16,10 +18,10 @@ import {MailServiceConfig} from './mail-service.config';
             defaults: {...mailOptions},
         }),
     ],
-    exports: [IMailService, IMailSenderService],
+    exports: [IMailService, IMailSender],
     providers: [
         {
-            provide: IMailSenderService,
+            provide: IMailSender,
             useFactory: (mailerService: MailerService, configService: ConfigService) => {
                 const mailService = configService.get<MailServiceConfig>('MAIL_SERVICE');
                 if (mailService === MailServiceConfig.Amazon_SES) {
@@ -35,10 +37,17 @@ import {MailServiceConfig} from './mail-service.config';
         },
         {
             provide: IMailService,
-            useFactory: (mailSenderService: IMailSenderService) => {
-                return new MailService(mailSenderService);
+            useFactory: (mailSender: IMailSender, deepLinkService: IDeepLinkService) => {
+                return new MailService(mailSender, deepLinkService);
             },
-            inject: [IMailSenderService],
+            inject: [IMailSender, IDeepLinkService],
+        },
+        {
+            provide: IDeepLinkService,
+            useFactory: (configService: ConfigService) => {
+                return new BranchIoService(configService);
+            },
+            inject: [ConfigService],
         },
     ],
 })
