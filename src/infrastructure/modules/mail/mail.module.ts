@@ -9,7 +9,7 @@ import {MailService} from 'app/modules/mail/services/mail.service';
 import {MailhogService} from './services/mailhog.service';
 import {MailServiceConfig} from './mail-service.config';
 import {BranchIoService} from 'infrastructure/services/branch-io.service';
-import {IBranchIoService} from 'app/modules/mail/services/branch-io.service';
+import {IDeepLinkService} from 'app/modules/mail/services/deep-link.service';
 
 @Module({
     imports: [
@@ -37,13 +37,13 @@ import {IBranchIoService} from 'app/modules/mail/services/branch-io.service';
         },
         {
             provide: IMailService,
-            useFactory: (mailSenderService: IMailSenderService, branchIoService: IBranchIoService) => {
-                return new MailService(mailSenderService, branchIoService);
+            useFactory: (mailSenderService: IMailSenderService, deepLinkService: IDeepLinkService) => {
+                return new MailService(mailSenderService, deepLinkService);
             },
-            inject: [IMailSenderService, IBranchIoService],
+            inject: [IMailSenderService, IDeepLinkService],
         },
         {
-            provide: IBranchIoService,
+            provide: IDeepLinkService,
             useFactory: (configService: ConfigService) => {
                 return new BranchIoService(configService);
             },

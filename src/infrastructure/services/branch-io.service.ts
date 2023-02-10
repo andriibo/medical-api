@@ -1,10 +1,10 @@
 import * as branchio from 'branchio-sdk';
 import {ConfigService} from '@nestjs/config';
 import {UserRole} from 'domain/entities/user.entity';
-import {IBranchIoService} from 'app/modules/mail/services/branch-io.service';
 import {Inject} from '@nestjs/common';
+import {IDeepLinkService} from 'app/modules/mail/services/deep-link.service';
 
-export class BranchIoService implements IBranchIoService {
+export class BranchIoService implements IDeepLinkService {
     private readonly client: any;
     private readonly mobileAppUrl: string;
     private readonly webAppUrl: string;
@@ -19,7 +19,7 @@ export class BranchIoService implements IBranchIoService {
         this.webAppUrl = configService.get<string>('WEB_APP_URL');
     }
 
-    public async signUpLinkForPatient(email: string): Promise<string> {
+    public async getSignUpLinkForPatient(email: string): Promise<string> {
         const marketingTitle = 'patient invite';
         const desktopUrl = `${this.webAppUrl}/sign-up-patient?email=${email}`;
         const iosDeeplinkPath = `${this.mobileAppUrl}auth?email=${email}&role=${UserRole.Patient}`;
@@ -28,7 +28,7 @@ export class BranchIoService implements IBranchIoService {
         return await this.sendRequest(marketingTitle, desktopUrl, iosDeeplinkPath, androidDeeplinkPath);
     }
 
-    public async signUpLinkForCaregiver(email: string): Promise<string> {
+    public async getSignUpLinkForCaregiver(email: string): Promise<string> {
         const marketingTitle = 'caregiver invite';
         const desktopUrl = `${this.webAppUrl}/sign-up-caregiver?email=${email}`;
         const iosDeeplinkPath = `${this.mobileAppUrl}auth?email=${email}&role=${UserRole.Caregiver}`;
@@ -37,7 +37,7 @@ export class BranchIoService implements IBranchIoService {
         return await this.sendRequest(marketingTitle, desktopUrl, iosDeeplinkPath, androidDeeplinkPath);
     }
 
-    public async signUpLinkForDoctor(email: string): Promise<string> {
+    public async getSignUpLinkForDoctor(email: string): Promise<string> {
         const marketingTitle = 'doctor invite';
         const desktopUrl = `${this.webAppUrl}/sign-up-doctor?email=${email}`;
         const iosDeeplinkPath = `${this.mobileAppUrl}auth?email=${email}&role=${UserRole.Doctor}`;
