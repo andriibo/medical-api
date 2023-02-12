@@ -27,17 +27,16 @@ import {MySuggestedContactDto} from 'domain/dtos/response/suggested-contact/my-s
 
 @Controller()
 @ApiBearerAuth()
+@ApiTags('Suggested Contact')
 @ApiUnauthorizedResponse({description: 'Unauthorized.'})
 @ApiForbiddenResponse({description: 'Forbidden.'})
-@ApiBadRequestResponse({description: 'Bad request.'})
-@ApiNotFoundResponse({description: 'Not Found.'})
-@ApiTags('Suggested Contact')
 export class GrantedUserController {
     public constructor(private readonly grantedUserUseCasesFactory: GrantedUserUseCasesFactory) {}
 
     @Roles('Caregiver', 'Doctor')
     @Post('suggested-contact')
     @ApiResponse({status: HttpStatus.CREATED, description: 'Created.'})
+    @ApiBadRequestResponse({description: 'Bad request.'})
     public async createSuggestedContact(@Body() requestBody: CreateSuggestedContactView): Promise<void> {
         const useCase = this.grantedUserUseCasesFactory.createSuggestedContactUseCase();
 
@@ -51,6 +50,8 @@ export class GrantedUserController {
     @Roles('Caregiver', 'Doctor')
     @Delete('suggested-contact/:contactId')
     @ApiResponse({status: HttpStatus.NO_CONTENT, description: 'No content.'})
+    @ApiBadRequestResponse({description: 'Bad request.'})
+    @ApiNotFoundResponse({description: 'Not Found.'})
     public async deleteSuggestedContact(@Param('contactId', ParseUUIDPipe) contactId: string): Promise<void> {
         const useCase = this.grantedUserUseCasesFactory.createDeleteSuggestedContactUseCase();
 

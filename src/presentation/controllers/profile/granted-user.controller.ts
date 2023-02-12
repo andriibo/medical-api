@@ -8,14 +8,14 @@ import {GrantedUserUseCasesFactory} from 'infrastructure/modules/profile/factori
 @Controller()
 @ApiBearerAuth()
 @ApiTags('Profile')
+@ApiUnauthorizedResponse({description: 'Unauthorized.'})
+@ApiForbiddenResponse({description: 'Forbidden.'})
 export class GrantedUserController {
     public constructor(private readonly grantedUserUseCasesFactory: GrantedUserUseCasesFactory) {}
 
     @Roles('Caregiver', 'Doctor')
     @Get('profile/my-patients')
     @ApiResponse({status: HttpStatus.OK, type: [MyPatientView]})
-    @ApiUnauthorizedResponse({description: 'Unauthorized.'})
-    @ApiForbiddenResponse({description: 'Forbidden.'})
     public async getMyPatients(): Promise<MyPatientDto[]> {
         const useCase = this.grantedUserUseCasesFactory.createPatientListUseCase();
 

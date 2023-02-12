@@ -1,5 +1,5 @@
 import {BadRequestException, Controller, Get, HttpCode, HttpStatus, Param, ParseUUIDPipe, Query} from '@nestjs/common';
-import {ApiBearerAuth, ApiResponse, ApiTags} from '@nestjs/swagger';
+import {ApiBearerAuth, ApiForbiddenResponse, ApiResponse, ApiTags, ApiUnauthorizedResponse} from '@nestjs/swagger';
 import {GetVitalsByGrantedUserDto} from 'domain/dtos/request/vital';
 import {VitalUseCasesFactory} from 'infrastructure/modules/vital/factories/vital-use-cases.factory';
 import {Roles} from 'presentation/guards';
@@ -9,6 +9,8 @@ import {VitalsView} from 'presentation/views/response/vital';
 @Controller()
 @ApiBearerAuth()
 @ApiTags('Vitals')
+@ApiUnauthorizedResponse({description: 'Unauthorized.'})
+@ApiForbiddenResponse({description: 'Forbidden.'})
 export class GrantedUserController {
     public constructor(private readonly useCasesFactory: VitalUseCasesFactory) {}
 

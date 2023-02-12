@@ -1,5 +1,5 @@
 import {Controller, HttpStatus, Get, Param, ParseUUIDPipe, HttpCode, BadRequestException} from '@nestjs/common';
-import {ApiBearerAuth, ApiResponse, ApiTags} from '@nestjs/swagger';
+import {ApiBearerAuth, ApiForbiddenResponse, ApiResponse, ApiTags, ApiUnauthorizedResponse} from '@nestjs/swagger';
 import {Roles} from 'presentation/guards';
 import {GrantedUserUseCasesFactory} from 'infrastructure/modules/emergency-contact/factories/granted-user-use-cases.factory';
 import {ContactView} from 'presentation/views/response/emergency-contact';
@@ -8,6 +8,8 @@ import {ContactDto} from 'domain/dtos/response/emergency-contact/contact.dto';
 @Controller()
 @ApiBearerAuth()
 @ApiTags('Emergency Contact')
+@ApiUnauthorizedResponse({description: 'Unauthorized.'})
+@ApiForbiddenResponse({description: 'Forbidden.'})
 export class GrantUserController {
     public constructor(private readonly grantedUserUseCasesFactory: GrantedUserUseCasesFactory) {}
 

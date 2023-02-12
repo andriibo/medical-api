@@ -1,5 +1,5 @@
 import {BadRequestException, Body, Controller, HttpCode, HttpStatus, Param, ParseUUIDPipe, Post} from '@nestjs/common';
-import {ApiBearerAuth, ApiResponse, ApiTags} from '@nestjs/swagger';
+import {ApiBearerAuth, ApiForbiddenResponse, ApiResponse, ApiTags, ApiUnauthorizedResponse} from '@nestjs/swagger';
 import {Roles} from 'presentation/guards';
 import {
     UpdateHeartRateView,
@@ -14,6 +14,8 @@ import {DoctorUseCasesFactory} from 'infrastructure/modules/patient-vital-thresh
 @Controller('doctor')
 @ApiBearerAuth()
 @ApiTags('Patient Vital Thresholds')
+@ApiUnauthorizedResponse({description: 'Unauthorized.'})
+@ApiForbiddenResponse({description: 'Forbidden.'})
 export class DoctorController {
     public constructor(private readonly doctorUseCasesFactory: DoctorUseCasesFactory) {}
 

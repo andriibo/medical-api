@@ -13,6 +13,8 @@ import {MyCaregiverDto} from 'domain/dtos/response/profile/my-caregiver.dto';
 @Controller('patient')
 @ApiBearerAuth()
 @ApiTags('Profile')
+@ApiUnauthorizedResponse({description: 'Unauthorized.'})
+@ApiForbiddenResponse({description: 'Forbidden.'})
 export class PatientController {
     public constructor(private readonly patientUseCasesFactory: PatientUseCasesFactory) {}
 
@@ -39,8 +41,6 @@ export class PatientController {
     @Roles('Patient')
     @Get('my-doctors')
     @ApiResponse({status: HttpStatus.OK, type: [MyDoctorView]})
-    @ApiUnauthorizedResponse({description: 'Unauthorized.'})
-    @ApiForbiddenResponse({description: 'Forbidden.'})
     public async getMyDoctors(): Promise<MyDoctorDto[]> {
         const useCase = this.patientUseCasesFactory.createDoctorListUseCase();
 
@@ -50,8 +50,6 @@ export class PatientController {
     @Roles('Patient')
     @Get('my-caregivers')
     @ApiResponse({status: HttpStatus.OK, type: [MyCaregiverView]})
-    @ApiUnauthorizedResponse({description: 'Unauthorized.'})
-    @ApiForbiddenResponse({description: 'Forbidden.'})
     public async getMyCaregivers(): Promise<MyCaregiverDto[]> {
         const useCase = this.patientUseCasesFactory.createCaregiverListUseCase();
 

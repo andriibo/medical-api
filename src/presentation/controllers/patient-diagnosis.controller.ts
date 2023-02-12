@@ -10,7 +10,7 @@ import {
     ParseUUIDPipe,
     HttpCode,
 } from '@nestjs/common';
-import {ApiBearerAuth, ApiResponse, ApiTags} from '@nestjs/swagger';
+import {ApiBearerAuth, ApiForbiddenResponse, ApiResponse, ApiTags, ApiUnauthorizedResponse} from '@nestjs/swagger';
 import {Roles} from 'presentation/guards';
 import {PatientDiagnosisUseCasesFactory} from 'infrastructure/modules/patient-diagnosis/factories/patient-diagnosis-use-cases.factory';
 import {CreateDiagnosisView} from 'presentation/views/request/patient-diagnosis/create-diagnosis.view';
@@ -20,6 +20,8 @@ import {DiagnosisView} from 'views/response/patient-diagnosis';
 @Controller()
 @ApiBearerAuth()
 @ApiTags('Patient Diagnosis')
+@ApiUnauthorizedResponse({description: 'Unauthorized.'})
+@ApiForbiddenResponse({description: 'Forbidden.'})
 export class PatientDiagnosisController {
     public constructor(private readonly patientDiagnosisUseCasesFactory: PatientDiagnosisUseCasesFactory) {}
 

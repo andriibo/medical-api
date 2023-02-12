@@ -10,7 +10,7 @@ import {
     ParseUUIDPipe,
     HttpCode,
 } from '@nestjs/common';
-import {ApiBearerAuth, ApiResponse, ApiTags} from '@nestjs/swagger';
+import {ApiBearerAuth, ApiForbiddenResponse, ApiResponse, ApiTags, ApiUnauthorizedResponse} from '@nestjs/swagger';
 import {Roles} from 'presentation/guards';
 import {PatientMedicationUseCasesFactory} from 'infrastructure/modules/patient-medication/factories/patient-medication-use-cases.factory';
 import {CreateMedicationView} from 'presentation/views/request/patient-medication/create-medication.view';
@@ -20,6 +20,8 @@ import {PatientMedicationView} from 'views/response/patient-medication';
 @Controller()
 @ApiBearerAuth()
 @ApiTags('Patient Medication')
+@ApiUnauthorizedResponse({description: 'Unauthorized.'})
+@ApiForbiddenResponse({description: 'Forbidden.'})
 export class PatientMedicationController {
     public constructor(private readonly patientMedicationUseCasesFactory: PatientMedicationUseCasesFactory) {}
 

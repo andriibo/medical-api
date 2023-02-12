@@ -1,5 +1,5 @@
 import {Controller, Get, Patch, HttpStatus, Body, HttpCode} from '@nestjs/common';
-import {ApiBearerAuth, ApiResponse, ApiTags} from '@nestjs/swagger';
+import {ApiBearerAuth, ApiForbiddenResponse, ApiResponse, ApiTags, ApiUnauthorizedResponse} from '@nestjs/swagger';
 import {Roles} from 'presentation/guards';
 import {DoctorView} from 'presentation/views/response/user';
 import {DoctorUseCasesFactory} from 'infrastructure/modules/profile/factories';
@@ -9,6 +9,8 @@ import {UpdateDoctorProfileView} from 'views/request/profile/update-doctor-profi
 @Controller('doctor')
 @ApiBearerAuth()
 @ApiTags('Profile')
+@ApiUnauthorizedResponse({description: 'Unauthorized.'})
+@ApiForbiddenResponse({description: 'Forbidden.'})
 export class DoctorController {
     public constructor(private readonly doctorUseCasesFactory: DoctorUseCasesFactory) {}
 

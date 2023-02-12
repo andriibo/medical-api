@@ -1,5 +1,5 @@
 import {Controller, Get, HttpStatus, HttpCode, Patch, Body} from '@nestjs/common';
-import {ApiBearerAuth, ApiResponse, ApiTags} from '@nestjs/swagger';
+import {ApiBearerAuth, ApiForbiddenResponse, ApiResponse, ApiTags, ApiUnauthorizedResponse} from '@nestjs/swagger';
 import {Roles} from 'presentation/guards';
 import {CaregiverUseCasesFactory} from 'infrastructure/modules/profile/factories';
 import {CaregiverDto} from 'domain/dtos/response/profile/caregiver.dto';
@@ -9,6 +9,8 @@ import {UpdateCaregiverProfileView} from 'views/request/profile/update-caregiver
 @Controller('caregiver')
 @ApiBearerAuth()
 @ApiTags('Profile')
+@ApiUnauthorizedResponse({description: 'Unauthorized.'})
+@ApiForbiddenResponse({description: 'Forbidden.'})
 export class CaregiverController {
     public constructor(private readonly caregiverUseCasesFactory: CaregiverUseCasesFactory) {}
 
