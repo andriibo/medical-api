@@ -6,7 +6,7 @@ import {REQUEST} from '@nestjs/core';
 import {TokenClaimsModel} from 'infrastructure/aws/cognito/token-claims.model';
 import {UserSignedInDto} from 'domain/dtos/response/auth';
 import {IFileUrlService} from 'app/modules/profile/services/file-url.service';
-import {InfrastructureError} from 'app/errors';
+import {UserNotActiveError} from 'app/errors/user-not-active.error';
 
 @Injectable({scope: Scope.REQUEST})
 export class AuthedUserService implements IAuthedUserService {
@@ -29,7 +29,7 @@ export class AuthedUserService implements IAuthedUserService {
     public async getActiveUserOrFail(): Promise<User> {
         const user = await this.getUser();
         if (user.deletedAt !== null) {
-            throw new InfrastructureError('User marked as deleted.');
+            throw new UserNotActiveError('User is not active.');
         }
 
         return user;
