@@ -1,4 +1,5 @@
 import {EmergencyContact} from 'domain/entities';
+import {convertToUnixTimestamp} from 'app/support/date.helper';
 
 export class ContactDto {
     public contactId: string;
@@ -13,7 +14,7 @@ export class ContactDto {
 
     public relationship: string;
 
-    public createdAt: string;
+    public createdAt: number;
 
     public static fromEmergencyContact(emergencyContact: EmergencyContact): ContactDto {
         const dto = new ContactDto();
@@ -23,7 +24,7 @@ export class ContactDto {
         dto.email = emergencyContact.email;
         dto.phone = emergencyContact.phone;
         dto.relationship = emergencyContact.relationship;
-        dto.createdAt = emergencyContact.createdAt;
+        dto.createdAt = convertToUnixTimestamp(emergencyContact.createdAt);
 
         return dto;
     }

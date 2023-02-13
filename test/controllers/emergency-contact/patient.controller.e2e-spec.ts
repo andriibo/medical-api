@@ -18,6 +18,7 @@ import {IDoctorMetadataRepository, IPatientMetadataRepository} from 'app/modules
 import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repositories';
 import {EmergencyContactModule} from 'infrastructure/modules';
 import {ContactDto} from 'domain/dtos/request/emergency-contact/contact.dto';
+import {convertToUnixTimestamp} from 'app/support/date.helper';
 
 const patient: User = {
     id: '5nc3e70a-c1y9-121a-c5mv-5aq272098bp0',
@@ -124,7 +125,7 @@ describe('PatientController', () => {
                     email: emergencyContact.email,
                     phone: emergencyContact.phone,
                     relationship: emergencyContact.relationship,
-                    createdAt: emergencyContact.createdAt,
+                    createdAt: convertToUnixTimestamp(emergencyContact.createdAt),
                 },
             ]);
     });

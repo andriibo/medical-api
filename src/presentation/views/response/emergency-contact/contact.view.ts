@@ -21,5 +21,5 @@ export class ContactView implements ContactDto {
     public relationship: string;
 
     @ApiProperty()
-    public createdAt: string;
+    public createdAt: number;
 }
