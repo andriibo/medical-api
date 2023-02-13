@@ -7,9 +7,9 @@ import {MyPatientStatusDto} from 'domain/dtos/response/patient-status/my-patient
 
 @Controller('patient')
 @ApiBearerAuth()
+@ApiTags('Patient Status')
 @ApiUnauthorizedResponse({description: 'Unauthorized.'})
 @ApiForbiddenResponse({description: 'Forbidden.'})
-@ApiTags('Patient Status')
 export class PatientStatusController {
     public constructor(private readonly patientStatusUseCasesFactory: PatientStatusUseCasesFactory) {}
 

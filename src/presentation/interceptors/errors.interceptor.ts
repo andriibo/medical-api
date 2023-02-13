@@ -1,6 +1,4 @@
-import {CallHandler, ExecutionContext, NestInterceptor} from '@nestjs/common';
-import {BadRequestException} from '@nestjs/common';
-import {Injectable} from '@nestjs/common';
+import {Injectable, CallHandler, ExecutionContext, BadRequestException, NestInterceptor} from '@nestjs/common';
 import {ApplicationError, InfrastructureError} from 'app/errors';
 import {catchError, Observable, throwError} from 'rxjs';
 
@@ -15,6 +13,7 @@ export class ErrorsInterceptor implements NestInterceptor {
                 if (err instanceof InfrastructureError) {
                     return throwError(() => new BadRequestException(err.message));
                 }
+
                 return throwError(() => err);
             }),
         );

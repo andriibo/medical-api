@@ -11,7 +11,7 @@ import {
     HttpCode,
     Patch,
 } from '@nestjs/common';
-import {ApiBearerAuth, ApiResponse, ApiTags} from '@nestjs/swagger';
+import {ApiBearerAuth, ApiForbiddenResponse, ApiResponse, ApiTags, ApiUnauthorizedResponse} from '@nestjs/swagger';
 import {Roles} from 'presentation/guards';
 import {PatientUseCasesFactory} from 'infrastructure/modules/patient-data-access/factories/patient-use-cases.factory';
 import {InitiateDataAccessView} from 'presentation/views/request/data-access';
@@ -21,6 +21,8 @@ import {DataAccessDto} from 'domain/dtos/response/data-access/data-access.dto';
 @Controller('patient')
 @ApiBearerAuth()
 @ApiTags('Patient Data Access')
+@ApiUnauthorizedResponse({description: 'Unauthorized.'})
+@ApiForbiddenResponse({description: 'Forbidden.'})
 export class PatientController {
     public constructor(private readonly patientUseCasesFactory: PatientUseCasesFactory) {}
 
