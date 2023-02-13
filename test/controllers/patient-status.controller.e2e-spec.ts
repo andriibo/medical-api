@@ -1,7 +1,7 @@
 import {Test, TestingModule} from '@nestjs/testing';
 import * as request from 'supertest';
 import {INestApplication, ValidationPipe} from '@nestjs/common';
-import {PatientStatusModule} from 'infrastructure/modules';
+import {PatientStatusModule} from 'infrastructure/modules/patient-status/patient-status.module';
 import {IUserRepository} from 'app/modules/auth/repositories';
 import {getRepositoryToken} from '@nestjs/typeorm';
 import {DoctorMetadataModel, PatientMetadataModel, UserModel} from 'infrastructure/modules/auth/models';
