@@ -35,6 +35,7 @@ export class GrantedUserController {
 
     @Roles('Caregiver', 'Doctor')
     @Post('suggested-contact')
+    @HttpCode(HttpStatus.CREATED)
     @ApiResponse({status: HttpStatus.CREATED, description: 'Created.'})
     @ApiBadRequestResponse({description: 'Bad request.'})
     public async createSuggestedContact(@Body() requestBody: CreateSuggestedContactView): Promise<void> {
@@ -49,6 +50,7 @@ export class GrantedUserController {
 
     @Roles('Caregiver', 'Doctor')
     @Delete('suggested-contact/:contactId')
+    @HttpCode(HttpStatus.NO_CONTENT)
     @ApiResponse({status: HttpStatus.NO_CONTENT, description: 'No content.'})
     @ApiBadRequestResponse({description: 'Bad request.'})
     @ApiNotFoundResponse({description: 'Not Found.'})

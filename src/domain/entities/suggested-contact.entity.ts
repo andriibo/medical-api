@@ -1,7 +1,7 @@
 export enum SuggestedContactRelationship {
     MedicalProfessional = 'MedicalProfessional',
     Caregiver = 'Caregiver',
-    Friends_Family = 'Friends&Family',
+    FriendsFamily = 'Friends&Family',
 }
 
 export interface SuggestedContact {

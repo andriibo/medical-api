@@ -10,7 +10,7 @@ import {
     ForgotPasswordDto,
     ResendSignUpCodeDto,
 } from 'domain/dtos/request/auth';
-import {AuthModule} from 'infrastructure/modules';
+import {AuthModule} from 'infrastructure/modules/auth/auth.module';
 import {IUserRepository} from 'app/modules/auth/repositories';
 import {getRepositoryToken} from '@nestjs/typeorm';
 import {DoctorMetadataModel, PatientMetadataModel, UserModel} from 'infrastructure/modules/auth/models';
