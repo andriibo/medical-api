@@ -37,6 +37,7 @@ export class GrantedUserController {
 
     @Roles('Caregiver', 'Doctor')
     @Post('suggested-contact')
+    @HttpCode(HttpStatus.CREATED)
     @ApiResponse({status: HttpStatus.CREATED, description: 'Created.'})
     public async createSuggestedContact(@Body() requestBody: CreateSuggestedContactView): Promise<void> {
         const useCase = this.grantedUserUseCasesFactory.createSuggestedContactUseCase();
@@ -50,6 +51,7 @@ export class GrantedUserController {
 
     @Roles('Caregiver', 'Doctor')
     @Delete('suggested-contact/:contactId')
+    @HttpCode(HttpStatus.NO_CONTENT)
     @ApiResponse({status: HttpStatus.NO_CONTENT, description: 'No content.'})
     public async deleteSuggestedContact(@Param('contactId', ParseUUIDPipe) contactId: string): Promise<void> {
         const useCase = this.grantedUserUseCasesFactory.createDeleteSuggestedContactUseCase();
