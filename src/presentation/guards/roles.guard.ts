@@ -30,8 +30,8 @@ export class RolesGuard implements CanActivate {
 
         try {
             await this.authedUserService.getActiveUserOrFail();
-        } catch (err) {
-            throw new ForbiddenException(err.message);
+        } catch (error) {
+            throw new ForbiddenException(error.message);
         }
 
         const userRoles: string[] = request.user.tokenClaims.getRoles();

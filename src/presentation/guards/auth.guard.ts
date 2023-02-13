@@ -24,8 +24,8 @@ export class AuthGuard implements CanActivate {
 
         try {
             await this.authedUserService.getActiveUserOrFail();
-        } catch (err) {
-            throw new ForbiddenException(err.message);
+        } catch (error) {
+            throw new ForbiddenException(error.message);
         }
 
         return true;
