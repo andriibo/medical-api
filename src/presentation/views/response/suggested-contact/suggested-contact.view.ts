@@ -22,7 +22,7 @@ export class SuggestedContactView implements SuggestedContactDto {
     public relationship: string;
 
     @ApiProperty()
-    public suggestedAt: string;
+    public suggestedAt: number;
 
     @ApiProperty()
     public suggestedByUser: UserView;

@@ -33,6 +33,7 @@ export class PatientController {
 
     @Roles('Patient')
     @Delete('suggested-contact/:contactId')
+    @HttpCode(HttpStatus.NO_CONTENT)
     @ApiResponse({status: HttpStatus.NO_CONTENT, description: 'No content.'})
     @ApiBadRequestResponse({description: 'Bad request.'})
     @ApiNotFoundResponse({description: 'Not Found.'})
@@ -48,6 +49,7 @@ export class PatientController {
 
     @Roles('Patient')
     @Post('suggested-contact/approve/:contactId')
+    @HttpCode(HttpStatus.OK)
     @ApiResponse({status: HttpStatus.OK, description: 'OK.'})
     @ApiBadRequestResponse({description: 'Bad request.'})
     @ApiNotFoundResponse({description: 'Not Found.'})

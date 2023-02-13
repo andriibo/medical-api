@@ -1,5 +1,6 @@
 import {SuggestedContact} from 'domain/entities';
 import {UserDto} from 'domain/dtos/response/user/user.dto';
+import {convertToUnixTimestamp} from 'app/support/date.helper';
 
 export class SuggestedContactDto {
     public contactId: string;
@@ -14,7 +15,7 @@ export class SuggestedContactDto {
 
     public relationship: string;
 
-    public suggestedAt: string;
+    public suggestedAt: number;
 
     public suggestedByUser: UserDto;
 
@@ -26,7 +27,7 @@ export class SuggestedContactDto {
         dto.email = suggestedContact.email;
         dto.phone = suggestedContact.phone;
         dto.relationship = suggestedContact.relationship;
-        dto.suggestedAt = suggestedContact.suggestedAt;
+        dto.suggestedAt = convertToUnixTimestamp(suggestedContact.suggestedAt);
 
         return dto;
     }
