@@ -28,9 +28,10 @@ export class RolesGuard implements CanActivate {
             throw new UnauthorizedException();
         }
 
-        const user = await this.authedUserService.getUser();
-        if (user.deletedAt !== null) {
-            throw new ForbiddenException();
+        try {
+            await this.authedUserService.getActiveUserOrFail();
+        } catch (err) {
+            throw new ForbiddenException(err.message);
         }
 
         const userRoles: string[] = request.user.tokenClaims.getRoles();

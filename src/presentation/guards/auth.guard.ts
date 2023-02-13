@@ -4,8 +4,8 @@ import {
     ExecutionContext,
     UseGuards,
     UnauthorizedException,
-    ForbiddenException,
     Inject,
+    ForbiddenException,
 } from '@nestjs/common';
 import {UserRequest} from 'presentation/middlewares/assign-user.middleware';
 import {isNullOrUndefined} from 'app/support/type.helper';
@@ -22,9 +22,10 @@ export class AuthGuard implements CanActivate {
             throw new UnauthorizedException();
         }
 
-        const user = await this.authedUserService.getUser();
-        if (user.deletedAt !== null) {
-            throw new ForbiddenException();
+        try {
+            await this.authedUserService.getActiveUserOrFail();
+        } catch (err) {
+            throw new ForbiddenException(err.message);
         }
 
         return true;

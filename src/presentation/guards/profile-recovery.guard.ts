@@ -3,7 +3,7 @@ import {UserRequest} from 'presentation/middlewares/assign-user.middleware';
 import {isNullOrUndefined} from 'app/support/type.helper';
 
 @Injectable()
-export class AuthDeletedGuard implements CanActivate {
+export class ProfileRecoveryGuard implements CanActivate {
     public async canActivate(context: ExecutionContext): Promise<boolean> {
         const request: UserRequest = context.switchToHttp().getRequest();
 
@@ -15,4 +15,4 @@ export class AuthDeletedGuard implements CanActivate {
     }
 }
 
-export const AuthDeleted = () => UseGuards(AuthDeletedGuard);
+export const ProfileRecovery = () => UseGuards(ProfileRecoveryGuard);

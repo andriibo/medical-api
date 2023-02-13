@@ -31,7 +31,7 @@ import {ChangeEmailResponseView} from 'views/response/auth';
 import {ChangeEmailView, ChangePasswordView, ConfirmChangeEmailView} from 'views/request/auth';
 import {UserRequest} from 'presentation/middlewares/assign-user.middleware';
 import {ChangeEmailDto, ChangePasswordDto, ConfirmChangeEmailDto} from 'domain/dtos/request/auth';
-import {AuthDeleted} from 'presentation/guards/auth-deleted.guard';
+import {ProfileRecovery} from 'presentation/guards/profile-recovery.guard';
 
 @Controller()
 @ApiBearerAuth()
@@ -81,7 +81,7 @@ export class ProfileController {
         }
     }
 
-    @AuthDeleted()
+    @ProfileRecovery()
     @Patch('my-profile/recovery')
     @HttpCode(HttpStatus.OK)
     @ApiResponse({status: HttpStatus.OK, description: 'OK.'})
