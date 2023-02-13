@@ -21,5 +21,5 @@ export class MySuggestedContactView implements MySuggestedContactDto {
     public relationship: string;
 
     @ApiProperty()
-    public suggestedAt: string;
+    public suggestedAt: number;
 }

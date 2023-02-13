@@ -1,4 +1,5 @@
 import {SuggestedContact} from 'domain/entities';
+import {convertToUnixTimestamp} from 'app/support/date.helper';
 
 export class MySuggestedContactDto {
     public contactId: string;
@@ -13,7 +14,7 @@ export class MySuggestedContactDto {
 
     public relationship: string;
 
-    public suggestedAt: string;
+    public suggestedAt: number;
 
     public static fromSuggestedContact(suggestedContact: SuggestedContact): MySuggestedContactDto {
         const dto = new MySuggestedContactDto();
@@ -23,7 +24,7 @@ export class MySuggestedContactDto {
         dto.email = suggestedContact.email;
         dto.phone = suggestedContact.phone;
         dto.relationship = suggestedContact.relationship;
-        dto.suggestedAt = suggestedContact.suggestedAt;
+        dto.suggestedAt = convertToUnixTimestamp(suggestedContact.suggestedAt);
 
         return dto;
     }
