@@ -26,7 +26,7 @@ const doctor: User = {
     lastName: 'Goldman',
     phone: '2930412345',
     avatar: null,
-    role: 'Patient',
+    role: 'Doctor',
     createdAt: '2022-10-10 07:31:17.016236',
     deletedAt: null,
 };
