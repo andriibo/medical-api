@@ -155,7 +155,7 @@ describe('PatientController', () => {
         await app.init();
     });
 
-    it(`/patient/my-profile (GET)`, async () => {
+    it('/patient/my-profile (GET)', async () => {
         return request(app.getHttpServer())
             .get('/patient/my-profile')
             .set('Authorization', 'Bearer patient')
@@ -175,7 +175,7 @@ describe('PatientController', () => {
             });
     });
 
-    it(`/patient/my-profile (PATCH)`, async () => {
+    it('/patient/my-profile (PATCH)', async () => {
         const dto = new UpdatePatientProfileDto();
         dto.firstName = 'Test';
         dto.lastName = 'Test';
@@ -191,7 +191,7 @@ describe('PatientController', () => {
             .expect(200);
     });
 
-    it(`/patient/my-doctors (GET)`, async () => {
+    it('/patient/my-doctors (GET)', async () => {
         return request(app.getHttpServer())
             .get('/patient/my-doctors')
             .set('Authorization', 'Bearer patient')
@@ -211,7 +211,7 @@ describe('PatientController', () => {
             ]);
     });
 
-    it(`/patient/my-caregivers (GET)`, async () => {
+    it('/patient/my-caregivers (GET)', async () => {
         return request(app.getHttpServer())
             .get('/patient/my-caregivers')
             .set('Authorization', 'Bearer patient')

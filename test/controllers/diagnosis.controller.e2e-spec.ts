@@ -65,7 +65,7 @@ describe('DiagnosisController', () => {
         await app.init();
     });
 
-    it(`/diagnoses (GET)`, async () => {
+    it('/diagnoses (GET)', async () => {
         return request(app.getHttpServer())
             .get('/diagnoses')
             .set('Authorization', 'Bearer doctor')

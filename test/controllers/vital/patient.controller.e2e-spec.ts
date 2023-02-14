@@ -135,7 +135,7 @@ describe('PatientController', () => {
         await app.init();
     });
 
-    it(`/patient/vitals (POST)`, async () => {
+    it('/patient/vitals (POST)', async () => {
         const dto = new SyncVitalsDto();
         const dtoVital = new VitalDto();
         dtoVital.temp = 38;
@@ -157,7 +157,7 @@ describe('PatientController', () => {
             .expect(200);
     });
 
-    it(`/patient/my-vitals (GET)`, async () => {
+    it('/patient/my-vitals (GET)', async () => {
         return request(app.getHttpServer())
             .get('/patient/my-vitals')
             .query({

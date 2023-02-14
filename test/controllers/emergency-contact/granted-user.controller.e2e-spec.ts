@@ -115,7 +115,7 @@ describe('GrantedUserController', () => {
         await app.init();
     });
 
-    it(`/patient-emergency-contacts/:patientUserId (GET)`, async () => {
+    it('/patient-emergency-contacts/:patientUserId (GET)', async () => {
         return request(app.getHttpServer())
             .get(`/patient-emergency-contacts/${patient.id}`)
             .set('Authorization', 'Bearer doctor')

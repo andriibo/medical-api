@@ -93,7 +93,7 @@ describe('PatientStatusController', () => {
         await app.init();
     });
 
-    it(`/patient/my-status (GET)`, async () => {
+    it('/patient/my-status (GET)', async () => {
         return request(app.getHttpServer())
             .get('/patient/my-status')
             .set('Authorization', 'Bearer patient')
@@ -104,14 +104,14 @@ describe('PatientStatusController', () => {
             });
     });
 
-    it(`/patient/my-status/normal (PUT)`, async () => {
+    it('/patient/my-status/normal (PUT)', async () => {
         return request(app.getHttpServer())
             .put('/patient/my-status/normal')
             .set('Authorization', 'Bearer patient')
             .expect(200);
     });
 
-    it(`/patient/my-status/abnormal (PUT)`, async () => {
+    it('/patient/my-status/abnormal (PUT)', async () => {
         return request(app.getHttpServer())
             .put('/patient/my-status/abnormal')
             .set('Authorization', 'Bearer patient')

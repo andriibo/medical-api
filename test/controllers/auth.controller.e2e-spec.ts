@@ -117,7 +117,7 @@ describe('AuthController', () => {
         await app.init();
     });
 
-    it(`/sign-in (POST)`, async () => {
+    it('/sign-in (POST)', async () => {
         const dto = new AuthUserDto();
         dto.email = 'doctor@gmail.com';
         dto.password = '123456!Aa';
@@ -141,7 +141,7 @@ describe('AuthController', () => {
             });
     });
 
-    it(`/doctor/sign-up (POST)`, async () => {
+    it('/doctor/sign-up (POST)', async () => {
         const dto = new CreateDoctorDto();
         dto.email = 'doctor@gmail.com';
         dto.firstName = 'Marc';
@@ -151,7 +151,7 @@ describe('AuthController', () => {
         return request(app.getHttpServer()).post('/doctor/sign-up').send(dto).expect(201);
     });
 
-    it(`/patient/sign-up (POST)`, async () => {
+    it('/patient/sign-up (POST)', async () => {
         const dto = new CreatePatientDto();
         dto.email = 'patient@gmail.com';
         dto.firstName = 'Marc';
@@ -165,7 +165,7 @@ describe('AuthController', () => {
         return request(app.getHttpServer()).post('/patient/sign-up').send(dto).expect(201);
     });
 
-    it(`/caregiver/sign-up (POST)`, async () => {
+    it('/caregiver/sign-up (POST)', async () => {
         const dto = new CreateCaregiverDto();
         dto.email = 'caregiver@gmail.com';
         dto.firstName = 'Marc';
@@ -175,7 +175,7 @@ describe('AuthController', () => {
         return request(app.getHttpServer()).post('/caregiver/sign-up').send(dto).expect(201);
     });
 
-    it(`/sign-up/confirm (POST)`, async () => {
+    it('/sign-up/confirm (POST)', async () => {
         const dto = new ConfirmSignUpUserDto();
         dto.email = 'doctor@gmail.com';
         dto.code = '553339';
@@ -192,7 +192,7 @@ describe('AuthController', () => {
         });
     });
 
-    it(`/forgot-password (POST)`, async () => {
+    it('/forgot-password (POST)', async () => {
         const dto = new ForgotPasswordDto();
         dto.email = 'doctor@gmail.com';
         return request(app.getHttpServer()).post('/forgot-password').send(dto).expect(200).expect({
@@ -202,7 +202,7 @@ describe('AuthController', () => {
         });
     });
 
-    it(`/forgot-password/confirm (POST)`, async () => {
+    it('/forgot-password/confirm (POST)', async () => {
         const dto = new ConfirmForgotPasswordDto();
         dto.email = 'doctor@gmail.com';
         dto.code = '216493';

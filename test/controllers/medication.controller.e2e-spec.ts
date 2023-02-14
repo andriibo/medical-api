@@ -66,7 +66,7 @@ describe('MedicationController', () => {
         await app.init();
     });
 
-    it(`/medications (GET)`, async () => {
+    it('/medications (GET)', async () => {
         return request(app.getHttpServer())
             .get('/medications')
             .set('Authorization', 'Bearer doctor')

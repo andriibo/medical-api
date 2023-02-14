@@ -87,7 +87,7 @@ describe('ProfileController', () => {
         await app.init();
     });
 
-    it(`/avatar/upload (POST)`, async () => {
+    it('/avatar/upload (POST)', async () => {
         return request(app.getHttpServer())
             .post('/avatar/upload')
             .set('Content-Type', 'multipart/form-data')
@@ -96,14 +96,14 @@ describe('ProfileController', () => {
             .expect(200);
     });
 
-    it(`/my-profile/delete (PATCH)`, async () => {
+    it('/my-profile/delete (PATCH)', async () => {
         return request(app.getHttpServer())
             .patch('/my-profile/delete')
             .set('Authorization', 'Bearer doctor')
             .expect(200);
     });
 
-    it(`/my-profile/recovery (PATCH)`, async () => {
+    it('/my-profile/recovery (PATCH)', async () => {
         return request(app.getHttpServer())
             .patch('/my-profile/recovery')
             .set('Authorization', 'Bearer doctor')

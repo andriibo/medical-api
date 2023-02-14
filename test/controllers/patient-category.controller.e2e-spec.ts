@@ -95,14 +95,14 @@ describe('PatientCategoryController', () => {
         await app.init();
     });
 
-    it(`/patient-category/normal/:patientUserId (PATCH)`, async () => {
+    it('/patient-category/normal/:patientUserId (PATCH)', async () => {
         return request(app.getHttpServer())
             .patch(`/patient-category/normal/${patient.id}`)
             .set('Authorization', 'Bearer doctor')
             .expect(200);
     });
 
-    it(`/patient-category/borderline/:patientUserId (PATCH)`, async () => {
+    it('/patient-category/borderline/:patientUserId (PATCH)', async () => {
         patientCategory.patientCategory = 'Abnormal';
         return request(app.getHttpServer())
             .patch(`/patient-category/borderline/${patient.id}`)

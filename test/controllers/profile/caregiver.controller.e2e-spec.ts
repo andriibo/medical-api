@@ -88,7 +88,7 @@ describe('CaregiverController', () => {
         await app.init();
     });
 
-    it(`/caregiver/my-profile (GET)`, async () => {
+    it('/caregiver/my-profile (GET)', async () => {
         return request(app.getHttpServer())
             .get('/caregiver/my-profile')
             .set('Authorization', 'Bearer caregiver')
@@ -104,7 +104,7 @@ describe('CaregiverController', () => {
             });
     });
 
-    it(`/caregiver/my-profile (PATCH)`, async () => {
+    it('/caregiver/my-profile (PATCH)', async () => {
         const dto = new UpdateCaregiverProfileDto();
         dto.firstName = 'Test';
         dto.lastName = 'Test';

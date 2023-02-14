@@ -113,7 +113,7 @@ describe('PatientMedicationController', () => {
         await app.init();
     });
 
-    it(`/patient-medication (POST)`, async () => {
+    it('/patient-medication (POST)', async () => {
         const dto = new MedicationDto();
         dto.patientUserId = patient.id;
         dto.genericName = 'Test';
@@ -125,7 +125,7 @@ describe('PatientMedicationController', () => {
             .expect(201);
     });
 
-    it(`/patient-medications/:patientUserId (GET)`, async () => {
+    it('/patient-medications/:patientUserId (GET)', async () => {
         return request(app.getHttpServer())
             .get(`/patient-medications/${patient.id}`)
             .set('Authorization', 'Bearer doctor')
@@ -150,7 +150,7 @@ describe('PatientMedicationController', () => {
             ]);
     });
 
-    it(`/patient-medication/:medicationId (DELETE)`, async () => {
+    it('/patient-medication/:medicationId (DELETE)', async () => {
         return request(app.getHttpServer())
             .delete(`/patient-medication/${patientMedication.id}`)
             .set('Authorization', 'Bearer patient')

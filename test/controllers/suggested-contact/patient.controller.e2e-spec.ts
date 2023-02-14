@@ -104,21 +104,21 @@ describe('PatientController', () => {
         await app.init();
     });
 
-    it(`/patient/suggested-contact/:contactId (DELETE)`, async () => {
+    it('/patient/suggested-contact/:contactId (DELETE)', async () => {
         return request(app.getHttpServer())
             .delete(`/patient/suggested-contact/${suggestedContact.id}`)
             .set('Authorization', 'Bearer patient')
             .expect(204);
     });
 
-    it(`/patient/suggested-contact/approve/:contactId (POST)`, async () => {
+    it('/patient/suggested-contact/approve/:contactId (POST)', async () => {
         return request(app.getHttpServer())
             .post(`/patient/suggested-contact/approve/${suggestedContact.id}`)
             .set('Authorization', 'Bearer patient')
             .expect(200);
     });
 
-    it(`/patient/suggested-contacts (GET)`, async () => {
+    it('/patient/suggested-contacts (GET)', async () => {
         return request(app.getHttpServer())
             .get(`/patient/suggested-contacts`)
             .set('Authorization', 'Bearer patient')

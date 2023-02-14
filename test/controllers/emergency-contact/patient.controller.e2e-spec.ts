@@ -97,7 +97,7 @@ describe('PatientController', () => {
         await app.init();
     });
 
-    it(`/patient/my-emergency-contact (POST)`, async () => {
+    it('/patient/my-emergency-contact (POST)', async () => {
         const dto: ContactDto = {
             firstName: 'firstName',
             lastName: 'lastName',
@@ -112,7 +112,7 @@ describe('PatientController', () => {
             .expect(201);
     });
 
-    it(`/patient/my-emergency-contacts (GET)`, async () => {
+    it('/patient/my-emergency-contacts (GET)', async () => {
         return request(app.getHttpServer())
             .get('/patient/my-emergency-contacts')
             .set('Authorization', 'Bearer patient')
@@ -130,7 +130,7 @@ describe('PatientController', () => {
             ]);
     });
 
-    it(`/patient/my-emergency-contact/:contactId (PATCH)`, async () => {
+    it('/patient/my-emergency-contact/:contactId (PATCH)', async () => {
         const dto: ContactDto = {
             firstName: 'firstNameNew',
             lastName: 'lastNameNew',
@@ -145,7 +145,7 @@ describe('PatientController', () => {
             .expect(200);
     });
 
-    it(`/patient/my-emergency-contact/:contactId (DELETE)`, async () => {
+    it('/patient/my-emergency-contact/:contactId (DELETE)', async () => {
         return request(app.getHttpServer())
             .delete(`/patient/my-emergency-contact/${emergencyContact.id}`)
             .set('Authorization', 'Bearer patient')

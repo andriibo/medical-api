@@ -127,7 +127,7 @@ describe('GrantedUserController', () => {
         await app.init();
     });
 
-    it(`/suggested-contact (POST)`, async () => {
+    it('/suggested-contact (POST)', async () => {
         const dto: SuggestedContactDto = {
             patientUserId: '5nc3e70a-c1y9-121a-c5mv-5aq272098bp0',
             firstName: 'Marc',
@@ -143,14 +143,14 @@ describe('GrantedUserController', () => {
             .expect(201);
     });
 
-    it(`/suggested-contact/:contactId (DELETE)`, async () => {
+    it('/suggested-contact/:contactId (DELETE)', async () => {
         return request(app.getHttpServer())
             .delete(`/suggested-contact/${suggestedContact.id}`)
             .set('Authorization', 'Bearer doctor')
             .expect(204);
     });
 
-    it(`/my-suggested-contacts/:patientUserId (GET)`, async () => {
+    it('/my-suggested-contacts/:patientUserId (GET)', async () => {
         return request(app.getHttpServer())
             .get(`/my-suggested-contacts/${patient.id}`)
             .set('Authorization', 'Bearer doctor')

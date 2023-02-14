@@ -113,7 +113,7 @@ describe('PatientDiagnosisController', () => {
         await app.init();
     });
 
-    it(`/patient-diagnosis (POST)`, async () => {
+    it('/patient-diagnosis (POST)', async () => {
         const dto = new DiagnosisDto();
         dto.patientUserId = patient.id;
         dto.diagnosisName = 'Test';
@@ -124,7 +124,7 @@ describe('PatientDiagnosisController', () => {
             .expect(201);
     });
 
-    it(`/patient-diagnoses/:patientUserId (GET)`, async () => {
+    it('/patient-diagnoses/:patientUserId (GET)', async () => {
         return request(app.getHttpServer())
             .get(`/patient-diagnoses/${patient.id}`)
             .set('Authorization', 'Bearer doctor')
@@ -148,7 +148,7 @@ describe('PatientDiagnosisController', () => {
             ]);
     });
 
-    it(`/patient-diagnosis/:diagnosisId (DELETE)`, async () => {
+    it('/patient-diagnosis/:diagnosisId (DELETE)', async () => {
         return request(app.getHttpServer())
             .delete(`/patient-diagnosis/${patientDiagnosis.id}`)
             .set('Authorization', 'Bearer patient')

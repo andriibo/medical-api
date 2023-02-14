@@ -151,7 +151,7 @@ describe('GrantedUserController', () => {
         await app.init();
     });
 
-    it(`/profile/my-patients (GET)`, async () => {
+    it('/profile/my-patients (GET)', async () => {
         return request(app.getHttpServer())
             .get('/profile/my-patients')
             .set('Authorization', 'Bearer caregiver')
@@ -176,7 +176,7 @@ describe('GrantedUserController', () => {
             ]);
     });
 
-    it(`/patient-profile/{patientUserId} (GET)`, async () => {
+    it('/patient-profile/{patientUserId} (GET)', async () => {
         return request(app.getHttpServer())
             .get(`/patient-profile/${patient.id}`)
             .set('Authorization', 'Bearer caregiver')

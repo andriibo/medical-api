@@ -97,7 +97,7 @@ describe('DoctorController', () => {
         await app.init();
     });
 
-    it(`/doctor/my-profile (GET)`, async () => {
+    it('/doctor/my-profile (GET)', async () => {
         return request(app.getHttpServer())
             .get('/doctor/my-profile')
             .set('Authorization', 'Bearer doctor')
@@ -114,7 +114,7 @@ describe('DoctorController', () => {
             });
     });
 
-    it(`/doctor/my-profile (PATCH)`, async () => {
+    it('/doctor/my-profile (PATCH)', async () => {
         const dto = new UpdateDoctorProfileDto();
         dto.firstName = 'Test';
         dto.lastName = 'Test';

@@ -153,7 +153,7 @@ describe('GrantedUserController', () => {
         await app.init();
     });
 
-    it(`/patient-vitals/:patientUserId (GET)`, async () => {
+    it('/patient-vitals/:patientUserId (GET)', async () => {
         return request(app.getHttpServer())
             .get(`/patient-vitals/${patient.id}`)
             .query({
