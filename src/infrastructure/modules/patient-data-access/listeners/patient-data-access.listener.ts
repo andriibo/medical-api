@@ -25,7 +25,7 @@ export class PatientDataAccessListener {
 
     @OnEvent('patient-initiated-data-access-for-unregistered-caregiver')
     public async handleAccessForUnregisteredCaregiverInitiatedByPatient(patient: User, email: string): Promise<void> {
-        await this.mailService.sendInviteToSignUpFromPatientToDoctor(patient, email);
+        await this.mailService.sendInviteToSignUpFromPatientToCaregiver(patient, email);
     }
 
     @OnEvent('granted-user-initiated-data-access-to-unregistered-patient')
