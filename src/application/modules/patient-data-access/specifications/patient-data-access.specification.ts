@@ -69,12 +69,6 @@ export class PatientDataAccessSpecification {
     }
 
     public async assertPatientCanGiveAccessForGrantedEmail(patient: User, grantedEmail: string): Promise<void> {
-        const userToGrant = await this.userRepository.getOneByEmail(grantedEmail);
-
-        if (userToGrant !== null) {
-            throw new PatientDataAccessSpecificationError('Email address has been already invited.');
-        }
-
         const dataAccess = await this.patientDataAccessRepository.getOneByPatientUserIdAndGrantedEmail(
             patient.id,
             grantedEmail,
