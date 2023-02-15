@@ -1,7 +1,7 @@
 import {Test, TestingModule} from '@nestjs/testing';
 import * as request from 'supertest';
 import {INestApplication, ValidationPipe} from '@nestjs/common';
-import {User} from 'domain/entities';
+import {PatientDataAccess, User} from 'domain/entities';
 import {TestModule} from 'tests/test.module';
 import {getRepositoryToken} from '@nestjs/typeorm';
 import {DoctorMetadataModel, PatientMetadataModel, UserModel} from 'infrastructure/modules/auth/models';
@@ -24,6 +24,8 @@ import {AccessForRegisteredDoctorService} from 'app/modules/patient-data-access/
 import {IMailSender} from 'app/modules/mail/services/abstract/mail-sender';
 import {IDeepLinkService} from 'app/modules/mail/services/deep-link.service';
 import {AccessForUnregisteredCaregiverService} from 'app/modules/patient-data-access/services/access-for-unregistered-caregiver.service';
+import {PatientStatus} from 'domain/entities/patient-status.entity';
+import {currentUnixTimestamp} from 'app/support/date.helper';
 
 const patient: User = {
     id: '5nc3e70a-c1y9-121a-c5mv-5aq272098bp0',
@@ -54,17 +56,44 @@ const users = {
     'caregiver@gmail.com': null,
 };
 
+const patientDataAccess: PatientDataAccess = {
+    id: 'f7c5009e-dd15-41f0-a8f9-77e69aa87c99',
+    patientUserId: patient.id,
+    grantedUserId: doctor.id,
+    direction: 'ToPatient',
+    status: 'Initiated',
+    createdAt: new Date().toISOString(),
+    grantedUser: doctor,
+};
+
+const patientStatus: PatientStatus = {
+    patientUserId: patient.id,
+    status: 'Normal',
+    setAt: currentUnixTimestamp(),
+};
+
 describe('PatientController', () => {
     let app: INestApplication;
     beforeAll(async () => {
         const mockedUserRepository = {
             getOneById: jest.fn(() => Promise.resolve(patient)),
             getOneByEmail: jest.fn((email: string) => Promise.resolve(users[email])),
+            getOneByIdOrFail: jest.fn(() => Promise.resolve(doctor)),
         };
         const mockedPatientDataAccessRepository = {
             getOneByPatientUserIdAndGrantedUserId: jest.fn(() => Promise.resolve(null)),
             getOneByPatientUserIdAndGrantedEmail: jest.fn(() => Promise.resolve(null)),
+            getOneById: jest.fn(() => Promise.resolve(patientDataAccess)),
             create: jest.fn(() => Promise.resolve()),
+            update: jest.fn(() => Promise.resolve()),
+            delete: jest.fn(() => Promise.resolve()),
+            getWithGrantedUserByPatientUserId: jest.fn(() => Promise.resolve([patientDataAccess])),
+        };
+        const mockedPatientStatusRepository = {
+            getByPatientUserId: jest.fn(() => Promise.resolve(patientStatus)),
+        };
+        const mockedPatientCategoryRepository = {
+            updateCategoryAndUpdatedAtById: jest.fn(() => Promise.resolve()),
         };
         const mockedMailSender = {
             sendMail: jest.fn(() => Promise.resolve()),
@@ -155,9 +184,9 @@ describe('PatientController', () => {
             .overrideProvider(IPatientVitalThresholdsRepository)
             .useValue(null)
             .overrideProvider(IPatientCategoryRepository)
-            .useValue(null)
+            .useValue(mockedPatientCategoryRepository)
             .overrideProvider(IPatientStatusRepository)
-            .useValue(null)
+            .useValue(mockedPatientStatusRepository)
             .overrideProvider(IPatientDataAccessRepository)
             .useValue(mockedPatientDataAccessRepository)
             .overrideProvider(IMailSender)
@@ -185,6 +214,54 @@ describe('PatientController', () => {
             .send({email: 'caregiver@gmail.com'})
             .set('Authorization', 'Bearer patient')
             .expect(201);
+    });
+
+    it('/patient/data-access/refuse/:accessId (PATCH)', async () => {
+        return request(app.getHttpServer())
+            .patch(`/patient/data-access/refuse/${patientDataAccess.id}`)
+            .set('Authorization', 'Bearer patient')
+            .expect(200);
+    });
+
+    it('/patient/data-access/approve/:accessId (PATCH)', async () => {
+        patientDataAccess.status = 'Initiated';
+        return request(app.getHttpServer())
+            .patch(`/patient/data-access/approve/${patientDataAccess.id}`)
+            .set('Authorization', 'Bearer patient')
+            .expect(200);
+    });
+
+    it('/patient/data-accesses (GET)', async () => {
+        return request(app.getHttpServer())
+            .get('/patient/data-accesses')
+            .set('Authorization', 'Bearer patient')
+            .expect(200)
+            .expect([
+                {
+                    accessId: patientDataAccess.id,
+                    direction: patientDataAccess.direction,
+                    status: patientDataAccess.status,
+                    createdAt: patientDataAccess.createdAt,
+                    requestedUser: {
+                        avatar: 'https://zenzers-medical-dev.s3.amazonaws.com/avatars/default-avatar.png',
+                        deletedAt: doctor.deletedAt,
+                        userId: doctor.id,
+                        email: doctor.email,
+                        firstName: doctor.firstName,
+                        lastName: doctor.lastName,
+                        phone: doctor.phone,
+                        role: doctor.role,
+                    },
+                },
+            ]);
+    });
+
+    it('/patient/data-access/:accessId (DELETE)', async () => {
+        patientDataAccess.direction = 'FromPatient';
+        return request(app.getHttpServer())
+            .delete(`/patient/data-access/${patientDataAccess.id}`)
+            .set('Authorization', 'Bearer patient')
+            .expect(204);
     });
 
     afterAll(async () => {
