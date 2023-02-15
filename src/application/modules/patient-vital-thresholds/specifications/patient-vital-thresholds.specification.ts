@@ -4,9 +4,9 @@ import {User} from 'domain/entities';
 export class PatientVitalThresholdsSpecification {
     public constructor(private readonly patientDataAccessSpecification: PatientDataAccessSpecification) {}
 
-    public async assertGrantedUserCanOperateThresholds(user: User, patientUserId: string): Promise<void> {
+    public async assertGrantedUserCanOperateThresholds(grantedUser: User, patientUserId: string): Promise<void> {
         await this.patientDataAccessSpecification.assertAccessIsOpenByGrantedUserIdAndPatientUserId(
-            user.id,
+            grantedUser.id,
             patientUserId,
         );
     }
