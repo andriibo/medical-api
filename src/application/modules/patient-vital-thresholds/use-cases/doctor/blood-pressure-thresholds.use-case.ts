@@ -7,7 +7,7 @@ import {BloodPressureThresholdsDto} from 'domain/dtos/request/patient-vital-thre
 export class BloodPressureThresholdsUseCase {
     public constructor(
         private readonly authedUserService: IAuthedUserService,
-        private readonly thresholdsRepository: IPatientVitalThresholdsRepository,
+        private readonly patientVitalThresholdsRepository: IPatientVitalThresholdsRepository,
         private readonly thresholdsMapper: IPatientVitalThresholdsEntityMapper,
         private readonly thresholdsSpecification: PatientVitalThresholdsSpecification,
     ) {}
@@ -16,10 +16,12 @@ export class BloodPressureThresholdsUseCase {
         const doctor = await this.authedUserService.getUser();
         await this.thresholdsSpecification.assertGrantedUserCanOperateThresholds(doctor, patientUserId);
 
-        const patientThresholds = await this.thresholdsRepository.getCurrentThresholdsByPatientUserId(patientUserId);
+        const patientThresholds = await this.patientVitalThresholdsRepository.getCurrentThresholdsByPatientUserId(
+            patientUserId,
+        );
         const modifiedPatientThresholds = this.thresholdsMapper.mapByBloodPressureDto(dto, patientThresholds, doctor);
         modifiedPatientThresholds.patientUserId = patientUserId;
 
-        await this.thresholdsRepository.insert(modifiedPatientThresholds);
+        await this.patientVitalThresholdsRepository.insert(modifiedPatientThresholds);
     }
 }
