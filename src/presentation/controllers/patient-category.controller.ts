@@ -29,7 +29,6 @@ export class PatientCategoryController {
         try {
             await useCase.setNormal(patientUserId);
         } catch (error) {
-            console.log(error);
             throw new BadRequestException(error.message);
         }
     }
