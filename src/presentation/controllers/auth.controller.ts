@@ -35,9 +35,9 @@ export class AuthController {
     @HttpCode(HttpStatus.CREATED)
     @ApiResponse({status: HttpStatus.CREATED})
     public async signUpDoctor(@Body() requestBody: SignUpDoctorView): Promise<void> {
-        const useCase = this.authUseCasesFactory.createSignUpUseCase();
+        const useCase = this.authUseCasesFactory.createDoctorSignUpUseCase();
 
-        await useCase.signUpDoctor(requestBody);
+        await useCase.signUp(requestBody);
     }
 
     @Post('patient/sign-up')
@@ -53,9 +53,9 @@ export class AuthController {
     @HttpCode(HttpStatus.CREATED)
     @ApiResponse({status: HttpStatus.CREATED})
     public async signUpCaregiver(@Body() requestBody: SignUpCaregiverView): Promise<void> {
-        const useCase = this.authUseCasesFactory.createSignUpUseCase();
+        const useCase = this.authUseCasesFactory.createCaregiverSignUpUseCase();
 
-        await useCase.signUpCaregiver(requestBody);
+        await useCase.signUp(requestBody);
     }
 
     @Post('sign-up/confirm')
