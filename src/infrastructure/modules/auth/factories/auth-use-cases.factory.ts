@@ -9,6 +9,7 @@ import {
     SignUpUseCase,
     ResendSignUpCodeUseCase,
     PatientSignUpUseCase,
+    ConfirmForgotPasswordUseCase,
 } from 'app/modules/auth/use-cases';
 import {IAuthEventEmitter} from 'app/modules/auth/event-emitters/auth.event-emitter';
 import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service';
@@ -54,5 +55,9 @@ export class AuthUseCasesFactory {
 
     public createForgotPasswordUseCase(): ForgotPasswordUseCase {
         return new ForgotPasswordUseCase(this.authService);
+    }
+
+    public createConfirmForgotPasswordUseCase(): ConfirmForgotPasswordUseCase {
+        return new ConfirmForgotPasswordUseCase(this.authService);
     }
 }
