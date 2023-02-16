@@ -6,6 +6,7 @@ import {SignInUseCase} from './sign-in.use-case';
 import {SignUpUseCase} from './sign-up.use-case';
 import {DoctorSignUpUseCase} from './doctor-sign-up.use-case';
 import {CaregiverSignUpUseCase} from './caregiver-sign-up.use-case';
+import {ConfirmForgotPasswordUseCase} from './confirm-forgot-password.use-case';
 
 export {
     PatientSignUpUseCase,
@@ -14,6 +15,7 @@ export {
     SignInUseCase,
     ForgotPasswordUseCase,
     ResendSignUpCodeUseCase,
+    ConfirmForgotPasswordUseCase,
     DoctorSignUpUseCase,
     CaregiverSignUpUseCase,
 };

@@ -121,9 +121,9 @@ export class ProfileController {
         @Req() request: UserRequest,
         @Body() requestBody: ConfirmChangeEmailView,
     ): Promise<void> {
-        const useCase = this.profileUseCasesFactory.createChangeEmailUseCase();
+        const useCase = this.profileUseCasesFactory.createConfirmChangeEmailUseCase();
 
-        await useCase.confirmChangeEmail(new ConfirmChangeEmailDto(requestBody.code, request.user.token));
+        await useCase.confirm(new ConfirmChangeEmailDto(requestBody.code, request.user.token));
     }
 
     @Auth()

@@ -80,9 +80,9 @@ export class AuthController {
     @HttpCode(HttpStatus.OK)
     @ApiResponse({status: HttpStatus.OK})
     public async confirmForgotPassword(@Body() requestBody: ConfirmForgotPasswordView): Promise<void> {
-        const useCase = this.authUseCasesFactory.createForgotPasswordUseCase();
+        const useCase = this.authUseCasesFactory.createConfirmForgotPasswordUseCase();
 
-        await useCase.confirmForgotPassword(requestBody);
+        await useCase.confirm(requestBody);
     }
 
     @Post('sign-up/resend-code')
