@@ -16,9 +16,8 @@ export class PatientContactListUseCase {
             grantedUser.id,
             patientUserId,
         );
-        console.log(333);
         const items = await this.emergencyContactRepository.getByUserId(patientUserId);
-        console.log(444);
+
         return items.map((item) => ContactDto.fromEmergencyContact(item));
     }
 }

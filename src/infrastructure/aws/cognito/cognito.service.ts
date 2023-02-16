@@ -276,7 +276,7 @@ export class CognitoService implements IAuthService {
 
         try {
             const result = await this.cognitoClient.send(command);
-            console.log(result);
+
             return this.getUserAttributesResult(result.UserAttributes);
         } catch (error) {
             console.error(error.message);
