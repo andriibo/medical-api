@@ -3,14 +3,15 @@ import {IVitalRepository} from 'app/modules/vital/repositories';
 import {IVitalEntityMapper} from 'app/modules/vital/mappers/vital-entity.mapper';
 import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service';
 import {PatientDataAccessSpecification} from 'app/modules/patient-data-access/specifications/patient-data-access.specification';
-import {GetVitalsUseCase, SyncVitalsUseCase} from 'app/modules/vital/use-cases';
+import {SyncVitalsUseCase} from 'app/modules/vital/use-cases/patient/sync-vitals.use-case';
 import {ThresholdsDtoService} from 'app/modules/patient-vital-thresholds/services/thresholds-dto.service';
 import {IUserRepository} from 'app/modules/auth/repositories';
 import {IPatientVitalThresholdsRepository} from 'app/modules/patient-vital-thresholds/repositories';
 import {PatientOwnsThresholdsSpecification} from 'app/modules/patient-vital-thresholds/specifications/patient-owns-thresholds.specification';
+import {VitalListUseCase} from 'app/modules/vital/use-cases/patient/vital-list.use-case';
 
 @Injectable()
-export class VitalUseCasesFactory {
+export class PatientUseCasesFactory {
     public constructor(
         @Inject(IAuthedUserService) private readonly authedUserService: IAuthedUserService,
         @Inject(IVitalRepository) private readonly vitalRepository: IVitalRepository,
@@ -22,8 +23,8 @@ export class VitalUseCasesFactory {
         private readonly patientOwnsThresholdsSpecification: PatientOwnsThresholdsSpecification,
     ) {}
 
-    public createGetVitalsUseCase(): GetVitalsUseCase {
-        return new GetVitalsUseCase(
+    public createVitalListUseCase(): VitalListUseCase {
+        return new VitalListUseCase(
             this.authedUserService,
             this.vitalRepository,
             this.patientDataAccessSpecification,
