@@ -6,7 +6,6 @@ import {
     ConfirmSignUpUserUseCase,
     ForgotPasswordUseCase,
     SignInUseCase,
-    SignUpUseCase,
     ResendSignUpCodeUseCase,
     PatientSignUpUseCase,
     ConfirmForgotPasswordUseCase,
@@ -14,6 +13,8 @@ import {
 import {IAuthEventEmitter} from 'app/modules/auth/event-emitters/auth.event-emitter';
 import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service';
 import {IPatientVitalThresholdsEntityMapper} from 'app/modules/patient-vital-thresholds/mappers/patient-vital-thresholds-entity.mapper';
+import {DoctorSignUpUseCase} from 'app/modules/auth/use-cases/doctor-sign-up.use-case';
+import {CaregiverSignUpUseCase} from 'app/modules/auth/use-cases/caregiver-sign-up.use-case';
 
 @Injectable()
 export class AuthUseCasesFactory {
@@ -37,8 +38,22 @@ export class AuthUseCasesFactory {
         );
     }
 
-    public createSignUpUseCase(): SignUpUseCase {
-        return new SignUpUseCase(this.authService, this.userRepository, this.userEntityMapper, this.authEventEmitter);
+    public createDoctorSignUpUseCase(): DoctorSignUpUseCase {
+        return new DoctorSignUpUseCase(
+            this.authService,
+            this.userRepository,
+            this.userEntityMapper,
+            this.authEventEmitter,
+        );
+    }
+
+    public createCaregiverSignUpUseCase(): CaregiverSignUpUseCase {
+        return new CaregiverSignUpUseCase(
+            this.authService,
+            this.userRepository,
+            this.userEntityMapper,
+            this.authEventEmitter,
+        );
     }
 
     public createSignInUseCase(): SignInUseCase {
