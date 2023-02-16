@@ -4,6 +4,7 @@ import {ResendSignUpCodeUseCase} from './resend-sign-up-code.use-case';
 import {PatientSignUpUseCase} from './patient-sign-up.use-case';
 import {SignInUseCase} from './sign-in.use-case';
 import {SignUpUseCase} from './sign-up.use-case';
+import {ConfirmForgotPasswordUseCase} from './confirm-forgot-password.use-case';
 
 export {
     PatientSignUpUseCase,
@@ -12,4 +13,5 @@ export {
     SignInUseCase,
     ForgotPasswordUseCase,
     ResendSignUpCodeUseCase,
+    ConfirmForgotPasswordUseCase,
 };
