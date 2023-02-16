@@ -4,7 +4,6 @@ import {UserSignedInDto} from 'domain/dtos/response/auth';
 export interface IAuthedUserService {
     getUser(): Promise<User>;
     getActiveUserOrFail(): Promise<User>;
-    syncUserEmailWithExternalProvider(externalProviderEmail: string): Promise<void>;
     getUserByTokenAndTokenClaims(token: string, tokenClaims: object): Promise<UserSignedInDto>;
 }
 
