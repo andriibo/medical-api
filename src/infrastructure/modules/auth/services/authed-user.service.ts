@@ -35,12 +35,6 @@ export class AuthedUserService implements IAuthedUserService {
         return user;
     }
 
-    public async syncUserEmailWithExternalProvider(externalProviderEmail: string): Promise<void> {
-        const user = await this.getUser();
-        user.email = externalProviderEmail;
-        await this.userRepository.persist(user);
-    }
-
     public async getUserByTokenAndTokenClaims(token: string, tokenClaims: object): Promise<UserSignedInDto> {
         const tokenClaimsModel = TokenClaimsModel.fromCognitoResponse(tokenClaims);
         const user = await this.userRepository.getOneById(tokenClaimsModel.getUserId());
