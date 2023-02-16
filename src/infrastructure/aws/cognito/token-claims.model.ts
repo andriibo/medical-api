@@ -3,7 +3,7 @@ import {ITokenClaimsModel} from 'app/modules/auth/models';
 class CLAIMS {
     public static readonly USER_ID = 'sub';
     public static readonly ROLES = 'cognito:groups';
-    public static readonly TOKEN_EXPITE_TIMESTAMP = 'exp';
+    public static readonly TOKEN_EXPIRE_TIMESTAMP = 'exp';
 }
 
 export class TokenClaimsModel implements ITokenClaimsModel {
@@ -29,7 +29,7 @@ export class TokenClaimsModel implements ITokenClaimsModel {
         return new TokenClaimsModel(
             tokenClaims[CLAIMS.USER_ID],
             tokenClaims[CLAIMS.ROLES],
-            tokenClaims[CLAIMS.TOKEN_EXPITE_TIMESTAMP],
+            tokenClaims[CLAIMS.TOKEN_EXPIRE_TIMESTAMP],
         );
     }
 }

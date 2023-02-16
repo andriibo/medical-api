@@ -238,7 +238,7 @@ export class CognitoService implements IAuthService {
             AccessToken: changeEmailModel.accessToken,
             UserAttributes: [
                 {
-                    Name: USER_ATTRIBUTES.EMIAL,
+                    Name: USER_ATTRIBUTES.EMAIL,
                     Value: changeEmailModel.newEmail,
                 },
             ],
@@ -257,7 +257,7 @@ export class CognitoService implements IAuthService {
     public async confirmChangeEmail(confirmChangeEmailModel: ConfirmChangeEmailModel): Promise<void> {
         const command = new VerifyUserAttributeCommand({
             AccessToken: confirmChangeEmailModel.accessToken,
-            AttributeName: USER_ATTRIBUTES.EMIAL,
+            AttributeName: USER_ATTRIBUTES.EMAIL,
             Code: confirmChangeEmailModel.code,
         });
 
@@ -276,7 +276,7 @@ export class CognitoService implements IAuthService {
 
         try {
             const result = await this.cognitoClient.send(command);
-
+            console.log(result);
             return this.getUserAttributesResult(result.UserAttributes);
         } catch (error) {
             console.error(error.message);
@@ -407,8 +407,8 @@ export class CognitoService implements IAuthService {
     private getUserAttributesResult(attributes: AttributeType[]): UserAttributesModel {
         const userAttributes = new UserAttributesModel();
         userAttributes.sub = this.getAttributeValueByName(attributes, USER_ATTRIBUTES.USER_SUB);
-        userAttributes.email = this.getAttributeValueByName(attributes, USER_ATTRIBUTES.EMIAL);
-        userAttributes.emailVerified = this.getAttributeValueByName(attributes, USER_ATTRIBUTES.EMIAL_VERIFIED);
+        userAttributes.email = this.getAttributeValueByName(attributes, USER_ATTRIBUTES.EMAIL);
+        userAttributes.emailVerified = this.getAttributeValueByName(attributes, USER_ATTRIBUTES.EMAIL_VERIFIED);
         userAttributes.updatedAt = this.getAttributeValueByName(attributes, USER_ATTRIBUTES.UPDATED_AT);
 
         return userAttributes;
@@ -422,10 +422,9 @@ export class CognitoService implements IAuthService {
 
 class USER_ATTRIBUTES {
     public static readonly USER_NAME = 'USERNAME';
-    public static readonly EMIAL = 'email';
+    public static readonly EMAIL = 'email';
     public static readonly PASSWORD = 'PASSWORD';
-
-    public static readonly EMIAL_VERIFIED = 'email_verified';
+    public static readonly EMAIL_VERIFIED = 'email_verified';
     public static readonly USER_SUB = 'sub';
     public static readonly UPDATED_AT = 'updated_at';
 }

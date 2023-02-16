@@ -14,6 +14,6 @@ export class DeleteMyProfileUseCase {
         const user = await this.authedUserService.getUser();
         this.profileSpecification.assertUserCanDeleteHisProfile(user);
         user.deletedAt = currentUnixTimestamp();
-        this.userRepository.persist(user);
+        await this.userRepository.persist(user);
     }
 }

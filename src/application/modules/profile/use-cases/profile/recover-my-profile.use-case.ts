@@ -13,6 +13,6 @@ export class RecoverMyProfileUseCase {
         const user = await this.authedUserService.getUser();
         this.profileSpecification.assertUserCanRecoverHisProfile(user);
         user.deletedAt = null;
-        this.userRepository.persist(user);
+        await this.userRepository.persist(user);
     }
 }
