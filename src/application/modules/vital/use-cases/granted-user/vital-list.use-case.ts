@@ -7,7 +7,7 @@ import {ThresholdsDtoService} from 'app/modules/patient-vital-thresholds/service
 import {IPatientVitalThresholdsRepository} from 'app/modules/patient-vital-thresholds/repositories';
 import {PatientVitalThresholds, Vital} from 'domain/entities';
 
-export class PatientVitalsUseCase {
+export class VitalListUseCase {
     public constructor(
         private readonly authedUserService: IAuthedUserService,
         private readonly vitalRepository: IVitalRepository,

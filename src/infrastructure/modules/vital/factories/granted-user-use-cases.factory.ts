@@ -6,7 +6,7 @@ import {PatientDataAccessSpecification} from 'app/modules/patient-data-access/sp
 import {ThresholdsDtoService} from 'app/modules/patient-vital-thresholds/services/thresholds-dto.service';
 import {IUserRepository} from 'app/modules/auth/repositories';
 import {IPatientVitalThresholdsRepository} from 'app/modules/patient-vital-thresholds/repositories';
-import {PatientVitalsUseCase} from 'app/modules/vital/use-cases/granted-user/patient-vitals.use-case';
+import {VitalListUseCase} from 'app/modules/vital/use-cases/granted-user/vital-list.use-case';
 
 @Injectable()
 export class GrantedUserUseCasesFactory {
@@ -20,8 +20,8 @@ export class GrantedUserUseCasesFactory {
         private readonly patientDataAccessSpecification: PatientDataAccessSpecification,
     ) {}
 
-    public createPatientVitalsUseCase(): PatientVitalsUseCase {
-        return new PatientVitalsUseCase(
+    public createVitalListUseCase(): VitalListUseCase {
+        return new VitalListUseCase(
             this.authedUserService,
             this.vitalRepository,
             this.patientDataAccessSpecification,

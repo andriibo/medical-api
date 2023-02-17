@@ -22,7 +22,7 @@ export class GrantedUserController {
         @Param('patientUserId', ParseUUIDPipe) patientUserId: string,
         @Query() query: GetVitalsQueryView,
     ): Promise<VitalsView> {
-        const useCase = this.grantedUserUseCasesFactory.createPatientVitalsUseCase();
+        const useCase = this.grantedUserUseCasesFactory.createVitalListUseCase();
 
         try {
             return await useCase.getList(new GetVitalsByGrantedUserDto(query.startDate, query.endDate, patientUserId));
