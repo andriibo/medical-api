@@ -1,7 +1,6 @@
 import {ApiProperty} from '@nestjs/swagger';
-import {VitalsDto, VitalDto} from 'domain/dtos/response/vital';
-import {PatientVitalThresholdsView} from 'views/response/patient-vital-thresholds/patient-vital-thresholds.view';
-import {UserView} from 'views/response/user';
+import {VitalDto} from 'domain/dtos/response/vital';
+import {ThresholdsView} from 'views/response/patient-vital-thresholds/patient-vital-thresholds.view';
 
 export class VitalView extends VitalDto {
     @ApiProperty({nullable: true})
@@ -38,13 +37,7 @@ export class VitalView extends VitalDto {
     public thresholdsId: string;
 }
 
-export class VitalsView extends VitalsDto {
+export class VitalsView extends ThresholdsView {
     @ApiProperty({isArray: true, type: VitalView})
     public vitals: VitalView[] = [];
-
-    @ApiProperty({isArray: true, type: PatientVitalThresholdsView})
-    public thresholds: PatientVitalThresholdsView[] = [];
-
-    @ApiProperty({isArray: true, type: UserView})
-    public users: UserView[] = [];
 }
