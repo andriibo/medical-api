@@ -4,6 +4,7 @@ import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service'
 import {IPatientVitalThresholdsRepository} from 'app/modules/patient-vital-thresholds/repositories';
 import {ThresholdListUseCase} from 'app/modules/patient-vital-thresholds/use-cases/patient';
 import {IVitalRepository} from 'app/modules/vital/repositories';
+import {ThresholdsDtoService} from 'infrastructure/modules/patient-vital-thresholds/services/thresholds-dto.service';
 
 @Injectable()
 export class PatientUseCasesFactory {
@@ -20,7 +21,7 @@ export class PatientUseCasesFactory {
             this.authedUserService,
             this.patientVitalThresholdsRepository,
             this.vitalRepository,
-            this.userRepository,
+            new ThresholdsDtoService(this.userRepository),
         );
     }
 }

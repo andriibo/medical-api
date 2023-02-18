@@ -6,7 +6,8 @@ import {SyncVitalsUseCase} from 'app/modules/vital/use-cases/patient/sync-vitals
 import {IPatientVitalThresholdsRepository} from 'app/modules/patient-vital-thresholds/repositories';
 import {PatientOwnsThresholdsSpecification} from 'app/modules/patient-vital-thresholds/specifications/patient-owns-thresholds.specification';
 import {VitalListUseCase} from 'app/modules/vital/use-cases/patient/vital-list.use-case';
-import {IThresholdsDtoService} from 'app/modules/patient-vital-thresholds/services/thresholds-dto.service';
+import {IUserRepository} from 'app/modules/auth/repositories';
+import {ThresholdsDtoService} from 'infrastructure/modules/patient-vital-thresholds/services/thresholds-dto.service';
 
 @Injectable()
 export class PatientUseCasesFactory {
@@ -17,7 +18,7 @@ export class PatientUseCasesFactory {
         @Inject(IPatientVitalThresholdsRepository)
         private readonly patientVitalThresholdsRepository: IPatientVitalThresholdsRepository,
         private readonly patientOwnsThresholdsSpecification: PatientOwnsThresholdsSpecification,
-        @Inject(IThresholdsDtoService) private readonly thresholdsDtoService: IThresholdsDtoService,
+        @Inject(IUserRepository) private readonly userRepository: IUserRepository,
     ) {}
 
     public createVitalListUseCase(): VitalListUseCase {
@@ -25,7 +26,7 @@ export class PatientUseCasesFactory {
             this.authedUserService,
             this.vitalRepository,
             this.patientVitalThresholdsRepository,
-            this.thresholdsDtoService,
+            new ThresholdsDtoService(this.userRepository),
         );
     }
 

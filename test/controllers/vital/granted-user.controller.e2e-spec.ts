@@ -102,7 +102,7 @@ describe('GrantedUserController', () => {
     beforeAll(async () => {
         const mockedUserRepository = {
             getOneById: jest.fn(() => Promise.resolve(doctor)),
-            getByIds: jest.fn(() => Promise.resolve([patient])),
+            getByIds: jest.fn(() => Promise.resolve([doctor])),
         };
         const mockedVitalRepository = {
             getByUserIdForInterval: jest.fn(() => Promise.resolve([vital])),
@@ -211,6 +211,18 @@ describe('GrantedUserController', () => {
                         mapSetBy: patientVitalThresholds.mapSetBy,
                         mapSetAt: patientVitalThresholds.mapSetAt,
                         createdAt: convertToUnixTimestamp(patientVitalThresholds.createdAt),
+                    },
+                ],
+                users: [
+                    {
+                        avatar: doctor.avatar,
+                        deletedAt: doctor.deletedAt,
+                        userId: doctor.id,
+                        email: doctor.email,
+                        firstName: doctor.firstName,
+                        lastName: doctor.lastName,
+                        phone: doctor.phone,
+                        role: doctor.role,
                     },
                 ],
             });
