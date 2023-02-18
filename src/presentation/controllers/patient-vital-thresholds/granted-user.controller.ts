@@ -1,9 +1,9 @@
 import {BadRequestException, Controller, Get, HttpCode, HttpStatus, Param, ParseUUIDPipe} from '@nestjs/common';
 import {ApiBearerAuth, ApiForbiddenResponse, ApiResponse, ApiTags, ApiUnauthorizedResponse} from '@nestjs/swagger';
 import {Roles} from 'presentation/guards';
-import {PatientVitalThresholdsView} from 'views/response/patient-vital-thresholds/patient-vital-thresholds.view';
+import {ThresholdsView} from 'views/response/patient-vital-thresholds/patient-vital-thresholds.view';
 import {GrantedUserUseCasesFactory} from 'infrastructure/modules/patient-vital-thresholds/factories';
-import {PatientVitalThresholdsDto} from 'domain/dtos/response/patient-vital-thresholds/patient-vital-thresholds.dto';
+import {ThresholdsDto} from 'domain/dtos/response/patient-vital-thresholds/thresholds.dto';
 
 @Controller()
 @ApiBearerAuth()
@@ -17,10 +17,10 @@ export class GrantedUserController {
     @Get('patient-vital-thresholds/:patientUserId')
     @HttpCode(HttpStatus.OK)
     @HttpCode(HttpStatus.BAD_REQUEST)
-    @ApiResponse({status: HttpStatus.OK, type: PatientVitalThresholdsView})
+    @ApiResponse({status: HttpStatus.OK, type: ThresholdsView})
     public async getVitalThresholds(
         @Param('patientUserId', ParseUUIDPipe) patientUserId: string,
-    ): Promise<PatientVitalThresholdsDto> {
+    ): Promise<ThresholdsDto> {
         const useCase = this.grantedUserUseCasesFactory.createPatientVitalThresholdListUseCase();
 
         try {

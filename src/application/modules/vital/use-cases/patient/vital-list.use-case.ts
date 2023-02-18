@@ -1,19 +1,17 @@
 import {IVitalRepository} from 'app/modules/vital/repositories';
 import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service';
-import {PatientDataAccessSpecification} from 'app/modules/patient-data-access/specifications/patient-data-access.specification';
 import {GetVitalsByPatientDto} from 'domain/dtos/request/vital';
 import {VitalsDto} from 'domain/dtos/response/vital/';
-import {ThresholdsDtoService} from 'app/modules/patient-vital-thresholds/services/thresholds-dto.service';
 import {IPatientVitalThresholdsRepository} from 'app/modules/patient-vital-thresholds/repositories';
 import {PatientVitalThresholds, Vital} from 'domain/entities';
+import {IThresholdsDtoService} from 'app/modules/patient-vital-thresholds/services/thresholds-dto.service';
 
 export class VitalListUseCase {
     public constructor(
         private readonly authedUserService: IAuthedUserService,
         private readonly vitalRepository: IVitalRepository,
-        private readonly patientDataAccessSpecification: PatientDataAccessSpecification,
         private readonly thresholdsRepository: IPatientVitalThresholdsRepository,
-        private readonly thresholdsDtoService: ThresholdsDtoService,
+        private readonly thresholdsDtoService: IThresholdsDtoService,
     ) {}
 
     public async getList(dto: GetVitalsByPatientDto): Promise<VitalsDto> {
@@ -27,7 +25,9 @@ export class VitalListUseCase {
         const vitalsDto = VitalsDto.fromVitals(vitals);
         const thresholdsGroup = await this.getThresholdsGroup(vitalsDto);
 
-        vitalsDto.thresholds = await this.thresholdsDtoService.createDtosByThresholdsGroup(thresholdsGroup);
+        const thresholdsDto = await this.thresholdsDtoService.createDtoByThresholds(thresholdsGroup);
+        vitalsDto.thresholds = thresholdsDto.thresholds;
+        vitalsDto.users = thresholdsDto.users;
 
         return vitalsDto;
     }
