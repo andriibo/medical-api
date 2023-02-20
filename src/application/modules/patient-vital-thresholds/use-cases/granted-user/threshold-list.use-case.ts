@@ -3,7 +3,7 @@ import {IPatientVitalThresholdsRepository} from 'app/modules/patient-vital-thres
 import {PatientVitalThresholdsSpecification} from 'app/modules/patient-vital-thresholds/specifications/patient-vital-thresholds.specification';
 import {IVitalRepository} from 'app/modules/vital/repositories';
 import {ThresholdsDto} from 'domain/dtos/response/patient-vital-thresholds/thresholds.dto';
-import {IThresholdsDtoService} from 'app/modules/patient-vital-thresholds/services/thresholds-dto.service';
+import {ThresholdsDtoService} from 'app/modules/patient-vital-thresholds/services/thresholds-dto.service';
 
 export class ThresholdListUseCase {
     public constructor(
@@ -11,7 +11,7 @@ export class ThresholdListUseCase {
         private readonly patientVitalThresholdsRepository: IPatientVitalThresholdsRepository,
         private readonly thresholdSpecification: PatientVitalThresholdsSpecification,
         private readonly vitalRepository: IVitalRepository,
-        private readonly thresholdsDtoService: IThresholdsDtoService,
+        private readonly thresholdsDtoService: ThresholdsDtoService,
     ) {}
 
     public async getList(patientUserId: string): Promise<ThresholdsDto> {

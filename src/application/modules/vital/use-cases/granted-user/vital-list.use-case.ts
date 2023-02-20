@@ -5,7 +5,7 @@ import {GetVitalsByGrantedUserDto} from 'domain/dtos/request/vital';
 import {VitalsDto} from 'domain/dtos/response/vital/';
 import {IPatientVitalThresholdsRepository} from 'app/modules/patient-vital-thresholds/repositories';
 import {PatientVitalThresholds, Vital} from 'domain/entities';
-import {IThresholdsDtoService} from 'app/modules/patient-vital-thresholds/services/thresholds-dto.service';
+import {ThresholdsDtoService} from 'app/modules/patient-vital-thresholds/services/thresholds-dto.service';
 
 export class VitalListUseCase {
     public constructor(
@@ -13,7 +13,7 @@ export class VitalListUseCase {
         private readonly vitalRepository: IVitalRepository,
         private readonly patientDataAccessSpecification: PatientDataAccessSpecification,
         private readonly thresholdsRepository: IPatientVitalThresholdsRepository,
-        private readonly thresholdsDtoService: IThresholdsDtoService,
+        private readonly thresholdsDtoService: ThresholdsDtoService,
     ) {}
 
     public async getList(dto: GetVitalsByGrantedUserDto): Promise<VitalsDto> {

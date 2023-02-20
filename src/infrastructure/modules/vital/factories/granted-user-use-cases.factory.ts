@@ -5,7 +5,7 @@ import {PatientDataAccessSpecification} from 'app/modules/patient-data-access/sp
 import {IPatientVitalThresholdsRepository} from 'app/modules/patient-vital-thresholds/repositories';
 import {VitalListUseCase} from 'app/modules/vital/use-cases/granted-user/vital-list.use-case';
 import {IUserRepository} from 'app/modules/auth/repositories';
-import {ThresholdsDtoService} from 'infrastructure/modules/patient-vital-thresholds/services/thresholds-dto.service';
+import {ThresholdsDtoService} from 'app/modules/patient-vital-thresholds/services/thresholds-dto.service';
 
 @Injectable()
 export class GrantedUserUseCasesFactory {
