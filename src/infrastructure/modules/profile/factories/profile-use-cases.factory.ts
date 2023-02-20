@@ -13,6 +13,7 @@ import {
 } from 'app/modules/profile/use-cases';
 import {ProfileSpecification} from 'app/modules/profile/specifications/profile.specification';
 import {IAuthService} from 'app/modules/auth/services/auth.service';
+import {IFileUrlService} from 'app/modules/profile/services/file-url.service';
 
 @Injectable()
 export class ProfileUseCasesFactory {
@@ -23,6 +24,7 @@ export class ProfileUseCasesFactory {
         @Inject(IFileNameService) private readonly fileNameService: IFileNameService,
         @Inject(ProfileSpecification) private readonly profileSpecification: ProfileSpecification,
         @Inject(IAuthService) private readonly authService: IAuthService,
+        @Inject(IFileUrlService) private readonly fileUrlService: IFileUrlService,
     ) {}
 
     public createUploadUserAvatarUseCase(): UploadUserAvatarUseCase {
@@ -35,7 +37,12 @@ export class ProfileUseCasesFactory {
     }
 
     public createDeleteMyProfile(): DeleteMyProfileUseCase {
-        return new DeleteMyProfileUseCase(this.userRepository, this.authedUserService, this.profileSpecification);
+        return new DeleteMyProfileUseCase(
+            this.userRepository,
+            this.authedUserService,
+            this.profileSpecification,
+            this.fileUrlService,
+        );
     }
 
     public createRecoverMyProfile(): RecoverMyProfileUseCase {

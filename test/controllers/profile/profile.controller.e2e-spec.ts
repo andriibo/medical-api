@@ -17,8 +17,9 @@ import {IPatientCategoryRepository} from 'app/modules/patient-category/repositor
 import {PatientStatusModel} from 'infrastructure/modules/patient-status/models';
 import {IPatientStatusRepository} from 'app/modules/patient-status/repositories';
 import {IPatientVitalThresholdsRepository} from 'app/modules/patient-vital-thresholds/repositories';
+import {currentUnixTimestamp} from 'app/support/date.helper';
 
-const registeredUser: User = {
+const doctor: User = {
     id: '8bfbd95c-c8a5-404b-b3eb-6ac648052ac4',
     email: 'doctor@gmail.com',
     firstName: 'Marc',
@@ -29,6 +30,19 @@ const registeredUser: User = {
     createdAt: '2022-10-10 07:31:17.016236',
     deletedAt: null,
 };
+
+const removedDoctor: User = {
+    id: '8bfbd95c-c8a5-404b-b3eb-6ac648052ac4',
+    email: 'doctor@gmail.com',
+    firstName: 'Marc',
+    lastName: 'Goldman',
+    phone: '2930412345',
+    avatar: null,
+    role: 'Doctor',
+    createdAt: '2022-10-10 07:31:17.016236',
+    deletedAt: currentUnixTimestamp(),
+};
+
 describe('ProfileController', () => {
     let app: INestApplication;
     beforeAll(async () => {
@@ -39,8 +53,8 @@ describe('ProfileController', () => {
             remove: jest.fn(() => Promise.resolve()),
         };
         const mockedUserRepository = {
-            getOneById: jest.fn(() => Promise.resolve(registeredUser)),
-            persist: jest.fn((user: User) => Promise.resolve(user)),
+            getOneById: jest.fn(() => Promise.resolve(doctor)),
+            persist: jest.fn(() => Promise.resolve(removedDoctor)),
             updateAvatar: jest.fn(() => Promise.resolve()),
         };
         const moduleRef: TestingModule = await Test.createTestingModule({
@@ -100,7 +114,17 @@ describe('ProfileController', () => {
         return request(app.getHttpServer())
             .patch('/my-profile/delete')
             .set('Authorization', 'Bearer doctor')
-            .expect(200);
+            .expect(200)
+            .expect({
+                userId: removedDoctor.id,
+                email: removedDoctor.email,
+                firstName: removedDoctor.firstName,
+                lastName: removedDoctor.lastName,
+                phone: removedDoctor.phone,
+                role: removedDoctor.role,
+                avatar: 'https://zenzers-medical-dev.s3.amazonaws.com/avatars/default-avatar.png',
+                deletedAt: removedDoctor.deletedAt,
+            });
     });
 
     it('/my-profile/recovery (PATCH)', async () => {
