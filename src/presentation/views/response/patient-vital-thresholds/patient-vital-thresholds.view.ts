@@ -1,7 +1,5 @@
 import {ApiProperty} from '@nestjs/swagger';
 import {PatientVitalThresholdsDto} from 'domain/dtos/response/patient-vital-thresholds/patient-vital-thresholds.dto';
-import {UserView} from 'views/response/user';
-import {ThresholdsDto} from 'domain/dtos/response/patient-vital-thresholds/thresholds.dto';
 
 export class PatientVitalThresholdsView implements PatientVitalThresholdsDto {
     @ApiProperty()
@@ -93,12 +91,4 @@ export class PatientVitalThresholdsView implements PatientVitalThresholdsDto {
 
     @ApiProperty()
     public isPending: boolean;
-}
-
-export class ThresholdsView extends ThresholdsDto {
-    @ApiProperty({isArray: true, type: PatientVitalThresholdsView})
-    public thresholds: PatientVitalThresholdsView[] = [];
-
-    @ApiProperty({isArray: true, type: UserView})
-    public users: UserView[] = [];
 }
