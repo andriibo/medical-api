@@ -10,8 +10,8 @@ export class VitalsDto {
 
     public users: UserDto[] = [];
 
-    public static fromVitals<T extends typeof VitalsDto>(this: T, vitals: Vital[]): VitalsDto {
-        const dto = new this() as InstanceType<T>;
+    public static fromVitals(vitals: Vital[]): VitalsDto {
+        const dto = new VitalsDto();
         dto.vitals = vitals.map((vital) => VitalDto.fromVital(vital));
 
         return dto;

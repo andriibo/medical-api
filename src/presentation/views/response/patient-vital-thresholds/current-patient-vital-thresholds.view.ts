@@ -4,7 +4,7 @@ import {PatientVitalThresholdsView} from 'views/response/patient-vital-threshold
 import {CurrentPatientVitalThresholdsDto} from 'domain/dtos/response/patient-vital-thresholds/current-patient-vital-thresholds.dto';
 
 export class CurrentPatientVitalThresholdsView extends CurrentPatientVitalThresholdsDto {
-    @ApiProperty()
+    @ApiProperty({type: PatientVitalThresholdsView})
     public threshold: PatientVitalThresholdsView;
 
     @ApiProperty({isArray: true, type: UserView})

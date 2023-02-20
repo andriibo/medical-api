@@ -42,7 +42,7 @@ export class VitalsView extends VitalsDto {
     @ApiProperty({isArray: true, type: VitalView})
     public vitals: VitalView[] = [];
 
-    @ApiProperty()
+    @ApiProperty({isArray: true, type: PatientVitalThresholdsView})
     public thresholds: PatientVitalThresholdsView[] = [];
 
     @ApiProperty({isArray: true, type: UserView})
