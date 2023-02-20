@@ -32,6 +32,7 @@ import {ChangeEmailView, ChangePasswordView, ConfirmChangeEmailView} from 'views
 import {UserRequest} from 'presentation/middlewares/assign-user.middleware';
 import {ChangeEmailDto, ChangePasswordDto, ConfirmChangeEmailDto} from 'domain/dtos/request/auth';
 import {ProfileRecovery} from 'presentation/guards/profile-recovery.guard';
+import {UserView} from 'views/response/user/user.view';
 
 @Controller()
 @ApiBearerAuth()
@@ -68,14 +69,14 @@ export class ProfileController {
     @Auth()
     @Patch('my-profile/delete')
     @HttpCode(HttpStatus.OK)
-    @ApiResponse({status: HttpStatus.OK, description: 'OK.'})
+    @ApiResponse({status: HttpStatus.OK, description: 'OK.', type: UserView})
     @ApiBadRequestResponse({description: 'Bad request.'})
     @ApiForbiddenResponse({description: 'Forbidden.'})
     public async deleteProfile() {
         const useCase = this.profileUseCasesFactory.createDeleteMyProfile();
 
         try {
-            await useCase.deleteProfile();
+            return await useCase.deleteProfile();
         } catch (error) {
             throw new BadRequestException(error.message);
         }
