@@ -1,5 +1,5 @@
 import {Inject, Injectable} from '@nestjs/common';
-import {RemoveUsersUseCase} from 'app/modules/profile/use-cases/profile';
+import {RemoveUsersUseCase} from 'app/modules/profile/use-cases/remove-users.use-case';
 import {IUserRepository} from 'app/modules/auth/repositories';
 import {IRemoveUserService} from 'app/modules/profile/services/remove-user.service';
 
