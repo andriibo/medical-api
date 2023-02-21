@@ -17,7 +17,7 @@ export class PatientDataAccessSpecification {
     public async assertPatientCanGiveAccessForDoctor(patient: User, doctor: User): Promise<void> {
         if (doctor.role !== UserRole.Doctor) {
             throw new PatientDataAccessSpecificationError(
-                'No doctor account with specified email address. Try another one.',
+                'This email address is already used by another patient. Try another one.',
             );
         }
 
@@ -53,7 +53,7 @@ export class PatientDataAccessSpecification {
     public async assertGrantedUserCanGetAccessToPatient(grantedUser: User, patient: User): Promise<void> {
         if (patient.role !== UserRole.Patient) {
             throw new PatientDataAccessSpecificationError(
-                'No patient account with specified email address. Try another one.',
+                'This email address is already used by another doctor. Try another one.',
             );
         }
 
