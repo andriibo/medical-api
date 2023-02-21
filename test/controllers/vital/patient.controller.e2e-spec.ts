@@ -31,12 +31,23 @@ const patient: User = {
     createdAt: '2022-10-10 07:31:17.016236',
     deletedAt: null,
 };
+const doctor: User = {
+    id: '4babe90f-b1a3-145e-c0mz-9aq248098ac0',
+    email: 'doctor@gmail.com',
+    firstName: 'Marc',
+    lastName: 'Goldman',
+    phone: '2930412345',
+    avatar: null,
+    role: 'Doctor',
+    createdAt: '2022-10-10 07:31:17.016236',
+    deletedAt: null,
+};
 const patientVitalThresholds: PatientVitalThresholds = {
     id: 'af095ce6-97d8-4a49-85c3-03ba5050bfa4',
     patientUserId: patient.id,
     minHr: 40,
     maxHr: 220,
-    hrSetBy: null,
+    hrSetBy: doctor.id,
     hrSetAt: null,
     minTemp: 32,
     maxTemp: 42,
@@ -85,7 +96,7 @@ describe('PatientController', () => {
     beforeAll(async () => {
         const mockedUserRepository = {
             getOneById: jest.fn(() => Promise.resolve(patient)),
-            getByIds: jest.fn(() => Promise.resolve([patient])),
+            getByIds: jest.fn(() => Promise.resolve([doctor])),
         };
         const mockedVitalRepository = {
             insertVitals: jest.fn(() => Promise.resolve()),
@@ -215,6 +226,18 @@ describe('PatientController', () => {
                         mapSetBy: patientVitalThresholds.mapSetBy,
                         mapSetAt: patientVitalThresholds.mapSetAt,
                         createdAt: convertToUnixTimestamp(patientVitalThresholds.createdAt),
+                    },
+                ],
+                users: [
+                    {
+                        avatar: doctor.avatar,
+                        deletedAt: doctor.deletedAt,
+                        userId: doctor.id,
+                        email: doctor.email,
+                        firstName: doctor.firstName,
+                        lastName: doctor.lastName,
+                        phone: doctor.phone,
+                        role: doctor.role,
                     },
                 ],
             });

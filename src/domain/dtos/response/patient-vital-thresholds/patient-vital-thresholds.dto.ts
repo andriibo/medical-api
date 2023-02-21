@@ -1,5 +1,4 @@
-import {UserDto} from 'domain/dtos/response/user/user.dto';
-import {PatientVitalThresholds, User} from 'domain/entities';
+import {PatientVitalThresholds} from 'domain/entities';
 import {convertToUnixTimestamp} from 'app/support/date.helper';
 
 export class PatientVitalThresholdsDto {
@@ -9,7 +8,7 @@ export class PatientVitalThresholdsDto {
 
     public maxHr: number;
 
-    public hrSetBy: UserDto | null;
+    public hrSetBy: string | null;
 
     public hrSetAt: number | null;
 
@@ -17,13 +16,13 @@ export class PatientVitalThresholdsDto {
 
     public maxTemp: number;
 
-    public tempSetBy: UserDto | null;
+    public tempSetBy: string | null;
 
     public tempSetAt: number | null;
 
     public minSpo2: number;
 
-    public spo2SetBy: UserDto | null;
+    public spo2SetBy: string | null;
 
     public spo2SetAt: number | null;
 
@@ -31,7 +30,7 @@ export class PatientVitalThresholdsDto {
 
     public maxRr: number;
 
-    public rrSetBy: UserDto | null;
+    public rrSetBy: string | null;
 
     public rrSetAt: number | null;
 
@@ -39,7 +38,7 @@ export class PatientVitalThresholdsDto {
 
     public maxDbp: number;
 
-    public dbpSetBy: UserDto | null;
+    public dbpSetBy: string | null;
 
     public dbpSetAt: number | null;
 
@@ -47,7 +46,7 @@ export class PatientVitalThresholdsDto {
 
     public maxSbp: number;
 
-    public sbpSetBy: UserDto | null;
+    public sbpSetBy: string | null;
 
     public sbpSetAt: number | null;
 
@@ -55,7 +54,7 @@ export class PatientVitalThresholdsDto {
 
     public maxMap: number;
 
-    public mapSetBy: UserDto | null;
+    public mapSetBy: string | null;
 
     public mapSetAt: number | null;
 
@@ -63,45 +62,35 @@ export class PatientVitalThresholdsDto {
 
     public isPending = false;
 
-    public static fromPatientVitalThresholds(
-        thresholds: PatientVitalThresholds,
-        users: User[],
-    ): PatientVitalThresholdsDto {
-        const indexedUsers = {};
-        users.map((user) => (indexedUsers[user.id] = user));
-
+    public static fromPatientVitalThresholds(thresholds: PatientVitalThresholds): PatientVitalThresholdsDto {
         const dto = new PatientVitalThresholdsDto();
         dto.thresholdsId = thresholds.id;
         dto.minHr = thresholds.minHr;
         dto.maxHr = thresholds.maxHr;
-        dto.hrSetBy = indexedUsers[thresholds.hrSetBy] ? UserDto.fromUser(indexedUsers[thresholds.hrSetBy]) : null;
+        dto.hrSetBy = thresholds.hrSetBy;
         dto.hrSetAt = thresholds.hrSetAt;
         dto.minTemp = thresholds.minTemp;
         dto.maxTemp = thresholds.maxTemp;
-        dto.tempSetBy = indexedUsers[thresholds.tempSetBy]
-            ? UserDto.fromUser(indexedUsers[thresholds.tempSetBy])
-            : null;
+        dto.tempSetBy = thresholds.tempSetBy;
         dto.tempSetAt = thresholds.tempSetAt;
         dto.minSpo2 = thresholds.minSpo2;
-        dto.spo2SetBy = indexedUsers[thresholds.spo2SetBy]
-            ? UserDto.fromUser(indexedUsers[thresholds.spo2SetBy])
-            : null;
+        dto.spo2SetBy = thresholds.spo2SetBy;
         dto.spo2SetAt = thresholds.spo2SetAt;
         dto.minRr = thresholds.minRr;
         dto.maxRr = thresholds.maxRr;
-        dto.rrSetBy = indexedUsers[thresholds.rrSetBy] ? UserDto.fromUser(indexedUsers[thresholds.rrSetBy]) : null;
+        dto.rrSetBy = thresholds.rrSetBy;
         dto.rrSetAt = thresholds.rrSetAt;
         dto.minDbp = thresholds.minDbp;
         dto.maxDbp = thresholds.maxDbp;
-        dto.dbpSetBy = indexedUsers[thresholds.dbpSetBy] ? UserDto.fromUser(indexedUsers[thresholds.dbpSetBy]) : null;
+        dto.dbpSetBy = thresholds.dbpSetBy;
         dto.dbpSetAt = thresholds.dbpSetAt;
         dto.minSbp = thresholds.minSbp;
         dto.maxSbp = thresholds.maxSbp;
-        dto.sbpSetBy = indexedUsers[thresholds.sbpSetBy] ? UserDto.fromUser(indexedUsers[thresholds.sbpSetBy]) : null;
+        dto.sbpSetBy = thresholds.sbpSetBy;
         dto.sbpSetAt = thresholds.sbpSetAt;
         dto.minMap = thresholds.minMap;
         dto.maxMap = thresholds.maxMap;
-        dto.mapSetBy = indexedUsers[thresholds.mapSetBy] ? UserDto.fromUser(indexedUsers[thresholds.mapSetBy]) : null;
+        dto.mapSetBy = thresholds.mapSetBy;
         dto.mapSetAt = thresholds.mapSetAt;
         dto.createdAt = convertToUnixTimestamp(thresholds.createdAt);
 

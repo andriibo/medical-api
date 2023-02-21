@@ -18,6 +18,7 @@ import {IPatientStatusRepository} from 'app/modules/patient-status/repositories'
 import {PatientVitalThresholdsModel} from 'infrastructure/modules/patient-vital-thresholds/models';
 import {VitalModel} from 'infrastructure/modules/vital/models';
 import {IVitalRepository} from 'app/modules/vital/repositories';
+import {convertToUnixTimestamp} from 'app/support/date.helper';
 
 const patient: User = {
     id: '5nc3e70a-c1y9-121a-c5mv-5aq272098bp0',
@@ -135,7 +136,53 @@ describe('PatientController', () => {
         return request(app.getHttpServer())
             .get('/patient/my-vital-thresholds')
             .set('Authorization', 'Bearer patient')
-            .expect(200);
+            .expect(200)
+            .expect({
+                threshold: {
+                    isPending: false,
+                    thresholdsId: patientVitalThresholds.id,
+                    minHr: patientVitalThresholds.minHr,
+                    maxHr: patientVitalThresholds.maxHr,
+                    hrSetBy: patientVitalThresholds.hrSetBy,
+                    hrSetAt: patientVitalThresholds.hrSetAt,
+                    minTemp: patientVitalThresholds.minTemp,
+                    maxTemp: patientVitalThresholds.maxTemp,
+                    tempSetBy: patientVitalThresholds.tempSetBy,
+                    tempSetAt: patientVitalThresholds.tempSetAt,
+                    minSpo2: patientVitalThresholds.minSpo2,
+                    spo2SetBy: patientVitalThresholds.spo2SetBy,
+                    spo2SetAt: patientVitalThresholds.spo2SetAt,
+                    minRr: patientVitalThresholds.minRr,
+                    maxRr: patientVitalThresholds.maxRr,
+                    rrSetBy: patientVitalThresholds.rrSetBy,
+                    rrSetAt: patientVitalThresholds.rrSetAt,
+                    minDbp: patientVitalThresholds.minDbp,
+                    maxDbp: patientVitalThresholds.maxDbp,
+                    dbpSetBy: patientVitalThresholds.dbpSetBy,
+                    dbpSetAt: patientVitalThresholds.dbpSetAt,
+                    minSbp: patientVitalThresholds.minSbp,
+                    maxSbp: patientVitalThresholds.maxSbp,
+                    sbpSetBy: patientVitalThresholds.sbpSetBy,
+                    sbpSetAt: patientVitalThresholds.sbpSetAt,
+                    minMap: patientVitalThresholds.minMap,
+                    maxMap: patientVitalThresholds.maxMap,
+                    mapSetBy: patientVitalThresholds.mapSetBy,
+                    mapSetAt: patientVitalThresholds.mapSetAt,
+                    createdAt: convertToUnixTimestamp(patientVitalThresholds.createdAt),
+                },
+                users: [
+                    {
+                        avatar: doctor.avatar,
+                        deletedAt: doctor.deletedAt,
+                        userId: doctor.id,
+                        email: doctor.email,
+                        firstName: doctor.firstName,
+                        lastName: doctor.lastName,
+                        phone: doctor.phone,
+                        role: doctor.role,
+                    },
+                ],
+            });
     });
 
     afterAll(async () => {

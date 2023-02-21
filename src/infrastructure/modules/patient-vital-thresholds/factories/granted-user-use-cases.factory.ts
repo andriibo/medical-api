@@ -24,8 +24,8 @@ export class GrantedUserUseCasesFactory {
             this.authedUserService,
             this.patientVitalThresholdsRepository,
             this.patientVitalThresholdSpecification,
-            new ThresholdsDtoService(this.userRepository),
             this.vitalRepository,
+            new ThresholdsDtoService(this.userRepository),
         );
     }
 }

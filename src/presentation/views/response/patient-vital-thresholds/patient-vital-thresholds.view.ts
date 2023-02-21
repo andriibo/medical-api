@@ -1,5 +1,4 @@
 import {ApiProperty} from '@nestjs/swagger';
-import {UserView} from 'presentation/views/response/user';
 import {PatientVitalThresholdsDto} from 'domain/dtos/response/patient-vital-thresholds/patient-vital-thresholds.dto';
 
 export class PatientVitalThresholdsView implements PatientVitalThresholdsDto {
@@ -13,7 +12,7 @@ export class PatientVitalThresholdsView implements PatientVitalThresholdsDto {
     public maxHr: number;
 
     @ApiProperty({nullable: true})
-    public hrSetBy: UserView | null;
+    public hrSetBy: string | null;
 
     @ApiProperty({nullable: true})
     public hrSetAt: number | null;
@@ -25,7 +24,7 @@ export class PatientVitalThresholdsView implements PatientVitalThresholdsDto {
     public maxTemp: number;
 
     @ApiProperty({nullable: true})
-    public tempSetBy: UserView | null;
+    public tempSetBy: string | null;
 
     @ApiProperty({nullable: true})
     public tempSetAt: number | null;
@@ -34,7 +33,7 @@ export class PatientVitalThresholdsView implements PatientVitalThresholdsDto {
     public minSpo2: number;
 
     @ApiProperty({nullable: true})
-    public spo2SetBy: UserView | null;
+    public spo2SetBy: string | null;
 
     @ApiProperty({nullable: true})
     public spo2SetAt: number | null;
@@ -46,7 +45,7 @@ export class PatientVitalThresholdsView implements PatientVitalThresholdsDto {
     public maxRr: number;
 
     @ApiProperty({nullable: true})
-    public rrSetBy: UserView | null;
+    public rrSetBy: string | null;
 
     @ApiProperty({nullable: true})
     public rrSetAt: number | null;
@@ -58,7 +57,7 @@ export class PatientVitalThresholdsView implements PatientVitalThresholdsDto {
     public maxDbp: number;
 
     @ApiProperty({nullable: true})
-    public dbpSetBy: UserView | null;
+    public dbpSetBy: string | null;
 
     @ApiProperty({nullable: true})
     public dbpSetAt: number | null;
@@ -70,7 +69,7 @@ export class PatientVitalThresholdsView implements PatientVitalThresholdsDto {
     public maxSbp: number;
 
     @ApiProperty({nullable: true})
-    public sbpSetBy: UserView | null;
+    public sbpSetBy: string | null;
 
     @ApiProperty({nullable: true})
     public sbpSetAt: number | null;
@@ -82,7 +81,7 @@ export class PatientVitalThresholdsView implements PatientVitalThresholdsDto {
     public maxMap: number;
 
     @ApiProperty({nullable: true})
-    public mapSetBy: UserView | null;
+    public mapSetBy: string | null;
 
     @ApiProperty({nullable: true})
     public mapSetAt: number | null;
