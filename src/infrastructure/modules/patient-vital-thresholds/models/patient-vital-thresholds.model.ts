@@ -15,6 +15,7 @@ import {
     MinSpO2,
     MinTemp,
 } from 'domain/constants/thresholds.const';
+import {FloatTransformer} from 'infrastructure/data-transformers/float.transformer';
 
 @Entity('patient_vital_thresholds')
 export class PatientVitalThresholdsModel implements PatientVitalThresholds {
@@ -36,10 +37,10 @@ export class PatientVitalThresholdsModel implements PatientVitalThresholds {
     @Column({name: 'hr_set_at'})
     hrSetAt: number | null = null;
 
-    @Column({name: 'min_temp'})
+    @Column('numeric', {name: 'min_temp', precision: 5, scale: 2, transformer: new FloatTransformer()})
     minTemp: number;
 
-    @Column({name: 'max_temp'})
+    @Column('numeric', {name: 'max_temp', precision: 5, scale: 2, transformer: new FloatTransformer()})
     maxTemp: number;
 
     @Column({name: 'temp_set_by'})
