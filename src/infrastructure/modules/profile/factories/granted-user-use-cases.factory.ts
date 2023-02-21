@@ -3,7 +3,6 @@ import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service'
 import {PatientListProfileUseCase} from 'app/modules/profile/use-cases/granted-user';
 import {PatientDataAccessSpecification} from 'app/modules/patient-data-access/specifications/patient-data-access.specification';
 import {PatientProfileUseCase} from 'app/modules/profile/use-cases/granted-user/patient-profile.use-case';
-import {IVitalRepository} from 'app/modules/vital/repositories';
 import {IMyPatientsService} from 'app/modules/profile/services/my-patients.service';
 import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repositories';
 
