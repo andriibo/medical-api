@@ -9,6 +9,7 @@ import {PatientDataAccessModule} from 'infrastructure/modules/patient-data-acces
 import {IVitalEntityMapper} from 'app/modules/vital/mappers/vital-entity.mapper';
 import {VitalModelMapper} from './mappers/vital-model.mapper';
 import {PatientVitalThresholdsIndependentModule} from 'infrastructure/modules/patient-vital-thresholds/patient-vital-thresholds.ind.module';
+import {FileModule} from 'infrastructure/modules/file/file.module';
 
 @Module({
     imports: [
@@ -16,6 +17,7 @@ import {PatientVitalThresholdsIndependentModule} from 'infrastructure/modules/pa
         AuthModule,
         PatientDataAccessModule,
         PatientVitalThresholdsIndependentModule,
+        FileModule,
     ],
     controllers: [PatientController, GrantedUserController, VitalController],
     exports: [IVitalRepository],

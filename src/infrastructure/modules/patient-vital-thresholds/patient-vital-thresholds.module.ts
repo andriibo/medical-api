@@ -10,6 +10,7 @@ import {PatientVitalThresholdsIndependentModule} from './patient-vital-threshold
 import {AuthModule} from 'infrastructure/modules/auth/auth.module';
 import {PatientDataAccessModule} from 'infrastructure/modules/patient-data-access/patient-data-access.module';
 import {VitalModule} from 'infrastructure/modules/vital/vital.module';
+import {FileModule} from 'infrastructure/modules/file/file.module';
 
 @Module({
     imports: [
@@ -18,6 +19,7 @@ import {VitalModule} from 'infrastructure/modules/vital/vital.module';
         PatientDataAccessModule,
         PatientVitalThresholdsIndependentModule,
         VitalModule,
+        FileModule,
     ],
     exports: [PatientVitalThresholdsSpecification],
     controllers: [DoctorController, PatientController, GrantedUserController],

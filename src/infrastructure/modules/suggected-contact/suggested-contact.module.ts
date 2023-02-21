@@ -1,7 +1,10 @@
 import {Module} from '@nestjs/common';
 import {GrantedUserController, PatientController} from 'controllers/suggested-contact';
 import {TypeOrmModule} from '@nestjs/typeorm';
-import {AuthModule, EmergencyContactModule, PatientDataAccessModule} from 'infrastructure/modules';
+import {AuthModule} from 'infrastructure/modules/auth/auth.module';
+import {EmergencyContactModule} from 'infrastructure/modules/emergency-contact/emergency-contact.module';
+import {FileModule} from 'infrastructure/modules/file/file.module';
+import {PatientDataAccessModule} from 'infrastructure/modules/patient-data-access/patient-data-access.module';
 import {SuggestedContactModel, SuggestedContactRepository} from './models';
 import {SuggestedContactSpecification} from 'app/modules/suggested-contact/specifications/suggested-contact.specification';
 import {ISuggestedContactRepository} from 'app/modules/suggested-contact/repositories';
@@ -22,6 +25,7 @@ import {PatientDataAccessSpecification} from 'app/modules/patient-data-access/sp
         AuthModule,
         EmergencyContactModule,
         PatientDataAccessModule,
+        FileModule,
     ],
     controllers: [PatientController, GrantedUserController],
     providers: [

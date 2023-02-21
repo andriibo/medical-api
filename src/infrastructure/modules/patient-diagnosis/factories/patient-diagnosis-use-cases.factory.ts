@@ -9,6 +9,7 @@ import {IPatientDiagnosisEntityMapper} from 'app/modules/patient-diagnosis/mappe
 import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service';
 import {PatientDiagnosisSpecification} from 'app/modules/patient-diagnosis/specifications/patient-diagnosis.specification';
 import {IUserRepository} from 'app/modules/auth/repositories';
+import {IFileUrlService} from 'app/modules/profile/services/file-url.service';
 
 @Injectable()
 export class PatientDiagnosisUseCasesFactory {
@@ -20,6 +21,7 @@ export class PatientDiagnosisUseCasesFactory {
         private readonly patientDiagnosisEntityMapper: IPatientDiagnosisEntityMapper,
         @Inject(PatientDiagnosisSpecification)
         private readonly patientDiagnosisSpecification: PatientDiagnosisSpecification,
+        @Inject(IFileUrlService) private readonly fileUrlService: IFileUrlService,
     ) {}
 
     public createCreateDiagnosisUseCase(): CreateDiagnosisUseCase {
@@ -37,6 +39,7 @@ export class PatientDiagnosisUseCasesFactory {
             this.userRepository,
             this.patientDiagnosisRepository,
             this.patientDiagnosisSpecification,
+            this.fileUrlService,
         );
     }
 

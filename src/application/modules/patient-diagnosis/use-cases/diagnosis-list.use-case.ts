@@ -5,6 +5,7 @@ import {PatientDiagnosisSpecification} from 'app/modules/patient-diagnosis/speci
 import {IUserRepository} from 'app/modules/auth/repositories';
 import {DiagnosisDto} from 'domain/dtos/response/patient-diagnosis/diagnosis.dto';
 import {UserDto} from 'domain/dtos/response/user/user.dto';
+import {IFileUrlService} from 'app/modules/profile/services/file-url.service';
 
 export class DiagnosisListUseCase {
     public constructor(
@@ -12,6 +13,7 @@ export class DiagnosisListUseCase {
         private readonly userRepository: IUserRepository,
         private readonly patientDiagnosisRepository: IPatientDiagnosisRepository,
         private readonly patientDiagnosisSpecification: PatientDiagnosisSpecification,
+        private readonly fileUrlService: IFileUrlService,
     ) {}
 
     public async getList(patientUserId: string): Promise<DiagnosisDto[]> {
@@ -28,7 +30,9 @@ export class DiagnosisListUseCase {
 
         return items.map((item) => {
             const dto = DiagnosisDto.fromPatientDiagnosis(item);
-            dto.createdByUser = UserDto.fromUser(indexedUsers[item.createdBy]);
+            const user = UserDto.fromUser(indexedUsers[item.createdBy]);
+            user.avatar = this.fileUrlService.createUrlToUserAvatar(user.avatar);
+            dto.createdByUser = user;
 
             return dto;
         });

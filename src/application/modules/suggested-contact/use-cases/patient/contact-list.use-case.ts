@@ -4,12 +4,14 @@ import {SuggestedContactDto} from 'domain/dtos/response/suggested-contact/sugges
 import {SuggestedContact, User} from 'domain/entities';
 import {IUserRepository} from 'app/modules/auth/repositories';
 import {UserDto} from 'domain/dtos/response/user/user.dto';
+import {IFileUrlService} from 'app/modules/profile/services/file-url.service';
 
 export class ContactListUseCase {
     public constructor(
         private readonly authedUserService: IAuthedUserService,
         private readonly suggestedContactRepository: ISuggestedContactRepository,
         private readonly userRepository: IUserRepository,
+        private readonly fileUrlService: IFileUrlService,
     ) {}
 
     public async getList(): Promise<SuggestedContactDto[]> {
@@ -22,7 +24,9 @@ export class ContactListUseCase {
 
         return items.map((item) => {
             const dto = SuggestedContactDto.fromSuggestedContact(item);
-            dto.suggestedByUser = UserDto.fromUser(indexedUsers[item.suggestedBy]);
+            const user = UserDto.fromUser(indexedUsers[item.suggestedBy]);
+            user.avatar = this.fileUrlService.createUrlToUserAvatar(user.avatar);
+            dto.suggestedByUser = user;
 
             return dto;
         });
