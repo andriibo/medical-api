@@ -17,7 +17,7 @@ export class createPatientRelationship1674739303923 implements MigrationInterfac
                 isNullable: true,
             }),
         ]);
-        await queryRunner.renameTable('patient_data_access', 'patient_relationship');
+        await queryRunner.query(`ALTER TABLE "patient_data_access" RENAME TO "patient_relationship";`);
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
