@@ -5,7 +5,7 @@ import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repo
 import {DoctorProfileUseCase, UpdateDoctorProfileUseCase} from 'app/modules/profile/use-cases/doctor';
 import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service';
 import {IUserProfileMapper} from 'app/modules/profile/mappers/user-profile.mapper';
-import {IFileUrlService} from 'app/modules/profile/services/file-url.service';
+import {UserDtoService} from 'app/modules/profile/services/user-dto.service';
 
 @Injectable()
 export class DoctorUseCasesFactory {
@@ -17,11 +17,11 @@ export class DoctorUseCasesFactory {
         @Inject(IUserProfileMapper) private readonly userProfileMapper: IUserProfileMapper,
         @Inject(IPatientDataAccessRepository)
         private readonly patientDataAccessRepository: IPatientDataAccessRepository,
-        @Inject(IFileUrlService) private readonly fileUrlService: IFileUrlService,
+        @Inject(UserDtoService) private readonly userDtoService: UserDtoService,
     ) {}
 
     public createGetDoctorProfileUseCase(): DoctorProfileUseCase {
-        return new DoctorProfileUseCase(this.authedUserService, this.doctorMetadataRepository, this.fileUrlService);
+        return new DoctorProfileUseCase(this.authedUserService, this.doctorMetadataRepository, this.userDtoService);
     }
 
     public createUpdateDoctorProfileUseCase(): UpdateDoctorProfileUseCase {

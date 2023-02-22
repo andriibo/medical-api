@@ -2,9 +2,9 @@ import {Controller, Get, HttpStatus, HttpCode, Patch, Body} from '@nestjs/common
 import {ApiBearerAuth, ApiForbiddenResponse, ApiResponse, ApiTags, ApiUnauthorizedResponse} from '@nestjs/swagger';
 import {Roles} from 'presentation/guards';
 import {CaregiverUseCasesFactory} from 'infrastructure/modules/profile/factories';
-import {CaregiverDto} from 'domain/dtos/response/profile/caregiver.dto';
-import {CaregiverView} from 'views/response/user/caregiver.view';
 import {UpdateCaregiverProfileView} from 'views/request/profile/update-caregiver-profile.view';
+import {UserDto} from 'domain/dtos/response/user/user.dto';
+import {UserView} from 'views/response/user';
 
 @Controller('caregiver')
 @ApiBearerAuth()
@@ -17,8 +17,8 @@ export class CaregiverController {
     @Roles('Caregiver')
     @Get('my-profile')
     @HttpCode(HttpStatus.OK)
-    @ApiResponse({status: HttpStatus.OK, type: CaregiverView})
-    public async getMyProfile(): Promise<CaregiverDto> {
+    @ApiResponse({status: HttpStatus.OK, type: UserView})
+    public async getMyProfile(): Promise<UserDto> {
         const useCase = this.caregiverUseCasesFactory.createGetCaregiverProfileUseCase();
 
         return await useCase.getProfileInfo();

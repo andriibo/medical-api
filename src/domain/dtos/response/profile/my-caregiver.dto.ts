@@ -1,5 +1,5 @@
-import {CaregiverDto} from 'domain/dtos/response/profile/caregiver.dto';
+import {UserDto} from 'domain/dtos/response/user/user.dto';
 
-export class MyCaregiverDto extends CaregiverDto {
+export class MyCaregiverDto extends UserDto {
     public accessId: string;
 }

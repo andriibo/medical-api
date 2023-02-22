@@ -1,15 +1,15 @@
 import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service';
 import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repositories';
 import {MyDoctorDto} from 'domain/dtos/response/profile/my-doctor.dto';
-import {IFileUrlService} from 'app/modules/profile/services/file-url.service';
 import {sortUserDtosByName} from 'app/support/sort.helper';
 import {PatientDataAccessStatus} from 'domain/entities/patient-data-access.entity';
+import {UserDtoService} from 'app/modules/profile/services/user-dto.service';
 
 export class DoctorListProfileUseCase {
     public constructor(
         private readonly authedUserService: IAuthedUserService,
         private readonly patientDataAccessRepository: IPatientDataAccessRepository,
-        private readonly fileUrlService: IFileUrlService,
+        private readonly userDtoService: UserDtoService,
     ) {}
 
     public async getMyDoctorList(): Promise<MyDoctorDto[]> {
@@ -21,11 +21,10 @@ export class DoctorListProfileUseCase {
         );
 
         const myDoctors = items.map((patientDataAccess) => {
-            const dto = MyDoctorDto.fromUserAndDoctorMetadata(
+            const dto = this.userDtoService.createDoctorDtoByUserAndMetadata(
                 patientDataAccess.grantedUser,
                 patientDataAccess.grantedUser.doctorMetadata,
-            );
-            dto.avatar = this.fileUrlService.createUrlToUserAvatar(dto.avatar);
+            ) as MyDoctorDto;
             dto.accessId = patientDataAccess.id;
 
             return dto;

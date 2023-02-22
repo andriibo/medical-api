@@ -31,15 +31,19 @@ import {IPatientStatusRepository} from 'app/modules/patient-status/repositories'
 import {IPatientCategoryRepository} from 'app/modules/patient-category/repositories';
 import {PatientStatusModule} from 'infrastructure/modules/patient-status/patient-status.module';
 import {PatientCategoryModule} from 'infrastructure/modules/patient-category/patient-category.module';
+import {ProfileIndependentModule} from 'infrastructure/modules/profile/profile.ind.module';
+import {AuthIndependentModule} from 'infrastructure/modules/auth/auth.ind.module';
 
 @Module({
     imports: [
         TypeOrmModule.forFeature([PatientDataAccessModel]),
         MailModule,
         AuthModule,
+        AuthIndependentModule,
         FileModule,
         PatientStatusModule,
         PatientCategoryModule,
+        ProfileIndependentModule,
     ],
     exports: [IPatientDataAccessRepository, PatientDataAccessSpecification],
     controllers: [PatientController, GrantedUserController],

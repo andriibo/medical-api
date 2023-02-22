@@ -3,7 +3,6 @@ import {GrantedUserController, PatientController} from 'controllers/suggested-co
 import {TypeOrmModule} from '@nestjs/typeorm';
 import {AuthModule} from 'infrastructure/modules/auth/auth.module';
 import {EmergencyContactModule} from 'infrastructure/modules/emergency-contact/emergency-contact.module';
-import {FileModule} from 'infrastructure/modules/file/file.module';
 import {PatientDataAccessModule} from 'infrastructure/modules/patient-data-access/patient-data-access.module';
 import {SuggestedContactModel, SuggestedContactRepository} from './models';
 import {SuggestedContactSpecification} from 'app/modules/suggested-contact/specifications/suggested-contact.specification';
@@ -18,14 +17,17 @@ import {IEmergencyContactEntityMapper} from 'app/modules/emergency-contact/mappe
 import {EmergencyContactSpecification} from 'app/modules/emergency-contact/specifications/emergency-contact.specification';
 import {IEmergencyContactRepository} from 'app/modules/emergency-contact/repositories';
 import {PatientDataAccessSpecification} from 'app/modules/patient-data-access/specifications/patient-data-access.specification';
+import {ProfileIndependentModule} from 'infrastructure/modules/profile/profile.ind.module';
+import {AuthIndependentModule} from 'infrastructure/modules/auth/auth.ind.module';
 
 @Module({
     imports: [
         TypeOrmModule.forFeature([SuggestedContactModel]),
         AuthModule,
+        AuthIndependentModule,
         EmergencyContactModule,
         PatientDataAccessModule,
-        FileModule,
+        ProfileIndependentModule,
     ],
     controllers: [PatientController, GrantedUserController],
     providers: [

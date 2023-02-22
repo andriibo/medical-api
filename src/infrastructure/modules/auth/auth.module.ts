@@ -1,19 +1,9 @@
 import {Module} from '@nestjs/common';
 import {AuthController} from 'controllers/auth.controller';
-import {IUserRepository} from 'app/modules/auth/repositories';
 import {IAuthService} from 'app/modules/auth/services/auth.service';
 import {CognitoService} from 'infrastructure/aws/cognito/cognito.service';
 import {TypeOrmModule} from '@nestjs/typeorm';
-import {
-    UserModel,
-    DoctorMetadataModel,
-    PatientMetadataModel,
-    UserRepository,
-    DoctorMetadataRepository,
-    PatientMetadataRepository,
-} from './models';
-import {IUserEntityMapper} from 'app/modules/auth/mappers/user-entity.mapper';
-import {UserModelMapper} from './mappers/user-model.mapper';
+import {UserModel, DoctorMetadataModel, PatientMetadataModel} from './models';
 import {AuthUseCasesFactory} from './factories/auth-use-cases.factory';
 import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service';
 import {AuthedUserService} from './services/authed-user.service';
@@ -22,42 +12,24 @@ import {IAuthEventEmitter} from 'app/modules/auth/event-emitters/auth.event-emit
 import {AuthEventEmitter} from './event-emitters/auth.event-emitter';
 import {AuthListener} from './listeners/auth.listener';
 import {MailModule} from 'infrastructure/modules/mail/mail.module';
-import {IDoctorMetadataRepository, IPatientMetadataRepository} from 'app/modules/profile/repositories';
-import {FileModule} from 'infrastructure/modules/file/file.module';
 import {PatientVitalThresholdsIndependentModule} from 'infrastructure/modules/patient-vital-thresholds/patient-vital-thresholds.ind.module';
+import {ProfileIndependentModule} from 'infrastructure/modules/profile/profile.ind.module';
+import {AuthIndependentModule} from 'infrastructure/modules/auth/auth.ind.module';
 
 @Module({
     imports: [
         TypeOrmModule.forFeature([UserModel, DoctorMetadataModel, PatientMetadataModel]),
         MailModule,
-        FileModule,
+        ProfileIndependentModule,
         PatientVitalThresholdsIndependentModule,
+        AuthIndependentModule,
     ],
-    exports: [
-        IAuthService,
-        IAuthedUserService,
-        IUserRepository,
-        IPatientMetadataRepository,
-        IDoctorMetadataRepository,
-        RequestUserService,
-    ],
+    exports: [IAuthService, IAuthedUserService, RequestUserService],
     controllers: [AuthController],
     providers: [
         AuthUseCasesFactory,
         AuthListener,
         RequestUserService,
-        {
-            provide: IUserRepository,
-            useClass: UserRepository,
-        },
-        {
-            provide: IPatientMetadataRepository,
-            useClass: PatientMetadataRepository,
-        },
-        {
-            provide: IDoctorMetadataRepository,
-            useClass: DoctorMetadataRepository,
-        },
         {
             provide: IAuthService,
             useClass: CognitoService,
@@ -65,10 +37,6 @@ import {PatientVitalThresholdsIndependentModule} from 'infrastructure/modules/pa
         {
             provide: IAuthedUserService,
             useClass: AuthedUserService,
-        },
-        {
-            provide: IUserEntityMapper,
-            useClass: UserModelMapper,
         },
         {
             provide: IAuthEventEmitter,

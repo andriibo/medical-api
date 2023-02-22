@@ -3,12 +3,12 @@ import {PatientVitalThresholds} from 'domain/entities';
 import {IUserRepository} from 'app/modules/auth/repositories';
 import {PatientVitalThresholdsDto} from 'domain/dtos/response/patient-vital-thresholds/patient-vital-thresholds.dto';
 import {UserDto} from 'domain/dtos/response/user/user.dto';
-import {IFileUrlService} from 'app/modules/profile/services/file-url.service';
+import {UserDtoService} from 'app/modules/profile/services/user-dto.service';
 
 export class ThresholdsDtoService {
     public constructor(
         private readonly userRepository: IUserRepository,
-        private readonly fileUrlService: IFileUrlService,
+        private readonly userDtoService: UserDtoService,
     ) {}
 
     public async createDtoByThresholds(thresholdsGroup: PatientVitalThresholds[]): Promise<ThresholdsDto> {
@@ -28,14 +28,8 @@ export class ThresholdsDtoService {
     private async getUserDtosWhoSetThresholds(thresholdsGroup: PatientVitalThresholds[]): Promise<UserDto[]> {
         const userIds = this.extractUserIds(thresholdsGroup);
         const users = await this.userRepository.getByIds(userIds);
-        const userDtos = users.map((user) => {
-            const dto = UserDto.fromUser(user);
-            dto.avatar = this.fileUrlService.createUrlToUserAvatar(dto.avatar);
 
-            return dto;
-        });
-
-        return userDtos;
+        return users.map((user) => this.userDtoService.createUserDtoByUser(user));
     }
 
     private extractUserIds(thresholdsGroup: PatientVitalThresholds[]): string[] {

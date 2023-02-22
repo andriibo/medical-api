@@ -10,11 +10,13 @@ import {IVitalEntityMapper} from 'app/modules/vital/mappers/vital-entity.mapper'
 import {VitalModelMapper} from './mappers/vital-model.mapper';
 import {PatientVitalThresholdsIndependentModule} from 'infrastructure/modules/patient-vital-thresholds/patient-vital-thresholds.ind.module';
 import {FileModule} from 'infrastructure/modules/file/file.module';
+import {AuthIndependentModule} from 'infrastructure/modules/auth/auth.ind.module';
 
 @Module({
     imports: [
         TypeOrmModule.forFeature([VitalModel]),
         AuthModule,
+        AuthIndependentModule,
         PatientDataAccessModule,
         PatientVitalThresholdsIndependentModule,
         FileModule,
