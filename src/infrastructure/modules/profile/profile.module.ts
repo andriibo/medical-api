@@ -6,8 +6,7 @@ import {IUserProfileMapper} from 'app/modules/profile/mappers/user-profile.mappe
 import {UserProfileMapper} from './mappers/user-profile.mapper';
 import {AuthModule} from 'infrastructure/modules/auth/auth.module';
 import {PatientDataAccessModule} from 'infrastructure/modules/patient-data-access/patient-data-access.module';
-import {FileModule} from 'infrastructure/modules/file/file.module';
-import {VitalModule} from 'infrastructure/modules/vital/vital.module';
+import {VitalIndependentModule} from 'infrastructure/modules/vital/vital.ind.module';
 import {ProfileController} from 'controllers/profile/profile.controller';
 import {CaregiverController} from 'controllers/profile/caregiver.controller';
 import {GrantedUserController} from 'controllers/profile/granted-user.controller';
@@ -26,18 +25,21 @@ import {RemoveCaregiverOrPatientService} from 'infrastructure/modules/profile/se
 import {IMyPatientsService} from 'app/modules/profile/services/my-patients.service';
 import {MyPatientsService} from 'infrastructure/modules/profile/services/my-patients.service';
 import {IPatientCategoryRepository} from 'app/modules/patient-category/repositories';
-import {IFileUrlService} from 'app/modules/profile/services/file-url.service';
 import {IVitalRepository} from 'app/modules/vital/repositories';
 import {PatientCategoryModule} from 'infrastructure/modules/patient-category/patient-category.module';
+import {UserIndependentModule} from 'infrastructure/modules/auth/user.ind.module';
+import {UserDtoService} from 'app/modules/profile/services/user-dto.service';
+import {FileModule} from 'infrastructure/modules/file/file.module';
 
 @Module({
     imports: [
         TypeOrmModule.forFeature([UserModel, DoctorMetadataModel, PatientMetadataModel]),
         AuthModule,
+        FileModule,
+        UserIndependentModule,
         PatientCategoryModule,
         PatientDataAccessModule,
-        FileModule,
-        VitalModule,
+        VitalIndependentModule,
     ],
     exports: ['RemoveDoctorService', 'RemoveCaregiverOrPatientService'],
     controllers: [PatientController, DoctorController, ProfileController, CaregiverController, GrantedUserController],
@@ -73,12 +75,12 @@ import {PatientCategoryModule} from 'infrastructure/modules/patient-category/pat
             provide: IMyPatientsService,
             useFactory: (
                 patientCategoryRepository: IPatientCategoryRepository,
-                fileUrlService: IFileUrlService,
+                userDtoService: UserDtoService,
                 vitalRepository: IVitalRepository,
             ) => {
-                return new MyPatientsService(patientCategoryRepository, fileUrlService, vitalRepository);
+                return new MyPatientsService(patientCategoryRepository, userDtoService, vitalRepository);
             },
-            inject: [IPatientCategoryRepository, IFileUrlService, IVitalRepository],
+            inject: [IPatientCategoryRepository, UserDtoService, IVitalRepository],
         },
     ],
 })

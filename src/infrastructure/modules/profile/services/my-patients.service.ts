@@ -3,14 +3,14 @@ import {IMyPatientsService} from 'app/modules/profile/services/my-patients.servi
 import {MyPatientDto} from 'domain/dtos/response/profile/my-patient.dto';
 import {PatientDataAccess} from 'domain/entities/patient-data-access.entity';
 import {IPatientCategoryRepository} from 'app/modules/patient-category/repositories';
-import {IFileUrlService} from 'app/modules/profile/services/file-url.service';
 import {IVitalRepository} from 'app/modules/vital/repositories';
 import {sortUserDtosByName} from 'app/support/sort.helper';
+import {UserDtoService} from 'app/modules/profile/services/user-dto.service';
 
 export class MyPatientsService implements IMyPatientsService {
     public constructor(
         @Inject(IPatientCategoryRepository) private readonly patientCategoryRepository: IPatientCategoryRepository,
-        @Inject(IFileUrlService) private readonly fileUrlService: IFileUrlService,
+        @Inject(UserDtoService) private readonly userDtoService: UserDtoService,
         @Inject(IVitalRepository) private readonly vitalRepository: IVitalRepository,
     ) {}
 
@@ -23,12 +23,12 @@ export class MyPatientsService implements IMyPatientsService {
         const grantedUserId = dataAccesses[0].grantedUserId;
         const indexedPatientCategories = await this.getIndexedPatientCategories(patientIds, grantedUserId);
         const myPatients = dataAccesses.map((patientDataAccess) => {
-            const dto = MyPatientDto.fromUserAndPatientMetadata(
+            const dto = this.userDtoService.createPatientDtoByUserAndMetadata(
                 patientDataAccess.patientUser,
                 patientDataAccess.patientUser.patientMetadata,
-            );
-            dto.avatar = this.fileUrlService.createUrlToUserAvatar(dto.avatar);
+            ) as MyPatientDto;
             dto.accessId = patientDataAccess.id;
+            dto.lastConnected = null;
             if (patientDataAccess.patientUserId in indexedUsersLastConnectionTime) {
                 dto.lastConnected = indexedUsersLastConnectionTime[patientDataAccess.patientUserId];
             }

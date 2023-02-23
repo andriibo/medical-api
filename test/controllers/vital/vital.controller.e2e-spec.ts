@@ -30,6 +30,7 @@ import {
     AbsMinSpO2,
     AbsMinTemp,
 } from 'domain/constants/vitals.const';
+import {PatientVitalThresholdsModel} from 'infrastructure/modules/patient-vital-thresholds/models';
 
 describe('VitalController', () => {
     let app: INestApplication;
@@ -50,6 +51,8 @@ describe('VitalController', () => {
             .overrideProvider(getRepositoryToken(PatientStatusModel))
             .useValue(null)
             .overrideProvider(getRepositoryToken(PatientCategoryModel))
+            .useValue(null)
+            .overrideProvider(getRepositoryToken(PatientVitalThresholdsModel))
             .useValue(null)
             .overrideProvider(IUserRepository)
             .useValue(null)

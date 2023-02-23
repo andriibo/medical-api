@@ -109,6 +109,7 @@ describe('DoctorController', () => {
                 lastName: doctor.lastName,
                 institution: doctorMetadata.institution,
                 phone: doctor.phone,
+                role: doctor.role,
                 avatar: 'https://zenzers-medical-dev.s3.amazonaws.com/avatars/default-avatar.png',
                 deletedAt: null,
             });

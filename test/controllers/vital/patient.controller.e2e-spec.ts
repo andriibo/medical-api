@@ -19,6 +19,7 @@ import {IPatientCategoryRepository} from 'app/modules/patient-category/repositor
 import {IPatientStatusRepository} from 'app/modules/patient-status/repositories';
 import {IVitalRepository} from 'app/modules/vital/repositories';
 import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repositories';
+import {PatientVitalThresholdsModel} from 'infrastructure/modules/patient-vital-thresholds/models';
 
 const patient: User = {
     id: '5nc3e70a-c1y9-121a-c5mv-5aq272098bp0',
@@ -122,6 +123,8 @@ describe('PatientController', () => {
             .overrideProvider(getRepositoryToken(PatientStatusModel))
             .useValue(null)
             .overrideProvider(getRepositoryToken(PatientCategoryModel))
+            .useValue(null)
+            .overrideProvider(getRepositoryToken(PatientVitalThresholdsModel))
             .useValue(null)
             .overrideProvider(IUserRepository)
             .useValue(mockedUserRepository)
@@ -230,7 +233,7 @@ describe('PatientController', () => {
                 ],
                 users: [
                     {
-                        avatar: doctor.avatar,
+                        avatar: 'https://zenzers-medical-dev.s3.amazonaws.com/avatars/default-avatar.png',
                         deletedAt: doctor.deletedAt,
                         userId: doctor.id,
                         email: doctor.email,

@@ -1,14 +1,13 @@
 import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repositories';
 import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service';
 import {DataAccessDto} from 'domain/dtos/response/data-access/data-access.dto';
-import {UserDto} from 'domain/dtos/response/user/user.dto';
-import {IFileUrlService} from 'app/modules/profile/services/file-url.service';
+import {UserDtoService} from 'app/modules/profile/services/user-dto.service';
 
 export class DataAccessListUseCase {
     public constructor(
         private readonly patientDataAccessRepository: IPatientDataAccessRepository,
         private readonly authedUserService: IAuthedUserService,
-        private readonly fileUrlService: IFileUrlService,
+        private readonly userDtoService: UserDtoService,
     ) {}
 
     public async getList(): Promise<DataAccessDto[]> {
@@ -19,11 +18,9 @@ export class DataAccessListUseCase {
             const dto = DataAccessDto.fromPatientDataAccess(item);
 
             if (item.grantedUser) {
-                const user = UserDto.fromUser(item.grantedUser);
-                user.avatar = this.fileUrlService.createUrlToUserAvatar(user.avatar);
-                dto.requestedUser = user;
+                dto.requestedUser = this.userDtoService.createUserDtoByUser(item.grantedUser);
             } else if (item.grantedEmail) {
-                dto.requestedUser = UserDto.fromEmail(item.grantedEmail);
+                dto.requestedUser = this.userDtoService.createUserDtoByEmail(item.grantedEmail);
             }
 
             return dto;

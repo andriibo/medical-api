@@ -184,7 +184,7 @@ describe('GrantedUserController', () => {
                 },
                 users: [
                     {
-                        avatar: doctor.avatar,
+                        avatar: 'https://zenzers-medical-dev.s3.amazonaws.com/avatars/default-avatar.png',
                         deletedAt: doctor.deletedAt,
                         userId: doctor.id,
                         email: doctor.email,

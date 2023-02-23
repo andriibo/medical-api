@@ -13,10 +13,10 @@ import {DeleteDataAccessByPatientService} from 'app/modules/patient-data-access/
 import {AccessForUnregisteredDoctorService} from 'app/modules/patient-data-access/services/access-for-unregistered-doctor.service';
 import {AccessForRegisteredDoctorService} from 'app/modules/patient-data-access/services/access-for-registered-doctor.service';
 import {RefuseDataAccessUseCase} from 'app/modules/patient-data-access/use-cases/patient/refuse-data-access.use-case';
-import {IFileUrlService} from 'app/modules/profile/services/file-url.service';
 import {AccessForRegisteredCaregiverService} from 'app/modules/patient-data-access/services/access-for-registered-caregiver.service';
 import {AccessForUnregisteredCaregiverService} from 'app/modules/patient-data-access/services/access-for-unregistered-caregiver.service';
 import {IPatientDataAccessEventEmitter} from 'app/modules/patient-data-access/event-emitters/patient-data-access.event-emitter';
+import {UserDtoService} from 'app/modules/profile/services/user-dto.service';
 
 @Injectable()
 export class PatientUseCasesFactory {
@@ -37,7 +37,7 @@ export class PatientUseCasesFactory {
         private readonly accessForUnregisteredCaregiverService: AccessForUnregisteredCaregiverService,
         @Inject(DeleteDataAccessByPatientService)
         private readonly deleteDataAccessByPatientService: DeleteDataAccessByPatientService,
-        @Inject(IFileUrlService) private readonly fileUrlService: IFileUrlService,
+        @Inject(UserDtoService) private readonly userDtoService: UserDtoService,
         @Inject(IPatientDataAccessEventEmitter)
         private readonly patientDataAccessEventEmitter: IPatientDataAccessEventEmitter,
     ) {}
@@ -78,7 +78,7 @@ export class PatientUseCasesFactory {
     }
 
     public createDataAccessListUseCase(): DataAccessListUseCase {
-        return new DataAccessListUseCase(this.patientDataAccessRepository, this.authedUserService, this.fileUrlService);
+        return new DataAccessListUseCase(this.patientDataAccessRepository, this.authedUserService, this.userDtoService);
     }
 
     public createDeleteDataAccessUseCase(): DeleteDataAccessUseCase {

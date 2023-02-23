@@ -1,17 +1,16 @@
 import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service';
-import {IFileUrlService} from 'app/modules/profile/services/file-url.service';
-import {CaregiverDto} from 'domain/dtos/response/profile/caregiver.dto';
+import {UserDtoService} from 'app/modules/profile/services/user-dto.service';
+import {UserDto} from 'domain/dtos/response/user/user.dto';
 
 export class CaregiverProfileUseCase {
     public constructor(
         private readonly authedUserService: IAuthedUserService,
-        private readonly fileUrlService: IFileUrlService,
+        private readonly userDtoService: UserDtoService,
     ) {}
 
-    public async getProfileInfo(): Promise<CaregiverDto> {
+    public async getProfileInfo(): Promise<UserDto> {
         const user = await this.authedUserService.getUser();
-        user.avatar = this.fileUrlService.createUrlToUserAvatar(user.avatar);
 
-        return CaregiverDto.fromUser(user);
+        return this.userDtoService.createUserDtoByUser(user);
     }
 }

@@ -4,7 +4,7 @@ import {IPatientMedicationRepository} from 'app/modules/patient-medication/repos
 import {PatientMedicationSpecification} from 'app/modules/patient-medication/specifications/patient-medication.specification';
 import {IUserRepository} from 'app/modules/auth/repositories';
 import {MedicationDto} from 'domain/dtos/response/patient-medication/medication.dto';
-import {UserDto} from 'domain/dtos/response/user/user.dto';
+import {UserDtoService} from 'app/modules/profile/services/user-dto.service';
 
 export class MedicationListUseCase {
     public constructor(
@@ -12,6 +12,7 @@ export class MedicationListUseCase {
         private readonly userRepository: IUserRepository,
         private readonly patientMedicationRepository: IPatientMedicationRepository,
         private readonly patientMedicationSpecification: PatientMedicationSpecification,
+        private readonly userDtoService: UserDtoService,
     ) {}
 
     public async getList(patientUserId: string): Promise<MedicationDto[]> {
@@ -28,7 +29,7 @@ export class MedicationListUseCase {
 
         return items.map((item) => {
             const dto = MedicationDto.fromPatientMedication(item);
-            dto.createdByUser = UserDto.fromUser(indexedUsers[item.createdBy]);
+            dto.createdByUser = this.userDtoService.createUserDtoByUser(indexedUsers[item.createdBy]);
 
             return dto;
         });

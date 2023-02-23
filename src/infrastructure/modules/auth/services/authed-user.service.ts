@@ -5,15 +5,15 @@ import {IUserRepository} from 'app/modules/auth/repositories';
 import {REQUEST} from '@nestjs/core';
 import {TokenClaimsModel} from 'infrastructure/aws/cognito/token-claims.model';
 import {UserSignedInDto} from 'domain/dtos/response/auth';
-import {IFileUrlService} from 'app/modules/profile/services/file-url.service';
 import {UserNotActiveError} from 'app/errors/user-not-active.error';
+import {UserDtoService} from 'app/modules/profile/services/user-dto.service';
 
 @Injectable({scope: Scope.REQUEST})
 export class AuthedUserService implements IAuthedUserService {
     public constructor(
         @Inject(REQUEST) private readonly request: any,
         @Inject(IUserRepository) private readonly userRepository: IUserRepository,
-        @Inject(IFileUrlService) private readonly fileUrlService: IFileUrlService,
+        @Inject(UserDtoService) private readonly userDtoService: UserDtoService,
     ) {}
 
     public async getUser(): Promise<User> {
@@ -38,8 +38,8 @@ export class AuthedUserService implements IAuthedUserService {
     public async getUserByTokenAndTokenClaims(token: string, tokenClaims: object): Promise<UserSignedInDto> {
         const tokenClaimsModel = TokenClaimsModel.fromCognitoResponse(tokenClaims);
         const user = await this.userRepository.getOneById(tokenClaimsModel.getUserId());
-        user.avatar = this.fileUrlService.createUrlToUserAvatar(user.avatar);
+        const userDto = this.userDtoService.createUserDtoByUser(user);
 
-        return UserSignedInDto.fromTokenData(token, tokenClaimsModel, user);
+        return UserSignedInDto.fromTokenData(token, tokenClaimsModel, userDto);
     }
 }

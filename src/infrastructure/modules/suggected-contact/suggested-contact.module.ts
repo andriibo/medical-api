@@ -1,7 +1,9 @@
 import {Module} from '@nestjs/common';
 import {GrantedUserController, PatientController} from 'controllers/suggested-contact';
 import {TypeOrmModule} from '@nestjs/typeorm';
-import {AuthModule, EmergencyContactModule, PatientDataAccessModule} from 'infrastructure/modules';
+import {AuthModule} from 'infrastructure/modules/auth/auth.module';
+import {EmergencyContactModule} from 'infrastructure/modules/emergency-contact/emergency-contact.module';
+import {PatientDataAccessModule} from 'infrastructure/modules/patient-data-access/patient-data-access.module';
 import {SuggestedContactModel, SuggestedContactRepository} from './models';
 import {SuggestedContactSpecification} from 'app/modules/suggested-contact/specifications/suggested-contact.specification';
 import {ISuggestedContactRepository} from 'app/modules/suggested-contact/repositories';
@@ -15,11 +17,13 @@ import {IEmergencyContactEntityMapper} from 'app/modules/emergency-contact/mappe
 import {EmergencyContactSpecification} from 'app/modules/emergency-contact/specifications/emergency-contact.specification';
 import {IEmergencyContactRepository} from 'app/modules/emergency-contact/repositories';
 import {PatientDataAccessSpecification} from 'app/modules/patient-data-access/specifications/patient-data-access.specification';
+import {UserIndependentModule} from 'infrastructure/modules/auth/user.ind.module';
 
 @Module({
     imports: [
         TypeOrmModule.forFeature([SuggestedContactModel]),
         AuthModule,
+        UserIndependentModule,
         EmergencyContactModule,
         PatientDataAccessModule,
     ],

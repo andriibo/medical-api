@@ -18,6 +18,7 @@ import {IPatientStatusRepository} from 'app/modules/patient-status/repositories'
 import {IPatientVitalThresholdsRepository} from 'app/modules/patient-vital-thresholds/repositories';
 import {PatientDataAccess, PatientVitalThresholds, User, Vital} from 'domain/entities';
 import {convertToUnixTimestamp, currentUnixTimestamp} from 'app/support/date.helper';
+import {PatientVitalThresholdsModel} from 'infrastructure/modules/patient-vital-thresholds/models';
 
 const patient: User = {
     id: 'bd58571c-c935-41e9-9e08-a8d4e0e93f5f',
@@ -130,6 +131,8 @@ describe('GrantedUserController', () => {
             .useValue(null)
             .overrideProvider(getRepositoryToken(PatientCategoryModel))
             .useValue(null)
+            .overrideProvider(getRepositoryToken(PatientVitalThresholdsModel))
+            .useValue(null)
             .overrideProvider(IUserRepository)
             .useValue(mockedUserRepository)
             .overrideProvider(IVitalRepository)
@@ -215,7 +218,7 @@ describe('GrantedUserController', () => {
                 ],
                 users: [
                     {
-                        avatar: doctor.avatar,
+                        avatar: 'https://zenzers-medical-dev.s3.amazonaws.com/avatars/default-avatar.png',
                         deletedAt: doctor.deletedAt,
                         userId: doctor.id,
                         email: doctor.email,

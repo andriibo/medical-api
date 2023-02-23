@@ -9,7 +9,6 @@ import {IPatientDataAccessEntityMapper} from 'app/modules/patient-data-access/ma
 import {PatientDataAccessModelMapper} from './mappers/patient-data-access-model.mapper';
 import {AuthModule} from 'infrastructure/modules/auth/auth.module';
 import {MailModule} from 'infrastructure/modules/mail/mail.module';
-import {FileModule} from 'infrastructure/modules/file/file.module';
 import {PatientDataAccessSpecification} from 'app/modules/patient-data-access/specifications/patient-data-access.specification';
 import {AccessForRegisteredDoctorService} from 'app/modules/patient-data-access/services/access-for-registered-doctor.service';
 import {AccessToGrantedUserBindingService} from 'app/modules/patient-data-access/services/access-to-granted-user-binding.service';
@@ -31,13 +30,14 @@ import {IPatientStatusRepository} from 'app/modules/patient-status/repositories'
 import {IPatientCategoryRepository} from 'app/modules/patient-category/repositories';
 import {PatientStatusModule} from 'infrastructure/modules/patient-status/patient-status.module';
 import {PatientCategoryModule} from 'infrastructure/modules/patient-category/patient-category.module';
+import {UserIndependentModule} from 'infrastructure/modules/auth/user.ind.module';
 
 @Module({
     imports: [
         TypeOrmModule.forFeature([PatientDataAccessModel]),
         MailModule,
         AuthModule,
-        FileModule,
+        UserIndependentModule,
         PatientStatusModule,
         PatientCategoryModule,
     ],

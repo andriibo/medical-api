@@ -17,6 +17,7 @@ export class GrantedUserUseCasesFactory {
         @Inject(PatientVitalThresholdsSpecification)
         private readonly patientVitalThresholdSpecification: PatientVitalThresholdsSpecification,
         @Inject(IVitalRepository) private readonly vitalRepository: IVitalRepository,
+        @Inject(ThresholdsDtoService) private readonly thresholdsDtoService: ThresholdsDtoService,
     ) {}
 
     public createPatientVitalThresholdListUseCase(): ThresholdListUseCase {
@@ -25,7 +26,7 @@ export class GrantedUserUseCasesFactory {
             this.patientVitalThresholdsRepository,
             this.patientVitalThresholdSpecification,
             this.vitalRepository,
-            new ThresholdsDtoService(this.userRepository),
+            this.thresholdsDtoService,
         );
     }
 }

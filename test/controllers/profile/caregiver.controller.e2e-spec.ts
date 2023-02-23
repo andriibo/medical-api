@@ -99,6 +99,7 @@ describe('CaregiverController', () => {
                 firstName: caregiver.firstName,
                 lastName: caregiver.lastName,
                 phone: caregiver.phone,
+                role: caregiver.role,
                 avatar: 'https://zenzers-medical-dev.s3.amazonaws.com/avatars/default-avatar.png',
                 deletedAt: null,
             });

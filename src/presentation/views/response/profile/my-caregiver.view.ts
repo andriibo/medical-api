@@ -1,8 +1,8 @@
 import {ApiProperty} from '@nestjs/swagger';
-import {CaregiverView} from 'views/response/user/caregiver.view';
 import {MyCaregiverDto} from 'domain/dtos/response/profile/my-caregiver.dto';
+import {UserView} from 'views/response/user';
 
-export class MyCaregiverView extends CaregiverView implements MyCaregiverDto {
+export class MyCaregiverView extends UserView implements MyCaregiverDto {
     @ApiProperty()
     public accessId: string;
 }
