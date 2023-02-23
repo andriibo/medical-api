@@ -11,7 +11,7 @@ export class VitalModel implements Vital {
     @Column()
     public timestamp: number;
 
-    @Column('numeric', {precision: 5, scale: 2, transformer: new FloatTransformer()})
+    @Column('numeric', {precision: 5, scale: 1, transformer: new FloatTransformer()})
     public temp: number | null = null;
 
     @Column({name: 'is_temp_normal'})
