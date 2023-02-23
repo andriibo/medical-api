@@ -17,17 +17,15 @@ import {IEmergencyContactEntityMapper} from 'app/modules/emergency-contact/mappe
 import {EmergencyContactSpecification} from 'app/modules/emergency-contact/specifications/emergency-contact.specification';
 import {IEmergencyContactRepository} from 'app/modules/emergency-contact/repositories';
 import {PatientDataAccessSpecification} from 'app/modules/patient-data-access/specifications/patient-data-access.specification';
-import {ProfileIndependentModule} from 'infrastructure/modules/profile/profile.ind.module';
-import {AuthIndependentModule} from 'infrastructure/modules/auth/auth.ind.module';
+import {UserModule} from 'infrastructure/modules/auth/user.module';
 
 @Module({
     imports: [
         TypeOrmModule.forFeature([SuggestedContactModel]),
         AuthModule,
-        AuthIndependentModule,
+        UserModule,
         EmergencyContactModule,
         PatientDataAccessModule,
-        ProfileIndependentModule,
     ],
     controllers: [PatientController, GrantedUserController],
     providers: [

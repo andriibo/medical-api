@@ -13,16 +13,16 @@ import {AuthEventEmitter} from './event-emitters/auth.event-emitter';
 import {AuthListener} from './listeners/auth.listener';
 import {MailModule} from 'infrastructure/modules/mail/mail.module';
 import {PatientVitalThresholdsIndependentModule} from 'infrastructure/modules/patient-vital-thresholds/patient-vital-thresholds.ind.module';
-import {ProfileIndependentModule} from 'infrastructure/modules/profile/profile.ind.module';
-import {AuthIndependentModule} from 'infrastructure/modules/auth/auth.ind.module';
+import {FileModule} from 'infrastructure/modules/file/file.module';
+import {UserModule} from './user.module';
 
 @Module({
     imports: [
         TypeOrmModule.forFeature([UserModel, DoctorMetadataModel, PatientMetadataModel]),
         MailModule,
-        ProfileIndependentModule,
+        FileModule,
         PatientVitalThresholdsIndependentModule,
-        AuthIndependentModule,
+        UserModule,
     ],
     exports: [IAuthService, IAuthedUserService, RequestUserService],
     controllers: [AuthController],

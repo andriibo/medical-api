@@ -9,17 +9,10 @@ import {PatientMedicationModelMapper} from './mappers/patient-medication-model.m
 import {AuthModule, PatientDataAccessModule} from 'infrastructure/modules';
 import {PatientMedicationSpecification} from 'app/modules/patient-medication/specifications/patient-medication.specification';
 import {PatientDataAccessSpecification} from 'app/modules/patient-data-access/specifications/patient-data-access.specification';
-import {ProfileIndependentModule} from 'infrastructure/modules/profile/profile.ind.module';
-import {AuthIndependentModule} from 'infrastructure/modules/auth/auth.ind.module';
+import {UserModule} from 'infrastructure/modules/auth/user.module';
 
 @Module({
-    imports: [
-        TypeOrmModule.forFeature([PatientMedicationModel]),
-        AuthModule,
-        AuthIndependentModule,
-        PatientDataAccessModule,
-        ProfileIndependentModule,
-    ],
+    imports: [TypeOrmModule.forFeature([PatientMedicationModel]), AuthModule, UserModule, PatientDataAccessModule],
     controllers: [PatientMedicationController],
     providers: [
         PatientMedicationUseCasesFactory,

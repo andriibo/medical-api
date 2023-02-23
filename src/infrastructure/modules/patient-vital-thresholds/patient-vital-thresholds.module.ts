@@ -10,18 +10,16 @@ import {PatientVitalThresholdsIndependentModule} from './patient-vital-threshold
 import {AuthModule} from 'infrastructure/modules/auth/auth.module';
 import {PatientDataAccessModule} from 'infrastructure/modules/patient-data-access/patient-data-access.module';
 import {VitalModule} from 'infrastructure/modules/vital/vital.module';
-import {FileModule} from 'infrastructure/modules/file/file.module';
-import {AuthIndependentModule} from 'infrastructure/modules/auth/auth.ind.module';
+import {UserModule} from 'infrastructure/modules/auth/user.module';
 
 @Module({
     imports: [
         TypeOrmModule.forFeature([PatientVitalThresholdsModel]),
         AuthModule,
-        AuthIndependentModule,
+        UserModule,
         PatientDataAccessModule,
         PatientVitalThresholdsIndependentModule,
         VitalModule,
-        FileModule,
     ],
     exports: [PatientVitalThresholdsSpecification],
     controllers: [DoctorController, PatientController, GrantedUserController],
