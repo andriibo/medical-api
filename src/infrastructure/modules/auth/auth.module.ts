@@ -14,7 +14,9 @@ import {AuthListener} from './listeners/auth.listener';
 import {MailModule} from 'infrastructure/modules/mail/mail.module';
 import {PatientVitalThresholdsIndependentModule} from 'infrastructure/modules/patient-vital-thresholds/patient-vital-thresholds.ind.module';
 import {FileModule} from 'infrastructure/modules/file/file.module';
-import {UserModule} from './user.module';
+import {UserIndependentModule} from './user.ind.module';
+import {UserDtoService} from 'app/modules/profile/services/user-dto.service';
+import {IFileUrlService} from 'app/modules/profile/services/file-url.service';
 
 @Module({
     imports: [
@@ -22,9 +24,9 @@ import {UserModule} from './user.module';
         MailModule,
         FileModule,
         PatientVitalThresholdsIndependentModule,
-        UserModule,
+        UserIndependentModule,
     ],
-    exports: [IAuthService, IAuthedUserService, RequestUserService],
+    exports: [IAuthService, IAuthedUserService, RequestUserService, UserDtoService],
     controllers: [AuthController],
     providers: [
         AuthUseCasesFactory,
@@ -41,6 +43,13 @@ import {UserModule} from './user.module';
         {
             provide: IAuthEventEmitter,
             useClass: AuthEventEmitter,
+        },
+        {
+            provide: UserDtoService,
+            useFactory: (fileUrlService: IFileUrlService) => {
+                return new UserDtoService(fileUrlService);
+            },
+            inject: [IFileUrlService],
         },
     ],
 })

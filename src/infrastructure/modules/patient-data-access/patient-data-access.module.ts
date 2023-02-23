@@ -30,14 +30,14 @@ import {IPatientStatusRepository} from 'app/modules/patient-status/repositories'
 import {IPatientCategoryRepository} from 'app/modules/patient-category/repositories';
 import {PatientStatusModule} from 'infrastructure/modules/patient-status/patient-status.module';
 import {PatientCategoryModule} from 'infrastructure/modules/patient-category/patient-category.module';
-import {UserModule} from 'infrastructure/modules/auth/user.module';
+import {UserIndependentModule} from 'infrastructure/modules/auth/user.ind.module';
 
 @Module({
     imports: [
         TypeOrmModule.forFeature([PatientDataAccessModel]),
         MailModule,
         AuthModule,
-        UserModule,
+        UserIndependentModule,
         PatientStatusModule,
         PatientCategoryModule,
     ],

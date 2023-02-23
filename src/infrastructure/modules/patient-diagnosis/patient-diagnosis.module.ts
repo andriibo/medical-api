@@ -10,10 +10,15 @@ import {AuthModule} from 'infrastructure/modules/auth/auth.module';
 import {PatientDataAccessModule} from 'infrastructure/modules/patient-data-access/patient-data-access.module';
 import {PatientDiagnosisSpecification} from 'app/modules/patient-diagnosis/specifications/patient-diagnosis.specification';
 import {PatientDataAccessSpecification} from 'app/modules/patient-data-access/specifications/patient-data-access.specification';
-import {UserModule} from 'infrastructure/modules/auth/user.module';
+import {UserIndependentModule} from 'infrastructure/modules/auth/user.ind.module';
 
 @Module({
-    imports: [TypeOrmModule.forFeature([PatientDiagnosisModel]), AuthModule, UserModule, PatientDataAccessModule],
+    imports: [
+        TypeOrmModule.forFeature([PatientDiagnosisModel]),
+        AuthModule,
+        UserIndependentModule,
+        PatientDataAccessModule,
+    ],
     controllers: [PatientDiagnosisController],
     providers: [
         PatientDiagnosisUseCasesFactory,
