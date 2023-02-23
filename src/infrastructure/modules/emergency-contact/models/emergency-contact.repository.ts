@@ -26,6 +26,12 @@ export class EmergencyContactRepository implements IEmergencyContactRepository {
     }
 
     public async getByUserId(userId: string): Promise<EmergencyContact[]> {
-        return await this.dataSource.manager.findBy(EmergencyContactModel, {userId});
+        return await this.dataSource.manager.find(EmergencyContactModel, {
+            where: {userId},
+            order: {
+                firstName: 'ASC',
+                lastName: 'ASC',
+            },
+        });
     }
 }
