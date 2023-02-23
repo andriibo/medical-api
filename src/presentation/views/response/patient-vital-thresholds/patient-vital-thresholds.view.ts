@@ -5,10 +5,10 @@ export class PatientVitalThresholdsView implements PatientVitalThresholdsDto {
     @ApiProperty()
     public thresholdsId: string;
 
-    @ApiProperty({default: 0})
+    @ApiProperty()
     public minHr: number;
 
-    @ApiProperty({default: 0})
+    @ApiProperty()
     public maxHr: number;
 
     @ApiProperty({nullable: true})
@@ -17,10 +17,10 @@ export class PatientVitalThresholdsView implements PatientVitalThresholdsDto {
     @ApiProperty({nullable: true})
     public hrSetAt: number | null;
 
-    @ApiProperty({type: Number, multipleOf: 0.1, default: 0})
+    @ApiProperty({type: Number, multipleOf: 0.1})
     public minTemp: number;
 
-    @ApiProperty({type: Number, multipleOf: 0.1, default: 0})
+    @ApiProperty({type: Number, multipleOf: 0.1})
     public maxTemp: number;
 
     @ApiProperty({nullable: true})
@@ -29,7 +29,7 @@ export class PatientVitalThresholdsView implements PatientVitalThresholdsDto {
     @ApiProperty({nullable: true})
     public tempSetAt: number | null;
 
-    @ApiProperty({default: 0})
+    @ApiProperty()
     public minSpo2: number;
 
     @ApiProperty({nullable: true})
@@ -38,10 +38,10 @@ export class PatientVitalThresholdsView implements PatientVitalThresholdsDto {
     @ApiProperty({nullable: true})
     public spo2SetAt: number | null;
 
-    @ApiProperty({default: 0})
+    @ApiProperty()
     public minRr: number;
 
-    @ApiProperty({default: 0})
+    @ApiProperty()
     public maxRr: number;
 
     @ApiProperty({nullable: true})
@@ -50,10 +50,10 @@ export class PatientVitalThresholdsView implements PatientVitalThresholdsDto {
     @ApiProperty({nullable: true})
     public rrSetAt: number | null;
 
-    @ApiProperty({default: 0})
+    @ApiProperty()
     public minDbp: number;
 
-    @ApiProperty({default: 0})
+    @ApiProperty()
     public maxDbp: number;
 
     @ApiProperty({nullable: true})
@@ -62,10 +62,10 @@ export class PatientVitalThresholdsView implements PatientVitalThresholdsDto {
     @ApiProperty({nullable: true})
     public dbpSetAt: number | null;
 
-    @ApiProperty({default: 0})
+    @ApiProperty()
     public minSbp: number;
 
-    @ApiProperty({default: 0})
+    @ApiProperty()
     public maxSbp: number;
 
     @ApiProperty({nullable: true})
@@ -74,10 +74,10 @@ export class PatientVitalThresholdsView implements PatientVitalThresholdsDto {
     @ApiProperty({nullable: true})
     public sbpSetAt: number | null;
 
-    @ApiProperty({default: 0})
+    @ApiProperty()
     public minMap: number;
 
-    @ApiProperty({default: 0})
+    @ApiProperty()
     public maxMap: number;
 
     @ApiProperty({nullable: true})
