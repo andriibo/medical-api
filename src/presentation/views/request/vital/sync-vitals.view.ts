@@ -13,7 +13,7 @@ import {
 import {SyncVitalsDto, VitalDto} from 'domain/dtos/request/vital';
 
 export class VitalView extends VitalDto {
-    @ApiProperty({nullable: true, required: false})
+    @ApiProperty({nullable: true, required: false, multipleOf: 0.1})
     @IsNumber()
     @IsOptional()
     public temp: number | null;
