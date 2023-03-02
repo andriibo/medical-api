@@ -1,7 +1,7 @@
 import {Vital} from 'domain/entities';
-import {FloatTransformer} from 'infrastructure/data-transformers/float.transformer';
 import {Entity, Column, PrimaryGeneratedColumn, JoinColumn, ManyToOne} from 'typeorm';
 import {UserModel} from 'infrastructure/modules/auth/models';
+import {FloatTransformer} from 'infrastructure/data-transformers/float.transformer';
 
 @Entity('vital')
 export class VitalModel implements Vital {
@@ -11,7 +11,7 @@ export class VitalModel implements Vital {
     @Column()
     public timestamp: number;
 
-    @Column('numeric', {precision: 5, scale: 1, transformer: new FloatTransformer()})
+    @Column({type: 'decimal', precision: 5, scale: 1, transformer: new FloatTransformer()})
     public temp: number | null = null;
 
     @Column({name: 'is_temp_normal'})

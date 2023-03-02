@@ -37,10 +37,10 @@ export class PatientVitalThresholdsModel implements PatientVitalThresholds {
     @Column({name: 'hr_set_at'})
     hrSetAt: number | null = null;
 
-    @Column('numeric', {name: 'min_temp', precision: 5, scale: 1, transformer: new FloatTransformer()})
+    @Column({type: 'decimal', name: 'min_temp', precision: 5, scale: 1, transformer: new FloatTransformer()})
     minTemp: number;
 
-    @Column('numeric', {name: 'max_temp', precision: 5, scale: 1, transformer: new FloatTransformer()})
+    @Column({type: 'decimal', name: 'max_temp', precision: 5, scale: 1, transformer: new FloatTransformer()})
     maxTemp: number;
 
     @Column({name: 'temp_set_by'})
