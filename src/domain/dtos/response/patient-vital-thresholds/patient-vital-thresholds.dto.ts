@@ -12,9 +12,9 @@ export class PatientVitalThresholdsDto {
 
     public hrSetAt: number | null;
 
-    public minTemp: number;
+    public minTemp: string;
 
-    public maxTemp: number;
+    public maxTemp: string;
 
     public tempSetBy: string | null;
 

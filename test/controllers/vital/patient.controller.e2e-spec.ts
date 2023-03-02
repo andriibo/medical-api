@@ -8,7 +8,6 @@ import {DoctorMetadataModel, PatientMetadataModel, UserModel} from 'infrastructu
 import {PatientVitalThresholds, User, Vital} from 'domain/entities';
 import {IDoctorMetadataRepository, IPatientMetadataRepository} from 'app/modules/profile/repositories';
 import {TestModule} from 'tests/test.module';
-import {SyncVitalsDto, VitalDto} from 'domain/dtos/request/vital';
 import {convertToUnixTimestamp, currentUnixTimestamp} from 'app/support/date.helper';
 import {VitalModel} from 'infrastructure/modules/vital/models';
 import {IPatientVitalThresholdsRepository} from 'app/modules/patient-vital-thresholds/repositories';
@@ -50,8 +49,8 @@ const patientVitalThresholds: PatientVitalThresholds = {
     maxHr: 220,
     hrSetBy: doctor.id,
     hrSetAt: null,
-    minTemp: 32,
-    maxTemp: 42,
+    minTemp: '32.0',
+    maxTemp: '42.0',
     tempSetBy: null,
     tempSetAt: null,
     minSpo2: 40,
@@ -78,7 +77,7 @@ const patientVitalThresholds: PatientVitalThresholds = {
 const vital: Vital = {
     id: 'ebf9b75d-fde9-49c0-a4e6-c1df2f8b4ff7',
     userId: patient.id,
-    temp: 38,
+    temp: '38.0',
     isTempNormal: true,
     hr: 170,
     isHrNormal: true,
@@ -150,23 +149,25 @@ describe('PatientController', () => {
     });
 
     it('/patient/vitals (POST)', async () => {
-        const dto = new SyncVitalsDto();
-        const dtoVital = new VitalDto();
-        dtoVital.temp = 38;
-        dtoVital.isTempNormal = true;
-        dtoVital.hr = 170;
-        dtoVital.isHrNormal = true;
-        dtoVital.spo2 = 50;
-        dtoVital.isSpo2Normal = true;
-        dtoVital.rr = 30;
-        dtoVital.isRrNormal = true;
-        dtoVital.fall = true;
-        dtoVital.timestamp = currentUnixTimestamp();
-        dtoVital.thresholdsId = patientVitalThresholds.id;
-        dto.vitals = [dtoVital];
         return request(app.getHttpServer())
             .post('/patient/vitals')
-            .send(dto)
+            .send({
+                vitals: [
+                    {
+                        temp: 38,
+                        isTempNormal: true,
+                        hr: 170,
+                        isHrNormal: true,
+                        spo2: 50,
+                        isSpo2Normal: true,
+                        rr: 30,
+                        isRrNormal: true,
+                        fall: true,
+                        timestamp: currentUnixTimestamp(),
+                        thresholdsId: patientVitalThresholds.id,
+                    },
+                ],
+            })
             .set('Authorization', 'Bearer patient')
             .expect(200);
     });

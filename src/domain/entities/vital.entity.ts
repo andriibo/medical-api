@@ -5,7 +5,7 @@ export interface Vital {
 
     timestamp: number;
 
-    temp: number | null;
+    temp: string | null;
 
     isTempNormal: boolean | null;
 

@@ -15,7 +15,6 @@ import {
     MinSpO2,
     MinTemp,
 } from 'domain/constants/thresholds.const';
-import {FloatTransformer} from 'infrastructure/data-transformers/float.transformer';
 
 @Entity('patient_vital_thresholds')
 export class PatientVitalThresholdsModel implements PatientVitalThresholds {
@@ -37,11 +36,11 @@ export class PatientVitalThresholdsModel implements PatientVitalThresholds {
     @Column({name: 'hr_set_at'})
     hrSetAt: number | null = null;
 
-    @Column({type: 'decimal', name: 'min_temp', precision: 5, scale: 1, transformer: new FloatTransformer()})
-    minTemp: number;
+    @Column({type: 'decimal', name: 'min_temp', precision: 5, scale: 1})
+    minTemp: string;
 
-    @Column({type: 'decimal', name: 'max_temp', precision: 5, scale: 1, transformer: new FloatTransformer()})
-    maxTemp: number;
+    @Column({type: 'decimal', name: 'max_temp', precision: 5, scale: 1})
+    maxTemp: string;
 
     @Column({name: 'temp_set_by'})
     tempSetBy: string | null = null;
@@ -113,8 +112,8 @@ export class PatientVitalThresholdsModel implements PatientVitalThresholds {
         const model = new PatientVitalThresholdsModel();
         model.minHr = MinHR;
         model.maxHr = MaxHR;
-        model.minTemp = MinTemp;
-        model.maxTemp = MaxTemp;
+        model.minTemp = MinTemp.toFixed(1);
+        model.maxTemp = MaxTemp.toFixed(1);
         model.minSpo2 = MinSpO2;
         model.minRr = MinRR;
         model.maxRr = MaxRR;

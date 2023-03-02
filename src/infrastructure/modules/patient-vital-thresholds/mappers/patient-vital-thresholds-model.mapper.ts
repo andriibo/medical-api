@@ -86,8 +86,8 @@ export class PatientVitalThresholdsModelMapper implements IPatientVitalThreshold
         doctor: User,
     ): PatientVitalThresholds {
         patientVitalThresholds = this.mapByEntity(patientVitalThresholds);
-        patientVitalThresholds.minTemp = dto.min;
-        patientVitalThresholds.maxTemp = dto.max;
+        patientVitalThresholds.minTemp = dto.min.toString();
+        patientVitalThresholds.maxTemp = dto.max.toString();
         patientVitalThresholds.tempSetAt = currentUnixTimestamp();
         patientVitalThresholds.tempSetBy = doctor.id;
 

@@ -17,11 +17,11 @@ export class PatientVitalThresholdsView implements PatientVitalThresholdsDto {
     @ApiProperty({nullable: true})
     public hrSetAt: number | null;
 
-    @ApiProperty({type: 'decimal', multipleOf: 0.1})
-    public minTemp: number;
+    @ApiProperty()
+    public minTemp: string;
 
-    @ApiProperty({type: 'decimal', multipleOf: 0.1})
-    public maxTemp: number;
+    @ApiProperty()
+    public maxTemp: string;
 
     @ApiProperty({nullable: true})
     public tempSetBy: string | null;
