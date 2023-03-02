@@ -5,7 +5,7 @@ export class VitalDto {
 
     public timestamp: number;
 
-    public temp: number | null;
+    public temp: string | null;
 
     public isTempNormal: boolean | null;
 

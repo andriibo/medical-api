@@ -1,5 +1,5 @@
 export class VitalDto {
-    public temp: number | null;
+    public temp: string | null;
 
     public isTempNormal: boolean | null;
 

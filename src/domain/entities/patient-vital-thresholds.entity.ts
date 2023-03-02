@@ -11,9 +11,9 @@ export interface PatientVitalThresholds {
 
     hrSetAt: number | null;
 
-    minTemp: number;
+    minTemp: string;
 
-    maxTemp: number;
+    maxTemp: string;
 
     tempSetBy: string | null;
 
