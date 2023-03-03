@@ -8,6 +8,8 @@ export const MaxTemp = 42;
 
 export const MinSpO2 = 40;
 
+export const MaxSpO2 = 100;
+
 export const MinRR = 4;
 
 export const MaxRR = 60;

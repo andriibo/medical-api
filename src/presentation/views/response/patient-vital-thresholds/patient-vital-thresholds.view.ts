@@ -1,14 +1,28 @@
 import {ApiProperty} from '@nestjs/swagger';
 import {PatientVitalThresholdsDto} from 'domain/dtos/response/patient-vital-thresholds/patient-vital-thresholds.dto';
+import {
+    MaxDBP,
+    MaxMAP,
+    MaxRR,
+    MaxSBP,
+    MaxSpO2,
+    MaxTemp,
+    MinDBP,
+    MinMAP,
+    MinRR,
+    MinSBP,
+    MinSpO2,
+    MinTemp,
+} from 'domain/constants/thresholds.const';
 
 export class PatientVitalThresholdsView implements PatientVitalThresholdsDto {
     @ApiProperty()
     public thresholdsId: string;
 
-    @ApiProperty()
+    @ApiProperty({minimum: MinRR, maximum: MaxRR})
     public minHr: number;
 
-    @ApiProperty()
+    @ApiProperty({minimum: MinRR, maximum: MaxRR})
     public maxHr: number;
 
     @ApiProperty({nullable: true})
@@ -17,10 +31,10 @@ export class PatientVitalThresholdsView implements PatientVitalThresholdsDto {
     @ApiProperty({nullable: true})
     public hrSetAt: number | null;
 
-    @ApiProperty({multipleOf: 0.1})
+    @ApiProperty({minimum: MinTemp, maximum: MaxTemp, multipleOf: 0.1})
     public minTemp: number;
 
-    @ApiProperty({multipleOf: 0.1})
+    @ApiProperty({minimum: MinTemp, maximum: MaxTemp, multipleOf: 0.1})
     public maxTemp: number;
 
     @ApiProperty({nullable: true})
@@ -29,7 +43,7 @@ export class PatientVitalThresholdsView implements PatientVitalThresholdsDto {
     @ApiProperty({nullable: true})
     public tempSetAt: number | null;
 
-    @ApiProperty()
+    @ApiProperty({minimum: MinSpO2, maximum: MaxSpO2})
     public minSpo2: number;
 
     @ApiProperty({nullable: true})
@@ -38,10 +52,10 @@ export class PatientVitalThresholdsView implements PatientVitalThresholdsDto {
     @ApiProperty({nullable: true})
     public spo2SetAt: number | null;
 
-    @ApiProperty()
+    @ApiProperty({minimum: MinRR, maximum: MaxRR})
     public minRr: number;
 
-    @ApiProperty()
+    @ApiProperty({minimum: MinRR, maximum: MaxRR})
     public maxRr: number;
 
     @ApiProperty({nullable: true})
@@ -50,10 +64,10 @@ export class PatientVitalThresholdsView implements PatientVitalThresholdsDto {
     @ApiProperty({nullable: true})
     public rrSetAt: number | null;
 
-    @ApiProperty()
+    @ApiProperty({minimum: MinDBP, maximum: MaxDBP})
     public minDbp: number;
 
-    @ApiProperty()
+    @ApiProperty({minimum: MinDBP, maximum: MaxDBP})
     public maxDbp: number;
 
     @ApiProperty({nullable: true})
@@ -62,10 +76,10 @@ export class PatientVitalThresholdsView implements PatientVitalThresholdsDto {
     @ApiProperty({nullable: true})
     public dbpSetAt: number | null;
 
-    @ApiProperty()
+    @ApiProperty({minimum: MinSBP, maximum: MaxSBP})
     public minSbp: number;
 
-    @ApiProperty()
+    @ApiProperty({minimum: MinSBP, maximum: MaxSBP})
     public maxSbp: number;
 
     @ApiProperty({nullable: true})
@@ -74,10 +88,10 @@ export class PatientVitalThresholdsView implements PatientVitalThresholdsDto {
     @ApiProperty({nullable: true})
     public sbpSetAt: number | null;
 
-    @ApiProperty()
+    @ApiProperty({minimum: MinMAP, maximum: MaxMAP})
     public minMap: number;
 
-    @ApiProperty()
+    @ApiProperty({minimum: MinMAP, maximum: MaxMAP})
     public maxMap: number;
 
     @ApiProperty({nullable: true})
