@@ -136,8 +136,12 @@ export class ProfileController {
     public async changePassword(@Req() request: UserRequest, @Body() requestBody: ChangePasswordView): Promise<void> {
         const useCase = this.profileUseCasesFactory.createChangePasswordUseCase();
 
-        return await useCase.changePassword(
-            new ChangePasswordDto(requestBody.currentPassword, requestBody.newPassword, request.user.token),
-        );
+        try {
+            return await useCase.changePassword(
+                new ChangePasswordDto(requestBody.currentPassword, requestBody.newPassword, request.user.token),
+            );
+        } catch (error) {
+            throw new BadRequestException(error.message);
+        }
     }
 }
