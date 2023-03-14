@@ -2,7 +2,7 @@ import {ConfirmSignUpModel} from './confirm-sign-up.model';
 import {SignInModel} from './sign-in.model';
 import {SignUpModel} from './sign-up.model';
 import {IAuthModel} from './auth.model';
-import {ITokenClaimsModel} from './token-claims.model';
+import {IAccessTokenClaimsModel} from './access-token-claims.model';
 import {AuthResultModel} from './auth-result.model';
 import {ChangeEmailModel} from './change-email.model';
 import {ChangePasswordModel} from './change-password.model';
@@ -19,7 +19,7 @@ export {
     SignUpModel,
     SignInModel,
     IAuthModel,
-    ITokenClaimsModel,
+    IAccessTokenClaimsModel,
     IRequestUserModel,
     AuthResultModel,
     ChangeEmailModel,

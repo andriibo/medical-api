@@ -1,4 +1,4 @@
-import {ITokenClaimsModel} from 'app/modules/auth/models';
+import {IAccessTokenClaimsModel} from 'app/modules/auth/models/';
 
 class CLAIMS {
     public static readonly USER_ID = 'sub';
@@ -6,7 +6,7 @@ class CLAIMS {
     public static readonly TOKEN_EXPIRE_TIMESTAMP = 'exp';
 }
 
-export class TokenClaimsModel implements ITokenClaimsModel {
+export class AccessTokenClaimsModel implements IAccessTokenClaimsModel {
     private constructor(
         private readonly userId: string,
         private readonly roles: string[],
@@ -17,7 +17,7 @@ export class TokenClaimsModel implements ITokenClaimsModel {
         return this.userId;
     }
 
-    public getTokenExpireTime(): Date {
+    public getAccessTokenExpireTime(): Date {
         return new Date(this.tokenExpireTimestamp * 1000);
     }
 
@@ -25,11 +25,11 @@ export class TokenClaimsModel implements ITokenClaimsModel {
         return this.roles;
     }
 
-    public static fromCognitoResponse(tokenClaims: object): ITokenClaimsModel {
-        return new TokenClaimsModel(
-            tokenClaims[CLAIMS.USER_ID],
-            tokenClaims[CLAIMS.ROLES],
-            tokenClaims[CLAIMS.TOKEN_EXPIRE_TIMESTAMP],
+    public static fromCognitoResponse(accessTokenClaims: object): IAccessTokenClaimsModel {
+        return new AccessTokenClaimsModel(
+            accessTokenClaims[CLAIMS.USER_ID],
+            accessTokenClaims[CLAIMS.ROLES],
+            accessTokenClaims[CLAIMS.TOKEN_EXPIRE_TIMESTAMP],
         );
     }
 }

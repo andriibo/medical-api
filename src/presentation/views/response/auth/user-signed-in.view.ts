@@ -4,10 +4,13 @@ import {UserView} from 'views/response/user';
 
 export class UserSignedInView extends UserSignedInDto {
     @ApiProperty()
-    public token: string;
+    public accessToken: string;
 
     @ApiProperty()
-    public tokenExpireTime: Date;
+    public accessTokenExpireTime: Date;
+
+    @ApiProperty({nullable: true})
+    public refreshToken: string | null;
 
     @ApiProperty()
     public user: UserView;
