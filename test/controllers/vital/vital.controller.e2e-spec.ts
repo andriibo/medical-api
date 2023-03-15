@@ -31,10 +31,26 @@ import {
     AbsMinTemp,
 } from 'domain/constants/vitals.const';
 import {PatientVitalThresholdsModel} from 'infrastructure/modules/patient-vital-thresholds/models';
+import {User} from 'domain/entities';
+
+const patient: User = {
+    id: '5nc3e70a-c1y9-121a-c5mv-5aq272098bp0',
+    email: 'patient@gmail.com',
+    firstName: 'Marc',
+    lastName: 'Goldman',
+    phone: '2930412345',
+    avatar: null,
+    role: 'Patient',
+    createdAt: '2022-10-10 07:31:17.016236',
+    deletedAt: null,
+};
 
 describe('VitalController', () => {
     let app: INestApplication;
     beforeAll(async () => {
+        const mockedUserRepository = {
+            getOneById: jest.fn(() => Promise.resolve(patient)),
+        };
         const moduleRef: TestingModule = await Test.createTestingModule({
             imports: [TestModule, VitalModule],
         })
@@ -55,7 +71,7 @@ describe('VitalController', () => {
             .overrideProvider(getRepositoryToken(PatientVitalThresholdsModel))
             .useValue(null)
             .overrideProvider(IUserRepository)
-            .useValue(null)
+            .useValue(mockedUserRepository)
             .overrideProvider(IVitalRepository)
             .useValue(null)
             .overrideProvider(IPatientMetadataRepository)
