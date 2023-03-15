@@ -91,7 +91,7 @@ export class CognitoService implements IAuthService {
             const response = await this.cognitoClient.send(command);
 
             if (response.ChallengeName == null) {
-                return this.getAuthResult(response.AuthenticationResult);
+                return this.getAuthResult(response.AuthenticationResult, user.rememberMe);
             }
 
             throw new Error(`Auth challenge ${response.ChallengeName} is required.`);
@@ -171,12 +171,12 @@ export class CognitoService implements IAuthService {
         }
     }
 
-    public async getTokenClaimsByToken(token: string): Promise<any> {
+    public async getAccessTokenClaimsByAccessToken(accessToken: string): Promise<any> {
         const userPoolJwk = JSON.parse(this.configService.get<string>('AWS_COGNITO_JWKS'));
         const pem = jwkToBuffer(userPoolJwk.keys[USER_POOL_JWK.AUTH_TOKEN]);
 
         return await new Promise((resolve, reject) => {
-            jwt.verify(token, pem, {algorithms: ['RS256']}, (err, decodedToken) => {
+            jwt.verify(accessToken, pem, {algorithms: ['RS256']}, (err, decodedToken) => {
                 if (this.isTokenValid(decodedToken)) {
                     resolve(decodedToken);
                 } else {
@@ -284,10 +284,11 @@ export class CognitoService implements IAuthService {
         }
     }
 
-    private getAuthResult(authResult: AuthenticationResultType): AuthResultModel {
+    private getAuthResult(authResult: AuthenticationResultType, rememberMe: boolean): AuthResultModel {
         const authResultModel = new AuthResultModel();
-        authResultModel.token = authResult.AccessToken;
-        authResultModel.tokenExpireTime = authResult.ExpiresIn;
+        authResultModel.accessToken = authResult.AccessToken;
+        authResultModel.accessTokenExpireTime = authResult.ExpiresIn;
+        authResultModel.refreshToken = rememberMe ? authResult.RefreshToken : null;
 
         return authResultModel;
     }

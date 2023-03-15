@@ -12,8 +12,12 @@ export class SignInUseCase {
 
     public async signInUser(dto: AuthUserDto): Promise<UserSignedInDto> {
         const authResult = await this.authService.signIn(SignInModel.fromAuthUserDto(dto));
-        const tokenClaims = await this.authService.getTokenClaimsByToken(authResult.token);
+        const accessTokenClaims = await this.authService.getAccessTokenClaimsByAccessToken(authResult.accessToken);
 
-        return await this.authedUserService.getUserByTokenAndTokenClaims(authResult.token, tokenClaims);
+        return await this.authedUserService.getUserByTokensAndAccessTokenClaims(
+            authResult.accessToken,
+            authResult.refreshToken,
+            accessTokenClaims,
+        );
     }
 }

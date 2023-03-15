@@ -67,7 +67,7 @@ export class WsPatientDataAccessGuard implements CanActivate {
             return;
         }
 
-        const userRoles: string[] = requestUser.tokenClaims.getRoles();
+        const userRoles: string[] = requestUser.accessTokenClaims.getRoles();
 
         for (const onlyRole of onlyRoles) {
             if (userRoles.includes(onlyRole)) {
@@ -79,7 +79,7 @@ export class WsPatientDataAccessGuard implements CanActivate {
     }
 
     private async assertUserHasAccess(context: ExecutionContext, requestUser: IRequestUserModel): Promise<void> {
-        const requestUserId = requestUser.tokenClaims.getUserId();
+        const requestUserId = requestUser.accessTokenClaims.getUserId();
         const patientUserId = this.extractRequestData(context).patientUserId;
 
         if (requestUserId === patientUserId) {

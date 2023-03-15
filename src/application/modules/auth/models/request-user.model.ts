@@ -1,6 +1,6 @@
-import {ITokenClaimsModel} from './token-claims.model';
+import {IAccessTokenClaimsModel} from './access-token-claims.model';
 
 export interface IRequestUserModel {
-    token: string;
-    tokenClaims: ITokenClaimsModel;
+    accessToken: string;
+    accessTokenClaims: IAccessTokenClaimsModel;
 }

@@ -26,7 +26,7 @@ export class WsRolesGuard implements CanActivate {
             return true;
         }
 
-        const userRoles: string[] = requestUser.tokenClaims.getRoles();
+        const userRoles: string[] = requestUser.accessTokenClaims.getRoles();
 
         for (const allowedRole of allowedRoles) {
             if (userRoles.includes(allowedRole)) {

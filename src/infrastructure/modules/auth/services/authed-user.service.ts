@@ -3,7 +3,7 @@ import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service'
 import {Inject, Injectable, UnauthorizedException, Scope} from '@nestjs/common';
 import {IUserRepository} from 'app/modules/auth/repositories';
 import {REQUEST} from '@nestjs/core';
-import {TokenClaimsModel} from 'infrastructure/aws/cognito/token-claims.model';
+import {AccessTokenClaimsModel} from 'infrastructure/aws/cognito/access-token-claims.model';
 import {UserSignedInDto} from 'domain/dtos/response/auth';
 import {UserNotActiveError} from 'app/errors/user-not-active.error';
 import {UserDtoService} from 'app/modules/profile/services/user-dto.service';
@@ -17,13 +17,13 @@ export class AuthedUserService implements IAuthedUserService {
     ) {}
 
     public async getUser(): Promise<User> {
-        if (!('tokenClaims' in this.request.user)) {
+        if (!('accessTokenClaims' in this.request.user)) {
             throw new UnauthorizedException();
         }
 
-        const {tokenClaims} = this.request.user;
+        const {accessTokenClaims} = this.request.user;
 
-        return await this.userRepository.getOneById(tokenClaims.getUserId());
+        return await this.userRepository.getOneById(accessTokenClaims.getUserId());
     }
 
     public async getActiveUserOrFail(): Promise<User> {
@@ -35,11 +35,15 @@ export class AuthedUserService implements IAuthedUserService {
         return user;
     }
 
-    public async getUserByTokenAndTokenClaims(token: string, tokenClaims: object): Promise<UserSignedInDto> {
-        const tokenClaimsModel = TokenClaimsModel.fromCognitoResponse(tokenClaims);
-        const user = await this.userRepository.getOneById(tokenClaimsModel.getUserId());
+    public async getUserByTokensAndAccessTokenClaims(
+        accessToken: string,
+        refreshToken: string,
+        accessTokenClaims: object,
+    ): Promise<UserSignedInDto> {
+        const accessTokenClaimsModel = AccessTokenClaimsModel.fromCognitoResponse(accessTokenClaims);
+        const user = await this.userRepository.getOneById(accessTokenClaimsModel.getUserId());
         const userDto = this.userDtoService.createUserDtoByUser(user);
 
-        return UserSignedInDto.fromTokenData(token, tokenClaimsModel, userDto);
+        return UserSignedInDto.fromTokenData(accessToken, refreshToken, accessTokenClaimsModel, userDto);
     }
 }

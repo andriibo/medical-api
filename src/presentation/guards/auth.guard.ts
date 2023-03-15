@@ -18,7 +18,7 @@ export class AuthGuard implements CanActivate {
     public async canActivate(context: ExecutionContext): Promise<boolean> {
         const request: UserRequest = context.switchToHttp().getRequest();
 
-        if (isNullOrUndefined(request.user) || isNullOrUndefined(request.user.tokenClaims)) {
+        if (isNullOrUndefined(request.user) || isNullOrUndefined(request.user.accessTokenClaims)) {
             throw new UnauthorizedException();
         }
 
