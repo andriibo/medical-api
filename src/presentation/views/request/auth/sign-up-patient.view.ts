@@ -14,7 +14,7 @@ import {
     IsNumberString,
 } from 'class-validator';
 import {CreatePatientDto} from 'domain/dtos/request/auth/create-patient.dto';
-import {Transform} from 'class-transformer';
+import {Type} from 'class-transformer';
 import {MaxPhoneLength, MinPhoneLength} from 'domain/constants/phone.const';
 
 export class SignUpPatientView extends CreatePatientDto {
@@ -41,7 +41,7 @@ export class SignUpPatientView extends CreatePatientDto {
     public phone: string;
 
     @ApiProperty()
-    @Transform(({value}) => new Date(value))
+    @Type(() => Date)
     @IsNotEmpty()
     @IsDate()
     @MinDate(new Date(1930, 0, 1))
