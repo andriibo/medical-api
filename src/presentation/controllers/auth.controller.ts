@@ -16,6 +16,7 @@ import {
 } from 'presentation/views/response/auth';
 import {AuthUseCasesFactory} from 'infrastructure/modules/auth/factories/auth-use-cases.factory';
 import {SignUpCaregiverView} from 'views/request/auth/sign-up-caregiver.view';
+import {ConfirmEmailResentDto, ForgotPasswordMailSentDto, UserSignedInDto} from 'domain/dtos/response/auth';
 
 @Controller()
 @ApiTags('Auth')
@@ -25,7 +26,7 @@ export class AuthController {
     @Post('sign-in')
     @HttpCode(HttpStatus.OK)
     @ApiResponse({status: HttpStatus.OK, type: UserSignedInView})
-    public async signIn(@Body() requestBody: SignInUserView): Promise<UserSignedInView> {
+    public async signIn(@Body() requestBody: SignInUserView): Promise<UserSignedInDto> {
         const useCase = this.authUseCasesFactory.createSignInUseCase();
 
         return await useCase.signInUser(requestBody);
@@ -70,7 +71,7 @@ export class AuthController {
     @Post('forgot-password')
     @HttpCode(HttpStatus.OK)
     @ApiResponse({status: HttpStatus.OK, type: ForgotPasswordResponseView})
-    public async forgotPassword(@Body() requestBody: ForgotPasswordView): Promise<ForgotPasswordResponseView> {
+    public async forgotPassword(@Body() requestBody: ForgotPasswordView): Promise<ForgotPasswordMailSentDto> {
         const useCase = this.authUseCasesFactory.createForgotPasswordUseCase();
 
         return await useCase.initiateForgotPasswordProcess(requestBody);
@@ -88,7 +89,7 @@ export class AuthController {
     @Post('sign-up/resend-code')
     @HttpCode(HttpStatus.OK)
     @ApiResponse({status: HttpStatus.OK, type: ResendSignUpCodeResponseView})
-    public async resendSignUpCode(@Body() requestBody: ResendSignUpCodeView): Promise<ResendSignUpCodeResponseView> {
+    public async resendSignUpCode(@Body() requestBody: ResendSignUpCodeView): Promise<ConfirmEmailResentDto> {
         const useCase = this.authUseCasesFactory.createResendSignUpCodeUseCase();
 
         return await useCase.resendCode(requestBody);
