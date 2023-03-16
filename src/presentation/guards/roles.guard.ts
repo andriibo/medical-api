@@ -24,7 +24,7 @@ export class RolesGuard implements CanActivate {
     public async canActivate(context: ExecutionContext): Promise<boolean> {
         const request: UserRequest = context.switchToHttp().getRequest();
 
-        if (isNullOrUndefined(request.user) || isNullOrUndefined(request.user.tokenClaims)) {
+        if (isNullOrUndefined(request.user) || isNullOrUndefined(request.user.accessTokenClaims)) {
             throw new UnauthorizedException();
         }
 
@@ -34,7 +34,7 @@ export class RolesGuard implements CanActivate {
             throw new ForbiddenException(error.message);
         }
 
-        const userRoles: string[] = request.user.tokenClaims.getRoles();
+        const userRoles: string[] = request.user.accessTokenClaims.getRoles();
         const roles = this.reflector.get<string[]>('roles', context.getHandler());
         if (!roles) {
             return true;

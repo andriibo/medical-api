@@ -3,6 +3,7 @@ import {ApiBearerAuth, ApiForbiddenResponse, ApiResponse, ApiTags, ApiUnauthoriz
 import {VitalUseCasesFactory} from 'infrastructure/modules/vital/factories/vital-use-cases.factory';
 import {AbsoluteVitalsDto} from 'domain/dtos/response/vital/absolute-vitals.dto';
 import {AbsoluteVitalsView} from 'views/response/vital';
+import {Auth} from 'presentation/guards';
 
 @Controller()
 @ApiBearerAuth()
@@ -12,6 +13,7 @@ import {AbsoluteVitalsView} from 'views/response/vital';
 export class VitalController {
     public constructor(private readonly vitalUseCasesFactory: VitalUseCasesFactory) {}
 
+    @Auth()
     @Get('/vitals/absolute')
     @HttpCode(HttpStatus.OK)
     @ApiResponse({status: HttpStatus.OK, type: AbsoluteVitalsView})

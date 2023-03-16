@@ -35,14 +35,15 @@ const authModel: IAuthModel = new AuthModel({
     UserConfirmed: true,
     UserSub: '2b9d1770-2ad2-4ac6-bb63-a7e9c1b1f815',
 });
-
-const authResultModel = new AuthResultModel();
-authResultModel.token = 'access_token';
-authResultModel.tokenExpireTime = currentUnixTimestamp() + 3600;
-const tokenClaims = {
+const authResultModel: AuthResultModel = {
+    accessToken: 'access_token',
+    accessTokenExpireTime: currentUnixTimestamp() + 3600,
+    refreshToken: 'refresh_token',
+};
+const accessTokenClaims = {
     sub: '8bfbd95c-c8a5-404b-b3eb-6ac648052ac4',
     'cognito:groups': ['Doctor'],
-    exp: authResultModel.tokenExpireTime,
+    exp: authResultModel.accessTokenExpireTime,
 };
 const resendConfirmationCodeResultModel: ResendConfirmationCodeResultModel = {
     destination: 'destination',
@@ -71,7 +72,7 @@ describe('AuthController', () => {
     const mockedCognitoService = {
         signUp: jest.fn(() => Promise.resolve(authModel)),
         signIn: jest.fn(() => Promise.resolve(authResultModel)),
-        getTokenClaimsByToken: jest.fn(() => Promise.resolve(tokenClaims)),
+        getAccessTokenClaimsByAccessToken: jest.fn(() => Promise.resolve(accessTokenClaims)),
         confirmSignUp: jest.fn(() => Promise.resolve()),
         resendConfirmSignUpCode: jest.fn(() => Promise.resolve(resendConfirmationCodeResultModel)),
         forgotPassword: jest.fn(() => Promise.resolve(forgotPasswordResponseModel)),
@@ -118,16 +119,19 @@ describe('AuthController', () => {
     });
 
     it('/sign-in (POST)', async () => {
-        const dto = new AuthUserDto();
-        dto.email = 'doctor@gmail.com';
-        dto.password = '123456!Aa';
+        const dto: AuthUserDto = {
+            email: 'doctor@gmail.com',
+            password: '123456!Aa',
+            rememberMe: true,
+        };
         return request(app.getHttpServer())
             .post('/sign-in')
             .send(dto)
             .expect(200)
             .expect({
-                token: 'access_token',
-                tokenExpireTime: new Date(authResultModel.tokenExpireTime * 1000).toISOString(),
+                accessToken: authResultModel.accessToken,
+                accessTokenExpireTime: new Date(authResultModel.accessTokenExpireTime * 1000).toISOString(),
+                refreshToken: authResultModel.refreshToken,
                 user: {
                     avatar: 'https://zenzers-medical-dev.s3.amazonaws.com/avatars/default-avatar.png',
                     deletedAt: registeredUser.deletedAt,

@@ -8,7 +8,7 @@ import {currentUnixTimestamp} from 'app/support/date.helper';
 import {IMailSender} from 'app/modules/mail/services/abstract/mail-sender';
 
 const exp = currentUnixTimestamp() + 3600;
-const tokenClaims = {
+const accessTokenClaims = {
     doctor: {
         sub: '8bfbd95c-c8a5-404b-b3eb-6ac648052ac4',
         'cognito:groups': ['Doctor'],
@@ -38,7 +38,7 @@ const tokenClaims = {
         {
             provide: IAuthService,
             useValue: {
-                getTokenClaimsByToken: jest.fn((role: string) => Promise.resolve(tokenClaims[role])),
+                getAccessTokenClaimsByAccessToken: jest.fn((role: string) => Promise.resolve(accessTokenClaims[role])),
             },
         },
         {

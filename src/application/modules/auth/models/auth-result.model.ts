@@ -1,4 +1,5 @@
 export class AuthResultModel {
-    public token: string;
-    public tokenExpireTime: number;
+    public accessToken: string;
+    public accessTokenExpireTime: number;
+    public refreshToken: string | null;
 }

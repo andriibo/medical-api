@@ -58,6 +58,6 @@ export class ProfileUseCasesFactory {
     }
 
     public createChangePasswordUseCase(): ChangePasswordUseCase {
-        return new ChangePasswordUseCase(this.authService);
+        return new ChangePasswordUseCase(this.authService, this.profileSpecification);
     }
 }

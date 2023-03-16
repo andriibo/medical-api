@@ -109,7 +109,7 @@ export class ProfileController {
     ): Promise<ChangeEmailResponseView> {
         const useCase = this.profileUseCasesFactory.createChangeEmailUseCase();
 
-        return await useCase.changeEmail(new ChangeEmailDto(requestBody.email, request.user.token));
+        return await useCase.changeEmail(new ChangeEmailDto(requestBody.email, request.user.accessToken));
     }
 
     @Auth()
@@ -124,7 +124,7 @@ export class ProfileController {
     ): Promise<void> {
         const useCase = this.profileUseCasesFactory.createConfirmChangeEmailUseCase();
 
-        await useCase.confirm(new ConfirmChangeEmailDto(requestBody.code, request.user.token));
+        await useCase.confirm(new ConfirmChangeEmailDto(requestBody.code, request.user.accessToken));
     }
 
     @Auth()
@@ -136,8 +136,12 @@ export class ProfileController {
     public async changePassword(@Req() request: UserRequest, @Body() requestBody: ChangePasswordView): Promise<void> {
         const useCase = this.profileUseCasesFactory.createChangePasswordUseCase();
 
-        return await useCase.changePassword(
-            new ChangePasswordDto(requestBody.currentPassword, requestBody.newPassword, request.user.token),
-        );
+        try {
+            return await useCase.changePassword(
+                new ChangePasswordDto(requestBody.currentPassword, requestBody.newPassword, request.user.accessToken),
+            );
+        } catch (error) {
+            throw new BadRequestException(error.message);
+        }
     }
 }

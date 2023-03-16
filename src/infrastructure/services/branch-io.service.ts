@@ -21,7 +21,8 @@ export class BranchIoService implements IDeepLinkService {
 
     public async getSignUpLinkForPatient(email: string): Promise<string> {
         const marketingTitle = 'patient invite';
-        const desktopUrl = `${this.webAppUrl}/sign-up-patient?email=${email}`;
+        const normalizedEmail = this.normalizeEmail(email);
+        const desktopUrl = `${this.webAppUrl}/sign-up-patient?email=${normalizedEmail}`;
         const iosDeeplinkPath = `${this.mobileAppUrl}auth?email=${email}&role=${UserRole.Patient}`;
         const androidDeeplinkPath = `${this.mobileAppUrl}auth?email=${email}&role=${UserRole.Patient}`;
 
@@ -30,7 +31,8 @@ export class BranchIoService implements IDeepLinkService {
 
     public async getSignUpLinkForCaregiver(email: string): Promise<string> {
         const marketingTitle = 'caregiver invite';
-        const desktopUrl = `${this.webAppUrl}/sign-up-caregiver?email=${email}`;
+        const normalizedEmail = this.normalizeEmail(email);
+        const desktopUrl = `${this.webAppUrl}/sign-up-caregiver?email=${normalizedEmail}`;
         const iosDeeplinkPath = `${this.mobileAppUrl}auth?email=${email}&role=${UserRole.Caregiver}`;
         const androidDeeplinkPath = `${this.mobileAppUrl}auth?email=${email}&role=${UserRole.Caregiver}`;
 
@@ -39,7 +41,8 @@ export class BranchIoService implements IDeepLinkService {
 
     public async getSignUpLinkForDoctor(email: string): Promise<string> {
         const marketingTitle = 'doctor invite';
-        const desktopUrl = `${this.webAppUrl}/sign-up-doctor?email=${email}`;
+        const normalizedEmail = this.normalizeEmail(email);
+        const desktopUrl = `${this.webAppUrl}/sign-up-doctor?email=${normalizedEmail}`;
         const iosDeeplinkPath = `${this.mobileAppUrl}auth?email=${email}&role=${UserRole.Doctor}`;
         const androidDeeplinkPath = `${this.mobileAppUrl}auth?email=${email}&role=${UserRole.Doctor}`;
 
@@ -83,5 +86,9 @@ export class BranchIoService implements IDeepLinkService {
         });
 
         return url;
+    }
+
+    private normalizeEmail(email: string): string {
+        return encodeURIComponent(email);
     }
 }
