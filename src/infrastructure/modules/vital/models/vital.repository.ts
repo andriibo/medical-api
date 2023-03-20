@@ -45,9 +45,7 @@ export class VitalRepository implements IVitalRepository {
     }
 
     public async countByThresholdsId(thresholdsId: string): Promise<number> {
-        return await this.dataSource.manager.countBy(VitalModel, {
-            thresholdsId: thresholdsId,
-        });
+        return await this.dataSource.manager.countBy(VitalModel, {thresholdsId});
     }
 
     private toTimestamp(date: Date): number {
