@@ -12,6 +12,7 @@ import {
     BadRequestException,
     Patch,
     Req,
+    Delete,
 } from '@nestjs/common';
 import {
     ApiBadRequestResponse,
@@ -68,7 +69,7 @@ export class ProfileController {
     }
 
     @Auth()
-    @Patch('avatar/delete')
+    @Delete('avatar/delete')
     @HttpCode(HttpStatus.OK)
     @ApiResponse({status: HttpStatus.OK, description: 'OK.'})
     @ApiBadRequestResponse({description: 'Bad request.'})

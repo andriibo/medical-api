@@ -116,8 +116,8 @@ describe('ProfileController', () => {
             .expect(200);
     });
 
-    it('/avatar/delete (PATCH)', async () => {
-        return request(app.getHttpServer()).patch('/avatar/delete').set('Authorization', 'Bearer doctor').expect(200);
+    it('/avatar/delete (DELETE)', async () => {
+        return request(app.getHttpServer()).delete('/avatar/delete').set('Authorization', 'Bearer doctor').expect(200);
     });
 
     it('/my-profile/delete (PATCH)', async () => {
