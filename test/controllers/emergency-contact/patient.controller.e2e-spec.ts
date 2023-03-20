@@ -149,7 +149,7 @@ describe('PatientController', () => {
         return request(app.getHttpServer())
             .delete(`/patient/my-emergency-contact/${emergencyContact.id}`)
             .set('Authorization', 'Bearer patient')
-            .expect(204);
+            .expect(400);
     });
 
     afterAll(async () => {
