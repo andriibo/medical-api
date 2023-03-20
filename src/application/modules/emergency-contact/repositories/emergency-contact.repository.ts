@@ -10,6 +10,8 @@ export interface IEmergencyContactRepository {
     getOneById(id: string): Promise<EmergencyContact>;
 
     getByUserId(userId: string): Promise<EmergencyContact[]>;
+
+    countByUserId(userId: string): Promise<number>;
 }
 
 export const IEmergencyContactRepository = Symbol('IEmergencyContactRepository');

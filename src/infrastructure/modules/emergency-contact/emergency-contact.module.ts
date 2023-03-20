@@ -16,7 +16,13 @@ import {EmergencyContactSpecification} from 'app/modules/emergency-contact/speci
     providers: [
         GrantedUserUseCasesFactory,
         PatientUseCasesFactory,
-        EmergencyContactSpecification,
+        {
+            provide: EmergencyContactSpecification,
+            useFactory: (emergencyContactRepository: IEmergencyContactRepository) => {
+                return new EmergencyContactSpecification(emergencyContactRepository);
+            },
+            inject: [IEmergencyContactRepository],
+        },
         {
             provide: IEmergencyContactRepository,
             useClass: EmergencyContactRepository,
