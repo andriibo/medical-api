@@ -34,4 +34,8 @@ export class EmergencyContactRepository implements IEmergencyContactRepository {
             },
         });
     }
+
+    public async countByUserId(userId: string): Promise<number> {
+        return await this.dataSource.manager.countBy(EmergencyContactModel, {userId});
+    }
 }
