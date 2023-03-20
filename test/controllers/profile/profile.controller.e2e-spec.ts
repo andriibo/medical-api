@@ -18,6 +18,7 @@ import {PatientStatusModel} from 'infrastructure/modules/patient-status/models';
 import {IPatientStatusRepository} from 'app/modules/patient-status/repositories';
 import {IPatientVitalThresholdsRepository} from 'app/modules/patient-vital-thresholds/repositories';
 import {currentUnixTimestamp} from 'app/support/date.helper';
+import {IRemoveMyAvatarService} from 'app/modules/profile/services/remove-my-avatar.service';
 
 const doctor: User = {
     id: '8bfbd95c-c8a5-404b-b3eb-6ac648052ac4',
@@ -49,6 +50,9 @@ describe('ProfileController', () => {
         const mockedRemoveDoctorService = {
             remove: jest.fn(() => Promise.resolve()),
         };
+        const mockedRemoveMyAvatarService = {
+            removeAvatar: jest.fn(() => Promise.resolve()),
+        };
         const mockedRemoveCaregiverOrPatientService = {
             remove: jest.fn(() => Promise.resolve()),
         };
@@ -64,6 +68,8 @@ describe('ProfileController', () => {
             .useValue(mockedRemoveDoctorService)
             .overrideProvider('RemoveCaregiverOrPatientService')
             .useValue(mockedRemoveCaregiverOrPatientService)
+            .overrideProvider(IRemoveMyAvatarService)
+            .useValue(mockedRemoveMyAvatarService)
             .overrideProvider(getRepositoryToken(UserModel))
             .useValue(null)
             .overrideProvider(getRepositoryToken(DoctorMetadataModel))
@@ -108,6 +114,10 @@ describe('ProfileController', () => {
             .set('Authorization', 'Bearer doctor')
             .attach('file', './test/pineapple.png')
             .expect(200);
+    });
+
+    it('/avatar/delete (PATCH)', async () => {
+        return request(app.getHttpServer()).patch('/avatar/delete').set('Authorization', 'Bearer doctor').expect(200);
     });
 
     it('/my-profile/delete (PATCH)', async () => {

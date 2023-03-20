@@ -30,6 +30,9 @@ import {PatientCategoryModule} from 'infrastructure/modules/patient-category/pat
 import {UserIndependentModule} from 'infrastructure/modules/auth/user.ind.module';
 import {UserDtoService} from 'app/modules/profile/services/user-dto.service';
 import {FileModule} from 'infrastructure/modules/file/file.module';
+import {IRemoveMyAvatarService} from 'app/modules/profile/services/remove-my-avatar.service';
+import {IUserAvatarService} from 'app/modules/profile/services/user-avatar.service';
+import {RemoveMyAvatarService} from 'infrastructure/modules/profile/services/remove-my-avatar.service';
 
 @Module({
     imports: [
@@ -41,7 +44,7 @@ import {FileModule} from 'infrastructure/modules/file/file.module';
         PatientDataAccessModule,
         VitalIndependentModule,
     ],
-    exports: ['RemoveDoctorService', 'RemoveCaregiverOrPatientService'],
+    exports: ['RemoveDoctorService', 'RemoveCaregiverOrPatientService', IRemoveMyAvatarService],
     controllers: [PatientController, DoctorController, ProfileController, CaregiverController, GrantedUserController],
     providers: [
         DoctorUseCasesFactory,
@@ -81,6 +84,13 @@ import {FileModule} from 'infrastructure/modules/file/file.module';
                 return new MyPatientsService(patientCategoryRepository, userDtoService, vitalRepository);
             },
             inject: [IPatientCategoryRepository, UserDtoService, IVitalRepository],
+        },
+        {
+            provide: IRemoveMyAvatarService,
+            useFactory: (userAvatarService: IUserAvatarService, dataSource: DataSource) => {
+                return new RemoveMyAvatarService(userAvatarService, dataSource);
+            },
+            inject: [IUserAvatarService, DataSource],
         },
     ],
 })

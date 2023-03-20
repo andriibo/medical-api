@@ -19,6 +19,7 @@ import {IPatientCategoryRepository} from 'app/modules/patient-category/repositor
 import {PatientStatusModel} from 'infrastructure/modules/patient-status/models';
 import {IPatientStatusRepository} from 'app/modules/patient-status/repositories';
 import {IPatientVitalThresholdsRepository} from 'app/modules/patient-vital-thresholds/repositories';
+import {IRemoveMyAvatarService} from 'app/modules/profile/services/remove-my-avatar.service';
 
 const patient: User = {
     id: '5nc3e70a-c1y9-121a-c5mv-5aq272098bp0',
@@ -118,6 +119,8 @@ describe('PatientController', () => {
             .useValue(mockedRemoveDoctorService)
             .overrideProvider('RemoveCaregiverOrPatientService')
             .useValue(mockedRemoveCaregiverOrPatientService)
+            .overrideProvider(IRemoveMyAvatarService)
+            .useValue(null)
             .overrideProvider(getRepositoryToken(UserModel))
             .useValue(null)
             .overrideProvider(getRepositoryToken(DoctorMetadataModel))

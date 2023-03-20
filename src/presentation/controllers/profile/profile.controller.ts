@@ -33,6 +33,7 @@ import {UserRequest} from 'presentation/middlewares/assign-user.middleware';
 import {ChangeEmailDto, ChangePasswordDto, ConfirmChangeEmailDto} from 'domain/dtos/request/auth';
 import {ProfileRecovery} from 'presentation/guards/profile-recovery.guard';
 import {UserView} from 'views/response/user/user.view';
+import {UserDto} from 'domain/dtos/response/user/user.dto';
 
 @Controller()
 @ApiBearerAuth()
@@ -60,10 +61,26 @@ export class ProfileController {
             }),
         )
         file: Express.Multer.File,
-    ) {
+    ): Promise<void> {
         const useCase = this.profileUseCasesFactory.createUploadUserAvatarUseCase();
 
         await useCase.uploadAvatarProfile(file.buffer, file.mimetype);
+    }
+
+    @Auth()
+    @Patch('avatar/delete')
+    @HttpCode(HttpStatus.OK)
+    @ApiResponse({status: HttpStatus.OK, description: 'OK.'})
+    @ApiBadRequestResponse({description: 'Bad request.'})
+    @ApiForbiddenResponse({description: 'Forbidden.'})
+    public async deleteAvatar(): Promise<void> {
+        const useCase = this.profileUseCasesFactory.createRemoveMyAvatarUseCase();
+
+        try {
+            await useCase.remove();
+        } catch (error) {
+            throw new BadRequestException(error.message);
+        }
     }
 
     @Auth()
@@ -72,7 +89,7 @@ export class ProfileController {
     @ApiResponse({status: HttpStatus.OK, description: 'OK.', type: UserView})
     @ApiBadRequestResponse({description: 'Bad request.'})
     @ApiForbiddenResponse({description: 'Forbidden.'})
-    public async deleteProfile() {
+    public async deleteProfile(): Promise<UserDto> {
         const useCase = this.profileUseCasesFactory.createDeleteMyProfile();
 
         try {
@@ -87,7 +104,7 @@ export class ProfileController {
     @HttpCode(HttpStatus.OK)
     @ApiResponse({status: HttpStatus.OK, description: 'OK.'})
     @ApiBadRequestResponse({description: 'Bad request.'})
-    public async recoveryMyProfile() {
+    public async recoveryMyProfile(): Promise<void> {
         const useCase = this.profileUseCasesFactory.createRecoverMyProfile();
 
         try {
