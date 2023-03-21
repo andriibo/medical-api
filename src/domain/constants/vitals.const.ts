@@ -21,3 +21,7 @@ export const AbsMaxDBP = 130;
 export const AbsMinSBP = 70;
 
 export const AbsMaxSBP = 220;
+
+export const AbsMinMAP = 43; // Calculated by the formula: AbsMinMAP ≈ 1/3(AbsMinSBP + 2AbsMinDBP)
+
+export const AbsMaxMAP = 160; // Calculated by the formula: AbsMaxMAP ≈ 1/3(AbsMaxSBP + 2AbsMaxDBP)
