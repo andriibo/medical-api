@@ -2,19 +2,19 @@ import {ApiProperty} from '@nestjs/swagger';
 import {IsNotEmpty, Min, Max} from 'class-validator';
 import {MinMaxThresholdDto} from 'domain/dtos/request/patient-vital-thresholds/min-max-threshold.dto';
 import {IsGreaterThan} from 'infrastructure/validators/is-greater-than';
-import {MinTemp, MaxTemp} from 'domain/constants/thresholds.const';
+import {AbsMaxTemp, AbsMinTemp} from 'domain/constants/vitals.const';
 
 export class UpdateTemperatureView extends MinMaxThresholdDto {
-    @ApiProperty({minimum: MinTemp, maximum: MaxTemp, multipleOf: 0.1})
+    @ApiProperty({minimum: AbsMinTemp, maximum: AbsMaxTemp, multipleOf: 0.1})
     @IsNotEmpty()
-    @Min(MinTemp)
-    @Max(MaxTemp)
+    @Min(AbsMinTemp)
+    @Max(AbsMaxTemp)
     public min: number;
 
-    @ApiProperty({minimum: MinTemp, maximum: MaxTemp, multipleOf: 0.1})
+    @ApiProperty({minimum: AbsMinTemp, maximum: AbsMaxTemp, multipleOf: 0.1})
     @IsNotEmpty()
-    @Min(MinTemp)
-    @Max(MaxTemp)
+    @Min(AbsMinTemp)
+    @Max(AbsMaxTemp)
     @IsGreaterThan('min', {
         message: 'Max Temperature must be greater than Min.',
     })
