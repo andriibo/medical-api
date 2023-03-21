@@ -2,9 +2,9 @@ export const MinHR = 60;
 
 export const MaxHR = 100;
 
-export const MinTemp = 36.0;
+export const MinTemp = 36;
 
-export const MaxTemp = 38.0;
+export const MaxTemp = 38;
 
 export const MinSpO2 = 90;
 
