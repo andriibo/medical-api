@@ -69,7 +69,7 @@ export class ProfileController {
     }
 
     @Auth()
-    @Delete('avatar/delete')
+    @Delete('avatar')
     @HttpCode(HttpStatus.OK)
     @ApiResponse({status: HttpStatus.OK, description: 'OK.'})
     @ApiBadRequestResponse({description: 'Bad request.'})
