@@ -85,7 +85,7 @@ export class GrantedUserController {
     @Delete('data-access/:accessId')
     @HttpCode(HttpStatus.NO_CONTENT)
     @HttpCode(HttpStatus.BAD_REQUEST)
-    @ApiResponse({status: HttpStatus.NO_CONTENT})
+    @ApiResponse({status: HttpStatus.NO_CONTENT, description: 'No Content.'})
     public async deleteDataAccess(@Param('accessId', ParseUUIDPipe) accessId: string): Promise<void> {
         const useCase = this.grantedUserUseCasesFactory.createDeleteDataAccessUseCase();
 

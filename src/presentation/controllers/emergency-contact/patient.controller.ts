@@ -73,7 +73,7 @@ export class PatientController {
     @Delete('my-emergency-contact/:contactId')
     @HttpCode(HttpStatus.NO_CONTENT)
     @HttpCode(HttpStatus.BAD_REQUEST)
-    @ApiResponse({status: HttpStatus.NO_CONTENT})
+    @ApiResponse({status: HttpStatus.NO_CONTENT, description: 'No Content.'})
     public async deleteMyEmergencyContact(@Param('contactId', ParseUUIDPipe) contactId: string): Promise<void> {
         const useCase = this.patientUseCasesFactory.createDeleteContactUseCase();
 

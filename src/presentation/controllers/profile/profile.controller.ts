@@ -70,8 +70,8 @@ export class ProfileController {
 
     @Auth()
     @Delete('avatar')
-    @HttpCode(HttpStatus.OK)
-    @ApiResponse({status: HttpStatus.OK, description: 'OK.'})
+    @HttpCode(HttpStatus.NO_CONTENT)
+    @ApiResponse({status: HttpStatus.NO_CONTENT, description: 'No Content.'})
     @ApiBadRequestResponse({description: 'Bad request.'})
     @ApiForbiddenResponse({description: 'Forbidden.'})
     public async deleteAvatar(): Promise<void> {

@@ -60,7 +60,7 @@ export class PatientMedicationController {
     @Delete('patient-medication/:medicationId')
     @HttpCode(HttpStatus.NO_CONTENT)
     @HttpCode(HttpStatus.BAD_REQUEST)
-    @ApiResponse({status: HttpStatus.NO_CONTENT})
+    @ApiResponse({status: HttpStatus.NO_CONTENT, description: 'No Content.'})
     public async deletePatientMedication(@Param('medicationId', ParseUUIDPipe) medicationId: string): Promise<void> {
         const useCase = this.patientMedicationUseCasesFactory.createDeleteMedicationUseCase();
 

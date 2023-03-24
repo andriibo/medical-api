@@ -60,7 +60,7 @@ export class PatientDiagnosisController {
     @Delete('patient-diagnosis/:diagnosisId')
     @HttpCode(HttpStatus.NO_CONTENT)
     @HttpCode(HttpStatus.BAD_REQUEST)
-    @ApiResponse({status: HttpStatus.NO_CONTENT})
+    @ApiResponse({status: HttpStatus.NO_CONTENT, description: 'No Content.'})
     public async deletePatientDiagnoses(@Param('diagnosisId', ParseUUIDPipe) diagnosisId: string): Promise<void> {
         const useCase = this.patientDiagnosisUseCasesFactory.createDeleteDiagnosisUseCase();
 
