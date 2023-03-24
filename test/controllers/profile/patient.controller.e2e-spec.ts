@@ -174,7 +174,7 @@ describe('PatientController', () => {
                 gender: patientMetadata.gender,
                 height: patientMetadata.height,
                 weight: patientMetadata.weight,
-                avatar: 'https://zenzers-medical-dev.s3.amazonaws.com/avatars/default-avatar.png',
+                avatar: patient.avatar,
                 deletedAt: null,
             });
     });
@@ -209,7 +209,7 @@ describe('PatientController', () => {
                     phone: doctor.phone,
                     role: doctor.role,
                     institution: doctorMetadata.institution,
-                    avatar: 'https://zenzers-medical-dev.s3.amazonaws.com/avatars/default-avatar.png',
+                    avatar: doctor.avatar,
                     deletedAt: null,
                     accessId: patientDataAccessForDoctor.id,
                 },
@@ -229,7 +229,7 @@ describe('PatientController', () => {
                     lastName: caregiver.lastName,
                     phone: caregiver.phone,
                     role: caregiver.role,
-                    avatar: 'https://zenzers-medical-dev.s3.amazonaws.com/avatars/default-avatar.png',
+                    avatar: caregiver.avatar,
                     deletedAt: null,
                     accessId: patientDataAccessForCaregiver.id,
                 },

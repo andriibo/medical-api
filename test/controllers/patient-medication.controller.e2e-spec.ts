@@ -142,7 +142,7 @@ describe('PatientMedicationController', () => {
                         firstName: patient.firstName,
                         lastName: patient.lastName,
                         phone: patient.phone,
-                        avatar: 'https://zenzers-medical-dev.s3.amazonaws.com/avatars/default-avatar.png',
+                        avatar: patient.avatar,
                         role: patient.role,
                         deletedAt: patient.deletedAt,
                     },

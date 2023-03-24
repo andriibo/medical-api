@@ -20,8 +20,8 @@ export class DoctorView extends DoctorDto {
     @ApiProperty()
     public institution: string;
 
-    @ApiProperty()
-    public avatar: string;
+    @ApiProperty({nullable: true})
+    public avatar: string | null;
 
     @ApiProperty({nullable: true})
     public deletedAt: number | null;

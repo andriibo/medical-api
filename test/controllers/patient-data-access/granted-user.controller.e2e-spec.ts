@@ -205,7 +205,7 @@ describe('GrantedUserController', () => {
                     status: patientDataAccess.status,
                     createdAt: patientDataAccess.createdAt,
                     requestedUser: {
-                        avatar: 'https://zenzers-medical-dev.s3.amazonaws.com/avatars/default-avatar.png',
+                        avatar: patient.avatar,
                         deletedAt: patient.deletedAt,
                         userId: patient.id,
                         email: patient.email,

@@ -113,7 +113,7 @@ describe('DoctorController', () => {
                 institution: doctorMetadata.institution,
                 phone: doctor.phone,
                 role: doctor.role,
-                avatar: 'https://zenzers-medical-dev.s3.amazonaws.com/avatars/default-avatar.png',
+                avatar: doctor.avatar,
                 deletedAt: null,
             });
     });

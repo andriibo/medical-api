@@ -29,8 +29,8 @@ export class PatientView extends PatientDto {
     @ApiProperty()
     public weight: number;
 
-    @ApiProperty()
-    public avatar: string;
+    @ApiProperty({nullable: true})
+    public avatar: string | null;
 
     @ApiProperty({nullable: true})
     public deletedAt: number | null;

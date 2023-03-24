@@ -132,7 +132,7 @@ describe('ProfileController', () => {
                 lastName: removedDoctor.lastName,
                 phone: removedDoctor.phone,
                 role: removedDoctor.role,
-                avatar: 'https://zenzers-medical-dev.s3.amazonaws.com/avatars/default-avatar.png',
+                avatar: removedDoctor.avatar,
                 deletedAt: removedDoctor.deletedAt,
             });
     });

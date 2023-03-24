@@ -103,7 +103,7 @@ describe('CaregiverController', () => {
                 lastName: caregiver.lastName,
                 phone: caregiver.phone,
                 role: caregiver.role,
-                avatar: 'https://zenzers-medical-dev.s3.amazonaws.com/avatars/default-avatar.png',
+                avatar: caregiver.avatar,
                 deletedAt: null,
             });
     });

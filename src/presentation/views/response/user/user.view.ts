@@ -18,8 +18,8 @@ export class UserView implements UserDto {
     @ApiProperty()
     public phone: string;
 
-    @ApiProperty()
-    public avatar: string;
+    @ApiProperty({nullable: true})
+    public avatar: string | null;
 
     @ApiProperty({enum: UserRole})
     public role: string;
