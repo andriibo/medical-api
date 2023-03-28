@@ -17,7 +17,7 @@ export class MeanArterialPressureThresholdsUseCase {
         await this.thresholdsSpecification.assertGrantedUserCanOperateThresholds(doctor, patientUserId);
 
         const patientThresholds = await this.thresholdsRepository.getCurrentThresholdsByPatientUserId(patientUserId);
-        const modifiedPatientThresholds = this.thresholdsMapper.mapByMinMaxTemperatureDto(
+        const modifiedPatientThresholds = this.thresholdsMapper.mapByMinMaxMeanArterialPressureDto(
             dto,
             patientThresholds,
             doctor,
