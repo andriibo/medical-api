@@ -22,6 +22,6 @@ export const MinSBP = 90;
 
 export const MaxSBP = 120;
 
-export const MinMAP = 70; // Calculated by the formula: MinMAP ≈ 1/3(MinSBP + 2MinDBP)
+export const MinMAP = 65; // Calculated by the formula: MinMAP ≈ 1/3(MinSBP + 2MinDBP)
 
-export const MaxMAP = 93; // Calculated by the formula: MaxMAP ≈ 1/3(MaxSBP + 2MaxDBP)
+export const MaxMAP = 110; // Calculated by the formula: MaxMAP ≈ 1/3(MaxSBP + 2MaxDBP)
