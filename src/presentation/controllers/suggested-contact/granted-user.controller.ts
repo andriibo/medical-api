@@ -24,6 +24,7 @@ import {CreateSuggestedContactView} from 'views/request/suggested-contact';
 import {GrantedUserUseCasesFactory} from 'infrastructure/modules/suggected-contact/factories';
 import {MySuggestedContactView} from 'views/response/suggested-contact';
 import {MySuggestedContactDto} from 'domain/dtos/response/suggested-contact/my-suggested-contact.dto';
+import {TrimPipe} from 'presentation/pipes/trim.pipe';
 
 @Controller()
 @ApiBearerAuth()
@@ -38,7 +39,7 @@ export class GrantedUserController {
     @HttpCode(HttpStatus.CREATED)
     @ApiResponse({status: HttpStatus.CREATED, description: 'Created.'})
     @ApiBadRequestResponse({description: 'Bad request.'})
-    public async createSuggestedContact(@Body() requestBody: CreateSuggestedContactView): Promise<void> {
+    public async createSuggestedContact(@Body(TrimPipe) requestBody: CreateSuggestedContactView): Promise<void> {
         const useCase = this.grantedUserUseCasesFactory.createSuggestedContactUseCase();
 
         try {

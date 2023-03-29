@@ -9,6 +9,7 @@ import {MyDoctorDto} from 'domain/dtos/response/profile/my-doctor.dto';
 import {MyDoctorView} from 'views/response/profile';
 import {MyCaregiverView} from 'views/response/profile/my-caregiver.view';
 import {MyCaregiverDto} from 'domain/dtos/response/profile/my-caregiver.dto';
+import {TrimPipe} from 'presentation/pipes/trim.pipe';
 
 @Controller('patient')
 @ApiBearerAuth()
@@ -32,7 +33,7 @@ export class PatientController {
     @Patch('my-profile')
     @HttpCode(HttpStatus.OK)
     @ApiResponse({status: HttpStatus.OK})
-    public async updateMyProfile(@Body() requestBody: UpdatePatientProfileView): Promise<void> {
+    public async updateMyProfile(@Body(TrimPipe) requestBody: UpdatePatientProfileView): Promise<void> {
         const useCase = this.patientUseCasesFactory.createUpdatePatientProfileUseCase();
 
         await useCase.updateProfileInfo(requestBody);

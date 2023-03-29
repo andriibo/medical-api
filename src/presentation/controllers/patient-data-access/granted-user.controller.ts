@@ -17,6 +17,7 @@ import {InitiateDataAccessView} from 'views/request/data-access';
 import {GrantedUserUseCasesFactory} from 'infrastructure/modules/patient-data-access/factories/granted-user-use-cases.factory';
 import {DataAccessView} from 'views/response/data-access';
 import {DataAccessDto} from 'domain/dtos/response/data-access/data-access.dto';
+import {TrimPipe} from 'presentation/pipes/trim.pipe';
 
 @Controller()
 @ApiBearerAuth()
@@ -31,7 +32,7 @@ export class GrantedUserController {
     @HttpCode(HttpStatus.CREATED)
     @HttpCode(HttpStatus.BAD_REQUEST)
     @ApiResponse({status: HttpStatus.CREATED})
-    public async initiateDataAccess(@Body() requestBody: InitiateDataAccessView): Promise<void> {
+    public async initiateDataAccess(@Body(TrimPipe) requestBody: InitiateDataAccessView): Promise<void> {
         const useCase = this.grantedUserUseCasesFactory.createInitiateDataAccessUseCase();
 
         try {
