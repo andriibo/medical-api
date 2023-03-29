@@ -17,7 +17,7 @@ export class TrimPipe implements PipeTransform {
         return typeof obj === 'object' && obj !== null;
     }
 
-    private trim(values): any {
+    private trim(values: any): any {
         Object.keys(values).forEach((key) => {
             if (this.fieldsToTrim.includes(key)) {
                 return;
