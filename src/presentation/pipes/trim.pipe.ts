@@ -20,11 +20,13 @@ export class TrimPipe implements PipeTransform {
     private trim(values): any {
         Object.keys(values).forEach((key) => {
             if (this.fieldsToTrim.includes(key)) {
-                if (this.isObj(values[key])) {
-                    values[key] = this.trim(values[key]);
-                } else if (typeof values[key] === 'string') {
-                    values[key] = values[key].trim();
-                }
+                return;
+            }
+
+            if (this.isObj(values[key])) {
+                values[key] = this.trim(values[key]);
+            } else if (typeof values[key] === 'string') {
+                values[key] = values[key].trim();
             }
         });
 
