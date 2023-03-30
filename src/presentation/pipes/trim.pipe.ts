@@ -2,8 +2,6 @@ import {PipeTransform, Injectable, ArgumentMetadata} from '@nestjs/common';
 
 @Injectable()
 export class TrimPipe implements PipeTransform {
-    private fieldsToTrim = ['firstName', 'lastName', 'email', 'institution'];
-
     public transform(values: any, metadata: ArgumentMetadata): any {
         const {type} = metadata;
         if (this.isObj(values) && type === 'body') {
@@ -19,10 +17,6 @@ export class TrimPipe implements PipeTransform {
 
     private trim(values: any): any {
         Object.keys(values).forEach((key) => {
-            if (this.fieldsToTrim.includes(key)) {
-                return;
-            }
-
             if (this.isObj(values[key])) {
                 values[key] = this.trim(values[key]);
             } else if (typeof values[key] === 'string') {
