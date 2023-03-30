@@ -21,6 +21,7 @@ import {
     ResendConfirmationCodeResponse,
     GetUserCommand,
     AttributeType,
+    NotAuthorizedException,
 } from '@aws-sdk/client-cognito-identity-provider';
 import {ConfigService} from '@nestjs/config';
 import {
@@ -96,7 +97,10 @@ export class CognitoService implements IAuthService {
 
             throw new Error(`Auth challenge ${response.ChallengeName} is required.`);
         } catch (error) {
-            console.error(error.message);
+            if (error instanceof NotAuthorizedException) {
+                throw new AuthServiceError('Incorrect email or password.');
+            }
+
             throw new AuthServiceError(error.message);
         }
     }
