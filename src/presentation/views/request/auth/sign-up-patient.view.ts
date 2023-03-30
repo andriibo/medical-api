@@ -14,7 +14,7 @@ import {
     IsNumberString,
 } from 'class-validator';
 import {CreatePatientDto} from 'domain/dtos/request/auth/create-patient.dto';
-import {Type} from 'class-transformer';
+import {Transform, TransformFnParams, Type} from 'class-transformer';
 import {MaxPhoneLength, MinPhoneLength} from 'domain/constants/phone.const';
 
 export class SignUpPatientView extends CreatePatientDto {
@@ -25,11 +25,13 @@ export class SignUpPatientView extends CreatePatientDto {
     public email: string;
 
     @ApiProperty({minLength: 1, maxLength: 30})
+    @Transform(({value}: TransformFnParams) => value?.trim())
     @IsNotEmpty()
     @Length(1, 30)
     public firstName: string;
 
     @ApiProperty({minLength: 1, maxLength: 30})
+    @Transform(({value}: TransformFnParams) => value?.trim())
     @IsNotEmpty()
     @Length(1, 30)
     public lastName: string;
