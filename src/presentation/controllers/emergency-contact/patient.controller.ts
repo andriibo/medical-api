@@ -17,7 +17,6 @@ import {PatientUseCasesFactory} from 'infrastructure/modules/emergency-contact/f
 import {CreateContactView, UpdateContactView} from 'presentation/views/request/emergency-contact';
 import {ContactView} from 'presentation/views/response/emergency-contact';
 import {ContactDto} from 'domain/dtos/response/emergency-contact/contact.dto';
-import {TrimPipe} from 'presentation/pipes/trim.pipe';
 
 @Controller('patient')
 @ApiBearerAuth()
@@ -32,7 +31,7 @@ export class PatientController {
     @HttpCode(HttpStatus.CREATED)
     @HttpCode(HttpStatus.BAD_REQUEST)
     @ApiResponse({status: HttpStatus.CREATED})
-    public async createMyEmergencyContact(@Body(TrimPipe) requestBody: CreateContactView): Promise<void> {
+    public async createMyEmergencyContact(@Body() requestBody: CreateContactView): Promise<void> {
         const useCase = this.patientUseCasesFactory.createCreateContactUseCase();
 
         try {

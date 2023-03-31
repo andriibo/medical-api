@@ -19,6 +19,7 @@ import {MaxPhoneLength, MinPhoneLength} from 'domain/constants/phone.const';
 
 export class SignUpPatientView extends CreatePatientDto {
     @ApiProperty({maxLength: 100})
+    @Transform(({value}: TransformFnParams) => value?.trim())
     @IsNotEmpty()
     @IsEmail()
     @MaxLength(100)

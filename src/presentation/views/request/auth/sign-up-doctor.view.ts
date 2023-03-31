@@ -6,6 +6,7 @@ import {Transform, TransformFnParams} from 'class-transformer';
 
 export class SignUpDoctorView extends CreateDoctorDto {
     @ApiProperty({maxLength: 100})
+    @Transform(({value}: TransformFnParams) => value?.trim())
     @IsNotEmpty()
     @IsEmail()
     @MaxLength(100)

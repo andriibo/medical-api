@@ -18,6 +18,7 @@ export class UpdateCaregiverProfileView extends UpdateCaregiverProfileDto {
     public lastName: string;
 
     @ApiProperty({minLength: MinPhoneLength, maxLength: MaxPhoneLength})
+    @Transform(({value}: TransformFnParams) => value?.trim())
     @IsNotEmpty()
     @Length(MinPhoneLength, MaxPhoneLength)
     @IsNumberString()

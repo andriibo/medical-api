@@ -17,7 +17,6 @@ import {
 import {AuthUseCasesFactory} from 'infrastructure/modules/auth/factories/auth-use-cases.factory';
 import {SignUpCaregiverView} from 'views/request/auth/sign-up-caregiver.view';
 import {ConfirmEmailResentDto, ForgotPasswordMailSentDto, UserSignedInDto} from 'domain/dtos/response/auth';
-import {TrimPipe} from 'presentation/pipes/trim.pipe';
 
 @Controller()
 @ApiTags('Auth')
@@ -36,7 +35,7 @@ export class AuthController {
     @Post('doctor/sign-up')
     @HttpCode(HttpStatus.CREATED)
     @ApiResponse({status: HttpStatus.CREATED})
-    public async signUpDoctor(@Body(TrimPipe) requestBody: SignUpDoctorView): Promise<void> {
+    public async signUpDoctor(@Body() requestBody: SignUpDoctorView): Promise<void> {
         const useCase = this.authUseCasesFactory.createDoctorSignUpUseCase();
 
         await useCase.signUp(requestBody);
@@ -45,7 +44,7 @@ export class AuthController {
     @Post('patient/sign-up')
     @HttpCode(HttpStatus.CREATED)
     @ApiResponse({status: HttpStatus.CREATED})
-    public async signUpPatient(@Body(TrimPipe) requestBody: SignUpPatientView): Promise<void> {
+    public async signUpPatient(@Body() requestBody: SignUpPatientView): Promise<void> {
         const useCase = this.authUseCasesFactory.createPatientSignUpUseCase();
 
         await useCase.signUp(requestBody);
@@ -54,7 +53,7 @@ export class AuthController {
     @Post('caregiver/sign-up')
     @HttpCode(HttpStatus.CREATED)
     @ApiResponse({status: HttpStatus.CREATED})
-    public async signUpCaregiver(@Body(TrimPipe) requestBody: SignUpCaregiverView): Promise<void> {
+    public async signUpCaregiver(@Body() requestBody: SignUpCaregiverView): Promise<void> {
         const useCase = this.authUseCasesFactory.createCaregiverSignUpUseCase();
 
         await useCase.signUp(requestBody);
@@ -72,7 +71,7 @@ export class AuthController {
     @Post('forgot-password')
     @HttpCode(HttpStatus.OK)
     @ApiResponse({status: HttpStatus.OK, type: ForgotPasswordResponseView})
-    public async forgotPassword(@Body(TrimPipe) requestBody: ForgotPasswordView): Promise<ForgotPasswordMailSentDto> {
+    public async forgotPassword(@Body() requestBody: ForgotPasswordView): Promise<ForgotPasswordMailSentDto> {
         const useCase = this.authUseCasesFactory.createForgotPasswordUseCase();
 
         return await useCase.initiateForgotPasswordProcess(requestBody);
