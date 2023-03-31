@@ -1,10 +1,9 @@
 import {PipeTransform, Injectable} from '@nestjs/common';
 import {SyncVitalsDto} from 'domain/dtos/request/vital';
-import {AbstractPipe} from 'presentation/pipes/abstract.pipe';
 
 @Injectable()
-export class VitalNormalizationPipe extends AbstractPipe implements PipeTransform<SyncVitalsDto, SyncVitalsDto> {
-    protected modify(model: SyncVitalsDto): SyncVitalsDto {
+export class VitalNormalizationPipe implements PipeTransform<SyncVitalsDto, SyncVitalsDto> {
+    public transform(model: SyncVitalsDto): SyncVitalsDto {
         model.vitals.forEach((vital) => {
             vital.hr = this.normalizeValue(vital.hr, 0, 250);
             vital.rr = this.normalizeValue(vital.rr, 0, 100);
