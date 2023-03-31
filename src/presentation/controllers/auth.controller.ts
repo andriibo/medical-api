@@ -72,7 +72,7 @@ export class AuthController {
     @Post('forgot-password')
     @HttpCode(HttpStatus.OK)
     @ApiResponse({status: HttpStatus.OK, type: ForgotPasswordResponseView})
-    public async forgotPassword(@Body() requestBody: ForgotPasswordView): Promise<ForgotPasswordMailSentDto> {
+    public async forgotPassword(@Body(TrimPipe) requestBody: ForgotPasswordView): Promise<ForgotPasswordMailSentDto> {
         const useCase = this.authUseCasesFactory.createForgotPasswordUseCase();
 
         return await useCase.initiateForgotPasswordProcess(requestBody);
