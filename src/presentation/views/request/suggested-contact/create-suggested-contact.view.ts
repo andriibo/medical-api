@@ -22,12 +22,14 @@ export class CreateSuggestedContactView extends SuggestedContactDto {
     public lastName: string;
 
     @ApiProperty({maxLength: 100})
+    @Transform(({value}: TransformFnParams) => value?.trim())
     @IsNotEmpty()
     @IsEmail()
     @MaxLength(100)
     public email: string;
 
     @ApiProperty({minLength: MinPhoneLength, maxLength: MaxPhoneLength})
+    @Transform(({value}: TransformFnParams) => value?.trim())
     @IsNotEmpty()
     @Length(MinPhoneLength, MaxPhoneLength)
     @IsNumberString()

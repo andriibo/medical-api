@@ -6,6 +6,7 @@ import {Transform, TransformFnParams} from 'class-transformer';
 
 export class SignUpCaregiverView extends CreateCaregiverDto {
     @ApiProperty({maxLength: 100})
+    @Transform(({value}: TransformFnParams) => value?.trim())
     @IsNotEmpty()
     @IsEmail()
     @MaxLength(100)

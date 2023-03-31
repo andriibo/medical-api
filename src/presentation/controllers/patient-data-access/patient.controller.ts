@@ -17,7 +17,6 @@ import {PatientUseCasesFactory} from 'infrastructure/modules/patient-data-access
 import {InitiateDataAccessView} from 'presentation/views/request/data-access';
 import {DataAccessView} from 'presentation/views/response/data-access';
 import {DataAccessDto} from 'domain/dtos/response/data-access/data-access.dto';
-import {TrimPipe} from 'presentation/pipes/trim.pipe';
 
 @Controller('patient')
 @ApiBearerAuth()
@@ -32,7 +31,7 @@ export class PatientController {
     @HttpCode(HttpStatus.CREATED)
     @HttpCode(HttpStatus.BAD_REQUEST)
     @ApiResponse({status: HttpStatus.CREATED})
-    public async initiateDoctorDataAccess(@Body(TrimPipe) requestBody: InitiateDataAccessView): Promise<void> {
+    public async initiateDoctorDataAccess(@Body() requestBody: InitiateDataAccessView): Promise<void> {
         const useCase = this.patientUseCasesFactory.createInitiateDataAccessForDoctorUseCase();
 
         try {
@@ -47,7 +46,7 @@ export class PatientController {
     @HttpCode(HttpStatus.CREATED)
     @HttpCode(HttpStatus.BAD_REQUEST)
     @ApiResponse({status: HttpStatus.CREATED})
-    public async initiateCaregiverDataAccess(@Body(TrimPipe) requestBody: InitiateDataAccessView): Promise<void> {
+    public async initiateCaregiverDataAccess(@Body() requestBody: InitiateDataAccessView): Promise<void> {
         const useCase = this.patientUseCasesFactory.createInitiateDataAccessForCaregiverUseCase();
 
         try {

@@ -5,7 +5,6 @@ import {CaregiverUseCasesFactory} from 'infrastructure/modules/profile/factories
 import {UpdateCaregiverProfileView} from 'views/request/profile/update-caregiver-profile.view';
 import {UserDto} from 'domain/dtos/response/user/user.dto';
 import {UserView} from 'views/response/user';
-import {TrimPipe} from 'presentation/pipes/trim.pipe';
 
 @Controller('caregiver')
 @ApiBearerAuth()
@@ -29,7 +28,7 @@ export class CaregiverController {
     @Patch('my-profile')
     @HttpCode(HttpStatus.OK)
     @ApiResponse({status: HttpStatus.OK})
-    public async updateMyProfile(@Body(TrimPipe) requestBody: UpdateCaregiverProfileView): Promise<void> {
+    public async updateMyProfile(@Body() requestBody: UpdateCaregiverProfileView): Promise<void> {
         const useCase = this.caregiverUseCasesFactory.createUpdateCaregiverProfileUseCase();
 
         await useCase.updateProfileInfo(requestBody);

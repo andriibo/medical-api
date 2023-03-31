@@ -5,7 +5,6 @@ import {DoctorView} from 'presentation/views/response/user';
 import {DoctorUseCasesFactory} from 'infrastructure/modules/profile/factories';
 import {DoctorDto} from 'domain/dtos/response/profile/doctor.dto';
 import {UpdateDoctorProfileView} from 'views/request/profile/update-doctor-profile.view';
-import {TrimPipe} from 'presentation/pipes/trim.pipe';
 
 @Controller('doctor')
 @ApiBearerAuth()
@@ -29,7 +28,7 @@ export class DoctorController {
     @Patch('my-profile')
     @HttpCode(HttpStatus.OK)
     @ApiResponse({status: HttpStatus.OK})
-    public async updateMyProfile(@Body(TrimPipe) requestBody: UpdateDoctorProfileView): Promise<void> {
+    public async updateMyProfile(@Body() requestBody: UpdateDoctorProfileView): Promise<void> {
         const useCase = this.doctorUseCasesFactory.createUpdateDoctorProfileUseCase();
 
         await useCase.updateProfileInfo(requestBody);
