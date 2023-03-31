@@ -97,11 +97,12 @@ export class CognitoService implements IAuthService {
 
             throw new Error(`Auth challenge ${response.ChallengeName} is required.`);
         } catch (error) {
+            let errorMessage = error.message;
             if (error instanceof NotAuthorizedException) {
-                throw new AuthServiceError('Incorrect email or password.');
+                errorMessage = 'Incorrect email or password.';
             }
 
-            throw new AuthServiceError(error.message);
+            throw new AuthServiceError(errorMessage);
         }
     }
 
@@ -232,8 +233,12 @@ export class CognitoService implements IAuthService {
         try {
             await this.cognitoClient.send(command);
         } catch (error) {
-            console.error(error.message);
-            throw new AuthServiceError(error.message);
+            let errorMessage = error.message;
+            if (error instanceof NotAuthorizedException) {
+                errorMessage = 'Incorrect current password.';
+            }
+
+            throw new AuthServiceError(errorMessage);
         }
     }
 
