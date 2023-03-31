@@ -14,7 +14,7 @@ export class ParseDateISO8601Pipe implements PipeTransform {
         return values;
     }
 
-    protected isObj(obj: any): boolean {
+    private isObj(obj: any): boolean {
         return typeof obj === 'object' && obj !== null;
     }
 
