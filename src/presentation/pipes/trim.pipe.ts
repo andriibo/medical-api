@@ -1,24 +1,12 @@
-import {PipeTransform, Injectable, ArgumentMetadata} from '@nestjs/common';
+import {Injectable} from '@nestjs/common';
+import {AbstractPipe} from 'presentation/pipes/abstract.pipe';
 
 @Injectable()
-export class TrimPipe implements PipeTransform {
-    public transform(values: any, metadata: ArgumentMetadata): any {
-        const {type} = metadata;
-        if (this.isObj(values) && type === 'body') {
-            return this.trim(values);
-        }
-
-        return values;
-    }
-
-    private isObj(obj: any): boolean {
-        return typeof obj === 'object' && obj !== null;
-    }
-
-    private trim(values: any): any {
+export class TrimPipe extends AbstractPipe {
+    protected modify(values: any): any {
         Object.keys(values).forEach((key) => {
             if (this.isObj(values[key])) {
-                values[key] = this.trim(values[key]);
+                values[key] = this.modify(values[key]);
             } else if (typeof values[key] === 'string') {
                 values[key] = values[key].trim();
             }
