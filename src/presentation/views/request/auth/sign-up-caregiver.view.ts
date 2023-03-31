@@ -25,6 +25,7 @@ export class SignUpCaregiverView extends CreateCaregiverDto {
     public lastName: string;
 
     @ApiProperty({minLength: MinPhoneLength, maxLength: MaxPhoneLength})
+    @Transform(({value}: TransformFnParams) => value?.trim())
     @IsNotEmpty()
     @Length(MinPhoneLength, MaxPhoneLength)
     @IsNumberString()

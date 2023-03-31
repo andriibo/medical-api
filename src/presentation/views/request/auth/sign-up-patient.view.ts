@@ -38,6 +38,7 @@ export class SignUpPatientView extends CreatePatientDto {
     public lastName: string;
 
     @ApiProperty({minLength: MinPhoneLength, maxLength: MaxPhoneLength})
+    @Transform(({value}: TransformFnParams) => value?.trim())
     @IsNotEmpty()
     @Length(MinPhoneLength, MaxPhoneLength)
     @IsNumberString()
