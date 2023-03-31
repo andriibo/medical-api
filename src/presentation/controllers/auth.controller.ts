@@ -17,7 +17,6 @@ import {
 import {AuthUseCasesFactory} from 'infrastructure/modules/auth/factories/auth-use-cases.factory';
 import {SignUpCaregiverView} from 'views/request/auth/sign-up-caregiver.view';
 import {ConfirmEmailResentDto, ForgotPasswordMailSentDto, UserSignedInDto} from 'domain/dtos/response/auth';
-import {ParseDateISO8601Pipe} from 'presentation/pipes/parse-date-iso-8601.pipe';
 
 @Controller()
 @ApiTags('Auth')
@@ -45,7 +44,7 @@ export class AuthController {
     @Post('patient/sign-up')
     @HttpCode(HttpStatus.CREATED)
     @ApiResponse({status: HttpStatus.CREATED})
-    public async signUpPatient(@Body(ParseDateISO8601Pipe) requestBody: SignUpPatientView): Promise<void> {
+    public async signUpPatient(@Body() requestBody: SignUpPatientView): Promise<void> {
         const useCase = this.authUseCasesFactory.createPatientSignUpUseCase();
 
         await useCase.signUp(requestBody);

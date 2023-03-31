@@ -7,15 +7,15 @@ import {
     Max,
     IsNotEmpty,
     IsIn,
-    MinDate,
-    MaxDate,
-    IsDate,
     MaxLength,
     IsNumberString,
+    IsISO8601,
 } from 'class-validator';
 import {CreatePatientDto} from 'domain/dtos/request/auth/create-patient.dto';
-import {Transform, TransformFnParams, Type} from 'class-transformer';
+import {Transform, TransformFnParams} from 'class-transformer';
 import {MaxPhoneLength, MinPhoneLength} from 'domain/constants/phone.const';
+import {MinDate} from 'infrastructure/validators/min-date.validator';
+import {MaxDate} from 'infrastructure/validators/max-date.validator';
 
 export class SignUpPatientView extends CreatePatientDto {
     @ApiProperty({maxLength: 100})
@@ -45,9 +45,8 @@ export class SignUpPatientView extends CreatePatientDto {
     public phone: string;
 
     @ApiProperty()
-    @Type(() => Date)
     @IsNotEmpty()
-    @IsDate()
+    @IsISO8601()
     @MinDate(new Date(1930, 0, 1))
     @MaxDate(new Date())
     public dob: Date;
