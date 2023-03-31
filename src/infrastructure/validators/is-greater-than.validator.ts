@@ -2,7 +2,7 @@ import {registerDecorator, ValidationOptions, ValidationArguments} from 'class-v
 
 export const IS_GREATER_THAN = 'isGreaterThan';
 
-export function IsGreaterThanValidator(property: string, validationOptions?: ValidationOptions) {
+export function IsGreaterThan(property: string, validationOptions?: ValidationOptions) {
     // eslint-disable-next-line @typescript-eslint/ban-types
     return function (object: Object, propertyName: string) {
         registerDecorator({

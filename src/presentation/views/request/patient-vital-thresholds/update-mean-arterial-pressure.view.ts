@@ -1,7 +1,7 @@
 import {ApiProperty} from '@nestjs/swagger';
 import {IsNotEmpty, Min, Max} from 'class-validator';
 import {MinMaxThresholdDto} from 'domain/dtos/request/patient-vital-thresholds/min-max-threshold.dto';
-import {IsGreaterThanValidator} from 'infrastructure/validators/is-greater-than.validator';
+import {IsGreaterThan} from 'infrastructure/validators/is-greater-than.validator';
 import {AbsMaxMAP, AbsMinMAP} from 'domain/constants/vitals.const';
 
 export class UpdateMeanArterialPressureView extends MinMaxThresholdDto {
@@ -15,7 +15,7 @@ export class UpdateMeanArterialPressureView extends MinMaxThresholdDto {
     @IsNotEmpty()
     @Min(AbsMinMAP)
     @Max(AbsMaxMAP)
-    @IsGreaterThanValidator('min', {
+    @IsGreaterThan('min', {
         message: 'Max Mean Arterial Pressure must be greater than Min.',
     })
     public max: number;

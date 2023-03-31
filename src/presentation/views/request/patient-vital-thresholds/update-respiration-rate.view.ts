@@ -1,7 +1,7 @@
 import {ApiProperty} from '@nestjs/swagger';
 import {IsNotEmpty, Min, Max} from 'class-validator';
 import {MinMaxThresholdDto} from 'domain/dtos/request/patient-vital-thresholds/min-max-threshold.dto';
-import {IsGreaterThanValidator} from 'infrastructure/validators/is-greater-than.validator';
+import {IsGreaterThan} from 'infrastructure/validators/is-greater-than.validator';
 import {AbsMaxRR, AbsMinRR} from 'domain/constants/vitals.const';
 
 export class UpdateRespirationRateView extends MinMaxThresholdDto {
@@ -15,7 +15,7 @@ export class UpdateRespirationRateView extends MinMaxThresholdDto {
     @IsNotEmpty()
     @Min(AbsMinRR)
     @Max(AbsMaxRR)
-    @IsGreaterThanValidator('min', {
+    @IsGreaterThan('min', {
         message: 'Max Respiration Rate must be greater than Min.',
     })
     public max: number;
