@@ -18,7 +18,7 @@ import {AuthUseCasesFactory} from 'infrastructure/modules/auth/factories/auth-us
 import {SignUpCaregiverView} from 'views/request/auth/sign-up-caregiver.view';
 import {ConfirmEmailResentDto, ForgotPasswordMailSentDto, UserSignedInDto} from 'domain/dtos/response/auth';
 import {TrimPipe} from 'presentation/pipes/trim.pipe';
-import {ParseDateISO8601Pipe} from 'presentation/pipes/parse-date-iso8601.pipe';
+import {ParseDateISO8601Pipe} from 'presentation/pipes/parse-date-iso-8601.pipe';
 
 @Controller()
 @ApiTags('Auth')
