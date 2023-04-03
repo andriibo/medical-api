@@ -63,7 +63,7 @@ export class AuthController {
     @Post('sign-up/confirm')
     @HttpCode(HttpStatus.OK)
     @ApiResponse({status: HttpStatus.OK})
-    public async confirmSignUp(@Body() requestBody: ConfirmSignUpUserView): Promise<void> {
+    public async confirmSignUp(@Body(TrimPipe) requestBody: ConfirmSignUpUserView): Promise<void> {
         const useCase = this.authUseCasesFactory.createConfirmSignUpUseCase();
 
         await useCase.confirmSignUpUser(requestBody);
@@ -81,7 +81,7 @@ export class AuthController {
     @Post('forgot-password/confirm')
     @HttpCode(HttpStatus.OK)
     @ApiResponse({status: HttpStatus.OK})
-    public async confirmForgotPassword(@Body() requestBody: ConfirmForgotPasswordView): Promise<void> {
+    public async confirmForgotPassword(@Body(TrimPipe) requestBody: ConfirmForgotPasswordView): Promise<void> {
         const useCase = this.authUseCasesFactory.createConfirmForgotPasswordUseCase();
 
         await useCase.confirm(requestBody);
@@ -90,7 +90,7 @@ export class AuthController {
     @Post('sign-up/resend-code')
     @HttpCode(HttpStatus.OK)
     @ApiResponse({status: HttpStatus.OK, type: ResendSignUpCodeResponseView})
-    public async resendSignUpCode(@Body() requestBody: ResendSignUpCodeView): Promise<ConfirmEmailResentDto> {
+    public async resendSignUpCode(@Body(TrimPipe) requestBody: ResendSignUpCodeView): Promise<ConfirmEmailResentDto> {
         const useCase = this.authUseCasesFactory.createResendSignUpCodeUseCase();
 
         return await useCase.resendCode(requestBody);
