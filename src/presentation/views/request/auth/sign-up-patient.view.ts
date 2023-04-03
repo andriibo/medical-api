@@ -10,6 +10,7 @@ import {
     MaxLength,
     IsNumberString,
     IsISO8601,
+    MinLength,
 } from 'class-validator';
 import {CreatePatientDto} from 'domain/dtos/request/auth/create-patient.dto';
 import {Transform, TransformFnParams} from 'class-transformer';
@@ -71,6 +72,6 @@ export class SignUpPatientView extends CreatePatientDto {
 
     @ApiProperty({minLength: 8})
     @IsNotEmpty()
-    @Length(8)
+    @MinLength(8)
     public password: string;
 }

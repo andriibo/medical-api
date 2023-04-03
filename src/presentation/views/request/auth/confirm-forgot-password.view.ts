@@ -1,5 +1,5 @@
 import {ApiProperty} from '@nestjs/swagger';
-import {IsEmail, IsNotEmpty, Length, MaxLength} from 'class-validator';
+import {IsEmail, IsNotEmpty, MaxLength, MinLength} from 'class-validator';
 import {ConfirmForgotPasswordDto} from 'domain/dtos/request/auth/confirm-forgot-password.dto';
 
 export class ConfirmForgotPasswordView extends ConfirmForgotPasswordDto {
@@ -15,6 +15,6 @@ export class ConfirmForgotPasswordView extends ConfirmForgotPasswordDto {
 
     @ApiProperty({minLength: 8})
     @IsNotEmpty()
-    @Length(8)
+    @MinLength(8)
     public newPassword: string;
 }
