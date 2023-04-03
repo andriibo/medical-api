@@ -3,16 +3,16 @@ import {buildMessage, ValidateBy, ValidationOptions} from 'class-validator';
 export const MAX_DATE = 'maxDate';
 export const MIN_DATE = 'minDate';
 
-function isMaxDate(date: unknown, maxDate: Date): boolean {
+function isDateLaterThan(date: unknown, maxDate: Date): boolean {
     const dateObject = getDateObject(date);
 
-    return dateObject instanceof Date && dateObject.getTime() <= maxDate.getTime();
+    return dateObject.getTime() <= maxDate.getTime();
 }
 
-function isMinDate(date: unknown, minDate: Date): boolean {
+function isDateEarlierThan(date: unknown, minDate: Date): boolean {
     const dateObject = getDateObject(date);
 
-    return dateObject instanceof Date && dateObject.getTime() >= minDate.getTime();
+    return dateObject.getTime() >= minDate.getTime();
 }
 
 function getDateObject(date: unknown): Date {
@@ -25,7 +25,7 @@ export function MaxDate(date: Date, validationOptions?: ValidationOptions): Prop
             name: MAX_DATE,
             constraints: [date],
             validator: {
-                validate: (value, args): boolean => isMaxDate(value, args.constraints[0]),
+                validate: (value, args): boolean => isDateLaterThan(value, args.constraints[0]),
                 defaultMessage: buildMessage(
                     (eachPrefix) => `maximal allowed date for ${eachPrefix}$property is $constraint1`,
                     validationOptions,
@@ -42,7 +42,7 @@ export function MinDate(date: Date, validationOptions?: ValidationOptions): Prop
             name: MIN_DATE,
             constraints: [date],
             validator: {
-                validate: (value, args): boolean => isMinDate(value, args.constraints[0]),
+                validate: (value, args): boolean => isDateEarlierThan(value, args.constraints[0]),
                 defaultMessage: buildMessage(
                     (eachPrefix) => `minimal allowed date for ${eachPrefix}$$property is $constraint1`,
                     validationOptions,
