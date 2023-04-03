@@ -14,8 +14,7 @@ import {
 import {CreatePatientDto} from 'domain/dtos/request/auth/create-patient.dto';
 import {Transform, TransformFnParams} from 'class-transformer';
 import {MaxPhoneLength, MinPhoneLength} from 'domain/constants/phone.const';
-import {MinDate} from 'infrastructure/validators/min-date.validator';
-import {MaxDate} from 'infrastructure/validators/max-date.validator';
+import {MaxDate, MinDate} from 'infrastructure/validators/date.validator';
 
 export class SignUpPatientView extends CreatePatientDto {
     @ApiProperty({maxLength: 100})

@@ -3,8 +3,7 @@ import {Length, IsNotEmpty, IsIn, IsInt, Min, Max, IsNumberString, IsISO8601} fr
 import {UpdatePatientProfileDto} from 'domain/dtos/request/profile/update-patient-profile.dto';
 import {MaxPhoneLength, MinPhoneLength} from 'domain/constants/phone.const';
 import {Transform, TransformFnParams} from 'class-transformer';
-import {MinDate} from 'infrastructure/validators/min-date.validator';
-import {MaxDate} from 'infrastructure/validators/max-date.validator';
+import {MaxDate, MinDate} from 'infrastructure/validators/date.validator';
 
 export class UpdatePatientProfileView extends UpdatePatientProfileDto {
     @ApiProperty({minLength: 1, maxLength: 30})
