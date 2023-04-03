@@ -44,7 +44,7 @@ export function MinDate(date: Date, validationOptions?: ValidationOptions): Prop
             validator: {
                 validate: (value, args): boolean => isDateEarlierThan(value, args.constraints[0]),
                 defaultMessage: buildMessage(
-                    (eachPrefix) => `minimal allowed date for ${eachPrefix}$$property is $constraint1`,
+                    (eachPrefix) => `minimal allowed date for ${eachPrefix}$property is $constraint1`,
                     validationOptions,
                 ),
             },
