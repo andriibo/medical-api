@@ -35,6 +35,7 @@ import {ChangeEmailDto, ChangePasswordDto, ConfirmChangeEmailDto} from 'domain/d
 import {ProfileRecovery} from 'presentation/guards/profile-recovery.guard';
 import {UserView} from 'views/response/user/user.view';
 import {UserDto} from 'domain/dtos/response/user/user.dto';
+import {TrimPipe} from 'presentation/pipes/trim.pipe';
 
 @Controller()
 @ApiBearerAuth()
@@ -123,7 +124,7 @@ export class ProfileController {
     @ApiForbiddenResponse({description: 'Forbidden.'})
     public async changeEmail(
         @Req() request: UserRequest,
-        @Body() requestBody: ChangeEmailView,
+        @Body(TrimPipe) requestBody: ChangeEmailView,
     ): Promise<ChangeEmailResponseView> {
         const useCase = this.profileUseCasesFactory.createChangeEmailUseCase();
 
@@ -151,7 +152,10 @@ export class ProfileController {
     @HttpCode(HttpStatus.OK)
     @ApiResponse({status: HttpStatus.OK})
     @ApiForbiddenResponse({description: 'Forbidden.'})
-    public async changePassword(@Req() request: UserRequest, @Body() requestBody: ChangePasswordView): Promise<void> {
+    public async changePassword(
+        @Req() request: UserRequest,
+        @Body(TrimPipe) requestBody: ChangePasswordView,
+    ): Promise<void> {
         const useCase = this.profileUseCasesFactory.createChangePasswordUseCase();
 
         try {
