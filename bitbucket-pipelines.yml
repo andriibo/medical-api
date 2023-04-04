@@ -12,7 +12,7 @@ definitions:
              apt-get update
              apt-get install python3-pip -y
              pip3 install hvac
-             python3 env_gen.py --project medical_api --token $VAULT_TOKEN
+             python3 env_gen.py --project ${VAULT_PATH} --token ${VAULT_TOKEN}
           - pipe: atlassian/rsync-deploy:0.8.1
             variables:
               USER: $USER
@@ -42,3 +42,8 @@ pipelines:
           <<: *deploy-to-server
           deployment: Develop
           name: deploy to development
+    stage:
+      - step:
+          <<: *deploy-to-server
+          deployment: Staging
+          name: deploy to stage
