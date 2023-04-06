@@ -43,7 +43,7 @@ pipelines:
           deployment: Develop
           name: deploy to development
     stage:
-      - step:
+      - release/*:
           <<: *deploy-to-server
           deployment: Staging
           name: deploy to stage
