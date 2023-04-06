@@ -42,8 +42,8 @@ pipelines:
           <<: *deploy-to-server
           deployment: Develop
           name: deploy to development
-    stage:
-      - release/*:
+    release/*:
+      - step:
           <<: *deploy-to-server
           deployment: Staging
           name: deploy to stage
