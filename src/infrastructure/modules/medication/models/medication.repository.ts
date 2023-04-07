@@ -10,6 +10,10 @@ export class MedicationRepository implements IMedicationRepository {
     public constructor(@InjectDataSource() private dataSource: DataSource) {}
 
     public async get(): Promise<Medication[]> {
-        return await this.dataSource.manager.find(MedicationModel);
+        return await this.dataSource.manager.find(MedicationModel, {
+            order: {
+                genericName: 'ASC',
+            },
+        });
     }
 }

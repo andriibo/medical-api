@@ -10,6 +10,10 @@ export class DiagnosisRepository implements IDiagnosisRepository {
     public constructor(@InjectDataSource() private dataSource: DataSource) {}
 
     public async get(): Promise<Diagnosis[]> {
-        return await this.dataSource.manager.find(DiagnosisModel);
+        return await this.dataSource.manager.find(DiagnosisModel, {
+            order: {
+                diagnosisName: 'ASC',
+            },
+        });
     }
 }
