@@ -4,7 +4,7 @@ import {Diagnosis} from 'domain/entities';
 @Entity('diagnosis')
 export class DiagnosisModel implements Diagnosis {
     @PrimaryGeneratedColumn()
-    public id: string;
+    public id: number;
 
     @Column({name: 'diagnosis_name'})
     public diagnosisName: string;

@@ -1,5 +1,5 @@
 export interface Medication {
-    id: string;
+    id: number;
 
     genericName: string;
 

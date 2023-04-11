@@ -1,5 +1,5 @@
 export interface Diagnosis {
-    id: string;
+    id: number;
 
     diagnosisName: string;
 }
