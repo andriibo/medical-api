@@ -15,9 +15,9 @@ export class ChangePasswordUseCase {
 
     public async changePassword(dto: ChangePasswordDto): Promise<void> {
         this.profileSpecification.assertUserCanChangePassword(dto.currentPassword, dto.newPassword);
-        const user = await this.authedUserService.getUser();
         await this.authService.changePassword(dto);
 
+        const user = await this.authedUserService.getUser();
         user.passwordUpdatedAt = currentUnixTimestamp();
         await this.userRepository.persist(user);
     }
