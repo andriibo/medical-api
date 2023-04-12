@@ -17,7 +17,7 @@ import {DoctorMetadataModel, PatientMetadataModel, UserModel} from 'infrastructu
 import {User} from 'domain/entities';
 import {IDoctorMetadataRepository, IPatientMetadataRepository} from 'app/modules/profile/repositories';
 import {CreateCaregiverDto} from 'domain/dtos/request/auth/create-caregiver.dto';
-import {convertToUnixTimestamp, currentUnixTimestamp} from 'app/support/date.helper';
+import {currentUnixTimestamp} from 'app/support/date.helper';
 import {TestModule} from 'tests/test.module';
 import {
     AuthResultModel,
@@ -66,7 +66,7 @@ const registeredUser: User = {
     role: 'Doctor',
     createdAt: '2022-10-10 07:31:17.016236',
     deletedAt: null,
-    passwordUpdatedAt: '2022-11-12 17:01:27.012109',
+    passwordUpdatedAt: 1681305134,
 };
 describe('AuthController', () => {
     let app: INestApplication;
@@ -142,7 +142,7 @@ describe('AuthController', () => {
                     lastName: registeredUser.lastName,
                     phone: registeredUser.phone,
                     role: registeredUser.role,
-                    passwordUpdatedAt: convertToUnixTimestamp(registeredUser.passwordUpdatedAt),
+                    passwordUpdatedAt: registeredUser.passwordUpdatedAt,
                 },
             });
     });

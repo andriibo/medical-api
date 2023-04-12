@@ -3,6 +3,7 @@ import {ChangePasswordDto} from 'domain/dtos/request/auth/change-password.dto';
 import {ProfileSpecification} from 'app/modules/profile/specifications/profile.specification';
 import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service';
 import {IUserRepository} from 'app/modules/auth/repositories';
+import {currentUnixTimestamp} from 'app/support/date.helper';
 
 export class ChangePasswordUseCase {
     public constructor(
@@ -17,7 +18,7 @@ export class ChangePasswordUseCase {
         const user = await this.authedUserService.getUser();
         await this.authService.changePassword(dto);
 
-        user.passwordUpdatedAt = new Date().toISOString();
+        user.passwordUpdatedAt = currentUnixTimestamp();
         await this.userRepository.persist(user);
     }
 }

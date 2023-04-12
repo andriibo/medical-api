@@ -26,7 +26,7 @@ export interface User {
 
     deletedAt: number | null;
 
-    passwordUpdatedAt: string;
+    passwordUpdatedAt: number;
 
     doctorMetadata?: DoctorMetadata | null;
 

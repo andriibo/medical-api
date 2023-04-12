@@ -19,7 +19,6 @@ import {PatientStatusModel} from 'infrastructure/modules/patient-status/models';
 import {IPatientStatusRepository} from 'app/modules/patient-status/repositories';
 import {IPatientVitalThresholdsRepository} from 'app/modules/patient-vital-thresholds/repositories';
 import {IRemoveMyAvatarService} from 'app/modules/profile/services/remove-my-avatar.service';
-import {convertToUnixTimestamp} from 'app/support/date.helper';
 
 const caregiver: User = {
     id: '2rc8q18o-c1v2-199c-c8ma-9cf142780lb0',
@@ -31,7 +30,7 @@ const caregiver: User = {
     role: 'Caregiver',
     createdAt: '2022-10-10 07:31:17.016236',
     deletedAt: null,
-    passwordUpdatedAt: '2022-11-12 17:01:27.012109',
+    passwordUpdatedAt: 1681305134,
 };
 
 describe('CaregiverController', () => {
@@ -107,7 +106,7 @@ describe('CaregiverController', () => {
                 role: caregiver.role,
                 avatar: caregiver.avatar,
                 deletedAt: null,
-                passwordUpdatedAt: convertToUnixTimestamp(caregiver.passwordUpdatedAt),
+                passwordUpdatedAt: caregiver.passwordUpdatedAt,
             });
     });
 

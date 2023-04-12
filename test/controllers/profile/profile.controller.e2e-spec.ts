@@ -17,7 +17,7 @@ import {IPatientCategoryRepository} from 'app/modules/patient-category/repositor
 import {PatientStatusModel} from 'infrastructure/modules/patient-status/models';
 import {IPatientStatusRepository} from 'app/modules/patient-status/repositories';
 import {IPatientVitalThresholdsRepository} from 'app/modules/patient-vital-thresholds/repositories';
-import {convertToUnixTimestamp, currentUnixTimestamp} from 'app/support/date.helper';
+import {currentUnixTimestamp} from 'app/support/date.helper';
 import {IRemoveMyAvatarService} from 'app/modules/profile/services/remove-my-avatar.service';
 
 const doctor: User = {
@@ -30,7 +30,7 @@ const doctor: User = {
     role: 'Doctor',
     createdAt: '2022-10-10 07:31:17.016236',
     deletedAt: null,
-    passwordUpdatedAt: '2022-11-12 17:01:27.012109',
+    passwordUpdatedAt: 1681305134,
 };
 
 const removedDoctor: User = {
@@ -43,7 +43,7 @@ const removedDoctor: User = {
     role: 'Doctor',
     createdAt: '2022-10-10 07:31:17.016236',
     deletedAt: currentUnixTimestamp(),
-    passwordUpdatedAt: '2022-11-12 17:01:27.012109',
+    passwordUpdatedAt: 1681305134,
 };
 
 describe('ProfileController', () => {
@@ -136,7 +136,7 @@ describe('ProfileController', () => {
                 role: removedDoctor.role,
                 avatar: removedDoctor.avatar,
                 deletedAt: removedDoctor.deletedAt,
-                passwordUpdatedAt: convertToUnixTimestamp(removedDoctor.passwordUpdatedAt),
+                passwordUpdatedAt: removedDoctor.passwordUpdatedAt,
             });
     });
 

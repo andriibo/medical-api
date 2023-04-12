@@ -6,13 +6,14 @@ export class passwordUpdatedAt1681293691886 implements MigrationInterface {
         await queryRunner.addColumns('user', [
             new TableColumn({
                 name: 'password_updated_at',
-                type: 'timestamp',
-                default: 'now()',
-                isNullable: false,
+                type: 'int',
+                isNullable: true,
             }),
         ]);
 
-        await queryRunner.query(`UPDATE "user" SET password_updated_at = created_at;`);
+        await queryRunner.query(`UPDATE "user" SET password_updated_at = extract(epoch from created_at);`);
+        await queryRunner.query(`ALTER TABLE "user" ALTER "password_updated_at" DROP DEFAULT;`);
+        await queryRunner.query(`ALTER TABLE "user" ALTER "password_updated_at" SET NOT NULL;`);
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {

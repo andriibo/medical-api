@@ -29,7 +29,7 @@ const patient: User = {
     role: 'Patient',
     createdAt: '2022-10-10 07:31:17.016236',
     deletedAt: null,
-    passwordUpdatedAt: '2022-11-12 17:01:27.012109',
+    passwordUpdatedAt: 1681305134,
 };
 const patientCategory: PatientCategory = {
     id: '3db4ddee-78b7-42d3-bb79-c38c9f5b770d',
