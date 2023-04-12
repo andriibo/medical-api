@@ -31,6 +31,7 @@ const caregiver: User = {
     role: 'Caregiver',
     createdAt: '2022-10-10 07:31:17.016236',
     deletedAt: null,
+    passwordUpdatedAt: 1681305134,
 };
 
 const patient: User = {
@@ -43,6 +44,7 @@ const patient: User = {
     role: 'Patient',
     createdAt: '2022-10-10 07:31:17.016236',
     deletedAt: null,
+    passwordUpdatedAt: 1681305134,
 };
 
 const patientMetadata: PatientMetadata = {
@@ -176,6 +178,7 @@ describe('GrantedUserController', () => {
                     accessId: patientDataAccess.id,
                     lastConnected: null,
                     category: patientCategory.patientCategory,
+                    passwordUpdatedAt: patient.passwordUpdatedAt,
                 },
             ]);
     });
@@ -201,6 +204,7 @@ describe('GrantedUserController', () => {
                 deletedAt: null,
                 lastConnected: null,
                 category: patientCategory.patientCategory,
+                passwordUpdatedAt: patient.passwordUpdatedAt,
             });
     });
 

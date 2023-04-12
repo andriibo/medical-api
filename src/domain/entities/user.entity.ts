@@ -26,6 +26,8 @@ export interface User {
 
     deletedAt: number | null;
 
+    passwordUpdatedAt: number;
+
     doctorMetadata?: DoctorMetadata | null;
 
     patientMetadata?: PatientMetadata | null;

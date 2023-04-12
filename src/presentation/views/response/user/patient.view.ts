@@ -34,4 +34,7 @@ export class PatientView extends PatientDto {
 
     @ApiProperty({nullable: true})
     public deletedAt: number | null;
+
+    @ApiProperty()
+    public passwordUpdatedAt: number;
 }

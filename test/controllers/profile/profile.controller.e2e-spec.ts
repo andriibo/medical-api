@@ -30,6 +30,7 @@ const doctor: User = {
     role: 'Doctor',
     createdAt: '2022-10-10 07:31:17.016236',
     deletedAt: null,
+    passwordUpdatedAt: 1681305134,
 };
 
 const removedDoctor: User = {
@@ -42,6 +43,7 @@ const removedDoctor: User = {
     role: 'Doctor',
     createdAt: '2022-10-10 07:31:17.016236',
     deletedAt: currentUnixTimestamp(),
+    passwordUpdatedAt: 1681305134,
 };
 
 describe('ProfileController', () => {
@@ -134,6 +136,7 @@ describe('ProfileController', () => {
                 role: removedDoctor.role,
                 avatar: removedDoctor.avatar,
                 deletedAt: removedDoctor.deletedAt,
+                passwordUpdatedAt: removedDoctor.passwordUpdatedAt,
             });
     });
 

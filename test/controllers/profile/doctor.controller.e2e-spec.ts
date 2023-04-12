@@ -30,6 +30,7 @@ const doctor: User = {
     role: 'Doctor',
     createdAt: '2022-10-10 07:31:17.016236',
     deletedAt: null,
+    passwordUpdatedAt: 1681305134,
 };
 
 const doctorMetadata: DoctorMetadata = {
@@ -115,6 +116,7 @@ describe('DoctorController', () => {
                 role: doctor.role,
                 avatar: doctor.avatar,
                 deletedAt: null,
+                passwordUpdatedAt: doctor.passwordUpdatedAt,
             });
     });
 

@@ -14,4 +14,6 @@ export class UserDto {
     public role: string;
 
     public deletedAt: number | null = null;
+
+    public passwordUpdatedAt: number;
 }

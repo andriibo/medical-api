@@ -30,6 +30,7 @@ const caregiver: User = {
     role: 'Caregiver',
     createdAt: '2022-10-10 07:31:17.016236',
     deletedAt: null,
+    passwordUpdatedAt: 1681305134,
 };
 
 describe('CaregiverController', () => {
@@ -105,6 +106,7 @@ describe('CaregiverController', () => {
                 role: caregiver.role,
                 avatar: caregiver.avatar,
                 deletedAt: null,
+                passwordUpdatedAt: caregiver.passwordUpdatedAt,
             });
     });
 
