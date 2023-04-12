@@ -10,7 +10,7 @@ import {IDoctorMetadataRepository, IPatientMetadataRepository} from 'app/modules
 import {PatientDataAccessModel} from 'infrastructure/modules/patient-data-access/models';
 import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repositories';
 import {TestModule} from 'tests/test.module';
-import {currentUnixTimestamp} from 'app/support/date.helper';
+import {convertToUnixTimestamp, currentUnixTimestamp} from 'app/support/date.helper';
 import {IVitalRepository} from 'app/modules/vital/repositories';
 import {VitalModel} from 'infrastructure/modules/vital/models';
 import {PatientCategoryModel} from 'infrastructure/modules/patient-category/models';
@@ -31,6 +31,7 @@ const caregiver: User = {
     role: 'Caregiver',
     createdAt: '2022-10-10 07:31:17.016236',
     deletedAt: null,
+    passwordUpdatedAt: '2022-11-12 17:01:27.012109',
 };
 
 const patient: User = {
@@ -43,6 +44,7 @@ const patient: User = {
     role: 'Patient',
     createdAt: '2022-10-10 07:31:17.016236',
     deletedAt: null,
+    passwordUpdatedAt: '2022-11-12 17:01:27.012109',
 };
 
 const patientMetadata: PatientMetadata = {
@@ -176,6 +178,7 @@ describe('GrantedUserController', () => {
                     accessId: patientDataAccess.id,
                     lastConnected: null,
                     category: patientCategory.patientCategory,
+                    passwordUpdatedAt: convertToUnixTimestamp(patient.passwordUpdatedAt),
                 },
             ]);
     });
@@ -201,6 +204,7 @@ describe('GrantedUserController', () => {
                 deletedAt: null,
                 lastConnected: null,
                 category: patientCategory.patientCategory,
+                passwordUpdatedAt: convertToUnixTimestamp(patient.passwordUpdatedAt),
             });
     });
 

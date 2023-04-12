@@ -30,6 +30,7 @@ const patient: User = {
     role: 'Patient',
     createdAt: '2022-10-10 07:31:17.016236',
     deletedAt: null,
+    passwordUpdatedAt: '2022-11-12 17:01:27.012109',
 };
 
 const doctor: User = {
@@ -42,6 +43,7 @@ const doctor: User = {
     role: 'Doctor',
     createdAt: '2022-10-10 07:31:17.016236',
     deletedAt: null,
+    passwordUpdatedAt: '2022-11-12 17:01:27.012109',
 };
 
 const patientVitalThresholds: PatientVitalThresholds = {
@@ -180,6 +182,7 @@ describe('PatientController', () => {
                         lastName: doctor.lastName,
                         phone: doctor.phone,
                         role: doctor.role,
+                        passwordUpdatedAt: convertToUnixTimestamp(doctor.passwordUpdatedAt),
                     },
                 ],
             });

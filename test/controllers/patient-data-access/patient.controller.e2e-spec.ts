@@ -25,7 +25,7 @@ import {IMailSender} from 'app/modules/mail/services/abstract/mail-sender';
 import {IDeepLinkService} from 'app/modules/mail/services/deep-link.service';
 import {AccessForUnregisteredCaregiverService} from 'app/modules/patient-data-access/services/access-for-unregistered-caregiver.service';
 import {PatientStatus} from 'domain/entities/patient-status.entity';
-import {currentUnixTimestamp} from 'app/support/date.helper';
+import {convertToUnixTimestamp, currentUnixTimestamp} from 'app/support/date.helper';
 
 const patient: User = {
     id: '5nc3e70a-c1y9-121a-c5mv-5aq272098bp0',
@@ -37,6 +37,7 @@ const patient: User = {
     role: 'Patient',
     createdAt: '2022-10-10 07:31:17.016236',
     deletedAt: null,
+    passwordUpdatedAt: '2022-11-12 17:01:27.012109',
 };
 
 const doctor: User = {
@@ -49,6 +50,7 @@ const doctor: User = {
     role: 'Doctor',
     createdAt: '2022-10-10 07:31:17.016236',
     deletedAt: null,
+    passwordUpdatedAt: '2022-11-12 17:01:27.012109',
 };
 
 const users = {
@@ -251,6 +253,7 @@ describe('PatientController', () => {
                         lastName: doctor.lastName,
                         phone: doctor.phone,
                         role: doctor.role,
+                        passwordUpdatedAt: convertToUnixTimestamp(doctor.passwordUpdatedAt),
                     },
                 },
             ]);

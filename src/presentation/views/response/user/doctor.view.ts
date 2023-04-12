@@ -25,4 +25,7 @@ export class DoctorView extends DoctorDto {
 
     @ApiProperty({nullable: true})
     public deletedAt: number | null;
+
+    @ApiProperty()
+    public passwordUpdatedAt: number;
 }

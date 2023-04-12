@@ -1,15 +1,23 @@
 import {IAuthService} from 'app/modules/auth/services/auth.service';
 import {ChangePasswordDto} from 'domain/dtos/request/auth/change-password.dto';
 import {ProfileSpecification} from 'app/modules/profile/specifications/profile.specification';
+import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service';
+import {IUserRepository} from 'app/modules/auth/repositories';
 
 export class ChangePasswordUseCase {
     public constructor(
+        private readonly authedUserService: IAuthedUserService,
         private readonly authService: IAuthService,
         private readonly profileSpecification: ProfileSpecification,
+        private readonly userRepository: IUserRepository,
     ) {}
 
     public async changePassword(dto: ChangePasswordDto): Promise<void> {
         this.profileSpecification.assertUserCanChangePassword(dto.currentPassword, dto.newPassword);
+        const user = await this.authedUserService.getUser();
         await this.authService.changePassword(dto);
+
+        user.passwordUpdatedAt = new Date().toISOString();
+        await this.userRepository.persist(user);
     }
 }

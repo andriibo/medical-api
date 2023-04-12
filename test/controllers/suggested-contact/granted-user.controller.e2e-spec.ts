@@ -32,6 +32,7 @@ const doctor: User = {
     role: 'Doctor',
     createdAt: '2022-10-10 07:31:17.016236',
     deletedAt: null,
+    passwordUpdatedAt: '2022-11-12 17:01:27.012109',
 };
 
 const patient: User = {
@@ -44,6 +45,7 @@ const patient: User = {
     role: 'Patient',
     createdAt: '2022-10-10 07:31:17.016236',
     deletedAt: null,
+    passwordUpdatedAt: '2022-11-12 17:01:27.012109',
 };
 
 const suggestedContact: SuggestedContact = {

@@ -10,7 +10,7 @@ import {IDoctorMetadataRepository, IPatientMetadataRepository} from 'app/modules
 import {PatientDataAccessModel} from 'infrastructure/modules/patient-data-access/models';
 import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repositories';
 import {TestModule} from 'tests/test.module';
-import {currentUnixTimestamp} from 'app/support/date.helper';
+import {convertToUnixTimestamp, currentUnixTimestamp} from 'app/support/date.helper';
 import {UpdatePatientProfileDto} from 'domain/dtos/request/profile';
 import {VitalModel} from 'infrastructure/modules/vital/models';
 import {IVitalRepository} from 'app/modules/vital/repositories';
@@ -31,6 +31,7 @@ const patient: User = {
     role: 'Patient',
     createdAt: '2022-10-10 07:31:17.016236',
     deletedAt: null,
+    passwordUpdatedAt: '2022-11-12 17:01:27.012109',
 };
 
 const doctor: User = {
@@ -43,6 +44,7 @@ const doctor: User = {
     role: 'Doctor',
     createdAt: '2022-10-10 07:31:17.016236',
     deletedAt: null,
+    passwordUpdatedAt: '2022-11-12 17:01:27.012109',
 };
 
 const caregiver: User = {
@@ -55,6 +57,7 @@ const caregiver: User = {
     role: 'Caregiver',
     createdAt: '2022-10-10 07:31:17.016236',
     deletedAt: null,
+    passwordUpdatedAt: '2022-11-12 17:01:27.012109',
 };
 
 const patientMetadata: PatientMetadata = {
@@ -176,6 +179,7 @@ describe('PatientController', () => {
                 weight: patientMetadata.weight,
                 avatar: patient.avatar,
                 deletedAt: null,
+                passwordUpdatedAt: convertToUnixTimestamp(patient.passwordUpdatedAt),
             });
     });
 
@@ -212,6 +216,7 @@ describe('PatientController', () => {
                     avatar: doctor.avatar,
                     deletedAt: null,
                     accessId: patientDataAccessForDoctor.id,
+                    passwordUpdatedAt: convertToUnixTimestamp(doctor.passwordUpdatedAt),
                 },
             ]);
     });
@@ -232,6 +237,7 @@ describe('PatientController', () => {
                     avatar: caregiver.avatar,
                     deletedAt: null,
                     accessId: patientDataAccessForCaregiver.id,
+                    passwordUpdatedAt: convertToUnixTimestamp(caregiver.passwordUpdatedAt),
                 },
             ]);
     });

@@ -3,6 +3,7 @@ import {DoctorMetadata, PatientMetadata, User} from 'domain/entities';
 import {UserDto} from 'domain/dtos/response/user/user.dto';
 import {PatientDto} from 'domain/dtos/response/profile/patient.dto';
 import {DoctorDto} from 'domain/dtos/response/profile/doctor.dto';
+import {convertToUnixTimestamp} from 'app/support/date.helper';
 
 export class UserDtoService {
     public constructor(private readonly fileUrlService: IFileUrlService) {}
@@ -17,6 +18,7 @@ export class UserDtoService {
         dto.avatar = this.fileUrlService.createUrlToUserAvatar(user.avatar);
         dto.role = user.role;
         dto.deletedAt = user.deletedAt;
+        dto.passwordUpdatedAt = convertToUnixTimestamp(user.passwordUpdatedAt);
 
         return dto;
     }

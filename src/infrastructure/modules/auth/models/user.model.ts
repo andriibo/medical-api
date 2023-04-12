@@ -32,6 +32,9 @@ export class UserModel implements User {
     @Column({name: 'deleted_at'})
     public deletedAt: number | null;
 
+    @Column({name: 'password_updated_at'})
+    public passwordUpdatedAt: string;
+
     @OneToOne(() => DoctorMetadataModel, (metadata) => metadata.user)
     public doctorMetadata?: DoctorMetadataModel | null;
 

@@ -19,6 +19,7 @@ import {PatientStatusModel} from 'infrastructure/modules/patient-status/models';
 import {IPatientStatusRepository} from 'app/modules/patient-status/repositories';
 import {IPatientVitalThresholdsRepository} from 'app/modules/patient-vital-thresholds/repositories';
 import {IRemoveMyAvatarService} from 'app/modules/profile/services/remove-my-avatar.service';
+import {convertToUnixTimestamp} from 'app/support/date.helper';
 
 const doctor: User = {
     id: '1nc5e10o-b1w9-239h-c7mk-9af242088lw0',
@@ -30,6 +31,7 @@ const doctor: User = {
     role: 'Doctor',
     createdAt: '2022-10-10 07:31:17.016236',
     deletedAt: null,
+    passwordUpdatedAt: '2022-11-12 17:01:27.012109',
 };
 
 const doctorMetadata: DoctorMetadata = {
@@ -115,6 +117,7 @@ describe('DoctorController', () => {
                 role: doctor.role,
                 avatar: doctor.avatar,
                 deletedAt: null,
+                passwordUpdatedAt: convertToUnixTimestamp(doctor.passwordUpdatedAt),
             });
     });
 
