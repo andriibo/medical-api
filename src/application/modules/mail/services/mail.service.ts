@@ -16,7 +16,7 @@ export class MailService implements IMailService {
 
         const mail: Email = {
             to: toEmail,
-            subject: 'Invitation to Medical app.',
+            subject: 'Invitation to Medical app',
             text: `${patient.firstName} ${patient.lastName} wants to add you as their medical doctor on Medical app. <a href="${deepLink}">SIGN UP</a>.`,
         };
 
@@ -28,7 +28,7 @@ export class MailService implements IMailService {
 
         const mail: Email = {
             to: toEmail,
-            subject: 'Invitation to Medical app.',
+            subject: 'Invitation to Medical app',
             text: `${patient.firstName} ${patient.lastName} wants to add you as their caregiver on Medical app. <a href="${deepLink}">SIGN UP</a>.`,
         };
 
@@ -40,7 +40,7 @@ export class MailService implements IMailService {
 
         const mail: Email = {
             to: toEmail,
-            subject: 'Invitation to Medical app.',
+            subject: 'Invitation to Medical app',
             text: `${grantedUser.firstName} ${grantedUser.lastName} wants to add you as their medical patient on Medical app. <a href="${deepLink}">SIGN UP</a>.`,
         };
 
@@ -55,7 +55,7 @@ export class MailService implements IMailService {
 
         const mail: Email = {
             to: toEmail,
-            subject: 'New incoming request.',
+            subject: 'New incoming request',
             text: `${patient.firstName} ${patient.lastName} wants to add you as their medical doctor. <a href="${deepLink}">VIEW REQUEST</a>.`,
         };
 
@@ -70,7 +70,7 @@ export class MailService implements IMailService {
 
         const mail: Email = {
             to: toEmail,
-            subject: 'New incoming request.',
+            subject: 'New incoming request',
             text: `${patient.firstName} ${patient.lastName} wants to add you as their caregiver. <a href="${deepLink}">VIEW REQUEST</a>.`,
         };
 
@@ -85,7 +85,7 @@ export class MailService implements IMailService {
 
         const mail: Email = {
             to: toEmail,
-            subject: 'New incoming request.',
+            subject: 'New incoming request',
             text: `${grantedUser.firstName} ${grantedUser.lastName} wants to add you as their medical patient. <a href="${deepLink}">VIEW REQUEST</a>.`,
         };
 
