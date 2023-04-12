@@ -1,4 +1,4 @@
-import {Entity, Column, PrimaryGeneratedColumn, OneToOne, CreateDateColumn, BeforeInsert} from 'typeorm';
+import {Entity, Column, PrimaryGeneratedColumn, OneToOne, BeforeInsert} from 'typeorm';
 import {User} from 'domain/entities';
 import {DoctorMetadataModel} from 'infrastructure/modules/auth/models/doctor-metadata.model';
 import {PatientMetadataModel} from 'infrastructure/modules/auth/models/patient-metadata.model';
@@ -33,7 +33,7 @@ export class UserModel implements User {
     @Column({name: 'deleted_at'})
     public deletedAt: number | null;
 
-    @CreateDateColumn({name: 'password_updated_at', type: 'int'})
+    @Column({name: 'password_updated_at'})
     public passwordUpdatedAt: number;
 
     @OneToOne(() => DoctorMetadataModel, (metadata) => metadata.user)
@@ -44,7 +44,6 @@ export class UserModel implements User {
 
     @BeforeInsert()
     insertCreated() {
-        console.log(222);
         this.passwordUpdatedAt = currentUnixTimestamp();
     }
 }
