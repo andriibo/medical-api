@@ -1,6 +1,5 @@
 import {ApiProperty} from '@nestjs/swagger';
 import {UserDto} from 'domain/dtos/response/user/user.dto';
-import {UserRole} from 'domain/entities/user.entity';
 
 export class UserView implements UserDto {
     @ApiProperty()
@@ -21,7 +20,7 @@ export class UserView implements UserDto {
     @ApiProperty({nullable: true})
     public avatar: string | null;
 
-    @ApiProperty({enum: UserRole})
+    @ApiProperty()
     public role: string;
 
     @ApiProperty({nullable: true})
