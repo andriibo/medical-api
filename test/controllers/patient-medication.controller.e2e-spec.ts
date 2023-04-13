@@ -29,6 +29,7 @@ const patient: User = {
     role: 'Patient',
     createdAt: '2022-10-10 07:31:17.016236',
     deletedAt: null,
+    passwordUpdatedAt: 1681305134,
 };
 const doctor: User = {
     id: '4babe90f-b1a3-145e-c0mz-9aq248098ac0',
@@ -40,6 +41,7 @@ const doctor: User = {
     role: 'Doctor',
     createdAt: '2022-10-10 07:31:17.016236',
     deletedAt: null,
+    passwordUpdatedAt: 1681305134,
 };
 const patientDataAccess: PatientDataAccess = {
     id: '17c3e70s-b0w2-126s-c8mo-1cq901092qm9',
@@ -145,6 +147,7 @@ describe('PatientMedicationController', () => {
                         avatar: patient.avatar,
                         role: patient.role,
                         deletedAt: patient.deletedAt,
+                        passwordUpdatedAt: patient.passwordUpdatedAt,
                     },
                 },
             ]);

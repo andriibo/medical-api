@@ -17,6 +17,7 @@ export class UserDtoService {
         dto.avatar = this.fileUrlService.createUrlToUserAvatar(user.avatar);
         dto.role = user.role;
         dto.deletedAt = user.deletedAt;
+        dto.passwordUpdatedAt = user.passwordUpdatedAt;
 
         return dto;
     }

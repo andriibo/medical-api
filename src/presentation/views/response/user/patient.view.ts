@@ -18,6 +18,9 @@ export class PatientView extends PatientDto {
     public phone: string;
 
     @ApiProperty()
+    public role: string;
+
+    @ApiProperty()
     public dob: Date;
 
     @ApiProperty()
@@ -34,4 +37,7 @@ export class PatientView extends PatientDto {
 
     @ApiProperty({nullable: true})
     public deletedAt: number | null;
+
+    @ApiProperty()
+    public passwordUpdatedAt: number;
 }

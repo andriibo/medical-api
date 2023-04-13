@@ -31,6 +31,7 @@ const patient: User = {
     role: 'Patient',
     createdAt: '2022-10-10 07:31:17.016236',
     deletedAt: null,
+    passwordUpdatedAt: 1681305134,
 };
 const doctor: User = {
     id: '4babe90f-b1a3-145e-c0mz-9aq248098ac0',
@@ -42,6 +43,7 @@ const doctor: User = {
     role: 'Doctor',
     createdAt: '2022-10-10 07:31:17.016236',
     deletedAt: null,
+    passwordUpdatedAt: 1681305134,
 };
 const patientVitalThresholds: PatientVitalThresholds = {
     id: 'af095ce6-97d8-4a49-85c3-03ba5050bfa4',
@@ -241,6 +243,7 @@ describe('PatientController', () => {
                         lastName: doctor.lastName,
                         phone: doctor.phone,
                         role: doctor.role,
+                        passwordUpdatedAt: doctor.passwordUpdatedAt,
                     },
                 ],
             });

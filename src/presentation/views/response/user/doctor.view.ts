@@ -18,6 +18,9 @@ export class DoctorView extends DoctorDto {
     public phone: string;
 
     @ApiProperty()
+    public role: string;
+
+    @ApiProperty()
     public institution: string;
 
     @ApiProperty({nullable: true})
@@ -25,4 +28,7 @@ export class DoctorView extends DoctorDto {
 
     @ApiProperty({nullable: true})
     public deletedAt: number | null;
+
+    @ApiProperty()
+    public passwordUpdatedAt: number;
 }

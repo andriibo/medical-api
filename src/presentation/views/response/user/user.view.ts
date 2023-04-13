@@ -26,4 +26,7 @@ export class UserView implements UserDto {
 
     @ApiProperty({nullable: true})
     public deletedAt: number | null;
+
+    @ApiProperty()
+    public passwordUpdatedAt: number;
 }
