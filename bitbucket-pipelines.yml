@@ -63,9 +63,9 @@ definitions:
                 docker stack deploy --with-registry-auth -c stack-stage.yaml medical-api-stage
                 docker ps --filter name=medical-api-stage_medical-api -q | tee /tmp/container_id
                 cat /tmp/container_id
-                docker exec -it $(cat /tmp/container_id) npm install
-                docker exec -it $(cat /tmp/container_id) npm run migration:up
-                docker exec -it $(cat /tmp/container_id) npm run test:e2e
+                docker exec -it `cat /tmp/container_id` npm install
+                docker exec -it `cat /tmp/container_id` npm run migration:up
+                docker exec -it `cat /tmp/container_id` npm run test:e2e
 pipelines:
   branches:
     dev:
