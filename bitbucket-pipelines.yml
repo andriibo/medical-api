@@ -66,7 +66,7 @@ definitions:
               SSH_USER: $USER
               SERVER: $SERVER_DO
               MODE: 'script'
-              COMMAND: 'stack-stage-migrations.sh'
+              COMMAND: './stack-stage-migrations.sh'
 
 pipelines:
   branches:
