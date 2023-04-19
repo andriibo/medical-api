@@ -61,7 +61,7 @@ definitions:
                 cd /var/www/${WORK_DIR}/api/
                 docker build -f Dockerfile -t api-medical-api:latest --target development .
                 docker stack deploy --with-registry-auth -c stack-stage.yaml medical-api-stage
-                docker ps --filter name=medical-api-stage_medical-api -q|awk {'print "API_CONTAINER_ID="$1'}|tee /tmp/container_id
+                docker ps --filter name=medical-api-stage_medical-api -q|xargs -0 printf 'API_CONTAINER_ID=%s'|tee /tmp/container_id
                 source /tmp/container_id
                 echo ${API_CONTAINER_ID}
                 docker exec -it ${API_CONTAINER_ID} npm install
