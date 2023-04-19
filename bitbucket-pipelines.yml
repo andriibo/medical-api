@@ -60,6 +60,7 @@ definitions:
                 export WORK_DIR=stage
                 cd /var/www/${WORK_DIR}/api/
                 docker build -f Dockerfile -t api-medical-api:latest --target development .
+                docker stack deploy --with-registry-auth -c stack-stage.yml medical-api-stage
                 
 pipelines:
   branches:
