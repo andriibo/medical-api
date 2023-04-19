@@ -51,7 +51,7 @@ definitions:
               SERVER: $SERVER_DO
               REMOTE_PATH: "/var/www/${WORK_DIR}/api/.env"
               LOCAL_PATH: ".env"
-          - pipe: atlassian/ssh-run:0.4.1
+          - pipe: atlassian/ssh-run:0.4.2
             variables:
               SSH_USER: $USER
               SERVER: $SERVER_DO
@@ -61,11 +61,12 @@ definitions:
                 cd /var/www/${WORK_DIR}/api/
                 docker build -f Dockerfile -t api-medical-api:latest --target development .
                 docker stack deploy --with-registry-auth -c stack-stage.yaml medical-api-stage
-                docker ps --filter name=medical-api-stage_medical-api -q | tee /tmp/container_id
-                cat /tmp/container_id
-                docker exec -it `cat /tmp/container_id` npm install
-                docker exec -it `cat /tmp/container_id` npm run migration:up
-                docker exec -it `cat /tmp/container_id` npm run test:e2e
+                docker ps --filter name=medical-api-stage_medical-api -q|awk {'print "API_CONTAINER_ID="$1'}|tee /tmp/container_id
+                source /tmp/container_id
+                echo ${API_CONTAINER_ID}
+                docker exec -it ${API_CONTAINER_ID} npm install
+                docker exec -it ${API_CONTAINER_ID} npm run migration:up
+                docker exec -it ${API_CONTAINER_ID} npm run test:e2e
 pipelines:
   branches:
     dev:
