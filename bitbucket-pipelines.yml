@@ -59,7 +59,7 @@ definitions:
                 export DOCKER_BUILDKIT=1
                 export WORK_DIR=stage
                 cd /var/www/${WORK_DIR}/api/
-                ls -latrh
+                docker build -f Dockerfile -t api-medical-api:latest --target development .
                 
 pipelines:
   branches:
