@@ -57,5 +57,6 @@ services:
 networks:
   medical-network:
     driver: overlay
+    attachable: true
 volumes:
   pgdata:
