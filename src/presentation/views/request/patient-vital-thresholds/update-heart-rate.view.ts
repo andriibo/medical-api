@@ -16,7 +16,7 @@ export class UpdateHeartRateView extends MinMaxThresholdDto {
     @Min(AbsMinHR)
     @Max(AbsMaxHR)
     @IsGreaterThan('min', {
-        message: 'Max Heart Rate must be greater than Min.',
+        message: "Min Heart Rate can't be equal to or greater than max Heart Rate.",
     })
     public max: number;
 }

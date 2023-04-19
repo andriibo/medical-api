@@ -16,7 +16,7 @@ export class UpdateRespirationRateView extends MinMaxThresholdDto {
     @Min(AbsMinRR)
     @Max(AbsMaxRR)
     @IsGreaterThan('min', {
-        message: 'Max Respiration Rate must be greater than Min.',
+        message: "Min Respiration Rate can't be equal to or greater than max Respiration Rate.",
     })
     public max: number;
 }

@@ -16,7 +16,7 @@ export class UpdateTemperatureView extends MinMaxThresholdDto {
     @Min(AbsMinTemp)
     @Max(AbsMaxTemp)
     @IsGreaterThan('min', {
-        message: 'Max Temperature must be greater than Min.',
+        message: "Min Temperature can't be equal to or greater than max Temperature.",
     })
     public max: number;
 }

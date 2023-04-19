@@ -16,7 +16,7 @@ export class UpdateMeanArterialPressureView extends MinMaxThresholdDto {
     @Min(AbsMinMAP)
     @Max(AbsMaxMAP)
     @IsGreaterThan('min', {
-        message: 'Max Mean Arterial Pressure must be greater than Min.',
+        message: "Min Mean Arterial Pressure can't be equal to or greater than max Mean Arterial Pressure.",
     })
     public max: number;
 }
