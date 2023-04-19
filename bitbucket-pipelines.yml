@@ -61,12 +61,11 @@ definitions:
                 cd /var/www/${WORK_DIR}/api/
                 docker build -f Dockerfile -t api-medical-api:latest --target development .
                 docker stack deploy --with-registry-auth -c stack-stage.yaml medical-api-stage
-                sleep 60
-                export MEDICAL_API_CONTAINER=$(docker ps --filter name=medical-api-stage_medical-api -q)
-                echo ${MEDICAL_API_CONTAINER}
-                docker exec -it ${MEDICAL_API_CONTAINER} npm install
-                docker exec -it ${MEDICAL_API_CONTAINER} npm run migration:up
-                docker exec -it ${MEDICAL_API_CONTAINER} npm run test:e2e
+                docker ps --filter name=medical-api-stage_medical-api -q | tee /tmp/container_id
+                cat /tmp/container_id
+                docker exec -it $(cat /tmp/container_id) npm install
+                docker exec -it $(cat /tmp/container_id) npm run migration:up
+                docker exec -it $(cat /tmp/container_id) npm run test:e2e
 pipelines:
   branches:
     dev:
