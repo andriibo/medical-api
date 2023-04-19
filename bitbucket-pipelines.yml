@@ -58,6 +58,7 @@ definitions:
               COMMAND: |
                 export DOCKER_BUILDKIT=1
                 cd /var/www/${WORK_DIR}/api/
+                git pull origin ${BITBUCKET_BRANCH}
                 docker build -f Dockerfile -t api-medical-api:latest --target development .
                 docker stack deploy --with-registry-auth -c stack-stage.yaml medical-api-stage
           - pipe: atlassian/ssh-run:0.4.2
@@ -77,9 +78,6 @@ pipelines:
           name: deploy to development
     release/*:
       - step:
-          <<: *deploy-to-server
+          <<: *deploy-to-swarm
           deployment: Staging
           name: deploy to stage
-    swarm-ci:
-      - step:
-          <<: *deploy-to-swarm
