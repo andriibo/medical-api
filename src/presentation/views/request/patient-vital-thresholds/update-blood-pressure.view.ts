@@ -16,7 +16,7 @@ export class UpdateBloodPressureView extends BloodPressureThresholdsDto {
     @Min(AbsMinDBP)
     @Max(AbsMaxDBP)
     @IsGreaterThan('minDBP', {
-        message: 'Max DBP must be greater than Min.',
+        message: "Min DBP can't be equal to or greater than max DBP.",
     })
     public maxDBP: number;
 
@@ -31,7 +31,7 @@ export class UpdateBloodPressureView extends BloodPressureThresholdsDto {
     @Min(AbsMinSBP)
     @Max(AbsMaxSBP)
     @IsGreaterThan('minSBP', {
-        message: 'Max SBP must be greater than Min.',
+        message: "Min SBP can't be equal to or greater than max SBP.",
     })
     public maxSBP: number;
 }
