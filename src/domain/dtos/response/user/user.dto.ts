@@ -13,6 +13,8 @@ export class UserDto {
 
     public role: string;
 
+    public roleLabel: string;
+
     public deletedAt: number | null = null;
 
     public passwordUpdatedAt: number;

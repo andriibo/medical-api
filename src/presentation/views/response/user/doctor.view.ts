@@ -21,6 +21,9 @@ export class DoctorView extends DoctorDto {
     public role: string;
 
     @ApiProperty()
+    public roleLabel: string;
+
+    @ApiProperty()
     public institution: string;
 
     @ApiProperty({nullable: true})

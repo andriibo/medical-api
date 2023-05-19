@@ -16,6 +16,7 @@ export class UserDtoService {
         dto.phone = user.phone;
         dto.avatar = this.fileUrlService.createUrlToUserAvatar(user.avatar);
         dto.role = user.role;
+        dto.roleLabel = user.roleLabel;
         dto.deletedAt = user.deletedAt;
         dto.passwordUpdatedAt = user.passwordUpdatedAt;
 
@@ -47,6 +48,7 @@ export class UserDtoService {
         dto.lastName = '';
         dto.phone = '';
         dto.role = '';
+        dto.roleLabel = '';
 
         return dto;
     }

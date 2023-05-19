@@ -21,6 +21,9 @@ export class PatientView extends PatientDto {
     public role: string;
 
     @ApiProperty()
+    public roleLabel: string;
+
+    @ApiProperty()
     public dob: Date;
 
     @ApiProperty()

@@ -23,6 +23,9 @@ export class UserView implements UserDto {
     @ApiProperty()
     public role: string;
 
+    @ApiProperty()
+    public roleLabel: string;
+
     @ApiProperty({nullable: true})
     public deletedAt: number | null;
 

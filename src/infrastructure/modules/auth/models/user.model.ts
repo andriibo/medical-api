@@ -24,6 +24,9 @@ export class UserModel implements User {
     @Column()
     public role: string;
 
+    @Column({name: 'role_label'})
+    public roleLabel: string;
+
     @Column({name: 'created_at'})
     public createdAt: string;
 

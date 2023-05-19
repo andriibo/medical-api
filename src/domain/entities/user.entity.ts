@@ -7,6 +7,15 @@ export enum UserRole {
     Patient = 'Patient',
 }
 
+export enum UserRoleLabel {
+    CaregiverProfessional = 'CaregiverProfessional',
+    Doctor = 'Doctor',
+    Family = 'Family',
+    Friend = 'Friend',
+    Nurse = 'Nurse',
+    Patient = 'Patient',
+}
+
 export interface User {
     id: string;
 
@@ -19,6 +28,8 @@ export interface User {
     phone: string;
 
     role: string;
+
+    roleLabel: string;
 
     createdAt: string;
 

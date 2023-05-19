@@ -8,4 +8,6 @@ export class CreateCaregiverDto {
     public phone: string;
 
     public password: string;
+
+    public roleLabel: string;
 }

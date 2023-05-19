@@ -64,6 +64,7 @@ const registeredUser: User = {
     phone: '2930412345',
     avatar: null,
     role: 'Doctor',
+    roleLabel: 'Doctor',
     createdAt: '2022-10-10 07:31:17.016236',
     deletedAt: null,
     passwordUpdatedAt: 1681305134,
@@ -77,6 +78,7 @@ const doctor: User = {
     phone: '2930412345',
     avatar: null,
     role: 'Doctor',
+    roleLabel: 'Doctor',
     createdAt: '2022-10-10 07:31:17.016236',
     deletedAt: null,
     passwordUpdatedAt: 1681305134,
@@ -162,6 +164,7 @@ describe('AuthController', () => {
                     lastName: registeredUser.lastName,
                     phone: registeredUser.phone,
                     role: registeredUser.role,
+                    roleLabel: registeredUser.roleLabel,
                     passwordUpdatedAt: registeredUser.passwordUpdatedAt,
                 },
             });
@@ -174,6 +177,7 @@ describe('AuthController', () => {
         dto.lastName = 'Goldman';
         dto.phone = '2930412345';
         dto.password = '123456!Aa';
+        dto.roleLabel = 'Doctor';
         return request(app.getHttpServer()).post('/doctor/sign-up').send(dto).expect(201);
     });
 
@@ -188,6 +192,7 @@ describe('AuthController', () => {
         dto.height = 180;
         dto.weight = 80;
         dto.password = '123456!Aa';
+        dto.roleLabel = 'Patient';
         return request(app.getHttpServer()).post('/patient/sign-up').send(dto).expect(201);
     });
 
@@ -198,6 +203,7 @@ describe('AuthController', () => {
         dto.lastName = 'Goldman';
         dto.phone = '2930412345';
         dto.password = '123456!Aa';
+        dto.roleLabel = 'CaregiverProfessional';
         return request(app.getHttpServer()).post('/caregiver/sign-up').send(dto).expect(201);
     });
 

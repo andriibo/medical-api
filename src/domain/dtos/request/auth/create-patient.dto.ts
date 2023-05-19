@@ -16,4 +16,6 @@ export class CreatePatientDto {
     public weight: number;
 
     public password: string;
+
+    public roleLabel: string;
 }

@@ -81,7 +81,6 @@ export class AuthController {
         try {
             return await useCase.initiateForgotPasswordProcess(requestBody);
         } catch (error) {
-            console.log('ERR', error);
             if (error instanceof EntityNotFoundError) {
                 throw new NotFoundException(error.message);
             }
