@@ -15,6 +15,7 @@ import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service'
 import {IPatientVitalThresholdsEntityMapper} from 'app/modules/patient-vital-thresholds/mappers/patient-vital-thresholds-entity.mapper';
 import {DoctorSignUpUseCase} from 'app/modules/auth/use-cases/doctor-sign-up.use-case';
 import {CaregiverSignUpUseCase} from 'app/modules/auth/use-cases/caregiver-sign-up.use-case';
+import {ForgotPasswordSpecification} from 'app/modules/auth/specifications/forgot-password.specification';
 
 @Injectable()
 export class AuthUseCasesFactory {
@@ -26,6 +27,7 @@ export class AuthUseCasesFactory {
         @Inject(IAuthedUserService) private readonly authedUserService: IAuthedUserService,
         @Inject(IPatientVitalThresholdsEntityMapper)
         private readonly patientVitalThresholdsEntityMapper: IPatientVitalThresholdsEntityMapper,
+        @Inject(ForgotPasswordSpecification) private readonly forgotPasswordSpecification: ForgotPasswordSpecification,
     ) {}
 
     public createPatientSignUpUseCase(): PatientSignUpUseCase {
@@ -69,7 +71,7 @@ export class AuthUseCasesFactory {
     }
 
     public createForgotPasswordUseCase(): ForgotPasswordUseCase {
-        return new ForgotPasswordUseCase(this.authService);
+        return new ForgotPasswordUseCase(this.authService, this.forgotPasswordSpecification);
     }
 
     public createConfirmForgotPasswordUseCase(): ConfirmForgotPasswordUseCase {

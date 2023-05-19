@@ -17,6 +17,8 @@ import {FileModule} from 'infrastructure/modules/file/file.module';
 import {UserIndependentModule} from './user.ind.module';
 import {UserDtoService} from 'app/modules/profile/services/user-dto.service';
 import {IFileUrlService} from 'app/modules/profile/services/file-url.service';
+import {IUserRepository} from 'app/modules/auth/repositories';
+import {ForgotPasswordSpecification} from 'app/modules/auth/specifications/forgot-password.specification';
 
 @Module({
     imports: [
@@ -50,6 +52,13 @@ import {IFileUrlService} from 'app/modules/profile/services/file-url.service';
                 return new UserDtoService(fileUrlService);
             },
             inject: [IFileUrlService],
+        },
+        {
+            provide: ForgotPasswordSpecification,
+            useFactory: (userRepository: IUserRepository) => {
+                return new ForgotPasswordSpecification(userRepository);
+            },
+            inject: [IUserRepository],
         },
     ],
 })

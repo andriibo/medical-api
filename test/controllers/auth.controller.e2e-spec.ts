@@ -68,6 +68,25 @@ const registeredUser: User = {
     deletedAt: null,
     passwordUpdatedAt: 1681305134,
 };
+
+const doctor: User = {
+    id: '8bfbd95c-c8a5-404b-b3eb-6ac648052ac4',
+    email: 'doctor@gmail.com',
+    firstName: 'Marc',
+    lastName: 'Goldman',
+    phone: '2930412345',
+    avatar: null,
+    role: 'Doctor',
+    createdAt: '2022-10-10 07:31:17.016236',
+    deletedAt: null,
+    passwordUpdatedAt: 1681305134,
+};
+
+const users = {
+    'doctor@gmail.com': doctor,
+    'not-existing-email@mail.com': null,
+};
+
 describe('AuthController', () => {
     let app: INestApplication;
     const mockedCognitoService = {
@@ -88,6 +107,7 @@ describe('AuthController', () => {
             insertPatient: jest.fn((user: User) => Promise.resolve(user)),
             persist: jest.fn((user: User) => Promise.resolve(user)),
             getOneById: jest.fn(() => Promise.resolve(registeredUser)),
+            getOneByEmail: jest.fn((email: string) => Promise.resolve(users[email])),
         };
         const moduleRef: TestingModule = await Test.createTestingModule({
             imports: [TestModule, AuthModule],
@@ -196,6 +216,13 @@ describe('AuthController', () => {
             deliveryMedium: resendConfirmationCodeResultModel.deliveryMedium,
             attributeName: resendConfirmationCodeResultModel.attributeName,
         });
+    });
+
+    it('/forgot-password (POST): returns the not found error if email does not exist.', async () => {
+        const dto = new ForgotPasswordDto();
+        dto.email = 'not-existing-email@mail.com';
+
+        return request(app.getHttpServer()).post('/forgot-password').send(dto).expect(404);
     });
 
     it('/forgot-password (POST)', async () => {
