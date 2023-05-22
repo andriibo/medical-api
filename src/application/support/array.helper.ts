@@ -23,3 +23,7 @@ export function indexObjects(objects: object[], propName: string): object {
 
     return indexedObjects;
 }
+
+export function arrayDiff(a: any[], b: any[]): any[] {
+    return a.filter((value) => b.indexOf(value) < 0);
+}

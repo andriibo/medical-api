@@ -56,6 +56,7 @@ const emergencyContact: EmergencyContact = {
     phone: '2930412345',
     relationship: 'MedicalProfessional',
     createdAt: '2022-12-10 17:31:07.016236',
+    rank: null,
 };
 
 const patientDataAccess: PatientDataAccess = {

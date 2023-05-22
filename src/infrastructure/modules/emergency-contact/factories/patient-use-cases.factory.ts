@@ -3,6 +3,7 @@ import {
     CreateContactUseCase,
     ContactListUseCase,
     DeleteContactUseCase,
+    SetContactsOrderUseCase,
     UpdateContactUseCase,
 } from 'app/modules/emergency-contact/use-cases/patient';
 import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service';
@@ -40,6 +41,14 @@ export class PatientUseCasesFactory {
             this.authedUserService,
             this.emergencyContactRepository,
             this.emergencyContactEntityMapper,
+            this.emergencyContactSpecification,
+        );
+    }
+
+    public createSetContactsOrderUseCase(): SetContactsOrderUseCase {
+        return new SetContactsOrderUseCase(
+            this.authedUserService,
+            this.emergencyContactRepository,
             this.emergencyContactSpecification,
         );
     }

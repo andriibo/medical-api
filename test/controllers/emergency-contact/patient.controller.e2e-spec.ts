@@ -43,6 +43,7 @@ const emergencyContact: EmergencyContact = {
     phone: '2930412345',
     relationship: 'MedicalProfessional',
     createdAt: '2022-12-10 17:31:07.016236',
+    rank: null,
 };
 
 describe('PatientController', () => {
@@ -57,7 +58,7 @@ describe('PatientController', () => {
             create: jest.fn(() => Promise.resolve()),
             delete: jest.fn(() => Promise.resolve()),
             update: jest.fn(() => Promise.resolve()),
-            getByUserId: jest.fn(() => Promise.resolve([emergencyContact])),
+            getByUserIdOrderedByRank: jest.fn(() => Promise.resolve([emergencyContact])),
         };
         const moduleRef: TestingModule = await Test.createTestingModule({
             imports: [TestModule, EmergencyContactModule],
