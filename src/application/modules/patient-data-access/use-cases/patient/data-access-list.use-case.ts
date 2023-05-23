@@ -1,13 +1,13 @@
 import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repositories';
 import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service';
 import {DataAccessDto} from 'domain/dtos/response/data-access/data-access.dto';
-import {UserDtoService} from 'app/modules/profile/services/user-dto.service';
+import {UserDtoMapper} from 'app/modules/profile/mappers/user-dto.mapper';
 
 export class DataAccessListUseCase {
     public constructor(
         private readonly patientDataAccessRepository: IPatientDataAccessRepository,
         private readonly authedUserService: IAuthedUserService,
-        private readonly userDtoService: UserDtoService,
+        private readonly userDtoMapper: UserDtoMapper,
     ) {}
 
     public async getList(): Promise<DataAccessDto[]> {
@@ -18,9 +18,9 @@ export class DataAccessListUseCase {
             const dto = DataAccessDto.fromPatientDataAccess(item);
 
             if (item.grantedUser) {
-                dto.requestedUser = this.userDtoService.createUserDtoByUser(item.grantedUser);
+                dto.requestedUser = this.userDtoMapper.mapUserDtoByUser(item.grantedUser);
             } else if (item.grantedEmail) {
-                dto.requestedUser = this.userDtoService.createUserDtoByEmail(item.grantedEmail);
+                dto.requestedUser = this.userDtoMapper.mapUserDtoByEmail(item.grantedEmail);
             }
 
             return dto;

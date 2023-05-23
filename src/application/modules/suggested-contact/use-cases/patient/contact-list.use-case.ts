@@ -3,14 +3,14 @@ import {ISuggestedContactRepository} from 'app/modules/suggested-contact/reposit
 import {SuggestedContactDto} from 'domain/dtos/response/suggested-contact/suggested-contact.dto';
 import {SuggestedContact, User} from 'domain/entities';
 import {IUserRepository} from 'app/modules/auth/repositories';
-import {UserDtoService} from 'app/modules/profile/services/user-dto.service';
+import {UserDtoMapper} from 'app/modules/profile/mappers/user-dto.mapper';
 
 export class ContactListUseCase {
     public constructor(
         private readonly authedUserService: IAuthedUserService,
         private readonly suggestedContactRepository: ISuggestedContactRepository,
         private readonly userRepository: IUserRepository,
-        private readonly userDtoService: UserDtoService,
+        private readonly userDtoMapper: UserDtoMapper,
     ) {}
 
     public async getList(): Promise<SuggestedContactDto[]> {
@@ -23,7 +23,7 @@ export class ContactListUseCase {
 
         return items.map((item) => {
             const dto = SuggestedContactDto.fromSuggestedContact(item);
-            dto.suggestedByUser = this.userDtoService.createUserDtoByUser(indexedUsers[item.suggestedBy]);
+            dto.suggestedByUser = this.userDtoMapper.mapUserDtoByUser(indexedUsers[item.suggestedBy]);
 
             return dto;
         });

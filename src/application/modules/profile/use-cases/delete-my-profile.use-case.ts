@@ -3,14 +3,14 @@ import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service'
 import {ProfileSpecification} from 'app/modules/profile/specifications/profile.specification';
 import {currentUnixTimestamp} from 'app/support/date.helper';
 import {UserDto} from 'domain/dtos/response/user/user.dto';
-import {UserDtoService} from 'app/modules/profile/services/user-dto.service';
+import {UserDtoMapper} from 'app/modules/profile/mappers/user-dto.mapper';
 
 export class DeleteMyProfileUseCase {
     public constructor(
         private readonly userRepository: IUserRepository,
         private readonly authedUserService: IAuthedUserService,
         private readonly profileSpecification: ProfileSpecification,
-        private readonly userDtoService: UserDtoService,
+        private readonly userDtoMapper: UserDtoMapper,
     ) {}
 
     public async deleteProfile(): Promise<UserDto> {
@@ -19,6 +19,6 @@ export class DeleteMyProfileUseCase {
         user.deletedAt = currentUnixTimestamp();
         const deletedUser = await this.userRepository.persist(user);
 
-        return this.userDtoService.createUserDtoByUser(deletedUser);
+        return this.userDtoMapper.mapUserDtoByUser(deletedUser);
     }
 }

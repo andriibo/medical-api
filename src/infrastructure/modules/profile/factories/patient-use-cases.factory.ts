@@ -7,7 +7,7 @@ import {IUserProfileMapper} from 'app/modules/profile/mappers/user-profile.mappe
 import {DoctorListProfileUseCase} from 'app/modules/profile/use-cases/patient/doctor-list-profile.use-case';
 import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repositories';
 import {CaregiverListProfileUseCase} from 'app/modules/profile/use-cases/patient/caregiver-list-profile.use-case';
-import {UserDtoService} from 'app/modules/profile/services/user-dto.service';
+import {UserDtoMapper} from 'app/modules/profile/mappers/user-dto.mapper';
 
 @Injectable()
 export class PatientUseCasesFactory {
@@ -16,13 +16,13 @@ export class PatientUseCasesFactory {
         @Inject(IAuthedUserService) private readonly authedUserService: IAuthedUserService,
         @Inject(IPatientMetadataRepository) private readonly patientMetadataRepository: IPatientMetadataRepository,
         @Inject(IUserProfileMapper) private readonly userProfileMapper: IUserProfileMapper,
-        @Inject(UserDtoService) private readonly userDtoService: UserDtoService,
+        @Inject(UserDtoMapper) private readonly userDtoMapper: UserDtoMapper,
         @Inject(IPatientDataAccessRepository)
         private readonly patientDataAccessRepository: IPatientDataAccessRepository,
     ) {}
 
     public createGetPatientProfileUseCase(): PatientProfileUseCase {
-        return new PatientProfileUseCase(this.authedUserService, this.patientMetadataRepository, this.userDtoService);
+        return new PatientProfileUseCase(this.authedUserService, this.patientMetadataRepository, this.userDtoMapper);
     }
 
     public createUpdatePatientProfileUseCase(): UpdatePatientProfileUseCase {
@@ -38,7 +38,7 @@ export class PatientUseCasesFactory {
         return new DoctorListProfileUseCase(
             this.authedUserService,
             this.patientDataAccessRepository,
-            this.userDtoService,
+            this.userDtoMapper,
         );
     }
 
@@ -46,7 +46,7 @@ export class PatientUseCasesFactory {
         return new CaregiverListProfileUseCase(
             this.authedUserService,
             this.patientDataAccessRepository,
-            this.userDtoService,
+            this.userDtoMapper,
         );
     }
 }

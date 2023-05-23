@@ -6,14 +6,14 @@ import {REQUEST} from '@nestjs/core';
 import {AccessTokenClaimsModel} from 'infrastructure/aws/cognito/access-token-claims.model';
 import {UserSignedInDto} from 'domain/dtos/response/auth';
 import {UserNotActiveError} from 'app/errors/user-not-active.error';
-import {UserDtoService} from 'app/modules/profile/services/user-dto.service';
+import {UserDtoMapper} from 'app/modules/profile/mappers/user-dto.mapper';
 
 @Injectable({scope: Scope.REQUEST})
 export class AuthedUserService implements IAuthedUserService {
     public constructor(
         @Inject(REQUEST) private readonly request: any,
         @Inject(IUserRepository) private readonly userRepository: IUserRepository,
-        @Inject(UserDtoService) private readonly userDtoService: UserDtoService,
+        @Inject(UserDtoMapper) private readonly userDtoMapper: UserDtoMapper,
     ) {}
 
     public async getUser(): Promise<User> {
@@ -42,7 +42,7 @@ export class AuthedUserService implements IAuthedUserService {
     ): Promise<UserSignedInDto> {
         const accessTokenClaimsModel = AccessTokenClaimsModel.fromCognitoResponse(accessTokenClaims);
         const user = await this.userRepository.getOneById(accessTokenClaimsModel.getUserId());
-        const userDto = this.userDtoService.createUserDtoByUser(user);
+        const userDto = this.userDtoMapper.mapUserDtoByUser(user);
 
         return UserSignedInDto.fromTokenData(accessToken, refreshToken, accessTokenClaimsModel, userDto);
     }

@@ -5,12 +5,12 @@ import {PatientDataAccess} from 'domain/entities/patient-data-access.entity';
 import {IPatientCategoryRepository} from 'app/modules/patient-category/repositories';
 import {IVitalRepository} from 'app/modules/vital/repositories';
 import {sortUserDtosByName} from 'app/support/sort.helper';
-import {UserDtoService} from 'app/modules/profile/services/user-dto.service';
+import {UserDtoMapper} from 'app/modules/profile/mappers/user-dto.mapper';
 
 export class MyPatientsService implements IMyPatientsService {
     public constructor(
         @Inject(IPatientCategoryRepository) private readonly patientCategoryRepository: IPatientCategoryRepository,
-        @Inject(UserDtoService) private readonly userDtoService: UserDtoService,
+        @Inject(UserDtoMapper) private readonly userDtoMapper: UserDtoMapper,
         @Inject(IVitalRepository) private readonly vitalRepository: IVitalRepository,
     ) {}
 
@@ -23,7 +23,7 @@ export class MyPatientsService implements IMyPatientsService {
         const grantedUserId = dataAccesses[0].grantedUserId;
         const indexedPatientCategories = await this.getIndexedPatientCategories(patientIds, grantedUserId);
         const myPatients = dataAccesses.map((patientDataAccess) => {
-            const dto = this.userDtoService.createPatientDtoByUserAndMetadata(
+            const dto = this.userDtoMapper.mapPatientDtoByUserAndMetadata(
                 patientDataAccess.patientUser,
                 patientDataAccess.patientUser.patientMetadata,
             ) as MyPatientDto;

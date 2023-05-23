@@ -3,12 +3,12 @@ import {PatientVitalThresholds} from 'domain/entities';
 import {IUserRepository} from 'app/modules/auth/repositories';
 import {PatientVitalThresholdsDto} from 'domain/dtos/response/patient-vital-thresholds/patient-vital-thresholds.dto';
 import {UserDto} from 'domain/dtos/response/user/user.dto';
-import {UserDtoService} from 'app/modules/profile/services/user-dto.service';
+import {UserDtoMapper} from 'app/modules/profile/mappers/user-dto.mapper';
 
 export class ThresholdsDtoService {
     public constructor(
         private readonly userRepository: IUserRepository,
-        private readonly userDtoService: UserDtoService,
+        private readonly userDtoMapper: UserDtoMapper,
     ) {}
 
     public async createDtoByThresholds(thresholdsGroup: PatientVitalThresholds[]): Promise<ThresholdsDto> {
@@ -29,7 +29,7 @@ export class ThresholdsDtoService {
         const userIds = this.extractUserIds(thresholdsGroup);
         const users = await this.userRepository.getByIds(userIds);
 
-        return users.map((user) => this.userDtoService.createUserDtoByUser(user));
+        return users.map((user) => this.userDtoMapper.mapUserDtoByUser(user));
     }
 
     private extractUserIds(thresholdsGroup: PatientVitalThresholds[]): string[] {

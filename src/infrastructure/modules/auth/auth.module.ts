@@ -15,7 +15,7 @@ import {MailModule} from 'infrastructure/modules/mail/mail.module';
 import {PatientVitalThresholdsIndependentModule} from 'infrastructure/modules/patient-vital-thresholds/patient-vital-thresholds.ind.module';
 import {FileModule} from 'infrastructure/modules/file/file.module';
 import {UserIndependentModule} from './user.ind.module';
-import {UserDtoService} from 'app/modules/profile/services/user-dto.service';
+import {UserDtoMapper} from 'app/modules/profile/mappers/user-dto.mapper';
 import {IFileUrlService} from 'app/modules/profile/services/file-url.service';
 import {IUserRepository} from 'app/modules/auth/repositories';
 import {ForgotPasswordSpecification} from 'app/modules/auth/specifications/forgot-password.specification';
@@ -28,7 +28,7 @@ import {ForgotPasswordSpecification} from 'app/modules/auth/specifications/forgo
         PatientVitalThresholdsIndependentModule,
         UserIndependentModule,
     ],
-    exports: [IAuthService, IAuthedUserService, RequestUserService, UserDtoService],
+    exports: [IAuthService, IAuthedUserService, RequestUserService, UserDtoMapper],
     controllers: [AuthController],
     providers: [
         AuthUseCasesFactory,
@@ -47,9 +47,9 @@ import {ForgotPasswordSpecification} from 'app/modules/auth/specifications/forgo
             useClass: AuthEventEmitter,
         },
         {
-            provide: UserDtoService,
+            provide: UserDtoMapper,
             useFactory: (fileUrlService: IFileUrlService) => {
-                return new UserDtoService(fileUrlService);
+                return new UserDtoMapper(fileUrlService);
             },
             inject: [IFileUrlService],
         },

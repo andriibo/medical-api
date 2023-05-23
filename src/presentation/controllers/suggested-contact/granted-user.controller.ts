@@ -22,9 +22,9 @@ import {
 import {Roles} from 'presentation/guards';
 import {CreateSuggestedContactView} from 'views/request/suggested-contact';
 import {GrantedUserUseCasesFactory} from 'infrastructure/modules/suggected-contact/factories';
-import {MySuggestedContactView} from 'views/response/suggested-contact';
-import {MySuggestedContactDto} from 'domain/dtos/response/suggested-contact/my-suggested-contact.dto';
 import {TrimPipe} from 'presentation/pipes/trim.pipe';
+import {SuggestedContactDto} from 'domain/dtos/response/suggested-contact/suggested-contact.dto';
+import {SuggestedContactView} from 'views/response/suggested-contact';
 
 @Controller()
 @ApiBearerAuth()
@@ -68,10 +68,10 @@ export class GrantedUserController {
     @Roles('Caregiver', 'Doctor')
     @Get('my-suggested-contacts/:patientUserId')
     @HttpCode(HttpStatus.OK)
-    @ApiResponse({status: HttpStatus.OK, type: [MySuggestedContactView]})
+    @ApiResponse({status: HttpStatus.OK, type: [SuggestedContactView]})
     public async getPatientSuggestedContacts(
         @Param('patientUserId', ParseUUIDPipe) patientUserId: string,
-    ): Promise<MySuggestedContactDto[]> {
+    ): Promise<SuggestedContactDto[]> {
         const useCase = this.grantedUserUseCasesFactory.createPatientContactUseCase();
 
         try {

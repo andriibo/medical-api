@@ -9,7 +9,7 @@ import {IPatientMedicationEntityMapper} from 'app/modules/patient-medication/map
 import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service';
 import {PatientMedicationSpecification} from 'app/modules/patient-medication/specifications/patient-medication.specification';
 import {IUserRepository} from 'app/modules/auth/repositories';
-import {UserDtoService} from 'app/modules/profile/services/user-dto.service';
+import {UserDtoMapper} from 'app/modules/profile/mappers/user-dto.mapper';
 
 @Injectable()
 export class PatientMedicationUseCasesFactory {
@@ -22,8 +22,8 @@ export class PatientMedicationUseCasesFactory {
         private readonly patientMedicationEntityMapper: IPatientMedicationEntityMapper,
         @Inject(PatientMedicationSpecification)
         private readonly patientMedicationSpecification: PatientMedicationSpecification,
-        @Inject(UserDtoService)
-        private readonly userDtoService: UserDtoService,
+        @Inject(UserDtoMapper)
+        private readonly userDtoMapper: UserDtoMapper,
     ) {}
 
     public createCreateMedicationUseCase(): CreateMedicationUseCase {
@@ -41,7 +41,7 @@ export class PatientMedicationUseCasesFactory {
             this.userRepository,
             this.patientMedicationRepository,
             this.patientMedicationSpecification,
-            this.userDtoService,
+            this.userDtoMapper,
         );
     }
 

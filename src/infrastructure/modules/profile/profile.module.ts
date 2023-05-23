@@ -28,7 +28,7 @@ import {IPatientCategoryRepository} from 'app/modules/patient-category/repositor
 import {IVitalRepository} from 'app/modules/vital/repositories';
 import {PatientCategoryModule} from 'infrastructure/modules/patient-category/patient-category.module';
 import {UserIndependentModule} from 'infrastructure/modules/auth/user.ind.module';
-import {UserDtoService} from 'app/modules/profile/services/user-dto.service';
+import {UserDtoMapper} from 'app/modules/profile/mappers/user-dto.mapper';
 import {FileModule} from 'infrastructure/modules/file/file.module';
 import {IRemoveMyAvatarService} from 'app/modules/profile/services/remove-my-avatar.service';
 import {IUserAvatarService} from 'app/modules/profile/services/user-avatar.service';
@@ -78,12 +78,12 @@ import {RemoveMyAvatarService} from 'infrastructure/modules/profile/services/rem
             provide: IMyPatientsService,
             useFactory: (
                 patientCategoryRepository: IPatientCategoryRepository,
-                userDtoService: UserDtoService,
+                userDtoMapper: UserDtoMapper,
                 vitalRepository: IVitalRepository,
             ) => {
-                return new MyPatientsService(patientCategoryRepository, userDtoService, vitalRepository);
+                return new MyPatientsService(patientCategoryRepository, userDtoMapper, vitalRepository);
             },
-            inject: [IPatientCategoryRepository, UserDtoService, IVitalRepository],
+            inject: [IPatientCategoryRepository, UserDtoMapper, IVitalRepository],
         },
         {
             provide: IRemoveMyAvatarService,
