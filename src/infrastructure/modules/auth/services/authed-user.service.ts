@@ -44,6 +44,9 @@ export class AuthedUserService implements IAuthedUserService {
         const user = await this.userRepository.getOneById(accessTokenClaimsModel.getUserId());
         const userDto = this.userDtoMapper.mapUserDtoByUser(user);
 
-        return UserSignedInDto.fromTokenData(accessToken, refreshToken, accessTokenClaimsModel, userDto);
+        const userSignedInDto = UserSignedInDto.fromTokenData(accessToken, refreshToken, userDto);
+        userSignedInDto.accessTokenExpireTime = accessTokenClaimsModel.getAccessTokenExpireTime();
+
+        return userSignedInDto;
     }
 }

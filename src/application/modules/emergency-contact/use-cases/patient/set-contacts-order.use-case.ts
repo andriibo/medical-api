@@ -2,7 +2,7 @@ import {ContactsOrderDto} from 'domain/dtos/request/emergency-contact/contacts-o
 import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service';
 import {IEmergencyContactRepository} from 'app/modules/emergency-contact/repositories';
 import {EmergencyContactSpecification} from 'app/modules/emergency-contact/specifications/emergency-contact.specification';
-import {indexObjects} from 'app/support/array.helper';
+import {indexObjects} from 'support/array.helper';
 import {EmergencyContact} from 'domain/entities';
 
 export class SetContactsOrderUseCase {

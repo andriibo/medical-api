@@ -8,6 +8,7 @@ import {ApproveSuggestedContactByPatientService} from 'app/modules/suggested-con
 import {ContactListUseCase} from 'app/modules/suggested-contact/use-cases/patient/contact-list.use-case';
 import {IUserRepository} from 'app/modules/auth/repositories';
 import {UserDtoMapper} from 'app/modules/profile/mappers/user-dto.mapper';
+import {SuggestedContactDtoMapper} from 'app/modules/suggested-contact/mappers/suggested-contact-dto.mapper';
 
 @Injectable()
 export class PatientUseCasesFactory {
@@ -20,6 +21,7 @@ export class PatientUseCasesFactory {
         @Inject(ApproveSuggestedContactByPatientService)
         private readonly approveSuggestedContactByPatientService: ApproveSuggestedContactByPatientService,
         @Inject(IUserRepository) private readonly userRepository: IUserRepository,
+        @Inject(SuggestedContactDtoMapper) private readonly suggestedContactDtoMapper: SuggestedContactDtoMapper,
         @Inject(UserDtoMapper) private readonly userDtoMapper: UserDtoMapper,
     ) {}
 
@@ -44,6 +46,7 @@ export class PatientUseCasesFactory {
             this.authedUserService,
             this.suggestedContactRepository,
             this.userRepository,
+            this.suggestedContactDtoMapper,
             this.userDtoMapper,
         );
     }

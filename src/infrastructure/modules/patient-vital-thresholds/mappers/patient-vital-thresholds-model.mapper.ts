@@ -2,7 +2,7 @@ import {IPatientVitalThresholdsEntityMapper} from 'app/modules/patient-vital-thr
 import {PatientVitalThresholds, User} from 'domain/entities';
 import {PatientVitalThresholdsModel} from 'infrastructure/modules/patient-vital-thresholds/models';
 import {BloodPressureThresholdsDto} from 'domain/dtos/request/patient-vital-thresholds/blood-pressure-thresholds.dto';
-import {currentUnixTimestamp} from 'app/support/date.helper';
+import {currentUnixTimestamp} from 'support/date.helper';
 import {MinMaxThresholdDto} from 'domain/dtos/request/patient-vital-thresholds/min-max-threshold.dto';
 import {MinThresholdDto} from 'domain/dtos/request/patient-vital-thresholds/min-threshold.dto';
 

@@ -23,7 +23,7 @@ import {PatientDataAccessEventEmitter} from 'infrastructure/modules/patient-data
 import {IMailSender} from 'app/modules/mail/services/abstract/mail-sender';
 import {IDeepLinkService} from 'app/modules/mail/services/deep-link.service';
 import {PatientStatus} from 'domain/entities/patient-status.entity';
-import {currentUnixTimestamp} from 'app/support/date.helper';
+import {currentUnixTimestamp} from 'support/date.helper';
 import {AccessToRegisteredPatientService} from 'app/modules/patient-data-access/services/access-to-registered-patient.service';
 
 const patient: User = {

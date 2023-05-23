@@ -8,7 +8,7 @@ import {DoctorMetadataModel, PatientMetadataModel, UserModel} from 'infrastructu
 import {PatientDataAccess, User} from 'domain/entities';
 import {IDoctorMetadataRepository, IPatientMetadataRepository} from 'app/modules/profile/repositories';
 import {TestModule} from 'tests/test.module';
-import {currentUnixTimestamp} from 'app/support/date.helper';
+import {currentUnixTimestamp} from 'support/date.helper';
 import {IPatientCategoryRepository} from 'app/modules/patient-category/repositories';
 import {PatientCategory} from 'domain/entities/patient-category.entity';
 import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repositories';

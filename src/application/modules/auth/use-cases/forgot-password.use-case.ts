@@ -12,8 +12,6 @@ export class ForgotPasswordUseCase {
     public async initiateForgotPasswordProcess(dto: ForgotPasswordDto): Promise<ForgotPasswordMailSentDto> {
         await this.forgotPasswordSpecification.assertUserExistsByEmail(dto.email);
 
-        const forgotPasswordRequestResult = await this.authService.forgotPassword(dto.email);
-
-        return ForgotPasswordMailSentDto.fromResponse(forgotPasswordRequestResult);
+        return await this.authService.forgotPassword(dto.email);
     }
 }

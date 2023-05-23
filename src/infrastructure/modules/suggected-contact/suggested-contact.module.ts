@@ -18,6 +18,7 @@ import {EmergencyContactSpecification} from 'app/modules/emergency-contact/speci
 import {IEmergencyContactRepository} from 'app/modules/emergency-contact/repositories';
 import {PatientDataAccessSpecification} from 'app/modules/patient-data-access/specifications/patient-data-access.specification';
 import {UserIndependentModule} from 'infrastructure/modules/auth/user.ind.module';
+import {SuggestedContactDtoMapper} from 'app/modules/suggested-contact/mappers/suggested-contact-dto.mapper';
 
 @Module({
     imports: [
@@ -38,6 +39,10 @@ import {UserIndependentModule} from 'infrastructure/modules/auth/user.ind.module
         {
             provide: ISuggestedContactEntityMapper,
             useClass: SuggestedContactModelMapper,
+        },
+        {
+            provide: SuggestedContactDtoMapper,
+            useClass: SuggestedContactDtoMapper,
         },
         {
             provide: DeleteSuggestedContactByGrantedUserService,

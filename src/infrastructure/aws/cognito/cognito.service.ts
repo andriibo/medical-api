@@ -34,9 +34,6 @@ import {
     ChangePasswordModel,
     ConfirmForgotPasswordModel,
     ConfirmChangeEmailModel,
-    ForgotPasswordResponseModel,
-    ChangeEmailResponseModel,
-    ResendConfirmationCodeResultModel,
     UserAttributesModel,
 } from 'app/modules/auth/models';
 import {IAuthService} from 'app/modules/auth/services/auth.service';
@@ -45,6 +42,7 @@ import * as jwkToBuffer from 'jwk-to-pem';
 import {User} from 'domain/entities/user.entity';
 import {AuthModel} from './auth.model';
 import {AuthServiceError} from 'app/errors';
+import {ChangeEmailResultDto, ConfirmEmailResentDto, ForgotPasswordMailSentDto} from 'domain/dtos/response/auth';
 
 interface CognitoProviderConfig {
     region: string;
@@ -146,7 +144,7 @@ export class CognitoService implements IAuthService {
         }
     }
 
-    public async resendConfirmSignUpCode(email: string): Promise<ResendConfirmationCodeResultModel> {
+    public async resendConfirmSignUpCode(email: string): Promise<ConfirmEmailResentDto> {
         const command = new ResendConfirmationCodeCommand({
             Username: email,
             ClientId: this.config.clientId,
@@ -191,7 +189,7 @@ export class CognitoService implements IAuthService {
         });
     }
 
-    public async forgotPassword(email: string): Promise<ForgotPasswordResponseModel> {
+    public async forgotPassword(email: string): Promise<ForgotPasswordMailSentDto> {
         const command = new ForgotPasswordCommand({
             ClientId: this.config.clientId,
             Username: email,
@@ -242,7 +240,7 @@ export class CognitoService implements IAuthService {
         }
     }
 
-    public async changeEmail(changeEmailModel: ChangeEmailModel): Promise<ChangeEmailResponseModel> {
+    public async changeEmail(changeEmailModel: ChangeEmailModel): Promise<ChangeEmailResultDto> {
         const command = new UpdateUserAttributesCommand({
             AccessToken: changeEmailModel.accessToken,
             UserAttributes: [
@@ -302,7 +300,7 @@ export class CognitoService implements IAuthService {
         return authResultModel;
     }
 
-    private getForgotPasswordResult(forgotPasswordResponse: ForgotPasswordResponse): ForgotPasswordResponseModel {
+    private getForgotPasswordResult(forgotPasswordResponse: ForgotPasswordResponse): ForgotPasswordMailSentDto {
         return {
             destination: forgotPasswordResponse?.CodeDeliveryDetails?.Destination,
             attributeName: forgotPasswordResponse?.CodeDeliveryDetails?.AttributeName,
@@ -310,7 +308,7 @@ export class CognitoService implements IAuthService {
         };
     }
 
-    private getChangeEmailResult(updateUserAttributesResponse: UpdateUserAttributesResponse): ChangeEmailResponseModel {
+    private getChangeEmailResult(updateUserAttributesResponse: UpdateUserAttributesResponse): ChangeEmailResultDto {
         const emailDeliveryDetails = updateUserAttributesResponse?.CodeDeliveryDetailsList?.pop();
 
         return {
@@ -322,7 +320,7 @@ export class CognitoService implements IAuthService {
 
     private getResendCodeResult(
         resendConfirmationCodeResponse: ResendConfirmationCodeResponse,
-    ): ResendConfirmationCodeResultModel {
+    ): ConfirmEmailResentDto {
         const emailDeliveryDetails = resendConfirmationCodeResponse?.CodeDeliveryDetails;
 
         return {

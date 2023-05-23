@@ -17,19 +17,15 @@ import {DoctorMetadataModel, PatientMetadataModel, UserModel} from 'infrastructu
 import {User} from 'domain/entities';
 import {IDoctorMetadataRepository, IPatientMetadataRepository} from 'app/modules/profile/repositories';
 import {CreateCaregiverDto} from 'domain/dtos/request/auth/create-caregiver.dto';
-import {currentUnixTimestamp} from 'app/support/date.helper';
+import {currentUnixTimestamp} from 'support/date.helper';
 import {TestModule} from 'tests/test.module';
-import {
-    AuthResultModel,
-    ForgotPasswordResponseModel,
-    IAuthModel,
-    ResendConfirmationCodeResultModel,
-} from 'app/modules/auth/models';
+import {AuthResultModel, IAuthModel} from 'app/modules/auth/models';
 import {IAuthService} from 'app/modules/auth/services/auth.service';
 import {IMailSender} from 'app/modules/mail/services/abstract/mail-sender';
 import {AuthModel} from 'infrastructure/aws/cognito/auth.model';
 import {PatientCategoryModel} from 'infrastructure/modules/patient-category/models';
 import {IPatientVitalThresholdsRepository} from 'app/modules/patient-vital-thresholds/repositories';
+import {ConfirmEmailResentDto, ForgotPasswordMailSentDto} from 'domain/dtos/response/auth';
 
 const authModel: IAuthModel = new AuthModel({
     UserConfirmed: true,
@@ -45,12 +41,12 @@ const accessTokenClaims = {
     'cognito:groups': ['Doctor'],
     exp: authResultModel.accessTokenExpireTime,
 };
-const resendConfirmationCodeResultModel: ResendConfirmationCodeResultModel = {
+const confirmEmailResentDto: ConfirmEmailResentDto = {
     destination: 'destination',
     deliveryMedium: 'deliveryMedium',
     attributeName: 'attributeName',
 };
-const forgotPasswordResponseModel: ForgotPasswordResponseModel = {
+const forgotPasswordMailSentDto: ForgotPasswordMailSentDto = {
     destination: 'destination',
     deliveryMedium: 'deliveryMedium',
     attributeName: 'attributeName',
@@ -96,8 +92,8 @@ describe('AuthController', () => {
         signIn: jest.fn(() => Promise.resolve(authResultModel)),
         getAccessTokenClaimsByAccessToken: jest.fn(() => Promise.resolve(accessTokenClaims)),
         confirmSignUp: jest.fn(() => Promise.resolve()),
-        resendConfirmSignUpCode: jest.fn(() => Promise.resolve(resendConfirmationCodeResultModel)),
-        forgotPassword: jest.fn(() => Promise.resolve(forgotPasswordResponseModel)),
+        resendConfirmSignUpCode: jest.fn(() => Promise.resolve(confirmEmailResentDto)),
+        forgotPassword: jest.fn(() => Promise.resolve(forgotPasswordMailSentDto)),
         confirmForgotPassword: jest.fn(() => Promise.resolve()),
         deleteUser: jest.fn(() => Promise.resolve()),
     };
@@ -218,9 +214,9 @@ describe('AuthController', () => {
         const dto = new ResendSignUpCodeDto();
         dto.email = 'doctor@gmail.com';
         return request(app.getHttpServer()).post('/sign-up/resend-code').send(dto).expect(200).expect({
-            destination: resendConfirmationCodeResultModel.destination,
-            deliveryMedium: resendConfirmationCodeResultModel.deliveryMedium,
-            attributeName: resendConfirmationCodeResultModel.attributeName,
+            destination: confirmEmailResentDto.destination,
+            deliveryMedium: confirmEmailResentDto.deliveryMedium,
+            attributeName: confirmEmailResentDto.attributeName,
         });
     });
 
@@ -235,9 +231,9 @@ describe('AuthController', () => {
         const dto = new ForgotPasswordDto();
         dto.email = 'doctor@gmail.com';
         return request(app.getHttpServer()).post('/forgot-password').send(dto).expect(200).expect({
-            destination: forgotPasswordResponseModel.destination,
-            deliveryMedium: forgotPasswordResponseModel.deliveryMedium,
-            attributeName: forgotPasswordResponseModel.attributeName,
+            destination: forgotPasswordMailSentDto.destination,
+            deliveryMedium: forgotPasswordMailSentDto.deliveryMedium,
+            attributeName: forgotPasswordMailSentDto.attributeName,
         });
     });
 

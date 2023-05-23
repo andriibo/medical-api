@@ -2,7 +2,7 @@ import {EmergencyContact, User} from 'domain/entities';
 import {UserRole} from 'domain/entities/user.entity';
 import {EmergencyContactSpecificationError} from 'app/modules/emergency-contact/errors';
 import {IEmergencyContactRepository} from 'app/modules/emergency-contact/repositories';
-import {arrayDiff} from 'app/support/array.helper';
+import {arrayDiff} from 'support/array.helper';
 import {ContactsOrderDto} from 'domain/dtos/request/emergency-contact/contacts-order.dto';
 
 export class EmergencyContactSpecification {

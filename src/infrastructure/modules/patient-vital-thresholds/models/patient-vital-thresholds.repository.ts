@@ -4,7 +4,7 @@ import {DataSource, In} from 'typeorm';
 import {IPatientVitalThresholdsRepository} from 'app/modules/patient-vital-thresholds/repositories';
 import {PatientVitalThresholdsModel} from './patient-vital-thresholds.model';
 import {PatientVitalThresholds} from 'domain/entities/patient-vital-thresholds.entity';
-import {arrayUnique} from 'app/support/array.helper';
+import {arrayUnique} from 'support/array.helper';
 
 @Injectable()
 export class PatientVitalThresholdsRepository implements IPatientVitalThresholdsRepository {

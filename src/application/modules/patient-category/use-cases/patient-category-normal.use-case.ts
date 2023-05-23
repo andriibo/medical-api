@@ -2,7 +2,7 @@ import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service'
 import {IPatientCategoryRepository} from 'app/modules/patient-category/repositories';
 import {EntityNotFoundError} from 'app/errors';
 import {PatientCategory, PatientCategoryEnum} from 'domain/entities/patient-category.entity';
-import {currentUnixTimestamp} from 'app/support/date.helper';
+import {currentUnixTimestamp} from 'support/date.helper';
 import {PatientCategorySpecification} from 'app/modules/patient-category/specifications/patient-category.specification';
 
 export class PatientCategoryNormalUseCase {

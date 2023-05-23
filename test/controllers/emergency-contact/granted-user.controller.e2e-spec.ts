@@ -17,7 +17,7 @@ import {IUserRepository} from 'app/modules/auth/repositories';
 import {IDoctorMetadataRepository, IPatientMetadataRepository} from 'app/modules/profile/repositories';
 import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repositories';
 import {EmergencyContactModule} from 'infrastructure/modules';
-import {convertToUnixTimestamp} from 'app/support/date.helper';
+import {convertToUnixTimestamp} from 'support/date.helper';
 
 const doctor: User = {
     id: '8bfbd95c-c8a5-404b-b3eb-6ac648052ac4',

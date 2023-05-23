@@ -1,7 +1,7 @@
 import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service';
 import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repositories';
 import {MyDoctorDto} from 'domain/dtos/response/profile/my-doctor.dto';
-import {sortUserDtosByName} from 'app/support/sort.helper';
+import {sortUserDtosByName} from 'support/sort.helper';
 import {PatientDataAccessStatus} from 'domain/entities/patient-data-access.entity';
 import {UserDtoMapper} from 'app/modules/profile/mappers/user-dto.mapper';
 

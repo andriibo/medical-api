@@ -4,7 +4,7 @@ import {MyPatientDto} from 'domain/dtos/response/profile/my-patient.dto';
 import {PatientDataAccess} from 'domain/entities/patient-data-access.entity';
 import {IPatientCategoryRepository} from 'app/modules/patient-category/repositories';
 import {IVitalRepository} from 'app/modules/vital/repositories';
-import {sortUserDtosByName} from 'app/support/sort.helper';
+import {sortUserDtosByName} from 'support/sort.helper';
 import {UserDtoMapper} from 'app/modules/profile/mappers/user-dto.mapper';
 
 export class MyPatientsService implements IMyPatientsService {

@@ -12,8 +12,6 @@ export class ChangeEmailUseCase {
             newEmail: dto.email,
         };
 
-        const response = await this.authService.changeEmail(changeEmailModel);
-
-        return ChangeEmailResultDto.fromResponse(response);
+        return await this.authService.changeEmail(changeEmailModel);
     }
 }

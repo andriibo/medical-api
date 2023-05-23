@@ -18,7 +18,7 @@ import {IDoctorMetadataRepository, IPatientMetadataRepository} from 'app/modules
 import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repositories';
 import {EmergencyContactModule} from 'infrastructure/modules';
 import {ContactDto} from 'domain/dtos/request/emergency-contact/contact.dto';
-import {convertToUnixTimestamp} from 'app/support/date.helper';
+import {convertToUnixTimestamp} from 'support/date.helper';
 import {ContactsOrderDto} from "domain/dtos/request/emergency-contact/contacts-order.dto";
 
 const patient: User = {

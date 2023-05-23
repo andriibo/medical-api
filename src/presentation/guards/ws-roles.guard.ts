@@ -8,7 +8,7 @@ import {
     SetMetadata,
 } from '@nestjs/common';
 import {WsException} from '@nestjs/websockets';
-import {isNullOrUndefined} from 'app/support/type.helper';
+import {isNullOrUndefined} from 'support/type.helper';
 import {RequestUserService} from 'infrastructure/services/request-user.service';
 import {Reflector} from '@nestjs/core';
 import {IRequestUserModel} from 'app/modules/auth/models';

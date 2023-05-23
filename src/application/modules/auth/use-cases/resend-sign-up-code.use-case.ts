@@ -6,8 +6,6 @@ export class ResendSignUpCodeUseCase {
     public constructor(private readonly authService: IAuthService) {}
 
     public async resendCode(dto: ResendSignUpCodeDto): Promise<ConfirmEmailResentDto> {
-        const response = await this.authService.resendConfirmSignUpCode(dto.email);
-
-        return ConfirmEmailResentDto.fromResponse(response);
+        return await this.authService.resendConfirmSignUpCode(dto.email);
     }
 }

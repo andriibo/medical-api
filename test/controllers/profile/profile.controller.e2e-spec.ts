@@ -17,7 +17,7 @@ import {IPatientCategoryRepository} from 'app/modules/patient-category/repositor
 import {PatientStatusModel} from 'infrastructure/modules/patient-status/models';
 import {IPatientStatusRepository} from 'app/modules/patient-status/repositories';
 import {IPatientVitalThresholdsRepository} from 'app/modules/patient-vital-thresholds/repositories';
-import {currentUnixTimestamp} from 'app/support/date.helper';
+import {currentUnixTimestamp} from 'support/date.helper';
 import {IRemoveMyAvatarService} from 'app/modules/profile/services/remove-my-avatar.service';
 
 const doctor: User = {

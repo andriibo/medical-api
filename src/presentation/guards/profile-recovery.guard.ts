@@ -1,6 +1,6 @@
 import {Injectable, CanActivate, ExecutionContext, UseGuards, UnauthorizedException} from '@nestjs/common';
 import {UserRequest} from 'presentation/middlewares/assign-user.middleware';
-import {isNullOrUndefined} from 'app/support/type.helper';
+import {isNullOrUndefined} from 'support/type.helper';
 
 @Injectable()
 export class ProfileRecoveryGuard implements CanActivate {

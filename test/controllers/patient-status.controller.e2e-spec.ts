@@ -11,7 +11,7 @@ import {TestModule} from 'tests/test.module';
 import {PatientStatusModel} from 'infrastructure/modules/patient-status/models';
 import {IPatientStatusRepository} from 'app/modules/patient-status/repositories';
 import {PatientStatus} from 'domain/entities/patient-status.entity';
-import {currentUnixTimestamp} from 'app/support/date.helper';
+import {currentUnixTimestamp} from 'support/date.helper';
 import {PatientCategoryModel} from 'infrastructure/modules/patient-category/models';
 import {PatientDataAccessModel} from 'infrastructure/modules/patient-data-access/models';
 import {IPatientCategoryRepository} from 'app/modules/patient-category/repositories';

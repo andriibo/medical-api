@@ -10,7 +10,7 @@ import {IDoctorMetadataRepository, IPatientMetadataRepository} from 'app/modules
 import {PatientDataAccessModel} from 'infrastructure/modules/patient-data-access/models';
 import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repositories';
 import {TestModule} from 'tests/test.module';
-import {currentUnixTimestamp} from 'app/support/date.helper';
+import {currentUnixTimestamp} from 'support/date.helper';
 import {IVitalRepository} from 'app/modules/vital/repositories';
 import {VitalModel} from 'infrastructure/modules/vital/models';
 import {PatientCategoryModel} from 'infrastructure/modules/patient-category/models';

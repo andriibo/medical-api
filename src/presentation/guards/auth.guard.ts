@@ -8,7 +8,7 @@ import {
     ForbiddenException,
 } from '@nestjs/common';
 import {UserRequest} from 'presentation/middlewares/assign-user.middleware';
-import {isNullOrUndefined} from 'app/support/type.helper';
+import {isNullOrUndefined} from 'support/type.helper';
 import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service';
 
 @Injectable()

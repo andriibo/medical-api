@@ -18,7 +18,7 @@ import {IPatientStatusRepository} from 'app/modules/patient-status/repositories'
 import {PatientVitalThresholdsModel} from 'infrastructure/modules/patient-vital-thresholds/models';
 import {VitalModel} from 'infrastructure/modules/vital/models';
 import {IVitalRepository} from 'app/modules/vital/repositories';
-import {convertToUnixTimestamp} from 'app/support/date.helper';
+import {convertToUnixTimestamp} from 'support/date.helper';
 
 const patient: User = {
     id: 'bd58571c-c935-41e9-9e08-a8d4e0e93f5f',
