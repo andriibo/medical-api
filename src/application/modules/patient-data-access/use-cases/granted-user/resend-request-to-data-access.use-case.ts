@@ -20,14 +20,14 @@ export class ResendRequestToDataAccessUseCase {
 
         await this.patientDataAccessSpecification.assertGrantedUserCanResendRequest(user, dataAccess);
 
-        // dataAccess.status = PatientDataAccessStatus.Initiated;
-        // dataAccess.lastInviteSentAt = currentUnixTimestamp();
-        //
-        // await this.patientDataAccessRepository.update(dataAccess);
-        // await this.patientDataAccessEventEmitter.emitGrantedUserResentRequestToPatient(
-        //     user,
-        //     dataAccess,
-        // );
+        dataAccess.status = PatientDataAccessStatus.Initiated;
+        dataAccess.lastInviteSentAt = currentUnixTimestamp();
+
+        await this.patientDataAccessRepository.update(dataAccess);
+        await this.patientDataAccessEventEmitter.emitGrantedUserResentRequestToPatient(
+            user,
+            dataAccess,
+        );
     }
 
     private async getDataAccess(accessId: string): Promise<PatientDataAccess> {

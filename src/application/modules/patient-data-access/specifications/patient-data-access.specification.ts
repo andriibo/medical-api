@@ -115,9 +115,7 @@ export class PatientDataAccessSpecification {
         const isPatientRequested = dataAccess.direction === PatientDataAccessRequestDirection.ToPatient;
         const isUserGranted = dataAccess.grantedUserId === grantedUser.id;
         const isAccessStatusNotApproved = dataAccess.status !== PatientDataAccessStatus.Approved;
-        console.log('--------isAccessStatusNotApproved', isAccessStatusNotApproved)
-        console.log('--------isPatientRequested', isPatientRequested)
-        console.log('--------isUserGranted', isUserGranted, grantedUser.id)
+
         const isResendAllowed = isUserGranted && isAccessStatusNotApproved && isPatientRequested;
 
         if (!isResendAllowed) {
