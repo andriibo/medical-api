@@ -28,6 +28,8 @@ export interface PatientDataAccess {
 
     createdAt: string;
 
+    lastInviteSentAt: number;
+
     grantedUser?: User | null;
 
     patientUser?: User | null;

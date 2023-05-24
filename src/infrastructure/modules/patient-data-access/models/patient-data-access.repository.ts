@@ -51,7 +51,7 @@ export class PatientDataAccessRepository implements IPatientDataAccessRepository
             .where('pda.patient_user_id = :patientUserId', {patientUserId})
             .andWhere('(pda.granted_email is not null or (user.deleted_at is null and user.email is not null))')
             .orderBy({
-                'pda.createdAt': 'DESC',
+                'pda.lastInviteSentAt': 'DESC',
             })
             .getMany();
     }
@@ -63,7 +63,7 @@ export class PatientDataAccessRepository implements IPatientDataAccessRepository
             .where('pda.granted_user_id = :grantedUserId', {grantedUserId})
             .andWhere('(pda.patient_email is not null or (user.deleted_at is null and user.email is not null))')
             .orderBy({
-                'pda.createdAt': 'DESC',
+                'pda.lastInviteSentAt': 'DESC',
             })
             .getMany();
     }

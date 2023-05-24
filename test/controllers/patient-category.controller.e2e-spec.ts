@@ -39,6 +39,7 @@ const patientDataAccess: PatientDataAccess = {
     direction: 'ToPatient',
     status: 'Approved',
     createdAt: new Date().toISOString(),
+    lastInviteSentAt: 0,
 };
 const patientCategory: PatientCategory = {
     id: '3db4ddee-78b7-42d3-bb79-c38c9f5b770d',

@@ -87,6 +87,7 @@ const patientDataAccessForDoctor: PatientDataAccess = {
     status: 'Approved',
     createdAt: new Date().toISOString(),
     grantedUser: doctor,
+    lastInviteSentAt: 0,
 };
 
 const patientDataAccessForCaregiver: PatientDataAccess = {
@@ -97,6 +98,7 @@ const patientDataAccessForCaregiver: PatientDataAccess = {
     status: 'Approved',
     createdAt: new Date().toISOString(),
     grantedUser: caregiver,
+    lastInviteSentAt: 0,
 };
 describe('PatientController', () => {
     let app: INestApplication;

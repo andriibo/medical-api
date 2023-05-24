@@ -10,6 +10,7 @@ import {
     DeleteDataAccessUseCase,
     InitiateDataAccessUseCase,
     RefuseDataAccessUseCase,
+    ResendRequestToDataAccessUseCase,
 } from 'app/modules/patient-data-access/use-cases/granted-user';
 import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repositories';
 import {DeleteDataAccessByGrantedUserService} from 'app/modules/patient-data-access/services/delete-data-access-by-granted-user.service';
@@ -76,6 +77,15 @@ export class GrantedUserUseCasesFactory {
             this.patientDataAccessRepository,
             this.authedUserService,
             this.deleteDataAccessByGrantedUserService,
+        );
+    }
+
+    public createResendRequestToDataAccessUseCase(): ResendRequestToDataAccessUseCase {
+        return new ResendRequestToDataAccessUseCase(
+            this.authedUserService,
+            this.patientDataAccessRepository,
+            this.patientDataAccessSpecification,
+            this.patientDataAccessEventEmitter,
         );
     }
 }

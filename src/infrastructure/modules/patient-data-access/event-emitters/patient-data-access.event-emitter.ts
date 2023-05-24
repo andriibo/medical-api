@@ -55,6 +55,23 @@ export class PatientDataAccessEventEmitter implements IPatientDataAccessEventEmi
         );
     }
 
+    public async emitGrantedUserResentRequestToPatient(
+        grantedUser: User,
+        dataAccess: PatientDataAccess,
+    ): Promise<void> {
+        if (dataAccess.patientUser) {
+            await this.emitGrantedUserInitiatedAccessToRegisteredPatient(
+                grantedUser,
+                dataAccess.patientUser.email,
+            );
+        } else if (dataAccess.patientEmail) {
+            await this.emitGrantedUserInitiatedAccessToUnregisteredPatient(
+                grantedUser,
+                dataAccess.patientEmail,
+            );
+        }
+    }
+
     public async emitAccessDeletedByPatient(patient: User, grantedEmail: string): Promise<void> {
         await this.eventEmitter.emit('data-access-deleted-by-patient', patient, grantedEmail);
     }

@@ -68,6 +68,7 @@ const patientDataAccess: PatientDataAccess = {
     status: 'Initiated',
     createdAt: new Date().toISOString(),
     grantedUser: doctor,
+    lastInviteSentAt: 0,
 };
 
 const patientStatus: PatientStatus = {
@@ -246,6 +247,7 @@ describe('PatientController', () => {
                     direction: patientDataAccess.direction,
                     status: patientDataAccess.status,
                     createdAt: patientDataAccess.createdAt,
+                    lastInviteSentAt: patientDataAccess.lastInviteSentAt,
                     requestedUser: {
                         avatar: doctor.avatar,
                         deletedAt: doctor.deletedAt,

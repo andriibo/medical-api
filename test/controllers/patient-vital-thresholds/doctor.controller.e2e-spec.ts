@@ -90,6 +90,7 @@ const patientDataAccess: PatientDataAccess = {
     direction: 'ToPatient',
     status: 'Approved',
     createdAt: new Date().toISOString(),
+    lastInviteSentAt: 0,
 };
 
 describe('DoctorController', () => {

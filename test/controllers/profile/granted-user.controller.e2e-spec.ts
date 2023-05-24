@@ -72,6 +72,7 @@ const patientDataAccess: PatientDataAccess = {
     status: 'Approved',
     createdAt: new Date().toISOString(),
     patientUser: patient,
+    lastInviteSentAt: 0,
 };
 
 const patientCategory: PatientCategory = {

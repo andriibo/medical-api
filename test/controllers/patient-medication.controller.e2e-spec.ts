@@ -52,6 +52,7 @@ const patientDataAccess: PatientDataAccess = {
     direction: 'FromPatient',
     status: 'Approved',
     createdAt: new Date().toISOString(),
+    lastInviteSentAt: 0,
 };
 const patientMedication: PatientMedication = {
     id: 'eee3adc4-9e36-4bb1-8911-e2161a2a3975',

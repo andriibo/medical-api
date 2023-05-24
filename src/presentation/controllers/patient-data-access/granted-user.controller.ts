@@ -96,4 +96,19 @@ export class GrantedUserController {
             throw new BadRequestException(error.message);
         }
     }
+
+    @Roles('Caregiver', 'Doctor')
+    @Patch('data-access/resend/:accessId')
+    @HttpCode(HttpStatus.OK)
+    @HttpCode(HttpStatus.BAD_REQUEST)
+    @ApiResponse({status: HttpStatus.OK})
+    public async resendRequestToDataAccess(@Param('accessId', ParseUUIDPipe) accessId: string): Promise<void> {
+        const useCase = this.grantedUserUseCasesFactory.createResendRequestToDataAccessUseCase();
+
+        try {
+            await useCase.resendRequest(accessId);
+        } catch (error) {
+            throw new BadRequestException(error.message);
+        }
+    }
 }

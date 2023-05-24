@@ -62,6 +62,7 @@ const patientDataAccess: PatientDataAccess = {
     status: 'Initiated',
     createdAt: new Date().toISOString(),
     patientUser: patient,
+    lastInviteSentAt: 0,
 };
 
 const patientStatus: PatientStatus = {
@@ -197,6 +198,15 @@ describe('GrantedUserController', () => {
             .expect(200);
     });
 
+    it('/data-access/resend/:accessId (PATCH)', async () => {
+        patientDataAccess.status = 'Initiated';
+        patientDataAccess.direction = 'ToPatient';
+        return request(app.getHttpServer())
+            .patch(`/data-access/resend/${patientDataAccess.id}`)
+            .set('Authorization', 'Bearer doctor')
+            .expect(200);
+    });
+
     it('/data-accesses (GET)', async () => {
         return request(app.getHttpServer())
             .get('/data-accesses')
@@ -208,6 +218,7 @@ describe('GrantedUserController', () => {
                     direction: patientDataAccess.direction,
                     status: patientDataAccess.status,
                     createdAt: patientDataAccess.createdAt,
+                    lastInviteSentAt: patientDataAccess.lastInviteSentAt,
                     requestedUser: {
                         avatar: patient.avatar,
                         deletedAt: patient.deletedAt,
