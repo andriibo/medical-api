@@ -4,6 +4,9 @@ import {PatientVitalThresholdsView} from 'views/response/patient-vital-threshold
 import {UserView} from 'views/response/user';
 
 export class VitalView extends VitalDto {
+    @ApiProperty()
+    public vitalId: string;
+
     @ApiProperty({multipleOf: 0.1, nullable: true})
     public temp: number | null;
 
