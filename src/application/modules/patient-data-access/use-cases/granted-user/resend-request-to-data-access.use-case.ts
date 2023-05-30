@@ -24,14 +24,11 @@ export class ResendRequestToDataAccessUseCase {
         dataAccess.lastInviteSentAt = currentUnixTimestamp();
 
         await this.patientDataAccessRepository.update(dataAccess);
-        await this.patientDataAccessEventEmitter.emitGrantedUserResentRequestToPatient(
-            user,
-            dataAccess,
-        );
+        await this.patientDataAccessEventEmitter.emitGrantedUserResentRequestToPatient(user, dataAccess);
     }
 
     private async getDataAccess(accessId: string): Promise<PatientDataAccess> {
-        const dataAccess = await this.patientDataAccessRepository.getOneById(accessId);
+        const dataAccess = await this.patientDataAccessRepository.getOneWithPatientUserById(accessId);
 
         if (dataAccess === null) {
             throw new EntityNotFoundError('Access Not Found.');

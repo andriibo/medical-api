@@ -84,6 +84,14 @@ export class PatientDataAccessRepository implements IPatientDataAccessRepository
         return await this.dataSource.manager.findOneBy(PatientDataAccessModel, {id});
     }
 
+    public async getOneWithPatientUserById(id: string): Promise<PatientDataAccess> {
+        return await this.dataSource
+            .createQueryBuilder(PatientDataAccessModel, 'pda')
+            .leftJoinAndSelect('pda.patientUser', 'user')
+            .where({id})
+            .getOne();
+    }
+
     public async getDoctorsByPatientUserIdAndStatus(
         patientUserId: string,
         status: PatientDataAccessStatus,

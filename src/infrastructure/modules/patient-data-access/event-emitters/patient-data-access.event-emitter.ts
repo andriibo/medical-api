@@ -46,12 +46,12 @@ export class PatientDataAccessEventEmitter implements IPatientDataAccessEventEmi
 
     public async emitGrantedUserInitiatedAccessToRegisteredPatient(
         grantedUser: User,
-        grantedEmail: string,
+        patientEmail: string,
     ): Promise<void> {
         await this.eventEmitter.emit(
             'granted-user-initiated-data-access-to-registered-patient',
             grantedUser,
-            grantedEmail,
+            patientEmail,
         );
     }
 
@@ -60,15 +60,9 @@ export class PatientDataAccessEventEmitter implements IPatientDataAccessEventEmi
         dataAccess: PatientDataAccess,
     ): Promise<void> {
         if (dataAccess.patientUser) {
-            await this.emitGrantedUserInitiatedAccessToRegisteredPatient(
-                grantedUser,
-                dataAccess.patientUser.email,
-            );
+            await this.emitGrantedUserInitiatedAccessToRegisteredPatient(grantedUser, dataAccess.patientUser.email);
         } else if (dataAccess.patientEmail) {
-            await this.emitGrantedUserInitiatedAccessToUnregisteredPatient(
-                grantedUser,
-                dataAccess.patientEmail,
-            );
+            await this.emitGrantedUserInitiatedAccessToUnregisteredPatient(grantedUser, dataAccess.patientEmail);
         }
     }
 
