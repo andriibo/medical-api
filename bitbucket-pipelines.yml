@@ -23,16 +23,17 @@ definitions:
             variables:
               SSH_USER: $USER
               SERVER: $SERVER_DO
-              COMMAND: |
-                export DOCKER_BUILDKIT=1
-                cd /var/www/${WORK_DIR}/api/
-                git pull origin ${BITBUCKET_BRANCH}
-                docker compose build --no-cache --pull
-                docker compose up -d
-                docker container prune -f
-                docker image prune -a -f
-                docker exec -it medical.api.dev npm install
-                docker exec -it medical.api.dev npm run migration:up
+              COMMAND:
+                >-
+                export DOCKER_BUILDKIT=1 &&
+                cd /var/www/${WORK_DIR}/api/ &&
+                git pull origin ${BITBUCKET_BRANCH} &&
+                docker compose build --no-cache --pull &&
+                docker compose up -d &&
+                docker container prune -f &&
+                docker image prune -a -f &&
+                docker exec -it medical.api.dev npm install &&
+                docker exec -it medical.api.dev npm run migration:up &&
                 docker exec -it medical.api.dev npm run test:e2e
                 
 pipelines:
