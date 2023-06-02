@@ -111,6 +111,18 @@ export class PatientDataAccessSpecification {
         }
     }
 
+    public async assertGrantedUserCanResendRequest(grantedUser: User, dataAccess: PatientDataAccess): Promise<void> {
+        const isPatientRequested = dataAccess.direction === PatientDataAccessRequestDirection.ToPatient;
+        const isUserGranted = dataAccess.grantedUserId === grantedUser.id;
+        const isAccessStatusNotApproved = dataAccess.status !== PatientDataAccessStatus.Approved;
+
+        const isResendAllowed = isUserGranted && isAccessStatusNotApproved && isPatientRequested;
+
+        if (!isResendAllowed) {
+            throw new PatientDataAccessSpecificationError('Resend Not Allowed.');
+        }
+    }
+
     public async assertPatientCanRefuseAccess(patient: User, dataAccess: PatientDataAccess): Promise<void> {
         const isPatient = dataAccess.patientUserId === patient.id;
         const isAccessStatusInitiated = dataAccess.status === PatientDataAccessStatus.Initiated;

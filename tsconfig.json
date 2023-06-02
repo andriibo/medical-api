@@ -27,6 +27,7 @@
       "presentation/*": ["src/presentation/*"],
       "root/*": ["*"],
       "src/*": ["src/*"],
+      "support/*": ["src/support/*"],
       "views/*": ["src/presentation/views/*"],
       "tests/*": ["test/*"],
     }

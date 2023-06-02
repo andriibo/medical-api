@@ -5,10 +5,10 @@ import {IUserRepository} from 'app/modules/auth/repositories';
 import {UserModel} from './user.model';
 import {User} from 'domain/entities';
 import {EntityNotFoundError} from 'app/errors';
-import {currentUnixTimestamp} from 'app/support/date.helper';
+import {currentUnixTimestamp} from 'support/date.helper';
 import {EntityManager} from 'typeorm/entity-manager/EntityManager';
 import {PatientVitalThresholdsModel} from 'infrastructure/modules/patient-vital-thresholds/models';
-import {arrayUnique} from 'app/support/array.helper';
+import {arrayUnique} from 'support/array.helper';
 
 @Injectable()
 export class UserRepository implements IUserRepository {

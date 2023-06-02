@@ -1,6 +1,6 @@
 import {ExecutionContext, UseGuards, CanActivate, UnauthorizedException, Injectable} from '@nestjs/common';
 import {WsException} from '@nestjs/websockets';
-import {isNullOrUndefined} from 'app/support/type.helper';
+import {isNullOrUndefined} from 'support/type.helper';
 import {RequestUserService} from 'infrastructure/services/request-user.service';
 import {IncomingHttpHeaders} from 'http';
 

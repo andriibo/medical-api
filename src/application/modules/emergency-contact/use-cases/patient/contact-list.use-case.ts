@@ -11,7 +11,7 @@ export class ContactListUseCase {
     public async getList(): Promise<ContactDto[]> {
         const user = await this.authedUserService.getUser();
 
-        const items = await this.emergencyContactRepository.getByUserId(user.id);
+        const items = await this.emergencyContactRepository.getByUserIdOrderedByRank(user.id);
 
         return items.map((item) => ContactDto.fromEmergencyContact(item));
     }

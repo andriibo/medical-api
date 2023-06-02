@@ -25,7 +25,7 @@ import {IMailSender} from 'app/modules/mail/services/abstract/mail-sender';
 import {IDeepLinkService} from 'app/modules/mail/services/deep-link.service';
 import {AccessForUnregisteredCaregiverService} from 'app/modules/patient-data-access/services/access-for-unregistered-caregiver.service';
 import {PatientStatus} from 'domain/entities/patient-status.entity';
-import {currentUnixTimestamp} from 'app/support/date.helper';
+import {currentUnixTimestamp} from 'support/date.helper';
 
 const patient: User = {
     id: '5nc3e70a-c1y9-121a-c5mv-5aq272098bp0',
@@ -35,6 +35,7 @@ const patient: User = {
     phone: '2930412345',
     avatar: null,
     role: 'Patient',
+    roleLabel: 'Patient',
     createdAt: '2022-10-10 07:31:17.016236',
     deletedAt: null,
     passwordUpdatedAt: 1681305134,
@@ -48,6 +49,7 @@ const doctor: User = {
     phone: '2930412345',
     avatar: null,
     role: 'Doctor',
+    roleLabel: 'Doctor',
     createdAt: '2022-10-10 07:31:17.016236',
     deletedAt: null,
     passwordUpdatedAt: 1681305134,
@@ -66,6 +68,7 @@ const patientDataAccess: PatientDataAccess = {
     status: 'Initiated',
     createdAt: new Date().toISOString(),
     grantedUser: doctor,
+    lastInviteSentAt: 0,
 };
 
 const patientStatus: PatientStatus = {
@@ -244,6 +247,7 @@ describe('PatientController', () => {
                     direction: patientDataAccess.direction,
                     status: patientDataAccess.status,
                     createdAt: patientDataAccess.createdAt,
+                    lastInviteSentAt: patientDataAccess.lastInviteSentAt,
                     requestedUser: {
                         avatar: doctor.avatar,
                         deletedAt: doctor.deletedAt,
@@ -253,6 +257,7 @@ describe('PatientController', () => {
                         lastName: doctor.lastName,
                         phone: doctor.phone,
                         role: doctor.role,
+                        roleLabel: doctor.roleLabel,
                         passwordUpdatedAt: doctor.passwordUpdatedAt,
                     },
                 },

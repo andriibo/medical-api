@@ -18,7 +18,7 @@ import {IPatientStatusRepository} from 'app/modules/patient-status/repositories'
 import {PatientVitalThresholdsModel} from 'infrastructure/modules/patient-vital-thresholds/models';
 import {VitalModel} from 'infrastructure/modules/vital/models';
 import {IVitalRepository} from 'app/modules/vital/repositories';
-import {convertToUnixTimestamp} from 'app/support/date.helper';
+import {convertToUnixTimestamp} from 'support/date.helper';
 
 const patient: User = {
     id: '5nc3e70a-c1y9-121a-c5mv-5aq272098bp0',
@@ -28,6 +28,7 @@ const patient: User = {
     phone: '2930412345',
     avatar: null,
     role: 'Patient',
+    roleLabel: 'Patient',
     createdAt: '2022-10-10 07:31:17.016236',
     deletedAt: null,
     passwordUpdatedAt: 1681305134,
@@ -41,6 +42,7 @@ const doctor: User = {
     phone: '2930412345',
     avatar: null,
     role: 'Doctor',
+    roleLabel: 'Doctor',
     createdAt: '2022-10-10 07:31:17.016236',
     deletedAt: null,
     passwordUpdatedAt: 1681305134,
@@ -182,6 +184,7 @@ describe('PatientController', () => {
                         lastName: doctor.lastName,
                         phone: doctor.phone,
                         role: doctor.role,
+                        roleLabel: doctor.roleLabel,
                         passwordUpdatedAt: doctor.passwordUpdatedAt,
                     },
                 ],

@@ -1,6 +1,6 @@
 import {Entity, Column, PrimaryColumn} from 'typeorm';
 import {PatientStatus, PatientStatusEnum} from 'domain/entities/patient-status.entity';
-import {currentUnixTimestamp} from 'app/support/date.helper';
+import {currentUnixTimestamp} from 'support/date.helper';
 
 @Entity('patient_status')
 export class PatientStatusModel implements PatientStatus {

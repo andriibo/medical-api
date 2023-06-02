@@ -16,6 +16,7 @@ import {CreatePatientDto} from 'domain/dtos/request/auth/create-patient.dto';
 import {Transform, TransformFnParams} from 'class-transformer';
 import {MaxPhoneLength, MinPhoneLength} from 'domain/constants/phone.const';
 import {MaxDate, MinDate} from 'infrastructure/validators/date.validator';
+import {UserRoleLabel} from 'domain/entities/user.entity';
 
 export class SignUpPatientView extends CreatePatientDto {
     @ApiProperty({maxLength: 100})
@@ -74,4 +75,9 @@ export class SignUpPatientView extends CreatePatientDto {
     @IsNotEmpty()
     @MinLength(8)
     public password: string;
+
+    @ApiProperty({enum: [UserRoleLabel.Patient]})
+    @IsNotEmpty()
+    @IsIn([UserRoleLabel.Patient])
+    public roleLabel: string;
 }

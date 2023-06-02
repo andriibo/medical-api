@@ -2,7 +2,7 @@ import {Entity, Column, PrimaryGeneratedColumn, OneToOne, BeforeInsert} from 'ty
 import {User} from 'domain/entities';
 import {DoctorMetadataModel} from 'infrastructure/modules/auth/models/doctor-metadata.model';
 import {PatientMetadataModel} from 'infrastructure/modules/auth/models/patient-metadata.model';
-import {currentUnixTimestamp} from 'app/support/date.helper';
+import {currentUnixTimestamp} from 'support/date.helper';
 
 @Entity('user')
 export class UserModel implements User {
@@ -23,6 +23,9 @@ export class UserModel implements User {
 
     @Column()
     public role: string;
+
+    @Column({name: 'role_label'})
+    public roleLabel: string;
 
     @Column({name: 'created_at'})
     public createdAt: string;

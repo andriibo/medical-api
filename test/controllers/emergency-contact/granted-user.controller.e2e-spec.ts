@@ -17,7 +17,7 @@ import {IUserRepository} from 'app/modules/auth/repositories';
 import {IDoctorMetadataRepository, IPatientMetadataRepository} from 'app/modules/profile/repositories';
 import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repositories';
 import {EmergencyContactModule} from 'infrastructure/modules';
-import {convertToUnixTimestamp} from 'app/support/date.helper';
+import {convertToUnixTimestamp} from 'support/date.helper';
 
 const doctor: User = {
     id: '8bfbd95c-c8a5-404b-b3eb-6ac648052ac4',
@@ -27,6 +27,7 @@ const doctor: User = {
     phone: '2930412345',
     avatar: null,
     role: 'Doctor',
+    roleLabel: 'Doctor',
     createdAt: '2022-10-10 07:31:17.016236',
     deletedAt: null,
     passwordUpdatedAt: 1681305134,
@@ -40,6 +41,7 @@ const patient: User = {
     phone: '2930412345',
     avatar: null,
     role: 'Patient',
+    roleLabel: 'Patient',
     createdAt: '2022-10-10 07:31:17.016236',
     deletedAt: null,
     passwordUpdatedAt: 1681305134,
@@ -54,6 +56,7 @@ const emergencyContact: EmergencyContact = {
     phone: '2930412345',
     relationship: 'MedicalProfessional',
     createdAt: '2022-12-10 17:31:07.016236',
+    rank: null,
 };
 
 const patientDataAccess: PatientDataAccess = {
@@ -63,6 +66,7 @@ const patientDataAccess: PatientDataAccess = {
     direction: 'FromPatient',
     status: 'Approved',
     createdAt: new Date().toISOString(),
+    lastInviteSentAt: 0,
 };
 
 describe('GrantedUserController', () => {

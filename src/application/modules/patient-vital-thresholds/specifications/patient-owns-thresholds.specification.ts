@@ -1,6 +1,6 @@
 import {User} from 'domain/entities';
 import {IPatientVitalThresholdsRepository} from 'app/modules/patient-vital-thresholds/repositories';
-import {arrayUnique, indexObjects} from 'app/support/array.helper';
+import {arrayUnique, indexObjects} from 'support/array.helper';
 import {PatientVitalThresholdsSpecificationError} from 'app/modules/patient-vital-thresholds/errors';
 
 export class PatientOwnsThresholdsSpecification {

@@ -6,6 +6,7 @@ import {Roles} from 'presentation/guards';
 import {VitalNormalizationPipe} from 'presentation/pipes/vital-normalization.pipe';
 import {GetVitalsQueryView, SyncVitalsView} from 'presentation/views/request/vital';
 import {VitalsView} from 'presentation/views/response/vital';
+import {VitalsDto} from 'domain/dtos/response/vital';
 
 @Controller('patient')
 @ApiBearerAuth()
@@ -34,7 +35,7 @@ export class PatientController {
     @Get('my-vitals')
     @HttpCode(HttpStatus.OK)
     @ApiResponse({status: HttpStatus.OK, type: VitalsView})
-    public async getMyVitals(@Query() query: GetVitalsQueryView): Promise<VitalsView> {
+    public async getMyVitals(@Query() query: GetVitalsQueryView): Promise<VitalsDto> {
         const useCase = this.patientUseCasesFactory.createVitalListUseCase();
 
         try {

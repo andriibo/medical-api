@@ -19,7 +19,7 @@ import {ISuggestedContactRepository} from 'app/modules/suggested-contact/reposit
 import {IUserRepository} from 'app/modules/auth/repositories';
 import {IDoctorMetadataRepository, IPatientMetadataRepository} from 'app/modules/profile/repositories';
 import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repositories';
-import {convertToUnixTimestamp} from 'app/support/date.helper';
+import {convertToUnixTimestamp} from 'support/date.helper';
 
 const patient: User = {
     id: '5nc3e70a-c1y9-121a-c5mv-5aq272098bp0',
@@ -29,6 +29,7 @@ const patient: User = {
     phone: '2930412345',
     avatar: null,
     role: 'Patient',
+    roleLabel: 'Patient',
     createdAt: '2022-10-10 07:31:17.016236',
     deletedAt: null,
     passwordUpdatedAt: 1681305134,
@@ -141,6 +142,7 @@ describe('PatientController', () => {
                         phone: patient.phone,
                         avatar: patient.avatar,
                         role: patient.role,
+                        roleLabel: patient.roleLabel,
                         deletedAt: patient.deletedAt,
                         passwordUpdatedAt: patient.passwordUpdatedAt,
                     },

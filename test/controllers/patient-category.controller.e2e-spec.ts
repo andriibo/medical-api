@@ -8,7 +8,7 @@ import {DoctorMetadataModel, PatientMetadataModel, UserModel} from 'infrastructu
 import {PatientDataAccess, User} from 'domain/entities';
 import {IDoctorMetadataRepository, IPatientMetadataRepository} from 'app/modules/profile/repositories';
 import {TestModule} from 'tests/test.module';
-import {currentUnixTimestamp} from 'app/support/date.helper';
+import {currentUnixTimestamp} from 'support/date.helper';
 import {IPatientCategoryRepository} from 'app/modules/patient-category/repositories';
 import {PatientCategory} from 'domain/entities/patient-category.entity';
 import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repositories';
@@ -26,6 +26,7 @@ const patient: User = {
     phone: '2930412345',
     avatar: null,
     role: 'Patient',
+    roleLabel: 'Patient',
     createdAt: '2022-10-10 07:31:17.016236',
     deletedAt: null,
     passwordUpdatedAt: 1681305134,
@@ -38,6 +39,7 @@ const patientDataAccess: PatientDataAccess = {
     direction: 'ToPatient',
     status: 'Approved',
     createdAt: new Date().toISOString(),
+    lastInviteSentAt: 0,
 };
 const patientCategory: PatientCategory = {
     id: '3db4ddee-78b7-42d3-bb79-c38c9f5b770d',

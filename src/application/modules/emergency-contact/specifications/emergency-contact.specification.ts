@@ -2,6 +2,8 @@ import {EmergencyContact, User} from 'domain/entities';
 import {UserRole} from 'domain/entities/user.entity';
 import {EmergencyContactSpecificationError} from 'app/modules/emergency-contact/errors';
 import {IEmergencyContactRepository} from 'app/modules/emergency-contact/repositories';
+import {arrayDiff} from 'support/array.helper';
+import {ContactsOrderDto} from 'domain/dtos/request/emergency-contact/contacts-order.dto';
 
 export class EmergencyContactSpecification {
     public constructor(private readonly emergencyContactRepository: IEmergencyContactRepository) {}
@@ -28,6 +30,17 @@ export class EmergencyContactSpecification {
         const contactsQuantity = await this.emergencyContactRepository.countByUserId(user.id);
         if (contactsQuantity <= 1) {
             throw new EmergencyContactSpecificationError('You must have at least one emergency contact.');
+        }
+    }
+
+    public assertContactsOrderIsValid(dto: ContactsOrderDto, contacts: EmergencyContact[]): void {
+        const contactIds = contacts.map((contact) => contact.id);
+
+        const absentContactIds = arrayDiff(dto.contactIds, contactIds);
+        const isThereAbsentContactId = absentContactIds.length > 0;
+
+        if (isThereAbsentContactId) {
+            throw new EmergencyContactSpecificationError(`[${absentContactIds.join(', ')}] Not Found.`);
         }
     }
 

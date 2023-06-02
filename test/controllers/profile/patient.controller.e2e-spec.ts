@@ -10,7 +10,7 @@ import {IDoctorMetadataRepository, IPatientMetadataRepository} from 'app/modules
 import {PatientDataAccessModel} from 'infrastructure/modules/patient-data-access/models';
 import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repositories';
 import {TestModule} from 'tests/test.module';
-import {currentUnixTimestamp} from 'app/support/date.helper';
+import {currentUnixTimestamp} from 'support/date.helper';
 import {UpdatePatientProfileDto} from 'domain/dtos/request/profile';
 import {VitalModel} from 'infrastructure/modules/vital/models';
 import {IVitalRepository} from 'app/modules/vital/repositories';
@@ -29,6 +29,7 @@ const patient: User = {
     phone: '2930412345',
     avatar: null,
     role: 'Patient',
+    roleLabel: 'Patient',
     createdAt: '2022-10-10 07:31:17.016236',
     deletedAt: null,
     passwordUpdatedAt: 1681305134,
@@ -42,6 +43,7 @@ const doctor: User = {
     phone: '2930412345',
     avatar: null,
     role: 'Doctor',
+    roleLabel: 'Doctor',
     createdAt: '2022-10-10 07:31:17.016236',
     deletedAt: null,
     passwordUpdatedAt: 1681305134,
@@ -55,6 +57,7 @@ const caregiver: User = {
     phone: '2930412345',
     avatar: null,
     role: 'Caregiver',
+    roleLabel: 'CaregiverProfessional',
     createdAt: '2022-10-10 07:31:17.016236',
     deletedAt: null,
     passwordUpdatedAt: 1681305134,
@@ -84,6 +87,7 @@ const patientDataAccessForDoctor: PatientDataAccess = {
     status: 'Approved',
     createdAt: new Date().toISOString(),
     grantedUser: doctor,
+    lastInviteSentAt: 0,
 };
 
 const patientDataAccessForCaregiver: PatientDataAccess = {
@@ -94,6 +98,7 @@ const patientDataAccessForCaregiver: PatientDataAccess = {
     status: 'Approved',
     createdAt: new Date().toISOString(),
     grantedUser: caregiver,
+    lastInviteSentAt: 0,
 };
 describe('PatientController', () => {
     let app: INestApplication;
@@ -173,6 +178,7 @@ describe('PatientController', () => {
                 lastName: patient.lastName,
                 phone: patient.phone,
                 role: patient.role,
+                roleLabel: patient.roleLabel,
                 dob: patientMetadata.dob.toISOString(),
                 gender: patientMetadata.gender,
                 height: patientMetadata.height,
@@ -212,6 +218,7 @@ describe('PatientController', () => {
                     lastName: doctor.lastName,
                     phone: doctor.phone,
                     role: doctor.role,
+                    roleLabel: doctor.roleLabel,
                     institution: doctorMetadata.institution,
                     avatar: doctor.avatar,
                     deletedAt: null,
@@ -234,6 +241,7 @@ describe('PatientController', () => {
                     lastName: caregiver.lastName,
                     phone: caregiver.phone,
                     role: caregiver.role,
+                    roleLabel: caregiver.roleLabel,
                     avatar: caregiver.avatar,
                     deletedAt: null,
                     accessId: patientDataAccessForCaregiver.id,

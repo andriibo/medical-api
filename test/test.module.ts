@@ -4,7 +4,7 @@ import {RequestUserService} from 'infrastructure/services/request-user.service';
 import {IAuthService} from 'app/modules/auth/services/auth.service';
 import {ConfigModule} from '@nestjs/config';
 import {EventEmitterModule} from '@nestjs/event-emitter';
-import {currentUnixTimestamp} from 'app/support/date.helper';
+import {currentUnixTimestamp} from 'support/date.helper';
 import {IMailSender} from 'app/modules/mail/services/abstract/mail-sender';
 
 const exp = currentUnixTimestamp() + 3600;

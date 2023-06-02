@@ -17,7 +17,7 @@ import {PatientStatusModel} from 'infrastructure/modules/patient-status/models';
 import {IPatientStatusRepository} from 'app/modules/patient-status/repositories';
 import {IPatientVitalThresholdsRepository} from 'app/modules/patient-vital-thresholds/repositories';
 import {PatientDataAccess, PatientVitalThresholds, User, Vital} from 'domain/entities';
-import {convertToUnixTimestamp, currentUnixTimestamp} from 'app/support/date.helper';
+import {convertToUnixTimestamp, currentUnixTimestamp} from 'support/date.helper';
 import {PatientVitalThresholdsModel} from 'infrastructure/modules/patient-vital-thresholds/models';
 
 const patient: User = {
@@ -28,6 +28,7 @@ const patient: User = {
     phone: '2930412345',
     avatar: null,
     role: 'Patient',
+    roleLabel: 'Patient',
     createdAt: '2022-10-10 07:31:17.016236',
     deletedAt: null,
     passwordUpdatedAt: 1681305134,
@@ -40,6 +41,7 @@ const doctor: User = {
     phone: '2930412345',
     avatar: null,
     role: 'Doctor',
+    roleLabel: 'Doctor',
     createdAt: '2022-10-10 07:31:17.016236',
     deletedAt: null,
     passwordUpdatedAt: 1681305134,
@@ -99,6 +101,7 @@ const patientDataAccess: PatientDataAccess = {
     direction: 'FromPatient',
     status: 'Approved',
     createdAt: new Date().toISOString(),
+    lastInviteSentAt: 0,
 };
 describe('GrantedUserController', () => {
     let app: INestApplication;
@@ -228,6 +231,7 @@ describe('GrantedUserController', () => {
                         lastName: doctor.lastName,
                         phone: doctor.phone,
                         role: doctor.role,
+                        roleLabel: doctor.roleLabel,
                         passwordUpdatedAt: doctor.passwordUpdatedAt,
                     },
                 ],

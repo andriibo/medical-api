@@ -2,7 +2,7 @@ import {Inject} from '@nestjs/common';
 import {IPatientCategoryRepository} from 'app/modules/patient-category/repositories';
 import {PatientDataAccess} from 'domain/entities/patient-data-access.entity';
 import {PatientCategoryEnum} from 'domain/entities/patient-category.entity';
-import {currentUnixTimestamp} from 'app/support/date.helper';
+import {currentUnixTimestamp} from 'support/date.helper';
 import {IPatientStatusRepository} from 'app/modules/patient-status/repositories';
 import {IDataAccessApprovedService} from 'app/modules/patient-data-access/services/data-access-approved.service';
 

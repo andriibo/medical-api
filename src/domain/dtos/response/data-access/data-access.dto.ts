@@ -10,6 +10,8 @@ export class DataAccessDto {
 
     public createdAt: string;
 
+    public lastInviteSentAt: number;
+
     public requestedUser: UserDto;
 
     public static fromPatientDataAccess(patientDataAccess: PatientDataAccess): DataAccessDto {
@@ -18,6 +20,7 @@ export class DataAccessDto {
         dto.direction = patientDataAccess.direction;
         dto.status = patientDataAccess.status;
         dto.createdAt = patientDataAccess.createdAt;
+        dto.lastInviteSentAt = patientDataAccess.lastInviteSentAt;
 
         return dto;
     }

@@ -16,9 +16,10 @@
     "^controllers/(.*)$": "<rootDir>/../src/presentation/controllers/$1",
     "^domain/(.*)$": "<rootDir>/../src/domain/$1",
     "^infrastructure/(.*)$": "<rootDir>/../src/infrastructure/$1",
-    "^src/(.*)$": "<rootDir>/../src/$1",
-    "^views/(.*)$": "<rootDir>/../src/presentation/views/$1",
     "^presentation/(.*)$": "<rootDir>/../src/presentation/$1",
-    "^tests/(.*)$": "<rootDir>/../test/$1"
+    "^src/(.*)$": "<rootDir>/../src/$1",
+    "^support/(.*)$": "<rootDir>/../src/support/$1",
+    "^tests/(.*)$": "<rootDir>/../test/$1",
+    "^views/(.*)$": "<rootDir>/../src/presentation/views/$1"
   }
 }

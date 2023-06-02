@@ -4,10 +4,10 @@ import {UserDto} from 'domain/dtos/response/user/user.dto';
 import {PatientDto} from 'domain/dtos/response/profile/patient.dto';
 import {DoctorDto} from 'domain/dtos/response/profile/doctor.dto';
 
-export class UserDtoService {
+export class UserDtoMapper {
     public constructor(private readonly fileUrlService: IFileUrlService) {}
 
-    public createUserDtoByUser(user: User): UserDto {
+    public mapUserDtoByUser(user: User): UserDto {
         const dto = new UserDto();
         dto.userId = user.id;
         dto.email = user.email;
@@ -16,21 +16,22 @@ export class UserDtoService {
         dto.phone = user.phone;
         dto.avatar = this.fileUrlService.createUrlToUserAvatar(user.avatar);
         dto.role = user.role;
+        dto.roleLabel = user.roleLabel;
         dto.deletedAt = user.deletedAt;
         dto.passwordUpdatedAt = user.passwordUpdatedAt;
 
         return dto;
     }
 
-    public createDoctorDtoByUserAndMetadata(user: User, metadata: DoctorMetadata): DoctorDto {
-        const dto = this.createUserDtoByUser(user) as DoctorDto;
+    public mapDoctorDtoByUserAndMetadata(user: User, metadata: DoctorMetadata): DoctorDto {
+        const dto = this.mapUserDtoByUser(user) as DoctorDto;
         dto.institution = metadata.institution;
 
         return dto;
     }
 
-    public createPatientDtoByUserAndMetadata(user: User, metadata: PatientMetadata): PatientDto {
-        const dto = this.createUserDtoByUser(user) as PatientDto;
+    public mapPatientDtoByUserAndMetadata(user: User, metadata: PatientMetadata): PatientDto {
+        const dto = this.mapUserDtoByUser(user) as PatientDto;
         dto.dob = metadata.dob;
         dto.gender = metadata.gender;
         dto.height = metadata.height;
@@ -39,7 +40,7 @@ export class UserDtoService {
         return dto;
     }
 
-    public createUserDtoByEmail(email: string): UserDto {
+    public mapUserDtoByEmail(email: string): UserDto {
         const dto = new UserDto();
         dto.userId = '';
         dto.email = email;
@@ -47,6 +48,7 @@ export class UserDtoService {
         dto.lastName = '';
         dto.phone = '';
         dto.role = '';
+        dto.roleLabel = '';
 
         return dto;
     }

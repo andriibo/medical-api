@@ -9,7 +9,7 @@ import {PatientVitalThresholds, User, Vital} from 'domain/entities';
 import {IDoctorMetadataRepository, IPatientMetadataRepository} from 'app/modules/profile/repositories';
 import {TestModule} from 'tests/test.module';
 import {SyncVitalsDto, VitalDto} from 'domain/dtos/request/vital';
-import {convertToUnixTimestamp, currentUnixTimestamp} from 'app/support/date.helper';
+import {convertToUnixTimestamp, currentUnixTimestamp} from 'support/date.helper';
 import {VitalModel} from 'infrastructure/modules/vital/models';
 import {IPatientVitalThresholdsRepository} from 'app/modules/patient-vital-thresholds/repositories';
 import {PatientDataAccessModel} from 'infrastructure/modules/patient-data-access/models';
@@ -29,6 +29,7 @@ const patient: User = {
     phone: '2930412345',
     avatar: null,
     role: 'Patient',
+    roleLabel: 'Patient',
     createdAt: '2022-10-10 07:31:17.016236',
     deletedAt: null,
     passwordUpdatedAt: 1681305134,
@@ -41,6 +42,7 @@ const doctor: User = {
     phone: '2930412345',
     avatar: null,
     role: 'Doctor',
+    roleLabel: 'Doctor',
     createdAt: '2022-10-10 07:31:17.016236',
     deletedAt: null,
     passwordUpdatedAt: 1681305134,
@@ -243,6 +245,7 @@ describe('PatientController', () => {
                         lastName: doctor.lastName,
                         phone: doctor.phone,
                         role: doctor.role,
+                        roleLabel: doctor.roleLabel,
                         passwordUpdatedAt: doctor.passwordUpdatedAt,
                     },
                 ],

@@ -20,4 +20,6 @@ export interface EmergencyContact {
     relationship: string;
 
     createdAt: string;
+
+    rank: number | null;
 }

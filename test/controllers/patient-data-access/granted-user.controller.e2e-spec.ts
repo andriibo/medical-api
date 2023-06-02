@@ -23,7 +23,7 @@ import {PatientDataAccessEventEmitter} from 'infrastructure/modules/patient-data
 import {IMailSender} from 'app/modules/mail/services/abstract/mail-sender';
 import {IDeepLinkService} from 'app/modules/mail/services/deep-link.service';
 import {PatientStatus} from 'domain/entities/patient-status.entity';
-import {currentUnixTimestamp} from 'app/support/date.helper';
+import {currentUnixTimestamp} from 'support/date.helper';
 import {AccessToRegisteredPatientService} from 'app/modules/patient-data-access/services/access-to-registered-patient.service';
 
 const patient: User = {
@@ -34,6 +34,7 @@ const patient: User = {
     phone: '2930412345',
     avatar: null,
     role: 'Patient',
+    roleLabel: 'Patient',
     createdAt: '2022-10-10 07:31:17.016236',
     deletedAt: null,
     passwordUpdatedAt: 1681305134,
@@ -47,6 +48,7 @@ const doctor: User = {
     phone: '2930412345',
     avatar: null,
     role: 'Doctor',
+    roleLabel: 'Doctor',
     createdAt: '2022-10-10 07:31:17.016236',
     deletedAt: null,
     passwordUpdatedAt: 1681305134,
@@ -60,6 +62,7 @@ const patientDataAccess: PatientDataAccess = {
     status: 'Initiated',
     createdAt: new Date().toISOString(),
     patientUser: patient,
+    lastInviteSentAt: 0,
 };
 
 const patientStatus: PatientStatus = {
@@ -79,6 +82,7 @@ describe('GrantedUserController', () => {
         const mockedPatientDataAccessRepository = {
             getOneByPatientUserIdAndGrantedUserId: jest.fn(() => Promise.resolve(null)),
             getOneById: jest.fn(() => Promise.resolve(patientDataAccess)),
+            getOneWithPatientUserById: jest.fn(() => Promise.resolve(patientDataAccess)),
             create: jest.fn(() => Promise.resolve()),
             update: jest.fn(() => Promise.resolve()),
             delete: jest.fn(() => Promise.resolve()),
@@ -195,6 +199,15 @@ describe('GrantedUserController', () => {
             .expect(200);
     });
 
+    it('/data-access/resend/:accessId (PATCH)', async () => {
+        patientDataAccess.status = 'Initiated';
+        patientDataAccess.direction = 'ToPatient';
+        return request(app.getHttpServer())
+            .patch(`/data-access/resend/${patientDataAccess.id}`)
+            .set('Authorization', 'Bearer doctor')
+            .expect(200);
+    });
+
     it('/data-accesses (GET)', async () => {
         return request(app.getHttpServer())
             .get('/data-accesses')
@@ -206,6 +219,7 @@ describe('GrantedUserController', () => {
                     direction: patientDataAccess.direction,
                     status: patientDataAccess.status,
                     createdAt: patientDataAccess.createdAt,
+                    lastInviteSentAt: patientDataAccess.lastInviteSentAt,
                     requestedUser: {
                         avatar: patient.avatar,
                         deletedAt: patient.deletedAt,
@@ -215,6 +229,7 @@ describe('GrantedUserController', () => {
                         lastName: patient.lastName,
                         phone: patient.phone,
                         role: patient.role,
+                        roleLabel: patient.roleLabel,
                         passwordUpdatedAt: patient.passwordUpdatedAt,
                     },
                 },

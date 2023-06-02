@@ -2,7 +2,7 @@ import {Inject} from '@nestjs/common';
 import {IAuthService} from 'app/modules/auth/services/auth.service';
 import {IRequestUserModel} from 'app/modules/auth/models';
 import {AccessTokenClaimsModel} from 'infrastructure/aws/cognito/access-token-claims.model';
-import {isNullOrUndefined} from 'app/support/type.helper';
+import {isNullOrUndefined} from 'support/type.helper';
 import {IncomingHttpHeaders} from 'http';
 
 export class RequestUserService {

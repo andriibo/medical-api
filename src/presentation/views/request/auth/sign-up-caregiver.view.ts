@@ -1,8 +1,9 @@
 import {ApiProperty} from '@nestjs/swagger';
-import {Length, IsEmail, IsNotEmpty, MaxLength, IsNumberString, MinLength} from 'class-validator';
+import {Length, IsEmail, IsNotEmpty, MaxLength, IsNumberString, MinLength, IsIn} from 'class-validator';
 import {CreateCaregiverDto} from 'domain/dtos/request/auth/create-caregiver.dto';
 import {MaxPhoneLength, MinPhoneLength} from 'domain/constants/phone.const';
 import {Transform, TransformFnParams} from 'class-transformer';
+import {UserRoleLabel} from 'domain/entities/user.entity';
 
 export class SignUpCaregiverView extends CreateCaregiverDto {
     @ApiProperty({maxLength: 100})
@@ -35,4 +36,9 @@ export class SignUpCaregiverView extends CreateCaregiverDto {
     @IsNotEmpty()
     @MinLength(8)
     public password: string;
+
+    @ApiProperty({enum: [UserRoleLabel.CaregiverProfessional, UserRoleLabel.Family, UserRoleLabel.Friend]})
+    @IsNotEmpty()
+    @IsIn([UserRoleLabel.CaregiverProfessional, UserRoleLabel.Family, UserRoleLabel.Friend])
+    public roleLabel: string;
 }

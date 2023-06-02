@@ -11,6 +11,8 @@ export interface IEmergencyContactRepository {
 
     getByUserId(userId: string): Promise<EmergencyContact[]>;
 
+    getByUserIdOrderedByRank(userId: string): Promise<EmergencyContact[]>;
+
     countByUserId(userId: string): Promise<number>;
 }
 

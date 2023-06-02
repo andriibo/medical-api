@@ -1,5 +1,5 @@
 import {EmergencyContact} from 'domain/entities';
-import {convertToUnixTimestamp} from 'app/support/date.helper';
+import {convertToUnixTimestamp} from 'support/date.helper';
 
 export class ContactDto {
     public contactId: string;

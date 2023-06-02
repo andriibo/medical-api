@@ -1,4 +1,4 @@
-import {Body, Controller, HttpCode, HttpStatus, Post} from '@nestjs/common';
+import {NotFoundException, BadRequestException, Body, Controller, HttpCode, HttpStatus, Post} from '@nestjs/common';
 import {ApiResponse, ApiTags} from '@nestjs/swagger';
 import {
     ConfirmSignUpUserView,
@@ -18,6 +18,7 @@ import {AuthUseCasesFactory} from 'infrastructure/modules/auth/factories/auth-us
 import {SignUpCaregiverView} from 'views/request/auth/sign-up-caregiver.view';
 import {ConfirmEmailResentDto, ForgotPasswordMailSentDto, UserSignedInDto} from 'domain/dtos/response/auth';
 import {TrimPipe} from 'presentation/pipes/trim.pipe';
+import {EntityNotFoundError} from "app/errors";
 
 @Controller()
 @ApiTags('Auth')
@@ -71,11 +72,20 @@ export class AuthController {
 
     @Post('forgot-password')
     @HttpCode(HttpStatus.OK)
+    @HttpCode(HttpStatus.NOT_FOUND)
+    @HttpCode(HttpStatus.BAD_REQUEST)
     @ApiResponse({status: HttpStatus.OK, type: ForgotPasswordResponseView})
     public async forgotPassword(@Body(TrimPipe) requestBody: ForgotPasswordView): Promise<ForgotPasswordMailSentDto> {
         const useCase = this.authUseCasesFactory.createForgotPasswordUseCase();
 
-        return await useCase.initiateForgotPasswordProcess(requestBody);
+        try {
+            return await useCase.initiateForgotPasswordProcess(requestBody);
+        } catch (error) {
+            if (error instanceof EntityNotFoundError) {
+                throw new NotFoundException(error.message);
+            }
+            throw new BadRequestException(error.message);
+        }
     }
 
     @Post('forgot-password/confirm')

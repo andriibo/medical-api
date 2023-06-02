@@ -10,7 +10,7 @@ import {IDoctorMetadataRepository, IPatientMetadataRepository} from 'app/modules
 import {PatientDataAccessModel} from 'infrastructure/modules/patient-data-access/models';
 import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repositories';
 import {TestModule} from 'tests/test.module';
-import {currentUnixTimestamp} from 'app/support/date.helper';
+import {currentUnixTimestamp} from 'support/date.helper';
 import {IVitalRepository} from 'app/modules/vital/repositories';
 import {VitalModel} from 'infrastructure/modules/vital/models';
 import {PatientCategoryModel} from 'infrastructure/modules/patient-category/models';
@@ -29,6 +29,7 @@ const caregiver: User = {
     phone: '2930412345',
     avatar: null,
     role: 'Caregiver',
+    roleLabel: 'CaregiverProfessional',
     createdAt: '2022-10-10 07:31:17.016236',
     deletedAt: null,
     passwordUpdatedAt: 1681305134,
@@ -42,6 +43,7 @@ const patient: User = {
     phone: '2930412345',
     avatar: null,
     role: 'Patient',
+    roleLabel: 'Patient',
     createdAt: '2022-10-10 07:31:17.016236',
     deletedAt: null,
     passwordUpdatedAt: 1681305134,
@@ -70,6 +72,7 @@ const patientDataAccess: PatientDataAccess = {
     status: 'Approved',
     createdAt: new Date().toISOString(),
     patientUser: patient,
+    lastInviteSentAt: 0,
 };
 
 const patientCategory: PatientCategory = {
@@ -169,6 +172,7 @@ describe('GrantedUserController', () => {
                     lastName: patient.lastName,
                     phone: patient.phone,
                     role: patient.role,
+                    roleLabel: patient.roleLabel,
                     dob: patientMetadata.dob.toISOString(),
                     height: patientMetadata.height,
                     weight: patientMetadata.weight,
@@ -196,6 +200,7 @@ describe('GrantedUserController', () => {
                 lastName: patient.lastName,
                 phone: patient.phone,
                 role: patient.role,
+                roleLabel: patient.roleLabel,
                 dob: patientMetadata.dob.toISOString(),
                 height: patientMetadata.height,
                 weight: patientMetadata.weight,

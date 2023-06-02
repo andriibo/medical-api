@@ -26,4 +26,7 @@ export class EmergencyContactModel implements EmergencyContact {
 
     @Column({name: 'created_at'})
     public createdAt: string;
+
+    @Column()
+    rank: number | null;
 }

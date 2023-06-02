@@ -27,6 +27,7 @@ const patient: User = {
     phone: '2930412345',
     avatar: null,
     role: 'Patient',
+    roleLabel: 'Patient',
     createdAt: '2022-10-10 07:31:17.016236',
     deletedAt: null,
     passwordUpdatedAt: 1681305134,
@@ -39,6 +40,7 @@ const doctor: User = {
     phone: '2930412345',
     avatar: null,
     role: 'Doctor',
+    roleLabel: 'Doctor',
     createdAt: '2022-10-10 07:31:17.016236',
     deletedAt: null,
     passwordUpdatedAt: 1681305134,
@@ -50,6 +52,7 @@ const patientDataAccess: PatientDataAccess = {
     direction: 'FromPatient',
     status: 'Approved',
     createdAt: new Date().toISOString(),
+    lastInviteSentAt: 0,
 };
 const patientDiagnosis: PatientDiagnosis = {
     id: 'eee3adc4-9e36-4bb1-8911-e2161a2a3975',
@@ -144,6 +147,7 @@ describe('PatientDiagnosisController', () => {
                         phone: patient.phone,
                         avatar: patient.avatar,
                         role: patient.role,
+                        roleLabel: patient.roleLabel,
                         deletedAt: patient.deletedAt,
                         passwordUpdatedAt: patient.passwordUpdatedAt,
                     },

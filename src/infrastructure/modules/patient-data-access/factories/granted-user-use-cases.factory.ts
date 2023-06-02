@@ -10,11 +10,12 @@ import {
     DeleteDataAccessUseCase,
     InitiateDataAccessUseCase,
     RefuseDataAccessUseCase,
+    ResendRequestToDataAccessUseCase,
 } from 'app/modules/patient-data-access/use-cases/granted-user';
 import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repositories';
 import {DeleteDataAccessByGrantedUserService} from 'app/modules/patient-data-access/services/delete-data-access-by-granted-user.service';
 import {IPatientDataAccessEventEmitter} from 'app/modules/patient-data-access/event-emitters/patient-data-access.event-emitter';
-import {UserDtoService} from 'app/modules/profile/services/user-dto.service';
+import {UserDtoMapper} from 'app/modules/profile/mappers/user-dto.mapper';
 
 @Injectable()
 export class GrantedUserUseCasesFactory {
@@ -29,7 +30,7 @@ export class GrantedUserUseCasesFactory {
         private readonly patientDataAccessRepository: IPatientDataAccessRepository,
         @Inject(PatientDataAccessSpecification)
         private readonly patientDataAccessSpecification: PatientDataAccessSpecification,
-        @Inject(UserDtoService) private readonly userDtoService: UserDtoService,
+        @Inject(UserDtoMapper) private readonly userDtoMapper: UserDtoMapper,
         @Inject(DeleteDataAccessByGrantedUserService)
         private readonly deleteDataAccessByGrantedUserService: DeleteDataAccessByGrantedUserService,
         @Inject(IPatientDataAccessEventEmitter)
@@ -67,7 +68,7 @@ export class GrantedUserUseCasesFactory {
             this.userRepository,
             this.patientDataAccessRepository,
             this.authedUserService,
-            this.userDtoService,
+            this.userDtoMapper,
         );
     }
 
@@ -76,6 +77,15 @@ export class GrantedUserUseCasesFactory {
             this.patientDataAccessRepository,
             this.authedUserService,
             this.deleteDataAccessByGrantedUserService,
+        );
+    }
+
+    public createResendRequestToDataAccessUseCase(): ResendRequestToDataAccessUseCase {
+        return new ResendRequestToDataAccessUseCase(
+            this.authedUserService,
+            this.patientDataAccessRepository,
+            this.patientDataAccessSpecification,
+            this.patientDataAccessEventEmitter,
         );
     }
 }

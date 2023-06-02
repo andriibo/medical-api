@@ -11,7 +11,7 @@ import {TestModule} from 'tests/test.module';
 import {PatientStatusModel} from 'infrastructure/modules/patient-status/models';
 import {IPatientStatusRepository} from 'app/modules/patient-status/repositories';
 import {PatientStatus} from 'domain/entities/patient-status.entity';
-import {currentUnixTimestamp} from 'app/support/date.helper';
+import {currentUnixTimestamp} from 'support/date.helper';
 import {PatientCategoryModel} from 'infrastructure/modules/patient-category/models';
 import {PatientDataAccessModel} from 'infrastructure/modules/patient-data-access/models';
 import {IPatientCategoryRepository} from 'app/modules/patient-category/repositories';
@@ -27,6 +27,7 @@ const patient: User = {
     phone: '2930412345',
     avatar: null,
     role: 'Patient',
+    roleLabel: 'Patient',
     createdAt: '2022-10-10 07:31:17.016236',
     deletedAt: null,
     passwordUpdatedAt: 1681305134,

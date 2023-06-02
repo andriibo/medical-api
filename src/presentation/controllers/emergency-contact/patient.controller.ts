@@ -14,7 +14,7 @@ import {
 import {ApiBearerAuth, ApiForbiddenResponse, ApiResponse, ApiTags, ApiUnauthorizedResponse} from '@nestjs/swagger';
 import {Roles} from 'presentation/guards';
 import {PatientUseCasesFactory} from 'infrastructure/modules/emergency-contact/factories/patient-use-cases.factory';
-import {CreateContactView, UpdateContactView} from 'presentation/views/request/emergency-contact';
+import {CreateContactView, UpdateContactView, SetContactsOrderView} from 'presentation/views/request/emergency-contact';
 import {ContactView} from 'presentation/views/response/emergency-contact';
 import {ContactDto} from 'domain/dtos/response/emergency-contact/contact.dto';
 import {TrimPipe} from 'presentation/pipes/trim.pipe';
@@ -65,6 +65,21 @@ export class PatientController {
 
         try {
             await useCase.updateContact(contactId, requestBody);
+        } catch (error) {
+            throw new BadRequestException(error.message);
+        }
+    }
+
+    @Roles('Patient')
+    @Patch('my-emergency-contacts/order')
+    @HttpCode(HttpStatus.OK)
+    @HttpCode(HttpStatus.BAD_REQUEST)
+    @ApiResponse({status: HttpStatus.OK})
+    public async setOrderOfMyEmergencyContacts(@Body(TrimPipe) requestBody: SetContactsOrderView): Promise<void> {
+        const useCase = this.patientUseCasesFactory.createSetContactsOrderUseCase();
+
+        try {
+            await useCase.setOrder(requestBody);
         } catch (error) {
             throw new BadRequestException(error.message);
         }

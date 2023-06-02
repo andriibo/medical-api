@@ -13,7 +13,7 @@ import {VitalIndependentModule} from 'infrastructure/modules/vital/vital.ind.mod
 import {UserIndependentModule} from 'infrastructure/modules/auth/user.ind.module';
 import {ThresholdsDtoService} from 'app/modules/patient-vital-thresholds/services/thresholds-dto.service';
 import {IUserRepository} from 'app/modules/auth/repositories';
-import {UserDtoService} from 'app/modules/profile/services/user-dto.service';
+import {UserDtoMapper} from 'app/modules/profile/mappers/user-dto.mapper';
 
 @Module({
     imports: [
@@ -39,10 +39,10 @@ import {UserDtoService} from 'app/modules/profile/services/user-dto.service';
         },
         {
             provide: ThresholdsDtoService,
-            useFactory: (userRepository: IUserRepository, userDtoService: UserDtoService) => {
-                return new ThresholdsDtoService(userRepository, userDtoService);
+            useFactory: (userRepository: IUserRepository, userDtoMapper: UserDtoMapper) => {
+                return new ThresholdsDtoService(userRepository, userDtoMapper);
             },
-            inject: [IUserRepository, UserDtoService],
+            inject: [IUserRepository, UserDtoMapper],
         },
     ],
 })

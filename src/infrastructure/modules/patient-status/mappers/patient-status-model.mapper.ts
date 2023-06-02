@@ -2,7 +2,7 @@ import {User} from 'domain/entities/user.entity';
 import {IPatientStatusEntityMapper} from 'app/modules/patient-status/mappers/patient-status-entity.mapper';
 import {PatientStatus, PatientStatusEnum} from 'domain/entities/patient-status.entity';
 import {PatientStatusModel} from 'infrastructure/modules/patient-status/models';
-import {currentUnixTimestamp} from 'app/support/date.helper';
+import {currentUnixTimestamp} from 'support/date.helper';
 
 export class PatientStatusModelMapper implements IPatientStatusEntityMapper {
     public mapByPatientAndStatus(patient: User, status: PatientStatusEnum): PatientStatus {

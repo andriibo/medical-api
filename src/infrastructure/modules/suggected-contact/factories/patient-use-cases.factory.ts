@@ -7,7 +7,8 @@ import {ApproveSuggestedContactUseCase} from 'app/modules/suggested-contact/use-
 import {ApproveSuggestedContactByPatientService} from 'app/modules/suggested-contact/services/approve-suggested-contact-by-patient.service';
 import {ContactListUseCase} from 'app/modules/suggested-contact/use-cases/patient/contact-list.use-case';
 import {IUserRepository} from 'app/modules/auth/repositories';
-import {UserDtoService} from 'app/modules/profile/services/user-dto.service';
+import {UserDtoMapper} from 'app/modules/profile/mappers/user-dto.mapper';
+import {SuggestedContactDtoMapper} from 'app/modules/suggested-contact/mappers/suggested-contact-dto.mapper';
 
 @Injectable()
 export class PatientUseCasesFactory {
@@ -20,7 +21,8 @@ export class PatientUseCasesFactory {
         @Inject(ApproveSuggestedContactByPatientService)
         private readonly approveSuggestedContactByPatientService: ApproveSuggestedContactByPatientService,
         @Inject(IUserRepository) private readonly userRepository: IUserRepository,
-        @Inject(UserDtoService) private readonly userDtoService: UserDtoService,
+        @Inject(SuggestedContactDtoMapper) private readonly suggestedContactDtoMapper: SuggestedContactDtoMapper,
+        @Inject(UserDtoMapper) private readonly userDtoMapper: UserDtoMapper,
     ) {}
 
     public createDeleteSuggestedContactUseCase(): DeleteSuggestedContactUseCase {
@@ -44,7 +46,8 @@ export class PatientUseCasesFactory {
             this.authedUserService,
             this.suggestedContactRepository,
             this.userRepository,
-            this.userDtoService,
+            this.suggestedContactDtoMapper,
+            this.userDtoMapper,
         );
     }
 }

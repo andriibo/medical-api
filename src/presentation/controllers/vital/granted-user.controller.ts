@@ -5,6 +5,7 @@ import {Roles} from 'presentation/guards';
 import {GetVitalsQueryView} from 'presentation/views/request/vital';
 import {VitalsView} from 'presentation/views/response/vital';
 import {GrantedUserUseCasesFactory} from 'infrastructure/modules/vital/factories/granted-user-use-cases.factory';
+import {VitalsDto} from 'domain/dtos/response/vital';
 
 @Controller()
 @ApiBearerAuth()
@@ -21,7 +22,7 @@ export class GrantedUserController {
     public async getPatientVitals(
         @Param('patientUserId', ParseUUIDPipe) patientUserId: string,
         @Query() query: GetVitalsQueryView,
-    ): Promise<VitalsView> {
+    ): Promise<VitalsDto> {
         const useCase = this.grantedUserUseCasesFactory.createVitalListUseCase();
 
         try {

@@ -10,4 +10,6 @@ export class CreateDoctorDto {
     public institution?: string;
 
     public password: string;
+
+    public roleLabel: string;
 }

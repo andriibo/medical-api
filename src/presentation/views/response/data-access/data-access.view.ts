@@ -16,5 +16,8 @@ export class DataAccessView implements DataAccessDto {
     public createdAt: string;
 
     @ApiProperty()
+    public lastInviteSentAt: number;
+
+    @ApiProperty()
     public requestedUser: UserView;
 }

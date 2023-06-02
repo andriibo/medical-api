@@ -18,7 +18,8 @@ import {IDoctorMetadataRepository, IPatientMetadataRepository} from 'app/modules
 import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repositories';
 import {EmergencyContactModule} from 'infrastructure/modules';
 import {ContactDto} from 'domain/dtos/request/emergency-contact/contact.dto';
-import {convertToUnixTimestamp} from 'app/support/date.helper';
+import {convertToUnixTimestamp} from 'support/date.helper';
+import {ContactsOrderDto} from "domain/dtos/request/emergency-contact/contacts-order.dto";
 
 const patient: User = {
     id: '5nc3e70a-c1y9-121a-c5mv-5aq272098bp0',
@@ -28,6 +29,7 @@ const patient: User = {
     phone: '2930412345',
     avatar: null,
     role: 'Patient',
+    roleLabel: 'Patient',
     createdAt: '2022-10-10 07:31:17.016236',
     deletedAt: null,
     passwordUpdatedAt: 1681305134,
@@ -42,6 +44,7 @@ const emergencyContact: EmergencyContact = {
     phone: '2930412345',
     relationship: 'MedicalProfessional',
     createdAt: '2022-12-10 17:31:07.016236',
+    rank: null,
 };
 
 describe('PatientController', () => {
@@ -56,7 +59,7 @@ describe('PatientController', () => {
             create: jest.fn(() => Promise.resolve()),
             delete: jest.fn(() => Promise.resolve()),
             update: jest.fn(() => Promise.resolve()),
-            getByUserId: jest.fn(() => Promise.resolve([emergencyContact])),
+            getByUserIdOrderedByRank: jest.fn(() => Promise.resolve([emergencyContact])),
         };
         const moduleRef: TestingModule = await Test.createTestingModule({
             imports: [TestModule, EmergencyContactModule],
@@ -129,6 +132,18 @@ describe('PatientController', () => {
                     createdAt: convertToUnixTimestamp(emergencyContact.createdAt),
                 },
             ]);
+    });
+
+    it('/patient/my-emergency-contacts/order (PATCH)', async () => {
+        const dto: ContactsOrderDto = {
+            contactIds: ['a9d9a7d9-0c0c-43a8-9ebf-bfbf4ecc1463'],
+        };
+
+        return request(app.getHttpServer())
+            .patch('/patient/my-emergency-contacts/order')
+            .send(dto)
+            .set('Authorization', 'Bearer patient')
+            .expect(200);
     });
 
     it('/patient/my-emergency-contact/:contactId (PATCH)', async () => {

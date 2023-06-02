@@ -13,7 +13,7 @@ import {
 } from 'app/modules/profile/use-cases';
 import {ProfileSpecification} from 'app/modules/profile/specifications/profile.specification';
 import {IAuthService} from 'app/modules/auth/services/auth.service';
-import {UserDtoService} from 'app/modules/profile/services/user-dto.service';
+import {UserDtoMapper} from 'app/modules/profile/mappers/user-dto.mapper';
 import {RemoveMyAvatarUseCase} from 'app/modules/profile/use-cases/remove-my-avatar.use-case';
 import {IRemoveMyAvatarService} from 'app/modules/profile/services/remove-my-avatar.service';
 
@@ -26,7 +26,7 @@ export class ProfileUseCasesFactory {
         @Inject(IFileNameService) private readonly fileNameService: IFileNameService,
         @Inject(ProfileSpecification) private readonly profileSpecification: ProfileSpecification,
         @Inject(IAuthService) private readonly authService: IAuthService,
-        @Inject(UserDtoService) private readonly userDtoService: UserDtoService,
+        @Inject(UserDtoMapper) private readonly userDtoMapper: UserDtoMapper,
         @Inject(IRemoveMyAvatarService) private readonly removeMyAvatarService: IRemoveMyAvatarService,
     ) {}
 
@@ -48,7 +48,7 @@ export class ProfileUseCasesFactory {
             this.userRepository,
             this.authedUserService,
             this.profileSpecification,
-            this.userDtoService,
+            this.userDtoMapper,
         );
     }
 

@@ -16,7 +16,7 @@ import {RefuseDataAccessUseCase} from 'app/modules/patient-data-access/use-cases
 import {AccessForRegisteredCaregiverService} from 'app/modules/patient-data-access/services/access-for-registered-caregiver.service';
 import {AccessForUnregisteredCaregiverService} from 'app/modules/patient-data-access/services/access-for-unregistered-caregiver.service';
 import {IPatientDataAccessEventEmitter} from 'app/modules/patient-data-access/event-emitters/patient-data-access.event-emitter';
-import {UserDtoService} from 'app/modules/profile/services/user-dto.service';
+import {UserDtoMapper} from 'app/modules/profile/mappers/user-dto.mapper';
 
 @Injectable()
 export class PatientUseCasesFactory {
@@ -37,7 +37,7 @@ export class PatientUseCasesFactory {
         private readonly accessForUnregisteredCaregiverService: AccessForUnregisteredCaregiverService,
         @Inject(DeleteDataAccessByPatientService)
         private readonly deleteDataAccessByPatientService: DeleteDataAccessByPatientService,
-        @Inject(UserDtoService) private readonly userDtoService: UserDtoService,
+        @Inject(UserDtoMapper) private readonly userDtoMapper: UserDtoMapper,
         @Inject(IPatientDataAccessEventEmitter)
         private readonly patientDataAccessEventEmitter: IPatientDataAccessEventEmitter,
     ) {}
@@ -78,7 +78,7 @@ export class PatientUseCasesFactory {
     }
 
     public createDataAccessListUseCase(): DataAccessListUseCase {
-        return new DataAccessListUseCase(this.patientDataAccessRepository, this.authedUserService, this.userDtoService);
+        return new DataAccessListUseCase(this.patientDataAccessRepository, this.authedUserService, this.userDtoMapper);
     }
 
     public createDeleteDataAccessUseCase(): DeleteDataAccessUseCase {
