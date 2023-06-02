@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   medical-api:
-    image: api-medical-api:latest
+    image: registry.digitalocean.com/abnk/api-medical-api:latest
     volumes:
       - .:/usr/src/app
       - /usr/src/app/node_modules
