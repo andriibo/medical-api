@@ -1,9 +1,9 @@
 export class BloodPressureThresholdsDto {
-    public minDBP: number;
+    public minDbp: number;
 
-    public maxDBP: number;
+    public maxDbp: number;
 
-    public minSBP: number;
+    public minSbp: number;
 
-    public maxSBP: number;
+    public maxSbp: number;
 }
