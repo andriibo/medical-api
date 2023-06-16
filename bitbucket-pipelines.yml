@@ -61,7 +61,11 @@ definitions:
                 cd /var/www/${WORK_DIR}/api/
                 git pull origin ${BITBUCKET_BRANCH}
                 docker build -f Dockerfile -t api-medical-api:latest --target development .
+                docker tag api-medical-api:latest registry.digitalocean.com/abnk/api-medical-api:latest 
+                docker login -p ${DOCKER_PASSWORD} -u ${DOCKER_USER} ${DOCKER_URL}
+                docker push registry.digitalocean.com/abnk/api-medical-api:latest
                 docker stack deploy --with-registry-auth -c stack-stage.yaml medical-api-stage
+                docker image prune -a -f
           - pipe: atlassian/ssh-run:0.4.2
             variables:
               SSH_USER: $USER
