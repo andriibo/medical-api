@@ -150,10 +150,10 @@ describe('DoctorController', () => {
 
     it('/doctor/blood-pressure/:patientUserId (POST)', async () => {
         const dto: BloodPressureThresholdsDto = {
-            minDBP: 35,
-            maxDBP: 120,
-            minSBP: 75,
-            maxSBP: 210,
+            minDbp: 35,
+            maxDbp: 120,
+            minSbp: 75,
+            maxSbp: 210,
         };
         return request(app.getHttpServer())
             .post(`/doctor/blood-pressure/${patient.id}`)

@@ -9,29 +9,29 @@ export class UpdateBloodPressureView extends BloodPressureThresholdsDto {
     @IsNotEmpty()
     @Min(AbsMinDBP)
     @Max(AbsMaxDBP)
-    public minDBP: number;
+    public minDbp: number;
 
     @ApiProperty({minimum: AbsMinDBP, maximum: AbsMaxDBP})
     @IsNotEmpty()
     @Min(AbsMinDBP)
     @Max(AbsMaxDBP)
-    @IsGreaterThan('minDBP', {
+    @IsGreaterThan('minDbp', {
         message: "Min DBP can't be equal to or greater than max DBP.",
     })
-    public maxDBP: number;
+    public maxDbp: number;
 
     @ApiProperty({minimum: AbsMinSBP, maximum: AbsMaxSBP})
     @IsNotEmpty()
     @Min(AbsMinSBP)
     @Max(AbsMaxSBP)
-    public minSBP: number;
+    public minSbp: number;
 
     @ApiProperty({minimum: AbsMinSBP, maximum: AbsMaxSBP})
     @IsNotEmpty()
     @Min(AbsMinSBP)
     @Max(AbsMaxSBP)
-    @IsGreaterThan('minSBP', {
+    @IsGreaterThan('minSbp', {
         message: "Min SBP can't be equal to or greater than max SBP.",
     })
-    public maxSBP: number;
+    public maxSbp: number;
 }

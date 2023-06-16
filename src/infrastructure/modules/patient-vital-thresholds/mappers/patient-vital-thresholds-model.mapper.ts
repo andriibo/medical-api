@@ -13,10 +13,10 @@ export class PatientVitalThresholdsModelMapper implements IPatientVitalThreshold
         doctor: User,
     ): PatientVitalThresholds {
         patientVitalThresholds = this.mapByEntity(patientVitalThresholds);
-        patientVitalThresholds.minDbp = dto.minDBP;
-        patientVitalThresholds.maxDbp = dto.maxDBP;
-        patientVitalThresholds.minSbp = dto.minSBP;
-        patientVitalThresholds.maxSbp = dto.maxSBP;
+        patientVitalThresholds.minDbp = dto.minDbp;
+        patientVitalThresholds.maxDbp = dto.maxDbp;
+        patientVitalThresholds.minSbp = dto.minSbp;
+        patientVitalThresholds.maxSbp = dto.maxSbp;
         patientVitalThresholds.dbpSetBy = doctor.id;
         patientVitalThresholds.dbpSetAt = currentUnixTimestamp();
         patientVitalThresholds.sbpSetBy = doctor.id;
