@@ -5,6 +5,7 @@ import {AccessToGrantedUserBindingService} from 'app/modules/patient-data-access
 import {IMailService} from 'app/modules/mail/services/abstract/mail.service';
 import {AccessToPatientBindingService} from 'app/modules/patient-data-access/services/access-to-patient-binding.service';
 import {IDataAccessApprovedService} from 'app/modules/patient-data-access/services/data-access-approved.service';
+import {UserRole} from 'domain/entities/user.entity';
 
 @Injectable()
 export class PatientDataAccessListener {
@@ -67,8 +68,16 @@ export class PatientDataAccessListener {
     }
 
     @OnEvent('data-access-deleted-by-patient')
-    public async handleAccessDeletedByPatient(patient: User, grantedEmail: string): Promise<void> {
-        await this.mailService.sendNotificationThatPatientDeletedDataAccess(patient, grantedEmail);
+    public async handleAccessDeletedByPatient(patient: User, grantedUser: User): Promise<void> {
+        if (!grantedUser.email) {
+            return;
+        }
+
+        if (grantedUser.role === UserRole.Doctor) {
+            await this.mailService.sendNotificationThatPatientDeletedDataAccessForDoctor(patient, grantedUser.email);
+        } else if (grantedUser.role === UserRole.Caregiver) {
+            await this.mailService.sendNotificationThatPatientDeletedDataAccessForCaregiver(patient, grantedUser.email);
+        }
     }
 
     @OnEvent('data-access-withdrawn-by-patient')

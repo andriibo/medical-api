@@ -18,7 +18,9 @@ export interface IMailService {
 
     sendNotificationThatUserWasActivated(toEmail: string): Promise<void>;
 
-    sendNotificationThatPatientDeletedDataAccess(patient: User, toEmail: string): Promise<void>;
+    sendNotificationThatPatientDeletedDataAccessForDoctor(patient: User, toEmail: string): Promise<void>;
+
+    sendNotificationThatPatientDeletedDataAccessForCaregiver(patient: User, toEmail: string): Promise<void>;
 
     sendNotificationThatPatientWithdrawnDataAccess(patient: User, toEmail: string): Promise<void>;
 

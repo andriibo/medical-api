@@ -15,7 +15,7 @@ export interface IPatientDataAccessEventEmitter {
 
     emitGrantedUserResentRequestToPatient(grantedUser: User, dataAccess: PatientDataAccess): void;
 
-    emitAccessDeletedByPatient(patient: User, grantedEmail: string): void;
+    emitAccessDeletedByPatient(patient: User, grantedUser: User): void;
 
     emitAccessWithdrawnByPatient(patient: User, grantedEmail: string): void;
 

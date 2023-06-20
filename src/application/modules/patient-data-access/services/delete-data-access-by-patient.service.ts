@@ -22,22 +22,42 @@ export class DeleteDataAccessByPatientService {
     }
 
     private async sendNotification(patient: User, dataAccess: PatientDataAccess): Promise<void> {
+        if (dataAccess.status === PatientDataAccessStatus.Initiated) {
+            await this.sendAccessWithdrawnNotification(patient, dataAccess);
+        } else {
+            await this.sendAccessDeletedNotification(patient, dataAccess);
+        }
+    }
+
+    private async sendAccessWithdrawnNotification(patient: User, dataAccess: PatientDataAccess): Promise<void> {
         const grantedEmail = await this.getGrantedEmail(dataAccess);
 
-        if (dataAccess.status === PatientDataAccessStatus.Initiated) {
-            await this.patientDataAccessEventEmitter.emitAccessWithdrawnByPatient(patient, grantedEmail);
-        } else {
-            await this.patientDataAccessEventEmitter.emitAccessDeletedByPatient(patient, grantedEmail);
+        await this.patientDataAccessEventEmitter.emitAccessWithdrawnByPatient(patient, grantedEmail);
+    }
+
+    private async sendAccessDeletedNotification(patient: User, dataAccess: PatientDataAccess): Promise<void> {
+        const grantedUser = await this.getGrantedUser(dataAccess);
+
+        if (grantedUser !== null) {
+            await this.patientDataAccessEventEmitter.emitAccessDeletedByPatient(patient, grantedUser);
         }
     }
 
     private async getGrantedEmail(dataAccess: PatientDataAccess): Promise<string> {
         if (dataAccess.grantedUserId !== null) {
-            const grantedUser = await this.userRepository.getOneByIdOrFail(dataAccess.grantedUserId);
+            const grantedUser = await this.getGrantedUser(dataAccess);
 
-            return grantedUser.email;
+            return grantedUser?.email || '';
         }
 
-        return dataAccess.grantedEmail;
+        return dataAccess.grantedEmail || '';
+    }
+
+    private async getGrantedUser(dataAccess: PatientDataAccess): Promise<User | null> {
+        if (dataAccess.grantedUserId !== null) {
+            return await this.userRepository.getOneById(dataAccess.grantedUserId);
+        }
+
+        return null;
     }
 }

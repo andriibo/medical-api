@@ -4,7 +4,6 @@ import {DataSource, In, LessThan} from 'typeorm';
 import {IUserRepository} from 'app/modules/auth/repositories';
 import {UserModel} from './user.model';
 import {User} from 'domain/entities';
-import {EntityNotFoundError} from 'app/errors';
 import {currentUnixTimestamp} from 'support/date.helper';
 import {EntityManager} from 'typeorm/entity-manager/EntityManager';
 import {PatientVitalThresholdsModel} from 'infrastructure/modules/patient-vital-thresholds/models';
@@ -50,15 +49,6 @@ export class UserRepository implements IUserRepository {
 
     public async getOneById(id: string): Promise<User> {
         return await this.dataSource.manager.findOneBy(UserModel, {id});
-    }
-
-    public async getOneByIdOrFail(id: string): Promise<User> {
-        const user = await this.dataSource.manager.findOneBy(UserModel, {id});
-        if (user === null) {
-            throw new EntityNotFoundError('User Not Found.');
-        }
-
-        return user;
     }
 
     public async getByIds(ids: string[]): Promise<User[]> {

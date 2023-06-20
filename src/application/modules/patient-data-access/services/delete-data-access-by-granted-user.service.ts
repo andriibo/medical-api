@@ -33,11 +33,11 @@ export class DeleteDataAccessByGrantedUserService {
 
     private async getPatientEmail(dataAccess: PatientDataAccess): Promise<string> {
         if (dataAccess.patientUserId !== null) {
-            const patient = await this.userRepository.getOneByIdOrFail(dataAccess.patientUserId);
+            const patient = await this.userRepository.getOneById(dataAccess.patientUserId);
 
-            return patient.email;
+            return patient?.email || '';
         }
 
-        return dataAccess.patientEmail;
+        return dataAccess.patientEmail || '';
     }
 }

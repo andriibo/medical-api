@@ -102,11 +102,24 @@ export class MailService implements IMailService {
         await this.mailSender.sendMail(mail);
     }
 
-    public async sendNotificationThatPatientDeletedDataAccess(patient: User, toEmail: string): Promise<void> {
+    public async sendNotificationThatPatientDeletedDataAccessForDoctor(patient: User, toEmail: string): Promise<void> {
         const mail: Email = {
             to: toEmail,
             subject: 'You were removed from list of doctors',
             text: `${patient.firstName} ${patient.lastName} has removed you from the list of their doctors. You no longer have access to the patient account.`,
+        };
+
+        await this.mailSender.sendMail(mail);
+    }
+
+    public async sendNotificationThatPatientDeletedDataAccessForCaregiver(
+        patient: User,
+        toEmail: string,
+    ): Promise<void> {
+        const mail: Email = {
+            to: toEmail,
+            subject: 'You were removed from list of caregivers',
+            text: `${patient.firstName} ${patient.lastName} has removed you from the list of their caregivers. You no longer have access to the patient account.`,
         };
 
         await this.mailSender.sendMail(mail);
