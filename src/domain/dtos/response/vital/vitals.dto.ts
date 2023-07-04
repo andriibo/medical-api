@@ -17,14 +17,14 @@ export class VitalsDto {
                 vital.thresholdsId,
                 vital.timestamp,
                 vital.temp,
-                vital.isTempNormal,
+                vital.isTempNormal === null ? null : Number(vital.isTempNormal),
                 vital.hr,
-                vital.isHrNormal,
+                vital.isHrNormal === null ? null : Number(vital.isHrNormal),
                 vital.spo2,
-                vital.isSpo2Normal,
+                vital.isSpo2Normal === null ? null : Number(vital.isSpo2Normal),
                 vital.rr,
-                vital.isRrNormal,
-                vital.fall,
+                vital.isRrNormal === null ? null : Number(vital.isRrNormal),
+                vital.fall === null ? null : Number(vital.fall),
             ];
         });
 
