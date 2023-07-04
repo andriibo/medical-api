@@ -172,20 +172,18 @@ describe('GrantedUserController', () => {
             .expect(200)
             .expect({
                 vitals: [
-                    {
-                        vitalId: vital.id,
-                        temp: vital.temp,
-                        isTempNormal: vital.isTempNormal,
-                        hr: vital.hr,
-                        isHrNormal: vital.isHrNormal,
-                        spo2: vital.spo2,
-                        isSpo2Normal: vital.isSpo2Normal,
-                        rr: vital.rr,
-                        isRrNormal: vital.isRrNormal,
-                        fall: vital.fall,
-                        timestamp: vital.timestamp,
-                        thresholdsId: vital.thresholdsId,
-                    },
+                    [
+                        vital.id,
+                        vital.thresholdsId,
+                        vital.timestamp,
+                        vital.temp,
+                        vital.isTempNormal,
+                        vital.hr,
+                        vital.isHrNormal,
+                        vital.spo2,
+                        vital.isSpo2Normal,
+                        vital.fall,
+                    ],
                 ],
                 thresholds: [
                     {

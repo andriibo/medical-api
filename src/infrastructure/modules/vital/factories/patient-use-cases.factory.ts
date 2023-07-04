@@ -3,11 +3,9 @@ import {IVitalRepository} from 'app/modules/vital/repositories';
 import {IVitalEntityMapper} from 'app/modules/vital/mappers/vital-entity.mapper';
 import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service';
 import {SyncVitalsUseCase} from 'app/modules/vital/use-cases/patient/sync-vitals.use-case';
-import {IPatientVitalThresholdsRepository} from 'app/modules/patient-vital-thresholds/repositories';
 import {PatientOwnsThresholdsSpecification} from 'app/modules/patient-vital-thresholds/specifications/patient-owns-thresholds.specification';
 import {VitalListUseCase} from 'app/modules/vital/use-cases/patient/vital-list.use-case';
-import {IUserRepository} from 'app/modules/auth/repositories';
-import {ThresholdsDtoService} from 'app/modules/patient-vital-thresholds/services/thresholds-dto.service';
+import {VitalsDtoService} from 'app/modules/vital/services/vitals-dto.service';
 
 @Injectable()
 export class PatientUseCasesFactory {
@@ -15,20 +13,12 @@ export class PatientUseCasesFactory {
         @Inject(IAuthedUserService) private readonly authedUserService: IAuthedUserService,
         @Inject(IVitalRepository) private readonly vitalRepository: IVitalRepository,
         @Inject(IVitalEntityMapper) private readonly vitalEntityMapper: IVitalEntityMapper,
-        @Inject(IPatientVitalThresholdsRepository)
-        private readonly patientVitalThresholdsRepository: IPatientVitalThresholdsRepository,
         private readonly patientOwnsThresholdsSpecification: PatientOwnsThresholdsSpecification,
-        @Inject(IUserRepository) private readonly userRepository: IUserRepository,
-        @Inject(ThresholdsDtoService) private readonly thresholdsDtoService: ThresholdsDtoService,
+        @Inject(VitalsDtoService) private readonly vitalsDtoService: VitalsDtoService,
     ) {}
 
     public createVitalListUseCase(): VitalListUseCase {
-        return new VitalListUseCase(
-            this.authedUserService,
-            this.vitalRepository,
-            this.patientVitalThresholdsRepository,
-            this.thresholdsDtoService,
-        );
+        return new VitalListUseCase(this.authedUserService, this.vitalRepository, this.vitalsDtoService);
     }
 
     public createSyncPatientVitalsUseCase(): SyncVitalsUseCase {

@@ -9,6 +9,9 @@ import {PatientVitalThresholdsModule} from 'infrastructure/modules/patient-vital
 import {PatientVitalThresholdsIndependentModule} from 'infrastructure/modules/patient-vital-thresholds/patient-vital-thresholds.ind.module';
 import {UserIndependentModule} from 'infrastructure/modules/auth/user.ind.module';
 import {VitalIndependentModule} from './vital.ind.module';
+import {VitalsDtoService} from 'app/modules/vital/services/vitals-dto.service';
+import {IPatientVitalThresholdsRepository} from 'app/modules/patient-vital-thresholds/repositories';
+import {ThresholdsDtoService} from 'app/modules/patient-vital-thresholds/services/thresholds-dto.service';
 
 @Module({
     imports: [
@@ -21,6 +24,20 @@ import {VitalIndependentModule} from './vital.ind.module';
         VitalIndependentModule,
     ],
     controllers: [PatientController, GrantedUserController, VitalController],
-    providers: [PatientUseCasesFactory, GrantedUserUseCasesFactory, VitalUseCasesFactory],
+    providers: [
+        PatientUseCasesFactory,
+        GrantedUserUseCasesFactory,
+        VitalUseCasesFactory,
+        {
+            provide: VitalsDtoService,
+            useFactory: (
+                patientVitalThresholdsRepository: IPatientVitalThresholdsRepository,
+                thresholdsDtoService: ThresholdsDtoService,
+            ) => {
+                return new VitalsDtoService(patientVitalThresholdsRepository, thresholdsDtoService);
+            },
+            inject: [IPatientVitalThresholdsRepository, ThresholdsDtoService],
+        },
+    ],
 })
 export class VitalModule {}
