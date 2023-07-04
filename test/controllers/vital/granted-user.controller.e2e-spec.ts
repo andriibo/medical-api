@@ -182,6 +182,8 @@ describe('GrantedUserController', () => {
                         vital.isHrNormal,
                         vital.spo2,
                         vital.isSpo2Normal,
+                        vital.rr,
+                        vital.isRrNormal,
                         vital.fall,
                     ],
                 ],
