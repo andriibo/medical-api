@@ -24,6 +24,10 @@ export class PatientVitalThresholdsRepository implements IPatientVitalThresholds
     }
 
     public async getByIds(ids: string[]): Promise<PatientVitalThresholds[]> {
+        if (!ids.length) {
+            return [];
+        }
+
         return await this.dataSource.manager.findBy(PatientVitalThresholdsModel, {
             id: In(arrayUnique(ids)),
         });
