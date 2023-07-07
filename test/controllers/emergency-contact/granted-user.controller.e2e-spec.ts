@@ -6,7 +6,7 @@ import {TestModule} from 'tests/test.module';
 import {getRepositoryToken} from '@nestjs/typeorm';
 import {DoctorMetadataModel, PatientMetadataModel, UserModel} from 'infrastructure/modules/auth/models';
 import {IPatientVitalThresholdsRepository} from 'app/modules/patient-vital-thresholds/repositories';
-import {EmergencyContactModel} from 'infrastructure/modules/emergency-contact/models';
+import {PersonEmergencyContactModel} from 'infrastructure/modules/emergency-contact/models';
 import {PatientDataAccessModel} from 'infrastructure/modules/patient-data-access/models';
 import {PatientStatusModel} from 'infrastructure/modules/patient-status/models';
 import {PatientCategoryModel} from 'infrastructure/modules/patient-category/models';
@@ -90,7 +90,7 @@ describe('GrantedUserController', () => {
             .useValue(null)
             .overrideProvider(getRepositoryToken(PatientMetadataModel))
             .useValue(null)
-            .overrideProvider(getRepositoryToken(EmergencyContactModel))
+            .overrideProvider(getRepositoryToken(PersonEmergencyContactModel))
             .useValue(null)
             .overrideProvider(getRepositoryToken(PatientDataAccessModel))
             .useValue(null)

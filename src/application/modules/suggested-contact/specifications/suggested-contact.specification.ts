@@ -12,7 +12,7 @@ export class SuggestedContactSpecification {
         );
     }
 
-    public assertUserCanDeleteContact(grantedUser: User, suggestedContact: SuggestedContact): void {
+    public assertUserCanDeletePersonContact(grantedUser: User, suggestedContact: SuggestedContact): void {
         const isSuggestedBy = suggestedContact.suggestedBy === grantedUser.id;
 
         if (!isSuggestedBy) {

@@ -1,9 +1,17 @@
 import {Controller, HttpStatus, Get, Param, ParseUUIDPipe, HttpCode, BadRequestException} from '@nestjs/common';
-import {ApiBearerAuth, ApiForbiddenResponse, ApiResponse, ApiTags, ApiUnauthorizedResponse} from '@nestjs/swagger';
+import {
+    ApiBearerAuth,
+    ApiForbiddenResponse,
+    ApiResponse,
+    ApiTags,
+    ApiUnauthorizedResponse,
+    ApiOperation,
+} from '@nestjs/swagger';
 import {Roles} from 'presentation/guards';
 import {GrantedUserUseCasesFactory} from 'infrastructure/modules/emergency-contact/factories/granted-user-use-cases.factory';
-import {ContactView} from 'presentation/views/response/emergency-contact';
-import {ContactDto} from 'domain/dtos/response/emergency-contact/contact.dto';
+import {PersonContactView} from 'presentation/views/response/emergency-contact';
+import {ContactsDto, PersonContactDto} from 'domain/dtos/response/emergency-contact';
+import {ContactsView} from 'views/response/emergency-contact/contacts.view';
 
 @Controller()
 @ApiBearerAuth()
@@ -17,14 +25,32 @@ export class GrantUserController {
     @Get('patient-emergency-contacts/:patientUserId')
     @HttpCode(HttpStatus.OK)
     @HttpCode(HttpStatus.BAD_REQUEST)
-    @ApiResponse({status: HttpStatus.OK, type: [ContactView]})
+    @ApiResponse({status: HttpStatus.OK, type: [PersonContactView]})
+    @ApiOperation({deprecated: true, summary: 'use GET /emergency-contacts/:patientUserId'})
     public async getPatientEmergencyContacts(
         @Param('patientUserId', ParseUUIDPipe) patientUserId: string,
-    ): Promise<ContactDto[]> {
+    ): Promise<PersonContactDto[]> {
         const useCase = this.grantedUserUseCasesFactory.createPatientContactUseCase();
 
         try {
             return await useCase.getList(patientUserId);
+        } catch (error) {
+            throw new BadRequestException(error.message);
+        }
+    }
+
+    @Roles('Caregiver', 'Doctor')
+    @Get('emergency-contacts/:patientUserId')
+    @HttpCode(HttpStatus.OK)
+    @HttpCode(HttpStatus.BAD_REQUEST)
+    @ApiResponse({status: HttpStatus.OK, type: ContactsView})
+    public async getEmergencyContacts(
+        @Param('patientUserId', ParseUUIDPipe) patientUserId: string,
+    ): Promise<ContactsDto> {
+        const useCase = this.grantedUserUseCasesFactory.createGetPatientContactsUseCase();
+
+        try {
+            return await useCase.getPatientContacts(patientUserId);
         } catch (error) {
             throw new BadRequestException(error.message);
         }

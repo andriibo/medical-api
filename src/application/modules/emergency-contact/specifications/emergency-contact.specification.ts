@@ -5,7 +5,7 @@ import {IEmergencyContactRepository} from 'app/modules/emergency-contact/reposit
 import {arrayDiff} from 'support/array.helper';
 import {ContactsOrderDto} from 'domain/dtos/request/emergency-contact/contacts-order.dto';
 
-export class EmergencyContactSpecification {
+export abstract class EmergencyContactSpecification {
     public constructor(private readonly emergencyContactRepository: IEmergencyContactRepository) {}
 
     public assertUserCanCreateContact(user: User): void {
@@ -22,7 +22,7 @@ export class EmergencyContactSpecification {
         }
     }
 
-    public async assertUserCanDeleteContact(user: User, contact: EmergencyContact): Promise<void> {
+    public async assertUserCanDeletePersonContact(user: User, contact: EmergencyContact): Promise<void> {
         if (!this.isUserOwnerOfContact(user, contact)) {
             throw new EmergencyContactSpecificationError('Delete Emergency Contact Not Allowed.');
         }
@@ -30,6 +30,12 @@ export class EmergencyContactSpecification {
         const contactsQuantity = await this.emergencyContactRepository.countByUserId(user.id);
         if (contactsQuantity <= 1) {
             throw new EmergencyContactSpecificationError('You must have at least one emergency contact.');
+        }
+    }
+
+    public async assertUserCanDeleteOrganizationContact(user: User, contact: EmergencyContact): Promise<void> {
+        if (!this.isUserOwnerOfContact(user, contact)) {
+            throw new EmergencyContactSpecificationError('Delete Emergency Contact Not Allowed.');
         }
     }
 

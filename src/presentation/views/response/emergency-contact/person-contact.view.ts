@@ -1,7 +1,7 @@
 import {ApiProperty} from '@nestjs/swagger';
-import {ContactDto} from 'domain/dtos/response/emergency-contact/contact.dto';
+import {PersonContactDto} from 'domain/dtos/response/emergency-contact';
 
-export class ContactView implements ContactDto {
+export class PersonContactView implements PersonContactDto {
     @ApiProperty()
     public contactId: string;
 

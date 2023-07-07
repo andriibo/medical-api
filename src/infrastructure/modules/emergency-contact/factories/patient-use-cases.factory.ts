@@ -1,63 +1,123 @@
 import {Inject, Injectable} from '@nestjs/common';
 import {
-    CreateContactUseCase,
+    CreatePersonContactUseCase,
     ContactListUseCase,
-    DeleteContactUseCase,
-    SetContactsOrderUseCase,
-    UpdateContactUseCase,
+    DeletePersonContactUseCase,
+    SetPersonContactsOrderUseCase,
+    UpdatePersonContactUseCase,
+    CreateOrganizationContactUseCase,
+    UpdateOrganizationContactUseCase,
+    DeleteOrganizationContactUseCase,
+    SetOrganizationContactsOrderUseCase,
+    GetContactsUseCase,
 } from 'app/modules/emergency-contact/use-cases/patient';
 import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service';
-import {IEmergencyContactRepository} from 'app/modules/emergency-contact/repositories';
-import {IEmergencyContactEntityMapper} from 'app/modules/emergency-contact/mappers/emergency-contact-entity.mapper';
-import {EmergencyContactSpecification} from 'app/modules/emergency-contact/specifications/emergency-contact.specification';
+import {
+    IPersonEmergencyContactRepository,
+    IOrganizationEmergencyContactRepository,
+} from 'app/modules/emergency-contact/repositories';
+import {IPersonEmergencyContactEntityMapper} from 'app/modules/emergency-contact/mappers/person-emergency-contact-entity.mapper';
+import {IOrganizationEmergencyContactEntityMapper} from 'app/modules/emergency-contact/mappers/organization-emergency-contact-entity.mapper';
+import {
+    PersonEmergencyContactSpecification,
+    OrganizationEmergencyContactSpecification,
+} from 'app/modules/emergency-contact/specifications';
 
 @Injectable()
 export class PatientUseCasesFactory {
     public constructor(
         @Inject(IAuthedUserService) private readonly authedUserService: IAuthedUserService,
-        @Inject(IEmergencyContactRepository)
-        private readonly emergencyContactRepository: IEmergencyContactRepository,
-        @Inject(IEmergencyContactEntityMapper)
-        private readonly emergencyContactEntityMapper: IEmergencyContactEntityMapper,
-        @Inject(EmergencyContactSpecification)
-        private readonly emergencyContactSpecification: EmergencyContactSpecification,
+        @Inject(IPersonEmergencyContactRepository)
+        private readonly personEmergencyContactRepository: IPersonEmergencyContactRepository,
+        @Inject(IOrganizationEmergencyContactRepository)
+        private readonly organizationEmergencyContactRepository: IOrganizationEmergencyContactRepository,
+        @Inject(IPersonEmergencyContactEntityMapper)
+        private readonly personEmergencyContactEntityMapper: IPersonEmergencyContactEntityMapper,
+        @Inject(IOrganizationEmergencyContactEntityMapper)
+        private readonly organizationEmergencyContactEntityMapper: IOrganizationEmergencyContactEntityMapper,
+        @Inject(PersonEmergencyContactSpecification)
+        private readonly personEmergencyContactSpecification: PersonEmergencyContactSpecification,
+        @Inject(OrganizationEmergencyContactSpecification)
+        private readonly organizationEmergencyContactSpecification: OrganizationEmergencyContactSpecification,
     ) {}
 
-    public createCreateContactUseCase(): CreateContactUseCase {
-        return new CreateContactUseCase(
+    public createCreatePersonContactUseCase(): CreatePersonContactUseCase {
+        return new CreatePersonContactUseCase(
             this.authedUserService,
-            this.emergencyContactRepository,
-            this.emergencyContactEntityMapper,
-            this.emergencyContactSpecification,
+            this.personEmergencyContactRepository,
+            this.personEmergencyContactEntityMapper,
+            this.personEmergencyContactSpecification,
+        );
+    }
+
+    public createCreateOrganizationContactUseCase(): CreateOrganizationContactUseCase {
+        return new CreateOrganizationContactUseCase(
+            this.authedUserService,
+            this.organizationEmergencyContactRepository,
+            this.organizationEmergencyContactEntityMapper,
+            this.organizationEmergencyContactSpecification,
         );
     }
 
     public createContactListUseCase(): ContactListUseCase {
-        return new ContactListUseCase(this.authedUserService, this.emergencyContactRepository);
+        return new ContactListUseCase(this.authedUserService, this.personEmergencyContactRepository);
     }
 
-    public createUpdateContactUseCase(): UpdateContactUseCase {
-        return new UpdateContactUseCase(
+    public createGetContactsUseCase(): GetContactsUseCase {
+        return new GetContactsUseCase(
             this.authedUserService,
-            this.emergencyContactRepository,
-            this.emergencyContactEntityMapper,
-            this.emergencyContactSpecification,
+            this.personEmergencyContactRepository,
+            this.organizationEmergencyContactRepository,
         );
     }
 
-    public createSetContactsOrderUseCase(): SetContactsOrderUseCase {
-        return new SetContactsOrderUseCase(
+    public createUpdatePersonContactUseCase(): UpdatePersonContactUseCase {
+        return new UpdatePersonContactUseCase(
             this.authedUserService,
-            this.emergencyContactRepository,
-            this.emergencyContactSpecification,
+            this.personEmergencyContactRepository,
+            this.personEmergencyContactEntityMapper,
+            this.personEmergencyContactSpecification,
         );
     }
 
-    public createDeleteContactUseCase(): DeleteContactUseCase {
-        return new DeleteContactUseCase(
+    public createUpdateOrganizationContactUseCase(): UpdateOrganizationContactUseCase {
+        return new UpdateOrganizationContactUseCase(
             this.authedUserService,
-            this.emergencyContactRepository,
-            this.emergencyContactSpecification,
+            this.organizationEmergencyContactRepository,
+            this.organizationEmergencyContactEntityMapper,
+            this.organizationEmergencyContactSpecification,
+        );
+    }
+
+    public createSetPersonContactsOrderUseCase(): SetPersonContactsOrderUseCase {
+        return new SetPersonContactsOrderUseCase(
+            this.authedUserService,
+            this.personEmergencyContactRepository,
+            this.personEmergencyContactSpecification,
+        );
+    }
+
+    public createSetOrganizationContactsOrderUseCase(): SetOrganizationContactsOrderUseCase {
+        return new SetOrganizationContactsOrderUseCase(
+            this.authedUserService,
+            this.organizationEmergencyContactRepository,
+            this.organizationEmergencyContactSpecification,
+        );
+    }
+
+    public createDeletePersonContactUseCase(): DeletePersonContactUseCase {
+        return new DeletePersonContactUseCase(
+            this.authedUserService,
+            this.personEmergencyContactRepository,
+            this.personEmergencyContactSpecification,
+        );
+    }
+
+    public createDeleteOrganizationContactUseCase(): DeleteOrganizationContactUseCase {
+        return new DeleteOrganizationContactUseCase(
+            this.authedUserService,
+            this.organizationEmergencyContactRepository,
+            this.organizationEmergencyContactSpecification,
         );
     }
 }

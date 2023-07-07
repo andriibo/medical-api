@@ -1,8 +1,8 @@
 import {Entity, Column, PrimaryGeneratedColumn} from 'typeorm';
-import {EmergencyContact} from 'domain/entities';
+import {PersonEmergencyContact} from 'domain/entities';
 
-@Entity('emergency_contact')
-export class EmergencyContactModel implements EmergencyContact {
+@Entity('person_emergency_contact')
+export class PersonEmergencyContactModel implements PersonEmergencyContact {
     @PrimaryGeneratedColumn('uuid')
     public id: string;
 

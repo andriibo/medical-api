@@ -1,4 +1,4 @@
-export class ContactDto {
+export class PersonContactDto {
     public firstName: string;
 
     public lastName: string;

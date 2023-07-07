@@ -1,7 +1,7 @@
-import {EmergencyContact} from 'domain/entities';
+import {PersonEmergencyContact} from 'domain/entities';
 import {convertToUnixTimestamp} from 'support/date.helper';
 
-export class ContactDto {
+export class PersonContactDto {
     public contactId: string;
 
     public firstName: string;
@@ -16,8 +16,8 @@ export class ContactDto {
 
     public createdAt: number;
 
-    public static fromEmergencyContact(emergencyContact: EmergencyContact): ContactDto {
-        const dto = new ContactDto();
+    public static fromPersonEmergencyContact(emergencyContact: PersonEmergencyContact): PersonContactDto {
+        const dto = new PersonContactDto();
         dto.contactId = emergencyContact.id;
         dto.firstName = emergencyContact.firstName;
         dto.lastName = emergencyContact.lastName;

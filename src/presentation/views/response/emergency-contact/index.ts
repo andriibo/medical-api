@@ -1,3 +1,4 @@
-import {ContactView} from './contact.view';
+import {PersonContactView} from './person-contact.view';
+import {OrganizationContactView} from './organization-contact.view';
 
-export {ContactView};
+export {PersonContactView, OrganizationContactView};

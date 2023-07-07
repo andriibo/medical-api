@@ -6,7 +6,7 @@ import {TestModule} from 'tests/test.module';
 import {getRepositoryToken} from '@nestjs/typeorm';
 import {DoctorMetadataModel, PatientMetadataModel, UserModel} from 'infrastructure/modules/auth/models';
 import {IPatientVitalThresholdsRepository} from 'app/modules/patient-vital-thresholds/repositories';
-import {EmergencyContactModel} from 'infrastructure/modules/emergency-contact/models';
+import {PersonEmergencyContactModel} from 'infrastructure/modules/emergency-contact/models';
 import {PatientDataAccessModel} from 'infrastructure/modules/patient-data-access/models';
 import {PatientStatusModel} from 'infrastructure/modules/patient-status/models';
 import {PatientCategoryModel} from 'infrastructure/modules/patient-category/models';
@@ -17,7 +17,7 @@ import {IUserRepository} from 'app/modules/auth/repositories';
 import {IDoctorMetadataRepository, IPatientMetadataRepository} from 'app/modules/profile/repositories';
 import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repositories';
 import {EmergencyContactModule} from 'infrastructure/modules';
-import {ContactDto} from 'domain/dtos/request/emergency-contact/contact.dto';
+import {PersonContactDto} from 'domain/dtos/request/emergency-contact/person-contact.dto';
 import {convertToUnixTimestamp} from 'support/date.helper';
 import {ContactsOrderDto} from "domain/dtos/request/emergency-contact/contacts-order.dto";
 
@@ -70,7 +70,7 @@ describe('PatientController', () => {
             .useValue(null)
             .overrideProvider(getRepositoryToken(PatientMetadataModel))
             .useValue(null)
-            .overrideProvider(getRepositoryToken(EmergencyContactModel))
+            .overrideProvider(getRepositoryToken(PersonEmergencyContactModel))
             .useValue(null)
             .overrideProvider(getRepositoryToken(PatientDataAccessModel))
             .useValue(null)
@@ -102,7 +102,7 @@ describe('PatientController', () => {
     });
 
     it('/patient/my-emergency-contact (POST)', async () => {
-        const dto: ContactDto = {
+        const dto: PersonContactDto = {
             firstName: 'firstName',
             lastName: 'lastName',
             email: 'email@gmail.com',
@@ -147,7 +147,7 @@ describe('PatientController', () => {
     });
 
     it('/patient/my-emergency-contact/:contactId (PATCH)', async () => {
-        const dto: ContactDto = {
+        const dto: PersonContactDto = {
             firstName: 'firstNameNew',
             lastName: 'lastNameNew',
             email: 'emailnew@gmail.com',

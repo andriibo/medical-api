@@ -1,14 +1,12 @@
-export enum SuggestedPersonContactRelationship {
+import {EmergencyContact} from './emergency-contact.entity';
+
+export enum PersonContactRelationship {
     MedicalProfessional = 'MedicalProfessional',
     Caregiver = 'Caregiver',
     FriendsFamily = 'Friends&Family',
 }
 
-export interface SuggestedContact {
-    id: string;
-
-    patientUserId: string;
-
+export interface PersonEmergencyContact extends EmergencyContact {
     firstName: string;
 
     lastName: string;
@@ -18,8 +16,4 @@ export interface SuggestedContact {
     phone: string;
 
     relationship: string;
-
-    suggestedBy: string;
-
-    suggestedAt: string;
 }

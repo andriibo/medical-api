@@ -1,35 +1,74 @@
 import {Module} from '@nestjs/common';
 import {GrantUserController, PatientController} from 'controllers/emergency-contact';
-import {IEmergencyContactRepository} from 'app/modules/emergency-contact/repositories';
+import {
+    IPersonEmergencyContactRepository,
+    IOrganizationEmergencyContactRepository,
+} from 'app/modules/emergency-contact/repositories';
 import {TypeOrmModule} from '@nestjs/typeorm';
-import {EmergencyContactModel, EmergencyContactRepository} from './models';
+import {
+    PersonEmergencyContactModel,
+    PersonEmergencyContactRepository,
+    OrganizationEmergencyContactModel,
+    OrganizationEmergencyContactRepository,
+} from './models';
 import {GrantedUserUseCasesFactory, PatientUseCasesFactory} from './factories';
-import {IEmergencyContactEntityMapper} from 'app/modules/emergency-contact/mappers/emergency-contact-entity.mapper';
-import {EmergencyContactModelMapper} from './mappers/emergency-contact-model.mapper';
+import {IPersonEmergencyContactEntityMapper} from 'app/modules/emergency-contact/mappers/person-emergency-contact-entity.mapper';
+import {IOrganizationEmergencyContactEntityMapper} from 'app/modules/emergency-contact/mappers/organization-emergency-contact-entity.mapper';
+import {PersonEmergencyContactModelMapper} from './mappers/person-emergency-contact-model.mapper';
+import {OrganizationEmergencyContactModelMapper} from './mappers/organization-emergency-contact-model.mapper';
 import {AuthModule, PatientDataAccessModule} from 'infrastructure/modules';
-import {EmergencyContactSpecification} from 'app/modules/emergency-contact/specifications/emergency-contact.specification';
+import {
+    PersonEmergencyContactSpecification,
+    OrganizationEmergencyContactSpecification,
+} from 'app/modules/emergency-contact/specifications';
 
 @Module({
-    imports: [TypeOrmModule.forFeature([EmergencyContactModel]), AuthModule, PatientDataAccessModule],
-    exports: [IEmergencyContactRepository, IEmergencyContactEntityMapper, EmergencyContactSpecification],
+    imports: [
+        TypeOrmModule.forFeature([PersonEmergencyContactModel, OrganizationEmergencyContactModel]),
+        AuthModule,
+        PatientDataAccessModule,
+    ],
+    exports: [
+        IPersonEmergencyContactRepository,
+        IPersonEmergencyContactEntityMapper,
+        IOrganizationEmergencyContactRepository,
+        IOrganizationEmergencyContactEntityMapper,
+        PersonEmergencyContactSpecification,
+        OrganizationEmergencyContactSpecification,
+    ],
     controllers: [GrantUserController, PatientController],
     providers: [
         GrantedUserUseCasesFactory,
         PatientUseCasesFactory,
         {
-            provide: EmergencyContactSpecification,
-            useFactory: (emergencyContactRepository: IEmergencyContactRepository) => {
-                return new EmergencyContactSpecification(emergencyContactRepository);
+            provide: PersonEmergencyContactSpecification,
+            useFactory: (emergencyContactRepository: IPersonEmergencyContactRepository) => {
+                return new PersonEmergencyContactSpecification(emergencyContactRepository);
             },
-            inject: [IEmergencyContactRepository],
+            inject: [IPersonEmergencyContactRepository],
         },
         {
-            provide: IEmergencyContactRepository,
-            useClass: EmergencyContactRepository,
+            provide: OrganizationEmergencyContactSpecification,
+            useFactory: (emergencyContactRepository: IOrganizationEmergencyContactRepository) => {
+                return new OrganizationEmergencyContactSpecification(emergencyContactRepository);
+            },
+            inject: [IOrganizationEmergencyContactRepository],
         },
         {
-            provide: IEmergencyContactEntityMapper,
-            useClass: EmergencyContactModelMapper,
+            provide: IPersonEmergencyContactRepository,
+            useClass: PersonEmergencyContactRepository,
+        },
+        {
+            provide: IOrganizationEmergencyContactRepository,
+            useClass: OrganizationEmergencyContactRepository,
+        },
+        {
+            provide: IPersonEmergencyContactEntityMapper,
+            useClass: PersonEmergencyContactModelMapper,
+        },
+        {
+            provide: IOrganizationEmergencyContactEntityMapper,
+            useClass: OrganizationEmergencyContactModelMapper,
         },
     ],
 })

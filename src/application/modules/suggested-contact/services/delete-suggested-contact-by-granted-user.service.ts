@@ -9,7 +9,7 @@ export class DeleteSuggestedContactByGrantedUserService {
     ) {}
 
     public async deleteSuggestedContact(doctor: User, suggestedContact: SuggestedContact): Promise<void> {
-        this.suggestedContactSpecification.assertUserCanDeleteContact(doctor, suggestedContact);
+        this.suggestedContactSpecification.assertUserCanDeletePersonContact(doctor, suggestedContact);
         await this.suggestedContactRepository.delete(suggestedContact);
     }
 }

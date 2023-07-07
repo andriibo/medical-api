@@ -13,9 +13,9 @@ import {DeleteSuggestedContactByGrantedUserService} from 'app/modules/suggested-
 import {DeleteSuggestedContactByPatientService} from 'app/modules/suggested-contact/services/delete-suggested-contact-by-patient.service';
 import {GrantedUserUseCasesFactory, PatientUseCasesFactory} from './factories';
 import {ApproveSuggestedContactByPatientService} from 'app/modules/suggested-contact/services/approve-suggested-contact-by-patient.service';
-import {IEmergencyContactEntityMapper} from 'app/modules/emergency-contact/mappers/emergency-contact-entity.mapper';
-import {EmergencyContactSpecification} from 'app/modules/emergency-contact/specifications/emergency-contact.specification';
-import {IEmergencyContactRepository} from 'app/modules/emergency-contact/repositories';
+import {IPersonEmergencyContactEntityMapper} from 'app/modules/emergency-contact/mappers/person-emergency-contact-entity.mapper';
+import {PersonEmergencyContactSpecification} from 'app/modules/emergency-contact/specifications';
+import {IPersonEmergencyContactRepository} from 'app/modules/emergency-contact/repositories';
 import {PatientDataAccessSpecification} from 'app/modules/patient-data-access/specifications/patient-data-access.specification';
 import {UserIndependentModule} from 'infrastructure/modules/auth/user.ind.module';
 import {SuggestedContactDtoMapper} from 'app/modules/suggested-contact/mappers/suggested-contact-dto.mapper';
@@ -75,9 +75,9 @@ import {SuggestedContactDtoMapper} from 'app/modules/suggested-contact/mappers/s
             useFactory: (
                 suggestedContactRepository: ISuggestedContactRepository,
                 suggestedContactSpecification: SuggestedContactSpecification,
-                emergencyContactEntityMapper: IEmergencyContactEntityMapper,
-                emergencyContactSpecification: EmergencyContactSpecification,
-                emergencyContactRepository: IEmergencyContactRepository,
+                emergencyContactEntityMapper: IPersonEmergencyContactEntityMapper,
+                emergencyContactSpecification: PersonEmergencyContactSpecification,
+                emergencyContactRepository: IPersonEmergencyContactRepository,
             ) => {
                 return new ApproveSuggestedContactByPatientService(
                     suggestedContactRepository,
@@ -90,9 +90,9 @@ import {SuggestedContactDtoMapper} from 'app/modules/suggested-contact/mappers/s
             inject: [
                 ISuggestedContactRepository,
                 SuggestedContactSpecification,
-                IEmergencyContactEntityMapper,
-                EmergencyContactSpecification,
-                IEmergencyContactRepository,
+                IPersonEmergencyContactEntityMapper,
+                PersonEmergencyContactSpecification,
+                IPersonEmergencyContactRepository,
             ],
         },
         {
