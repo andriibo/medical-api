@@ -2,25 +2,39 @@ import {Test, TestingModule} from '@nestjs/testing';
 import * as request from 'supertest';
 import {INestApplication, ValidationPipe} from '@nestjs/common';
 import {SuggestedContactModule} from 'infrastructure/modules/suggected-contact/suggested-contact.module';
-import {PatientDataAccess, PersonSuggestedContact, User} from 'domain/entities';
+import {OrganizationSuggestedContact, PatientDataAccess, PersonSuggestedContact, User} from 'domain/entities';
 import {TestModule} from 'tests/test.module';
 import {getRepositoryToken} from '@nestjs/typeorm';
 import {DoctorMetadataModel, PatientMetadataModel, UserModel} from 'infrastructure/modules/auth/models';
-import {PersonSuggestedContactModel} from 'infrastructure/modules/suggected-contact/models';
+import {
+    PersonSuggestedContactModel,
+    OrganizationSuggestedContactModel,
+} from 'infrastructure/modules/suggected-contact/models';
 import {IPatientVitalThresholdsRepository} from 'app/modules/patient-vital-thresholds/repositories';
-import {PersonEmergencyContactModel} from 'infrastructure/modules/emergency-contact/models';
+import {
+    PersonEmergencyContactModel,
+    OrganizationEmergencyContactModel,
+} from 'infrastructure/modules/emergency-contact/models';
 import {PatientDataAccessModel} from 'infrastructure/modules/patient-data-access/models';
 import {PatientStatusModel} from 'infrastructure/modules/patient-status/models';
 import {PatientCategoryModel} from 'infrastructure/modules/patient-category/models';
 import {IPatientCategoryRepository} from 'app/modules/patient-category/repositories';
-import {IEmergencyContactRepository} from 'app/modules/emergency-contact/repositories';
+import {
+    IPersonEmergencyContactRepository,
+    IOrganizationEmergencyContactRepository,
+} from 'app/modules/emergency-contact/repositories';
 import {IPatientStatusRepository} from 'app/modules/patient-status/repositories';
-import {IPersonSuggestedContactRepository} from 'app/modules/suggested-contact/repositories';
+import {
+    IPersonSuggestedContactRepository,
+    IOrganizationSuggestedContactRepository,
+} from 'app/modules/suggested-contact/repositories';
 import {IUserRepository} from 'app/modules/auth/repositories';
 import {IDoctorMetadataRepository, IPatientMetadataRepository} from 'app/modules/profile/repositories';
 import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repositories';
 import {PersonSuggestedContactDto} from 'domain/dtos/request/suggested-contact/person-suggested-contact.dto';
+import {OrganizationSuggestedContactDto} from 'domain/dtos/request/suggested-contact/organization-suggested-contact.dto';
 import {convertToUnixTimestamp} from 'support/date.helper';
+import {OrganizationType} from 'domain/entities/organization-emergency-contact.entity';
 
 const doctor: User = {
     id: '8bfbd95c-c8a5-404b-b3eb-6ac648052ac4',
@@ -50,7 +64,7 @@ const patient: User = {
     passwordUpdatedAt: 1681305134,
 };
 
-const suggestedContact: PersonSuggestedContact = {
+const personSuggestedContact: PersonSuggestedContact = {
     id: 'a9d9a7d9-0c0c-43a8-9ebf-bfbf4ecc1463',
     patientUserId: '5nc3e70a-c1y9-121a-c5mv-5aq272098bp0',
     firstName: 'Marc',
@@ -60,6 +74,18 @@ const suggestedContact: PersonSuggestedContact = {
     relationship: 'MedicalProfessional',
     suggestedBy: doctor.id,
     suggestedAt: '2022-12-10 17:31:07.016236',
+};
+
+const organizationSuggestedContact: OrganizationSuggestedContact = {
+    id: 'a9d9a7d9-0c0c-43a8-9ebf-bfbf4ecc1464',
+    patientUserId: patient.id,
+    name: 'Marc',
+    email: 'suggested@gmail.com',
+    phone: '2930412345',
+    fax: '2930412345',
+    type: OrganizationType.Pharmacy,
+    suggestedAt: '2022-12-10 17:31:07.016236',
+    suggestedBy: doctor.id,
 };
 
 const patientDataAccess: PatientDataAccess = {
@@ -79,9 +105,15 @@ describe('GrantedUserController', () => {
             getOneById: jest.fn(() => Promise.resolve(doctor)),
             getByIds: jest.fn(() => Promise.resolve([doctor])),
         };
-        const mockedSuggestedContactRepository = {
-            getOneById: jest.fn(() => Promise.resolve(suggestedContact)),
-            getByPatientUserIdAndSuggestedBy: jest.fn(() => Promise.resolve([suggestedContact])),
+        const mockedPersonSuggestedContactRepository = {
+            getOneById: jest.fn(() => Promise.resolve(personSuggestedContact)),
+            getByPatientUserIdAndSuggestedBy: jest.fn(() => Promise.resolve([personSuggestedContact])),
+            create: jest.fn(() => Promise.resolve()),
+            delete: jest.fn(() => Promise.resolve()),
+        };
+        const mockedOrganizationSuggestedContactRepository = {
+            getOneById: jest.fn(() => Promise.resolve(organizationSuggestedContact)),
+            getByPatientUserIdAndSuggestedBy: jest.fn(() => Promise.resolve([organizationSuggestedContact])),
             create: jest.fn(() => Promise.resolve()),
             delete: jest.fn(() => Promise.resolve()),
         };
@@ -99,7 +131,11 @@ describe('GrantedUserController', () => {
             .useValue(null)
             .overrideProvider(getRepositoryToken(PersonSuggestedContactModel))
             .useValue(null)
+            .overrideProvider(getRepositoryToken(OrganizationSuggestedContactModel))
+            .useValue(null)
             .overrideProvider(getRepositoryToken(PersonEmergencyContactModel))
+            .useValue(null)
+            .overrideProvider(getRepositoryToken(OrganizationEmergencyContactModel))
             .useValue(null)
             .overrideProvider(getRepositoryToken(PatientDataAccessModel))
             .useValue(null)
@@ -111,12 +147,16 @@ describe('GrantedUserController', () => {
             .useValue(null)
             .overrideProvider(IPatientCategoryRepository)
             .useValue(null)
-            .overrideProvider(IEmergencyContactRepository)
+            .overrideProvider(IPersonEmergencyContactRepository)
+            .useValue(null)
+            .overrideProvider(IOrganizationEmergencyContactRepository)
             .useValue(null)
             .overrideProvider(IPatientStatusRepository)
             .useValue(null)
             .overrideProvider(IPersonSuggestedContactRepository)
-            .useValue(mockedSuggestedContactRepository)
+            .useValue(mockedPersonSuggestedContactRepository)
+            .overrideProvider(IOrganizationSuggestedContactRepository)
+            .useValue(mockedOrganizationSuggestedContactRepository)
             .overrideProvider(IUserRepository)
             .useValue(mockedUserRepository)
             .overrideProvider(IPatientMetadataRepository)
@@ -132,7 +172,7 @@ describe('GrantedUserController', () => {
         await app.init();
     });
 
-    it('/suggested-contact (POST)', async () => {
+    it('/person-suggested-contact (POST)', async () => {
         const dto: PersonSuggestedContactDto = {
             patientUserId: '5nc3e70a-c1y9-121a-c5mv-5aq272098bp0',
             firstName: 'Marc',
@@ -142,35 +182,71 @@ describe('GrantedUserController', () => {
             relationship: 'MedicalProfessional',
         };
         return request(app.getHttpServer())
-            .post('/suggested-contact')
+            .post('/person-suggested-contact')
             .send(dto)
             .set('Authorization', 'Bearer doctor')
             .expect(201);
     });
 
-    it('/suggested-contact/:contactId (DELETE)', async () => {
+    it('/organization-suggested-contact (POST)', async () => {
+        const dto: OrganizationSuggestedContactDto = {
+            patientUserId: '5nc3e70a-c1y9-121a-c5mv-5aq272098bp0',
+            name: 'Goldman',
+            email: 'suggested@gmail.com',
+            phone: '2930412345',
+            fax: '2930412345',
+            type: OrganizationType.Pharmacy,
+        };
         return request(app.getHttpServer())
-            .delete(`/suggested-contact/${suggestedContact.id}`)
+            .post('/organization-suggested-contact')
+            .send(dto)
+            .set('Authorization', 'Bearer doctor')
+            .expect(201);
+    });
+
+    it('/person-suggested-contact/:contactId (DELETE)', async () => {
+        return request(app.getHttpServer())
+            .delete(`/person-suggested-contact/${personSuggestedContact.id}`)
             .set('Authorization', 'Bearer doctor')
             .expect(204);
     });
 
-    it('/my-suggested-contacts/:patientUserId (GET)', async () => {
+    it('/organization-suggested-contact/:contactId (DELETE)', async () => {
         return request(app.getHttpServer())
-            .get(`/my-suggested-contacts/${patient.id}`)
+            .delete(`/organization-suggested-contact/${organizationSuggestedContact.id}`)
+            .set('Authorization', 'Bearer doctor')
+            .expect(204);
+    });
+
+    it('/suggested-contacts/:patientUserId (GET)', async () => {
+        return request(app.getHttpServer())
+            .get(`/suggested-contacts/${patient.id}`)
             .set('Authorization', 'Bearer doctor')
             .expect(200)
-            .expect([
-                {
-                    contactId: suggestedContact.id,
-                    firstName: suggestedContact.firstName,
-                    lastName: suggestedContact.lastName,
-                    email: suggestedContact.email,
-                    phone: suggestedContact.phone,
-                    relationship: suggestedContact.relationship,
-                    suggestedAt: convertToUnixTimestamp(suggestedContact.suggestedAt),
-                },
-            ]);
+            .expect({
+                persons: [
+                    {
+                        contactId: personSuggestedContact.id,
+                        firstName: personSuggestedContact.firstName,
+                        lastName: personSuggestedContact.lastName,
+                        email: personSuggestedContact.email,
+                        phone: personSuggestedContact.phone,
+                        relationship: personSuggestedContact.relationship,
+                        suggestedAt: convertToUnixTimestamp(personSuggestedContact.suggestedAt),
+                    },
+                ],
+                organizations: [
+                    {
+                        contactId: organizationSuggestedContact.id,
+                        name: organizationSuggestedContact.name,
+                        email: organizationSuggestedContact.email,
+                        phone: organizationSuggestedContact.phone,
+                        fax: organizationSuggestedContact.fax,
+                        type: organizationSuggestedContact.type,
+                        suggestedAt: convertToUnixTimestamp(organizationSuggestedContact.suggestedAt),
+                    },
+                ],
+            });
     });
 
     afterAll(async () => {

@@ -1,17 +1,24 @@
 import {Test, TestingModule} from '@nestjs/testing';
 import * as request from 'supertest';
 import {INestApplication, ValidationPipe} from '@nestjs/common';
-import {EmergencyContact, PatientDataAccess, User} from 'domain/entities';
+import {PersonEmergencyContact, PatientDataAccess, User} from 'domain/entities';
+import {OrganizationType, OrganizationEmergencyContact} from 'domain/entities/organization-emergency-contact.entity';
 import {TestModule} from 'tests/test.module';
 import {getRepositoryToken} from '@nestjs/typeorm';
 import {DoctorMetadataModel, PatientMetadataModel, UserModel} from 'infrastructure/modules/auth/models';
 import {IPatientVitalThresholdsRepository} from 'app/modules/patient-vital-thresholds/repositories';
-import {PersonEmergencyContactModel} from 'infrastructure/modules/emergency-contact/models';
+import {
+    PersonEmergencyContactModel,
+    OrganizationEmergencyContactModel,
+} from 'infrastructure/modules/emergency-contact/models';
 import {PatientDataAccessModel} from 'infrastructure/modules/patient-data-access/models';
 import {PatientStatusModel} from 'infrastructure/modules/patient-status/models';
 import {PatientCategoryModel} from 'infrastructure/modules/patient-category/models';
 import {IPatientCategoryRepository} from 'app/modules/patient-category/repositories';
-import {IEmergencyContactRepository} from 'app/modules/emergency-contact/repositories';
+import {
+    IPersonEmergencyContactRepository,
+    IOrganizationEmergencyContactRepository,
+} from 'app/modules/emergency-contact/repositories';
 import {IPatientStatusRepository} from 'app/modules/patient-status/repositories';
 import {IUserRepository} from 'app/modules/auth/repositories';
 import {IDoctorMetadataRepository, IPatientMetadataRepository} from 'app/modules/profile/repositories';
@@ -47,7 +54,7 @@ const patient: User = {
     passwordUpdatedAt: 1681305134,
 };
 
-const emergencyContact: EmergencyContact = {
+const personEmergencyContact: PersonEmergencyContact = {
     id: 'a9d9a7d9-0c0c-43a8-9ebf-bfbf4ecc1463',
     userId: patient.id,
     firstName: 'Marc',
@@ -55,6 +62,18 @@ const emergencyContact: EmergencyContact = {
     email: 'suggested@gmail.com',
     phone: '2930412345',
     relationship: 'MedicalProfessional',
+    createdAt: '2022-12-10 17:31:07.016236',
+    rank: null,
+};
+
+const organizationEmergencyContact: OrganizationEmergencyContact = {
+    id: 'a9d9a7d9-0c0c-43a8-9ebf-bfbf4ecc1463',
+    userId: patient.id,
+    name: 'Marc',
+    email: 'suggested@gmail.com',
+    phone: '2930412345',
+    fax: '2930412345',
+    type: OrganizationType.Pharmacy,
     createdAt: '2022-12-10 17:31:07.016236',
     rank: null,
 };
@@ -75,8 +94,11 @@ describe('GrantedUserController', () => {
         const mockedUserRepository = {
             getOneById: jest.fn(() => Promise.resolve(doctor)),
         };
-        const mockedEmergencyContactRepository = {
-            getByUserId: jest.fn(() => Promise.resolve([emergencyContact])),
+        const mockedPersonEmergencyContactRepository = {
+            getByUserId: jest.fn(() => Promise.resolve([personEmergencyContact])),
+        };
+        const mockedOrganizationEmergencyContactRepository = {
+            getByUserId: jest.fn(() => Promise.resolve([organizationEmergencyContact])),
         };
         const mockedPatientDataAccessRepository = {
             getOneByPatientUserIdAndGrantedUserId: jest.fn(() => Promise.resolve(patientDataAccess)),
@@ -92,6 +114,8 @@ describe('GrantedUserController', () => {
             .useValue(null)
             .overrideProvider(getRepositoryToken(PersonEmergencyContactModel))
             .useValue(null)
+            .overrideProvider(getRepositoryToken(OrganizationEmergencyContactModel))
+            .useValue(null)
             .overrideProvider(getRepositoryToken(PatientDataAccessModel))
             .useValue(null)
             .overrideProvider(getRepositoryToken(PatientStatusModel))
@@ -102,8 +126,10 @@ describe('GrantedUserController', () => {
             .useValue(null)
             .overrideProvider(IPatientCategoryRepository)
             .useValue(null)
-            .overrideProvider(IEmergencyContactRepository)
-            .useValue(mockedEmergencyContactRepository)
+            .overrideProvider(IPersonEmergencyContactRepository)
+            .useValue(mockedPersonEmergencyContactRepository)
+            .overrideProvider(IOrganizationEmergencyContactRepository)
+            .useValue(mockedOrganizationEmergencyContactRepository)
             .overrideProvider(IPatientStatusRepository)
             .useValue(null)
             .overrideProvider(IUserRepository)
@@ -121,22 +147,35 @@ describe('GrantedUserController', () => {
         await app.init();
     });
 
-    it('/patient-emergency-contacts/:patientUserId (GET)', async () => {
+    it('/emergency-contacts/:patientUserId (GET)', async () => {
         return request(app.getHttpServer())
-            .get(`/patient-emergency-contacts/${patient.id}`)
+            .get(`/emergency-contacts/${patient.id}`)
             .set('Authorization', 'Bearer doctor')
             .expect(200)
-            .expect([
-                {
-                    contactId: emergencyContact.id,
-                    firstName: emergencyContact.firstName,
-                    lastName: emergencyContact.lastName,
-                    email: emergencyContact.email,
-                    phone: emergencyContact.phone,
-                    relationship: emergencyContact.relationship,
-                    createdAt: convertToUnixTimestamp(emergencyContact.createdAt),
-                },
-            ]);
+            .expect({
+                persons: [
+                    {
+                        contactId: personEmergencyContact.id,
+                        firstName: personEmergencyContact.firstName,
+                        lastName: personEmergencyContact.lastName,
+                        email: personEmergencyContact.email,
+                        phone: personEmergencyContact.phone,
+                        relationship: personEmergencyContact.relationship,
+                        createdAt: convertToUnixTimestamp(personEmergencyContact.createdAt),
+                    },
+                ],
+                organizations: [
+                    {
+                        contactId: organizationEmergencyContact.id,
+                        name: organizationEmergencyContact.name,
+                        email: organizationEmergencyContact.email,
+                        phone: organizationEmergencyContact.phone,
+                        fax: organizationEmergencyContact.fax,
+                        type: organizationEmergencyContact.type,
+                        createdAt: convertToUnixTimestamp(organizationEmergencyContact.createdAt),
+                    },
+                ],
+            });
     });
 
     afterAll(async () => {
