@@ -7,20 +7,20 @@ import {EntityNotFoundError} from 'app/errors/entity-not-found.error';
 export class DeletePersonContactUseCase {
     public constructor(
         private readonly authedUserService: IAuthedUserService,
-        private readonly emergencyContactRepository: IPersonEmergencyContactRepository,
-        private readonly emergencyContactSpecification: PersonEmergencyContactSpecification,
+        private readonly contactRepository: IPersonEmergencyContactRepository,
+        private readonly contactSpecification: PersonEmergencyContactSpecification,
     ) {}
 
     public async deleteContact(contactId: string): Promise<void> {
         const user = await this.authedUserService.getUser();
         const contact = await this.getContact(contactId);
 
-        await this.emergencyContactSpecification.assertUserCanDeletePersonContact(user, contact);
-        await this.emergencyContactRepository.delete(contact);
+        await this.contactSpecification.assertUserCanDeletePersonContact(user, contact);
+        await this.contactRepository.delete(contact);
     }
 
     private async getContact(contactId: string): Promise<PersonEmergencyContact> {
-        const contact = await this.emergencyContactRepository.getOneById(contactId);
+        const contact = await this.contactRepository.getOneById(contactId);
 
         if (contact === null) {
             throw new EntityNotFoundError('Contact Not Found.');

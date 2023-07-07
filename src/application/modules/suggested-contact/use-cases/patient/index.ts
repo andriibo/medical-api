@@ -1,5 +1,13 @@
-import {DeleteSuggestedContactUseCase} from './delete-suggested-contact.use-case';
-import {ApproveSuggestedContactUseCase} from './approve-suggested-contact.use-case';
-import {ContactListUseCase} from './contact-list.use-case';
+import {DeletePersonSuggestedContactUseCase} from './delete-person-suggested-contact.use-case';
+import {ApprovePersonSuggestedContactUseCase} from './approve-person-suggested-contact.use-case';
+import {GetPatientContactsUseCase} from './get-patient-contacts.use-case';
+import {DeleteOrganizationSuggestedContactUseCase} from './delete-organization-suggested-contact.use-case';
+import {ApproveOrganizationSuggestedContactUseCase} from './approve-organization-suggested-contact.use-case';
 
-export {ApproveSuggestedContactUseCase, DeleteSuggestedContactUseCase, ContactListUseCase};
+export {
+    ApprovePersonSuggestedContactUseCase,
+    DeletePersonSuggestedContactUseCase,
+    GetPatientContactsUseCase,
+    DeleteOrganizationSuggestedContactUseCase,
+    ApproveOrganizationSuggestedContactUseCase,
+};

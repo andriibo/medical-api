@@ -1,3 +1,4 @@
-import {CreateSuggestedContactView} from './create-suggested-contact.view';
+import {CreatePersonSuggestedContactView} from './create-person-suggested-contact.view';
+import {CreateOrganizationSuggestedContactView} from './create-organization-suggested-contact.view';
 
-export {CreateSuggestedContactView};
+export {CreatePersonSuggestedContactView, CreateOrganizationSuggestedContactView};

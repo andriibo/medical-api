@@ -1,16 +1,16 @@
 import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service';
-import {ISuggestedContactRepository} from 'app/modules/suggested-contact/repositories';
-import {SuggestedContactDto} from 'domain/dtos/response/suggested-contact/suggested-contact.dto';
-import {SuggestedContactDtoMapper} from 'app/modules/suggested-contact/mappers/suggested-contact-dto.mapper';
+import {IPersonSuggestedContactRepository} from 'app/modules/suggested-contact/repositories';
+import {PersonSuggestedContactDto} from 'domain/dtos/response/suggested-contact/person-suggested-contact.dto';
+import {PersonSuggestedContactDtoMapper} from 'app/modules/suggested-contact/mappers/person-suggested-contact-dto.mapper';
 
 export class PatientContactListUseCase {
     public constructor(
         private readonly authedUserService: IAuthedUserService,
-        private readonly suggestedContactRepository: ISuggestedContactRepository,
-        private readonly suggestedContactDtoMapper: SuggestedContactDtoMapper,
+        private readonly suggestedContactRepository: IPersonSuggestedContactRepository,
+        private readonly suggestedContactDtoMapper: PersonSuggestedContactDtoMapper,
     ) {}
 
-    public async getList(patientUserId: string): Promise<SuggestedContactDto[]> {
+    public async getList(patientUserId: string): Promise<PersonSuggestedContactDto[]> {
         const grantedUser = await this.authedUserService.getUser();
 
         const items = await this.suggestedContactRepository.getByPatientUserIdAndSuggestedBy(
@@ -18,6 +18,6 @@ export class PatientContactListUseCase {
             grantedUser.id,
         );
 
-        return items.map((item) => this.suggestedContactDtoMapper.mapBySuggestedContact(item));
+        return items.map((item) => this.suggestedContactDtoMapper.mapByPersonSuggestedContact(item));
     }
 }

@@ -1,3 +1,4 @@
-import {ISuggestedContactRepository} from './suggested-contact.repository';
+import {IPersonSuggestedContactRepository} from './person-suggested-contact.repository';
+import {IOrganizationSuggestedContactRepository} from './organization-suggested-contact.repository';
 
-export {ISuggestedContactRepository};
+export {IPersonSuggestedContactRepository, IOrganizationSuggestedContactRepository};

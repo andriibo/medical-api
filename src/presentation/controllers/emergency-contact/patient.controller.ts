@@ -28,10 +28,10 @@ import {
     CreateOrganizationContactView,
     UpdateOrganizationContactView,
 } from 'presentation/views/request/emergency-contact';
-import {PersonContactView} from 'presentation/views/response/emergency-contact';
-import {ContactsDto, PersonContactDto} from 'domain/dtos/response/emergency-contact';
+import {PersonEmergencyContactView} from 'presentation/views/response/emergency-contact';
+import {EmergencyContactsDto, PersonEmergencyContactDto} from 'domain/dtos/response/emergency-contact';
 import {TrimPipe} from 'presentation/pipes/trim.pipe';
-import {ContactsView} from 'views/response/emergency-contact/contacts.view';
+import {EmergencyContactsView} from 'views/response/emergency-contact/emergency-contacts.view';
 
 @Controller('patient')
 @ApiBearerAuth()
@@ -86,9 +86,9 @@ export class PatientController {
     @Roles('Patient')
     @Get('my-emergency-contacts')
     @HttpCode(HttpStatus.OK)
-    @ApiResponse({status: HttpStatus.OK, type: [PersonContactView]})
+    @ApiResponse({status: HttpStatus.OK, type: [PersonEmergencyContactView]})
     @ApiOperation({deprecated: true, summary: 'use GET /patient/emergency-contacts'})
-    public async getMyEmergencyContacts(): Promise<PersonContactDto[]> {
+    public async getMyEmergencyContacts(): Promise<PersonEmergencyContactDto[]> {
         const useCase = this.patientUseCasesFactory.createContactListUseCase();
 
         return await useCase.getList();
@@ -97,8 +97,8 @@ export class PatientController {
     @Roles('Patient')
     @Get('emergency-contacts')
     @HttpCode(HttpStatus.OK)
-    @ApiResponse({status: HttpStatus.OK, type: ContactsView})
-    public async getEmergencyContacts(): Promise<ContactsDto> {
+    @ApiResponse({status: HttpStatus.OK, type: EmergencyContactsView})
+    public async getEmergencyContacts(): Promise<EmergencyContactsDto> {
         const useCase = this.patientUseCasesFactory.createGetContactsUseCase();
 
         return await useCase.getContacts();

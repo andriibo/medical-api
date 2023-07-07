@@ -1,4 +1,4 @@
-import {PersonContactView} from './person-contact.view';
-import {OrganizationContactView} from './organization-contact.view';
+import {PersonEmergencyContactView} from './person-emergency-contact.view';
+import {OrganizationEmergencyContactView} from './organization-emergency-contact.view';
 
-export {PersonContactView, OrganizationContactView};
+export {PersonEmergencyContactView, OrganizationEmergencyContactView};

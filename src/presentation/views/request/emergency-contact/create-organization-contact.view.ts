@@ -1,11 +1,11 @@
 import {ApiProperty} from '@nestjs/swagger';
 import {Length, IsEmail, IsNotEmpty, IsIn, MaxLength, IsNumberString, IsOptional} from 'class-validator';
-import {OrganizationContactDto} from 'domain/dtos/request/emergency-contact/organization-contact.dto';
+import {OrganizationEmergencyContactDto} from 'domain/dtos/request/emergency-contact/organization-emergency-contact.dto';
 import {MaxPhoneLength, MinPhoneLength} from 'domain/constants/phone.const';
 import {Transform, TransformFnParams} from 'class-transformer';
 import {OrganizationType} from 'domain/entities/organization-emergency-contact.entity';
 
-export class CreateOrganizationContactView extends OrganizationContactDto {
+export class CreateOrganizationContactView extends OrganizationEmergencyContactDto {
     @ApiProperty({minLength: 1, maxLength: 60})
     @Transform(({value}: TransformFnParams) => value?.trim())
     @IsNotEmpty()

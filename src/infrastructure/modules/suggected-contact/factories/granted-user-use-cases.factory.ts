@@ -1,53 +1,100 @@
 import {Inject, Injectable} from '@nestjs/common';
 import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service';
-import {ISuggestedContactRepository} from 'app/modules/suggested-contact/repositories/suggested-contact.repository';
-import {SuggestedContactSpecification} from 'app/modules/suggested-contact/specifications/suggested-contact.specification';
-import {ISuggestedContactEntityMapper} from 'app/modules/suggested-contact/mappers/suggested-contact-entity.mapper';
 import {
-    CreateSuggestedContactUseCase,
-    DeleteSuggestedContactUseCase,
+    IPersonSuggestedContactRepository,
+    IOrganizationSuggestedContactRepository,
+} from 'app/modules/suggested-contact/repositories';
+import {SuggestedContactSpecification} from 'app/modules/suggested-contact/specifications/suggested-contact.specification';
+import {IPersonSuggestedContactEntityMapper} from 'app/modules/suggested-contact/mappers/person-suggested-contact-entity.mapper';
+import {IOrganizationSuggestedContactEntityMapper} from 'app/modules/suggested-contact/mappers/organization-suggested-contact-entity.mapper';
+import {
+    CreatePersonSuggestedContactUseCase,
+    CreateOrganizationSuggestedContactUseCase,
+    DeletePersonSuggestedContactUseCase,
+    DeleteOrganizationSuggestedContactUseCase,
     PatientContactListUseCase,
+    GetGrantedUserContactsUseCase,
 } from 'app/modules/suggested-contact/use-cases/granted-user';
-import {DeleteSuggestedContactByGrantedUserService} from 'app/modules/suggested-contact/services/delete-suggested-contact-by-granted-user.service';
-import {SuggestedContactDtoMapper} from 'app/modules/suggested-contact/mappers/suggested-contact-dto.mapper';
+import {
+    DeletePersonSuggestedContactByGrantedUserService,
+    DeleteOrganizationSuggestedContactByGrantedUserService,
+} from 'app/modules/suggested-contact/services';
+import {PersonSuggestedContactDtoMapper} from 'app/modules/suggested-contact/mappers/person-suggested-contact-dto.mapper';
+import {OrganizationSuggestedContactDtoMapper} from 'app/modules/suggested-contact/mappers/organization-suggested-contact-dto.mapper';
 
 @Injectable()
 export class GrantedUserUseCasesFactory {
     public constructor(
         @Inject(IAuthedUserService) private readonly authedUserService: IAuthedUserService,
-        @Inject(ISuggestedContactRepository)
-        private readonly suggestedContactRepository: ISuggestedContactRepository,
-        @Inject(ISuggestedContactEntityMapper)
-        private readonly suggestedContactEntityMapper: ISuggestedContactEntityMapper,
-        @Inject(SuggestedContactDtoMapper) private readonly suggestedContactDtoMapper: SuggestedContactDtoMapper,
+        @Inject(IPersonSuggestedContactRepository)
+        private readonly personSuggestedContactRepository: IPersonSuggestedContactRepository,
+        @Inject(IOrganizationSuggestedContactRepository)
+        private readonly organizationSuggestedContactRepository: IOrganizationSuggestedContactRepository,
+        @Inject(IPersonSuggestedContactEntityMapper)
+        private readonly personSuggestedContactEntityMapper: IPersonSuggestedContactEntityMapper,
+        @Inject(IOrganizationSuggestedContactEntityMapper)
+        private readonly organizationSuggestedContactEntityMapper: IOrganizationSuggestedContactEntityMapper,
+        @Inject(PersonSuggestedContactDtoMapper)
+        private readonly personSuggestedContactDtoMapper: PersonSuggestedContactDtoMapper,
+        @Inject(OrganizationSuggestedContactDtoMapper)
+        private readonly organizationSuggestedContactDtoMapper: OrganizationSuggestedContactDtoMapper,
         @Inject(SuggestedContactSpecification)
         private readonly suggestedContactSpecification: SuggestedContactSpecification,
-        @Inject(DeleteSuggestedContactByGrantedUserService)
-        private readonly deleteSuggestedContactByGrantedUserService: DeleteSuggestedContactByGrantedUserService,
+        @Inject(DeletePersonSuggestedContactByGrantedUserService)
+        private readonly deleteSuggestedContactByGrantedUserService: DeletePersonSuggestedContactByGrantedUserService,
+        @Inject(DeleteOrganizationSuggestedContactByGrantedUserService)
+        private readonly deleteOrganizationSuggestedContactByGrantedUserService: DeleteOrganizationSuggestedContactByGrantedUserService,
     ) {}
 
-    public createSuggestedContactUseCase(): CreateSuggestedContactUseCase {
-        return new CreateSuggestedContactUseCase(
+    public createPersonSuggestedContactUseCase(): CreatePersonSuggestedContactUseCase {
+        return new CreatePersonSuggestedContactUseCase(
             this.authedUserService,
-            this.suggestedContactRepository,
-            this.suggestedContactEntityMapper,
+            this.personSuggestedContactRepository,
+            this.personSuggestedContactEntityMapper,
             this.suggestedContactSpecification,
         );
     }
 
-    public createDeleteSuggestedContactUseCase(): DeleteSuggestedContactUseCase {
-        return new DeleteSuggestedContactUseCase(
+    public createOrganizationSuggestedContactUseCase(): CreateOrganizationSuggestedContactUseCase {
+        return new CreateOrganizationSuggestedContactUseCase(
             this.authedUserService,
-            this.suggestedContactRepository,
+            this.organizationSuggestedContactRepository,
+            this.organizationSuggestedContactEntityMapper,
+            this.suggestedContactSpecification,
+        );
+    }
+
+    public createDeletePersonSuggestedContactUseCase(): DeletePersonSuggestedContactUseCase {
+        return new DeletePersonSuggestedContactUseCase(
+            this.authedUserService,
+            this.personSuggestedContactRepository,
             this.deleteSuggestedContactByGrantedUserService,
+        );
+    }
+
+    public createDeleteOrganizationSuggestedContactUseCase(): DeleteOrganizationSuggestedContactUseCase {
+        return new DeleteOrganizationSuggestedContactUseCase(
+            this.authedUserService,
+            this.organizationSuggestedContactRepository,
+            this.deleteOrganizationSuggestedContactByGrantedUserService,
         );
     }
 
     public createPatientContactUseCase(): PatientContactListUseCase {
         return new PatientContactListUseCase(
             this.authedUserService,
-            this.suggestedContactRepository,
-            this.suggestedContactDtoMapper,
+            this.personSuggestedContactRepository,
+            this.personSuggestedContactDtoMapper,
+        );
+    }
+
+    public createGetGrantedUserContactsUseCase(): GetGrantedUserContactsUseCase {
+        return new GetGrantedUserContactsUseCase(
+            this.authedUserService,
+            this.personSuggestedContactRepository,
+            this.organizationSuggestedContactRepository,
+            this.personSuggestedContactDtoMapper,
+            this.organizationSuggestedContactDtoMapper,
         );
     }
 }

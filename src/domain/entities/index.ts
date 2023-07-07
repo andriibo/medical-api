@@ -5,7 +5,7 @@ import {PatientMetadata} from './patient-metadata.entity';
 import {PatientDataAccess} from './patient-data-access.entity';
 import {Vital} from './vital.entity';
 import {PersonEmergencyContact} from './person-emergency-contact.entity';
-import {SuggestedContact} from './suggested-contact.entity';
+import {PersonSuggestedContact} from './person-suggested-contact.entity';
 import {Diagnosis} from './diagnosis.entity';
 import {PatientDiagnosis} from './patient-diagnosis.entity';
 import {Medication} from './medication.entity';
@@ -13,6 +13,8 @@ import {PatientMedication} from './patient-medication.entity';
 import {PatientVitalThresholds} from './patient-vital-thresholds.entity';
 import {EmergencyContact} from './emergency-contact.entity';
 import {OrganizationEmergencyContact} from './organization-emergency-contact.entity';
+import {SuggestedContact} from './suggested-contact.entity';
+import {OrganizationSuggestedContact} from './organization-suggested-contact.entity';
 
 export {
     User,
@@ -22,7 +24,7 @@ export {
     PatientDataAccess,
     Vital,
     PersonEmergencyContact,
-    SuggestedContact,
+    PersonSuggestedContact,
     Diagnosis,
     PatientDiagnosis,
     Medication,
@@ -30,4 +32,6 @@ export {
     PatientVitalThresholds,
     EmergencyContact,
     OrganizationEmergencyContact,
+    SuggestedContact,
+    OrganizationSuggestedContact,
 };

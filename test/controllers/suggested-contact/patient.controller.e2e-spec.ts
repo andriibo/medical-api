@@ -2,11 +2,11 @@ import {Test, TestingModule} from '@nestjs/testing';
 import * as request from 'supertest';
 import {INestApplication, ValidationPipe} from '@nestjs/common';
 import {SuggestedContactModule} from 'infrastructure/modules/suggected-contact/suggested-contact.module';
-import {SuggestedContact, User} from 'domain/entities';
+import {PersonSuggestedContact, User} from 'domain/entities';
 import {TestModule} from 'tests/test.module';
 import {getRepositoryToken} from '@nestjs/typeorm';
 import {DoctorMetadataModel, PatientMetadataModel, UserModel} from 'infrastructure/modules/auth/models';
-import {SuggestedContactModel} from 'infrastructure/modules/suggected-contact/models';
+import {PersonSuggestedContactModel} from 'infrastructure/modules/suggected-contact/models';
 import {IPatientVitalThresholdsRepository} from 'app/modules/patient-vital-thresholds/repositories';
 import {PersonEmergencyContactModel} from 'infrastructure/modules/emergency-contact/models';
 import {PatientDataAccessModel} from 'infrastructure/modules/patient-data-access/models';
@@ -15,7 +15,7 @@ import {PatientCategoryModel} from 'infrastructure/modules/patient-category/mode
 import {IPatientCategoryRepository} from 'app/modules/patient-category/repositories';
 import {IEmergencyContactRepository} from 'app/modules/emergency-contact/repositories';
 import {IPatientStatusRepository} from 'app/modules/patient-status/repositories';
-import {ISuggestedContactRepository} from 'app/modules/suggested-contact/repositories';
+import {IPersonSuggestedContactRepository} from 'app/modules/suggested-contact/repositories';
 import {IUserRepository} from 'app/modules/auth/repositories';
 import {IDoctorMetadataRepository, IPatientMetadataRepository} from 'app/modules/profile/repositories';
 import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repositories';
@@ -35,7 +35,7 @@ const patient: User = {
     passwordUpdatedAt: 1681305134,
 };
 
-const suggestedContact: SuggestedContact = {
+const suggestedContact: PersonSuggestedContact = {
     id: 'a9d9a7d9-0c0c-43a8-9ebf-bfbf4ecc1463',
     patientUserId: '5nc3e70a-c1y9-121a-c5mv-5aq272098bp0',
     firstName: 'Marc',
@@ -71,7 +71,7 @@ describe('PatientController', () => {
             .useValue(null)
             .overrideProvider(getRepositoryToken(PatientMetadataModel))
             .useValue(null)
-            .overrideProvider(getRepositoryToken(SuggestedContactModel))
+            .overrideProvider(getRepositoryToken(PersonSuggestedContactModel))
             .useValue(null)
             .overrideProvider(getRepositoryToken(PersonEmergencyContactModel))
             .useValue(null)
@@ -89,7 +89,7 @@ describe('PatientController', () => {
             .useValue(mockedEmergencyContactRepository)
             .overrideProvider(IPatientStatusRepository)
             .useValue(null)
-            .overrideProvider(ISuggestedContactRepository)
+            .overrideProvider(IPersonSuggestedContactRepository)
             .useValue(mockedSuggestedContactRepository)
             .overrideProvider(IUserRepository)
             .useValue(mockedUserRepository)

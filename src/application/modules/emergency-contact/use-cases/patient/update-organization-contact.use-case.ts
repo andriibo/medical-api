@@ -1,4 +1,4 @@
-import {OrganizationContactDto} from 'domain/dtos/request/emergency-contact/organization-contact.dto';
+import {OrganizationEmergencyContactDto} from 'domain/dtos/request/emergency-contact/organization-emergency-contact.dto';
 import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service';
 import {IOrganizationEmergencyContactRepository} from 'app/modules/emergency-contact/repositories';
 import {IOrganizationEmergencyContactEntityMapper} from 'app/modules/emergency-contact/mappers/organization-emergency-contact-entity.mapper';
@@ -14,13 +14,13 @@ export class UpdateOrganizationContactUseCase {
         private readonly contactSpecification: OrganizationEmergencyContactSpecification,
     ) {}
 
-    public async updateContact(contactId: string, dto: OrganizationContactDto): Promise<void> {
+    public async updateContact(contactId: string, dto: OrganizationEmergencyContactDto): Promise<void> {
         const user = await this.authedUserService.getUser();
         const contact = await this.getContact(contactId);
 
         this.contactSpecification.assertUserCanUpdateContact(user, contact);
 
-        const modifiedContact = this.contactEntityMapper.mapByOrganizationContactDto(dto, contact);
+        const modifiedContact = this.contactEntityMapper.mapByOrganizationEmergencyContactDto(dto, contact);
 
         await this.contactRepository.update(modifiedContact);
     }

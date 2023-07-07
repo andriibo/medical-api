@@ -9,9 +9,9 @@ import {
 } from '@nestjs/swagger';
 import {Roles} from 'presentation/guards';
 import {GrantedUserUseCasesFactory} from 'infrastructure/modules/emergency-contact/factories/granted-user-use-cases.factory';
-import {PersonContactView} from 'presentation/views/response/emergency-contact';
-import {ContactsDto, PersonContactDto} from 'domain/dtos/response/emergency-contact';
-import {ContactsView} from 'views/response/emergency-contact/contacts.view';
+import {PersonEmergencyContactView} from 'presentation/views/response/emergency-contact';
+import {EmergencyContactsDto, PersonEmergencyContactDto} from 'domain/dtos/response/emergency-contact';
+import {EmergencyContactsView} from 'views/response/emergency-contact/emergency-contacts.view';
 
 @Controller()
 @ApiBearerAuth()
@@ -25,11 +25,11 @@ export class GrantUserController {
     @Get('patient-emergency-contacts/:patientUserId')
     @HttpCode(HttpStatus.OK)
     @HttpCode(HttpStatus.BAD_REQUEST)
-    @ApiResponse({status: HttpStatus.OK, type: [PersonContactView]})
+    @ApiResponse({status: HttpStatus.OK, type: [PersonEmergencyContactView]})
     @ApiOperation({deprecated: true, summary: 'use GET /emergency-contacts/:patientUserId'})
     public async getPatientEmergencyContacts(
         @Param('patientUserId', ParseUUIDPipe) patientUserId: string,
-    ): Promise<PersonContactDto[]> {
+    ): Promise<PersonEmergencyContactDto[]> {
         const useCase = this.grantedUserUseCasesFactory.createPatientContactUseCase();
 
         try {
@@ -43,14 +43,14 @@ export class GrantUserController {
     @Get('emergency-contacts/:patientUserId')
     @HttpCode(HttpStatus.OK)
     @HttpCode(HttpStatus.BAD_REQUEST)
-    @ApiResponse({status: HttpStatus.OK, type: ContactsView})
+    @ApiResponse({status: HttpStatus.OK, type: EmergencyContactsView})
     public async getEmergencyContacts(
         @Param('patientUserId', ParseUUIDPipe) patientUserId: string,
-    ): Promise<ContactsDto> {
+    ): Promise<EmergencyContactsDto> {
         const useCase = this.grantedUserUseCasesFactory.createGetPatientContactsUseCase();
 
         try {
-            return await useCase.getPatientContacts(patientUserId);
+            return await useCase.getContacts(patientUserId);
         } catch (error) {
             throw new BadRequestException(error.message);
         }

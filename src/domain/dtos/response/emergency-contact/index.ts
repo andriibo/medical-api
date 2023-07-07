@@ -1,5 +1,5 @@
-import {ContactsDto} from './contacts.dto';
-import {PersonContactDto} from './person-contact.dto';
-import {OrganizationContactDto} from './organization-contact.dto';
+import {EmergencyContactsDto} from './emergency-contacts.dto';
+import {PersonEmergencyContactDto} from './person-emergency-contact.dto';
+import {OrganizationEmergencyContactDto} from './organization-emergency-contact.dto';
 
-export {ContactsDto, PersonContactDto, OrganizationContactDto};
+export {EmergencyContactsDto, PersonEmergencyContactDto, OrganizationEmergencyContactDto};

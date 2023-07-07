@@ -1,11 +1,11 @@
 import {PersonEmergencyContactModel} from 'infrastructure/modules/emergency-contact/models';
 import {IPersonEmergencyContactEntityMapper} from 'app/modules/emergency-contact/mappers/person-emergency-contact-entity.mapper';
-import {PersonContactDto} from 'domain/dtos/request/emergency-contact/person-contact.dto';
-import {PersonEmergencyContact, SuggestedContact} from 'domain/entities';
+import {PersonEmergencyContactDto} from 'domain/dtos/request/emergency-contact/person-emergency-contact.dto';
+import {PersonEmergencyContact, PersonSuggestedContact} from 'domain/entities';
 
 export class PersonEmergencyContactModelMapper implements IPersonEmergencyContactEntityMapper {
-    public mapByPersonContactDto(
-        contactDto: PersonContactDto,
+    public mapByPersonEmergencyContactDto(
+        contactDto: PersonEmergencyContactDto,
         contact?: PersonEmergencyContact,
     ): PersonEmergencyContact {
         if (!contact) {
@@ -21,7 +21,7 @@ export class PersonEmergencyContactModelMapper implements IPersonEmergencyContac
         return contact;
     }
 
-    public mapBySuggestedContact(suggestedContact: SuggestedContact): PersonEmergencyContact {
+    public mapByPersonSuggestedContact(suggestedContact: PersonSuggestedContact): PersonEmergencyContact {
         const contact = new PersonEmergencyContactModel();
         contact.userId = suggestedContact.patientUserId;
         contact.firstName = suggestedContact.firstName;

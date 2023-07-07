@@ -1,4 +1,4 @@
-import {OrganizationContactDto} from 'domain/dtos/request/emergency-contact/organization-contact.dto';
+import {OrganizationEmergencyContactDto} from 'domain/dtos/request/emergency-contact/organization-emergency-contact.dto';
 import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service';
 import {IOrganizationEmergencyContactRepository} from 'app/modules/emergency-contact/repositories';
 import {OrganizationEmergencyContact, User} from 'domain/entities';
@@ -13,7 +13,7 @@ export class CreateOrganizationContactUseCase {
         private readonly contactSpecification: OrganizationEmergencyContactSpecification,
     ) {}
 
-    public async createContact(dto: OrganizationContactDto): Promise<void> {
+    public async createContact(dto: OrganizationEmergencyContactDto): Promise<void> {
         const user = await this.authedUserService.getUser();
 
         this.contactSpecification.assertUserCanCreateContact(user);
@@ -23,8 +23,8 @@ export class CreateOrganizationContactUseCase {
         await this.contactRepository.create(emergencyContact);
     }
 
-    private createEmergencyContact(patient: User, dto: OrganizationContactDto): OrganizationEmergencyContact {
-        const emergencyContact = this.contactEntityMapper.mapByOrganizationContactDto(dto);
+    private createEmergencyContact(patient: User, dto: OrganizationEmergencyContactDto): OrganizationEmergencyContact {
+        const emergencyContact = this.contactEntityMapper.mapByOrganizationEmergencyContactDto(dto);
         emergencyContact.userId = patient.id;
 
         return emergencyContact;

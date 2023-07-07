@@ -1,6 +1,6 @@
 import {IPersonEmergencyContactRepository} from 'app/modules/emergency-contact/repositories';
 import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service';
-import {PersonContactDto} from 'domain/dtos/response/emergency-contact';
+import {PersonEmergencyContactDto} from 'domain/dtos/response/emergency-contact';
 import {PatientDataAccessSpecification} from 'app/modules/patient-data-access/specifications/patient-data-access.specification';
 
 export class PatientContactListUseCase {
@@ -10,7 +10,7 @@ export class PatientContactListUseCase {
         private readonly patientDataAccessSpecification: PatientDataAccessSpecification,
     ) {}
 
-    public async getList(patientUserId: string): Promise<PersonContactDto[]> {
+    public async getList(patientUserId: string): Promise<PersonEmergencyContactDto[]> {
         const grantedUser = await this.authedUserService.getUser();
         await this.patientDataAccessSpecification.assertAccessIsOpenByGrantedUserIdAndPatientUserId(
             grantedUser.id,
@@ -18,6 +18,6 @@ export class PatientContactListUseCase {
         );
         const items = await this.emergencyContactRepository.getByUserId(patientUserId);
 
-        return items.map((item) => PersonContactDto.fromPersonEmergencyContact(item));
+        return items.map((item) => PersonEmergencyContactDto.fromPersonEmergencyContact(item));
     }
 }

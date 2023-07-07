@@ -17,7 +17,7 @@ import {IUserRepository} from 'app/modules/auth/repositories';
 import {IDoctorMetadataRepository, IPatientMetadataRepository} from 'app/modules/profile/repositories';
 import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repositories';
 import {EmergencyContactModule} from 'infrastructure/modules';
-import {PersonContactDto} from 'domain/dtos/request/emergency-contact/person-contact.dto';
+import {PersonEmergencyContactDto} from 'domain/dtos/request/emergency-contact/person-emergency-contact.dto';
 import {convertToUnixTimestamp} from 'support/date.helper';
 import {ContactsOrderDto} from "domain/dtos/request/emergency-contact/contacts-order.dto";
 
@@ -102,7 +102,7 @@ describe('PatientController', () => {
     });
 
     it('/patient/my-emergency-contact (POST)', async () => {
-        const dto: PersonContactDto = {
+        const dto: PersonEmergencyContactDto = {
             firstName: 'firstName',
             lastName: 'lastName',
             email: 'email@gmail.com',
@@ -147,7 +147,7 @@ describe('PatientController', () => {
     });
 
     it('/patient/my-emergency-contact/:contactId (PATCH)', async () => {
-        const dto: PersonContactDto = {
+        const dto: PersonEmergencyContactDto = {
             firstName: 'firstNameNew',
             lastName: 'lastNameNew',
             email: 'emailnew@gmail.com',
