@@ -20,6 +20,7 @@ import {TestModule} from 'tests/test.module';
 import {SpecialtyModel} from 'infrastructure/modules/specialty/models/specialty.model';
 import {ISpecialtyRepository} from 'app/modules/specialty/repositories';
 import {IPatientVitalThresholdsRepository} from 'app/modules/patient-vital-thresholds/repositories';
+import {SpecialtiesView} from 'views/response/specialty';
 
 const registeredUser: User = {
     id: '8bfbd95c-c8a5-404b-b3eb-6ac648052ac4',
@@ -34,11 +35,17 @@ const registeredUser: User = {
     deletedAt: null,
     passwordUpdatedAt: 1681305134,
 };
+
 const specialties = [
     {
         specialtyName: 'specialty',
     },
 ];
+
+const specialtyNames: SpecialtiesView = {
+    specialtyNames: ['specialty'],
+};
+
 describe('SpecialtyController', () => {
     let app: INestApplication;
     beforeAll(async () => {
@@ -85,7 +92,7 @@ describe('SpecialtyController', () => {
             .get('/specialties')
             .set('Authorization', 'Bearer doctor')
             .expect(200)
-            .expect(specialties);
+            .expect(specialtyNames);
     });
 
     afterAll(async () => {

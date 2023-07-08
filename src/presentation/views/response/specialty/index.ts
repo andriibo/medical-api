@@ -1,3 +1,3 @@
-import {SpecialtyView} from './specialty.view';
+import {SpecialtiesView} from './specialties.view';
 
-export {SpecialtyView};
+export {SpecialtiesView};
