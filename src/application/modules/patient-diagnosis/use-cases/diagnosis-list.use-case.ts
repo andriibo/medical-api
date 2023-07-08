@@ -3,7 +3,7 @@ import {PatientDiagnosis, User} from 'domain/entities';
 import {IPatientDiagnosisRepository} from 'app/modules/patient-diagnosis/repositories';
 import {PatientDiagnosisSpecification} from 'app/modules/patient-diagnosis/specifications/patient-diagnosis.specification';
 import {IUserRepository} from 'app/modules/auth/repositories';
-import {DiagnosisDto} from 'domain/dtos/response/patient-diagnosis/diagnosis.dto';
+import {PatientDiagnosisDto} from 'domain/dtos/response/patient-diagnosis/patient-diagnosis.dto';
 import {UserDtoMapper} from 'app/modules/profile/mappers/user-dto.mapper';
 
 export class DiagnosisListUseCase {
@@ -15,7 +15,7 @@ export class DiagnosisListUseCase {
         private readonly userDtoMapper: UserDtoMapper,
     ) {}
 
-    public async getList(patientUserId: string): Promise<DiagnosisDto[]> {
+    public async getList(patientUserId: string): Promise<PatientDiagnosisDto[]> {
         const user = await this.authedUserService.getUser();
 
         await this.patientDiagnosisSpecification.assertUserCanOperateDiagnosis(user, patientUserId);
@@ -28,7 +28,7 @@ export class DiagnosisListUseCase {
         users.map((user) => (indexedUsers[user.id] = user));
 
         return items.map((item) => {
-            const dto = DiagnosisDto.fromPatientDiagnosis(item);
+            const dto = PatientDiagnosisDto.fromPatientDiagnosis(item);
             dto.createdByUser = this.userDtoMapper.mapUserDtoByUser(indexedUsers[item.createdBy]);
 
             return dto;

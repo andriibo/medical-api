@@ -1,8 +1,8 @@
 import {ApiProperty} from '@nestjs/swagger';
-import {DiagnosisDto} from 'domain/dtos/response/patient-diagnosis/diagnosis.dto';
+import {PatientDiagnosisDto} from 'domain/dtos/response/patient-diagnosis/patient-diagnosis.dto';
 import {UserView} from 'presentation/views/response/user';
 
-export class DiagnosisView implements DiagnosisDto {
+export class PatientDiagnosisView implements PatientDiagnosisDto {
     @ApiProperty()
     public diagnosisId: string;
 

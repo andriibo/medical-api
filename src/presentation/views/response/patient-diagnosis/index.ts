@@ -1,3 +1,3 @@
-import {DiagnosisView} from './diagnosis.view';
+import {PatientDiagnosisView} from './patient-diagnosis.view';
 
-export {DiagnosisView};
+export {PatientDiagnosisView};

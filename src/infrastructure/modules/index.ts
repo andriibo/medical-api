@@ -14,6 +14,7 @@ import {WebsocketModule} from './websocket.module';
 import {FileModule} from './file/file.module';
 import {PatientStatusModule} from './patient-status/patient-status.module';
 import {PatientCategoryModule} from './patient-category/patient-category.module';
+import {SpecialtyModule} from './specialty/specialty.module';
 
 export {
     AuthModule,
@@ -32,4 +33,5 @@ export {
     FileModule,
     PatientStatusModule,
     PatientCategoryModule,
+    SpecialtyModule,
 };
