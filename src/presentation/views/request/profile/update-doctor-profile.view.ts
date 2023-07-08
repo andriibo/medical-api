@@ -24,6 +24,12 @@ export class UpdateDoctorProfileView extends UpdateDoctorProfileDto {
     @IsNumberString()
     public phone: string;
 
+    @ApiProperty({minLength: 0, maxLength: 100})
+    @Transform(({value}: TransformFnParams) => value?.trim())
+    @IsNotEmpty()
+    @Length(0, 100)
+    public specialty: string;
+
     @ApiProperty({required: false, minLength: 0, maxLength: 100})
     @Transform(({value}: TransformFnParams) => value?.trim())
     @IsOptional()

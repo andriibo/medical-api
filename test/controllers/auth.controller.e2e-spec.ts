@@ -187,6 +187,7 @@ describe('AuthController', () => {
         dto.phone = '2930412345';
         dto.password = '123456!Aa';
         dto.roleLabel = 'Doctor';
+        dto.specialty = 'specialty';
         return request(app.getHttpServer()).post('/doctor/sign-up').send(dto).expect(201);
     });
 

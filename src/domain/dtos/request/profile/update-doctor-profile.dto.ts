@@ -5,5 +5,7 @@ export class UpdateDoctorProfileDto {
 
     public phone: string;
 
+    public specialty: string;
+
     public institution?: string;
 }

@@ -32,6 +32,11 @@ export class SignUpDoctorView extends CreateDoctorDto {
     @IsNumberString()
     public phone: string;
 
+    @ApiProperty({minLength: 0, maxLength: 100})
+    @IsNotEmpty()
+    @Length(0, 100)
+    public specialty: string;
+
     @ApiProperty({required: false, minLength: 0, maxLength: 100})
     @IsOptional()
     @Length(0, 100)

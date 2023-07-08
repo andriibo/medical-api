@@ -27,6 +27,7 @@ export class UserDtoMapper {
     public mapDoctorDtoByUserAndMetadata(user: User, metadata: DoctorMetadata): DoctorDto {
         const dto = this.mapUserDtoByUser(user) as DoctorDto;
         dto.institution = metadata.institution;
+        dto.specialty = metadata.specialty;
 
         return dto;
     }

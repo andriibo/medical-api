@@ -11,6 +11,7 @@ export class UserProfileMapper implements IUserProfileMapper {
         user.phone = dto.phone;
 
         metadata.institution = dto.institution;
+        metadata.specialty = dto.specialty;
 
         user.doctorMetadata = metadata;
 

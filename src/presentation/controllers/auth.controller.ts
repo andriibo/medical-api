@@ -18,7 +18,7 @@ import {AuthUseCasesFactory} from 'infrastructure/modules/auth/factories/auth-us
 import {SignUpCaregiverView} from 'views/request/auth/sign-up-caregiver.view';
 import {ConfirmEmailResentDto, ForgotPasswordMailSentDto, UserSignedInDto} from 'domain/dtos/response/auth';
 import {TrimPipe} from 'presentation/pipes/trim.pipe';
-import {EntityNotFoundError} from "app/errors";
+import {EntityNotFoundError} from 'app/errors';
 
 @Controller()
 @ApiTags('Auth')

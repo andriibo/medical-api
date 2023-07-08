@@ -25,6 +25,7 @@ export class UserModelMapper implements IUserEntityMapper {
         const metadata = new DoctorMetadataModel();
         metadata.userId = authModel.getUserId();
         metadata.institution = dto.institution;
+        metadata.specialty = dto.specialty;
 
         user.doctorMetadata = metadata;
 

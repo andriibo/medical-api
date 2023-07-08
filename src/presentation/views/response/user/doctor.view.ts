@@ -26,6 +26,9 @@ export class DoctorView extends DoctorDto {
     @ApiProperty()
     public institution: string;
 
+    @ApiProperty()
+    public specialty: string;
+
     @ApiProperty({nullable: true})
     public avatar: string | null;
 

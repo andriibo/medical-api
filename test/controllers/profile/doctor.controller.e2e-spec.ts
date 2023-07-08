@@ -46,6 +46,7 @@ const doctor: User = {
 const doctorMetadata: DoctorMetadata = {
     userId: doctor.id,
     institution: 'institution',
+    specialty: 'specialty',
     user: doctor,
 };
 
@@ -126,6 +127,7 @@ describe('DoctorController', () => {
                 firstName: doctor.firstName,
                 lastName: doctor.lastName,
                 institution: doctorMetadata.institution,
+                specialty: doctorMetadata.specialty,
                 phone: doctor.phone,
                 role: doctor.role,
                 roleLabel: doctor.roleLabel,
@@ -141,6 +143,7 @@ describe('DoctorController', () => {
         dto.lastName = 'Test';
         dto.phone = '123456789';
         dto.institution = 'test';
+        dto.specialty = 'test';
         return request(app.getHttpServer())
             .patch('/doctor/my-profile')
             .send(dto)

@@ -7,6 +7,8 @@ export class CreateDoctorDto {
 
     public phone: string;
 
+    public specialty: string;
+
     public institution?: string;
 
     public password: string;

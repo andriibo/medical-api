@@ -84,6 +84,7 @@ const patientMetadata: PatientMetadata = {
 const doctorMetadata: DoctorMetadata = {
     userId: doctor.id,
     institution: 'institution',
+    specialty: 'specialty',
     user: doctor,
 };
 doctor.doctorMetadata = doctorMetadata;
@@ -240,6 +241,7 @@ describe('PatientController', () => {
                     role: doctor.role,
                     roleLabel: doctor.roleLabel,
                     institution: doctorMetadata.institution,
+                    specialty: doctorMetadata.specialty,
                     avatar: doctor.avatar,
                     deletedAt: null,
                     accessId: patientDataAccessForDoctor.id,
