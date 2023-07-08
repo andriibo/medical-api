@@ -9,6 +9,6 @@ export class AppController {
     @Get()
     @HttpCode(HttpStatus.OK)
     public getHello(): object {
-        return {message: 'Hello World!'};
+        return {message: 'Welcome to Zenzers Medical!'};
     }
 }
