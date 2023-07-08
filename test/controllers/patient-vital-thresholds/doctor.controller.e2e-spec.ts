@@ -4,10 +4,19 @@ import {INestApplication, ValidationPipe} from '@nestjs/common';
 import {PatientDataAccess, PatientVitalThresholds, User} from 'domain/entities';
 import {TestModule} from 'tests/test.module';
 import {getRepositoryToken} from '@nestjs/typeorm';
-import {DoctorMetadataModel, PatientMetadataModel, UserModel} from 'infrastructure/modules/auth/models';
+import {
+    DoctorMetadataModel,
+    PatientMetadataModel,
+    UserModel,
+    CaregiverMetadataModel,
+} from 'infrastructure/modules/auth/models';
 import {PatientDataAccessModel} from 'infrastructure/modules/patient-data-access/models';
 import {IUserRepository} from 'app/modules/auth/repositories';
-import {IDoctorMetadataRepository, IPatientMetadataRepository} from 'app/modules/profile/repositories';
+import {
+    IDoctorMetadataRepository,
+    IPatientMetadataRepository,
+    ICaregiverMetadataRepository,
+} from 'app/modules/profile/repositories';
 import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repositories';
 import {PatientVitalThresholdsModule} from 'infrastructure/modules/patient-vital-thresholds/patient-vital-thresholds.module';
 import {IPatientVitalThresholdsRepository} from 'app/modules/patient-vital-thresholds/repositories';
@@ -115,6 +124,8 @@ describe('DoctorController', () => {
             .useValue(null)
             .overrideProvider(getRepositoryToken(PatientMetadataModel))
             .useValue(null)
+            .overrideProvider(getRepositoryToken(CaregiverMetadataModel))
+            .useValue(null)
             .overrideProvider(getRepositoryToken(PatientDataAccessModel))
             .useValue(null)
             .overrideProvider(getRepositoryToken(PatientStatusModel))
@@ -130,6 +141,8 @@ describe('DoctorController', () => {
             .overrideProvider(IPatientMetadataRepository)
             .useValue(null)
             .overrideProvider(IDoctorMetadataRepository)
+            .useValue(null)
+            .overrideProvider(ICaregiverMetadataRepository)
             .useValue(null)
             .overrideProvider(IPatientVitalThresholdsRepository)
             .useValue(mockedPatientVitalThresholdsRepository)

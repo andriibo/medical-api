@@ -1,12 +1,27 @@
 import {Module} from '@nestjs/common';
 import {IUserRepository} from 'app/modules/auth/repositories';
-import {UserRepository, DoctorMetadataRepository, PatientMetadataRepository} from './models';
+import {
+    UserRepository,
+    DoctorMetadataRepository,
+    PatientMetadataRepository,
+    CaregiverMetadataRepository,
+} from './models';
 import {IUserEntityMapper} from 'app/modules/auth/mappers/user-entity.mapper';
 import {UserModelMapper} from './mappers/user-model.mapper';
-import {IDoctorMetadataRepository, IPatientMetadataRepository} from 'app/modules/profile/repositories';
+import {
+    IDoctorMetadataRepository,
+    IPatientMetadataRepository,
+    ICaregiverMetadataRepository,
+} from 'app/modules/profile/repositories';
 
 @Module({
-    exports: [IUserRepository, IPatientMetadataRepository, IDoctorMetadataRepository, IUserEntityMapper],
+    exports: [
+        IUserRepository,
+        IPatientMetadataRepository,
+        IDoctorMetadataRepository,
+        ICaregiverMetadataRepository,
+        IUserEntityMapper,
+    ],
     providers: [
         {
             provide: IUserRepository,
@@ -19,6 +34,10 @@ import {IDoctorMetadataRepository, IPatientMetadataRepository} from 'app/modules
         {
             provide: IDoctorMetadataRepository,
             useClass: DoctorMetadataRepository,
+        },
+        {
+            provide: ICaregiverMetadataRepository,
+            useClass: CaregiverMetadataRepository,
         },
         {
             provide: IUserEntityMapper,

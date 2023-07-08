@@ -5,7 +5,12 @@ import {SuggestedContactModule} from 'infrastructure/modules/suggected-contact/s
 import {OrganizationSuggestedContact, PatientDataAccess, PersonSuggestedContact, User} from 'domain/entities';
 import {TestModule} from 'tests/test.module';
 import {getRepositoryToken} from '@nestjs/typeorm';
-import {DoctorMetadataModel, PatientMetadataModel, UserModel} from 'infrastructure/modules/auth/models';
+import {
+    DoctorMetadataModel,
+    PatientMetadataModel,
+    UserModel,
+    CaregiverMetadataModel,
+} from 'infrastructure/modules/auth/models';
 import {
     PersonSuggestedContactModel,
     OrganizationSuggestedContactModel,
@@ -29,7 +34,11 @@ import {
     IOrganizationSuggestedContactRepository,
 } from 'app/modules/suggested-contact/repositories';
 import {IUserRepository} from 'app/modules/auth/repositories';
-import {IDoctorMetadataRepository, IPatientMetadataRepository} from 'app/modules/profile/repositories';
+import {
+    IDoctorMetadataRepository,
+    IPatientMetadataRepository,
+    ICaregiverMetadataRepository,
+} from 'app/modules/profile/repositories';
 import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repositories';
 import {PersonSuggestedContactDto} from 'domain/dtos/request/suggested-contact/person-suggested-contact.dto';
 import {OrganizationSuggestedContactDto} from 'domain/dtos/request/suggested-contact/organization-suggested-contact.dto';
@@ -129,6 +138,8 @@ describe('GrantedUserController', () => {
             .useValue(null)
             .overrideProvider(getRepositoryToken(PatientMetadataModel))
             .useValue(null)
+            .overrideProvider(getRepositoryToken(CaregiverMetadataModel))
+            .useValue(null)
             .overrideProvider(getRepositoryToken(PersonSuggestedContactModel))
             .useValue(null)
             .overrideProvider(getRepositoryToken(OrganizationSuggestedContactModel))
@@ -162,6 +173,8 @@ describe('GrantedUserController', () => {
             .overrideProvider(IPatientMetadataRepository)
             .useValue(null)
             .overrideProvider(IDoctorMetadataRepository)
+            .useValue(null)
+            .overrideProvider(ICaregiverMetadataRepository)
             .useValue(null)
             .overrideProvider(IPatientDataAccessRepository)
             .useValue(mockedPatientDataAccessRepository)

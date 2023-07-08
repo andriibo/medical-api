@@ -13,9 +13,18 @@ import {
 import {AuthModule} from 'infrastructure/modules/auth/auth.module';
 import {IUserRepository} from 'app/modules/auth/repositories';
 import {getRepositoryToken} from '@nestjs/typeorm';
-import {DoctorMetadataModel, PatientMetadataModel, UserModel} from 'infrastructure/modules/auth/models';
+import {
+    DoctorMetadataModel,
+    PatientMetadataModel,
+    UserModel,
+    CaregiverMetadataModel,
+} from 'infrastructure/modules/auth/models';
 import {User} from 'domain/entities';
-import {IDoctorMetadataRepository, IPatientMetadataRepository} from 'app/modules/profile/repositories';
+import {
+    IDoctorMetadataRepository,
+    IPatientMetadataRepository,
+    ICaregiverMetadataRepository,
+} from 'app/modules/profile/repositories';
 import {CreateCaregiverDto} from 'domain/dtos/request/auth/create-caregiver.dto';
 import {currentUnixTimestamp} from 'support/date.helper';
 import {TestModule} from 'tests/test.module';
@@ -120,6 +129,8 @@ describe('AuthController', () => {
             .useValue(null)
             .overrideProvider(getRepositoryToken(PatientMetadataModel))
             .useValue(null)
+            .overrideProvider(getRepositoryToken(CaregiverMetadataModel))
+            .useValue(null)
             .overrideProvider(getRepositoryToken(PatientCategoryModel))
             .useValue(null)
             .overrideProvider(IUserRepository)
@@ -127,6 +138,8 @@ describe('AuthController', () => {
             .overrideProvider(IPatientMetadataRepository)
             .useValue(null)
             .overrideProvider(IDoctorMetadataRepository)
+            .useValue(null)
+            .overrideProvider(ICaregiverMetadataRepository)
             .useValue(null)
             .overrideProvider(IPatientVitalThresholdsRepository)
             .useValue(null)

@@ -4,9 +4,18 @@ import {INestApplication, ValidationPipe} from '@nestjs/common';
 import {PatientCategoryModule} from 'infrastructure/modules/patient-category/patient-category.module';
 import {IUserRepository} from 'app/modules/auth/repositories';
 import {getRepositoryToken} from '@nestjs/typeorm';
-import {DoctorMetadataModel, PatientMetadataModel, UserModel} from 'infrastructure/modules/auth/models';
+import {
+    DoctorMetadataModel,
+    PatientMetadataModel,
+    UserModel,
+    CaregiverMetadataModel,
+} from 'infrastructure/modules/auth/models';
 import {PatientDataAccess, User} from 'domain/entities';
-import {IDoctorMetadataRepository, IPatientMetadataRepository} from 'app/modules/profile/repositories';
+import {
+    IDoctorMetadataRepository,
+    IPatientMetadataRepository,
+    ICaregiverMetadataRepository,
+} from 'app/modules/profile/repositories';
 import {TestModule} from 'tests/test.module';
 import {currentUnixTimestamp} from 'support/date.helper';
 import {IPatientCategoryRepository} from 'app/modules/patient-category/repositories';
@@ -71,6 +80,8 @@ describe('PatientCategoryController', () => {
             .useValue(null)
             .overrideProvider(getRepositoryToken(PatientMetadataModel))
             .useValue(null)
+            .overrideProvider(getRepositoryToken(CaregiverMetadataModel))
+            .useValue(null)
             .overrideProvider(getRepositoryToken(PatientCategoryModel))
             .useValue(null)
             .overrideProvider(getRepositoryToken(PatientDataAccessModel))
@@ -82,6 +93,8 @@ describe('PatientCategoryController', () => {
             .overrideProvider(IPatientMetadataRepository)
             .useValue(null)
             .overrideProvider(IDoctorMetadataRepository)
+            .useValue(null)
+            .overrideProvider(ICaregiverMetadataRepository)
             .useValue(null)
             .overrideProvider(IPatientCategoryRepository)
             .useValue(mockedPatientCategoryRepository)

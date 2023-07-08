@@ -4,8 +4,17 @@ import {INestApplication, ValidationPipe} from '@nestjs/common';
 import {VitalModule} from 'infrastructure/modules';
 import {IUserRepository} from 'app/modules/auth/repositories';
 import {getRepositoryToken} from '@nestjs/typeorm';
-import {DoctorMetadataModel, PatientMetadataModel, UserModel} from 'infrastructure/modules/auth/models';
-import {IDoctorMetadataRepository, IPatientMetadataRepository} from 'app/modules/profile/repositories';
+import {
+    DoctorMetadataModel,
+    PatientMetadataModel,
+    UserModel,
+    CaregiverMetadataModel,
+} from 'infrastructure/modules/auth/models';
+import {
+    IDoctorMetadataRepository,
+    IPatientMetadataRepository,
+    ICaregiverMetadataRepository,
+} from 'app/modules/profile/repositories';
 import {PatientDataAccessModel} from 'infrastructure/modules/patient-data-access/models';
 import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repositories';
 import {TestModule} from 'tests/test.module';
@@ -128,6 +137,8 @@ describe('GrantedUserController', () => {
             .useValue(null)
             .overrideProvider(getRepositoryToken(PatientMetadataModel))
             .useValue(null)
+            .overrideProvider(getRepositoryToken(CaregiverMetadataModel))
+            .useValue(null)
             .overrideProvider(getRepositoryToken(PatientDataAccessModel))
             .useValue(null)
             .overrideProvider(getRepositoryToken(VitalModel))
@@ -145,6 +156,8 @@ describe('GrantedUserController', () => {
             .overrideProvider(IPatientMetadataRepository)
             .useValue(null)
             .overrideProvider(IDoctorMetadataRepository)
+            .useValue(null)
+            .overrideProvider(ICaregiverMetadataRepository)
             .useValue(null)
             .overrideProvider(IPatientVitalThresholdsRepository)
             .useValue(mockedPatientVitalThresholdsRepository)

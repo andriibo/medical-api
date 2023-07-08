@@ -4,9 +4,18 @@ import {INestApplication, ValidationPipe} from '@nestjs/common';
 import {ProfileModule} from 'infrastructure/modules/profile/profile.module';
 import {IUserRepository} from 'app/modules/auth/repositories';
 import {getRepositoryToken} from '@nestjs/typeorm';
-import {DoctorMetadataModel, PatientMetadataModel, UserModel} from 'infrastructure/modules/auth/models';
+import {
+    DoctorMetadataModel,
+    PatientMetadataModel,
+    UserModel,
+    CaregiverMetadataModel,
+} from 'infrastructure/modules/auth/models';
 import {User} from 'domain/entities';
-import {IDoctorMetadataRepository, IPatientMetadataRepository} from 'app/modules/profile/repositories';
+import {
+    IDoctorMetadataRepository,
+    IPatientMetadataRepository,
+    ICaregiverMetadataRepository,
+} from 'app/modules/profile/repositories';
 import {PatientDataAccessModel} from 'infrastructure/modules/patient-data-access/models';
 import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repositories';
 import {TestModule} from 'tests/test.module';
@@ -80,6 +89,8 @@ describe('ProfileController', () => {
             .useValue(null)
             .overrideProvider(getRepositoryToken(PatientMetadataModel))
             .useValue(null)
+            .overrideProvider(getRepositoryToken(CaregiverMetadataModel))
+            .useValue(null)
             .overrideProvider(getRepositoryToken(PatientDataAccessModel))
             .useValue(null)
             .overrideProvider(getRepositoryToken(PatientCategoryModel))
@@ -93,6 +104,8 @@ describe('ProfileController', () => {
             .overrideProvider(IPatientMetadataRepository)
             .useValue(null)
             .overrideProvider(IDoctorMetadataRepository)
+            .useValue(null)
+            .overrideProvider(ICaregiverMetadataRepository)
             .useValue(null)
             .overrideProvider(IPatientDataAccessRepository)
             .useValue(null)

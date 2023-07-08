@@ -117,6 +117,7 @@ export class PatientDataAccessRepository implements IPatientDataAccessRepository
         return await this.dataSource
             .createQueryBuilder(PatientDataAccessModel, 'pda')
             .leftJoinAndSelect('pda.grantedUser', 'user')
+            .leftJoinAndSelect('user.caregiverMetadata', 'metadata')
             .where('pda.patient_user_id = :patientUserId', {patientUserId})
             .andWhere('pda.status = :status', {status})
             .andWhere('user.role = :role', {role})

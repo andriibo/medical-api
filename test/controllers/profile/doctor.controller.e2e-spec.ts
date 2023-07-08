@@ -4,9 +4,18 @@ import {INestApplication, ValidationPipe} from '@nestjs/common';
 import {ProfileModule} from 'infrastructure/modules/profile/profile.module';
 import {IUserRepository} from 'app/modules/auth/repositories';
 import {getRepositoryToken} from '@nestjs/typeorm';
-import {DoctorMetadataModel, PatientMetadataModel, UserModel} from 'infrastructure/modules/auth/models';
+import {
+    DoctorMetadataModel,
+    PatientMetadataModel,
+    UserModel,
+    CaregiverMetadataModel,
+} from 'infrastructure/modules/auth/models';
 import {DoctorMetadata, User} from 'domain/entities';
-import {IDoctorMetadataRepository, IPatientMetadataRepository} from 'app/modules/profile/repositories';
+import {
+    IDoctorMetadataRepository,
+    IPatientMetadataRepository,
+    ICaregiverMetadataRepository,
+} from 'app/modules/profile/repositories';
 import {PatientDataAccessModel} from 'infrastructure/modules/patient-data-access/models';
 import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repositories';
 import {TestModule} from 'tests/test.module';
@@ -35,7 +44,7 @@ const doctor: User = {
 };
 
 const doctorMetadata: DoctorMetadata = {
-    userId: '1nc5e10o-b1w9-239h-c7mk-9af242088lw0',
+    userId: doctor.id,
     institution: 'institution',
     user: doctor,
 };
@@ -71,6 +80,8 @@ describe('DoctorController', () => {
             .useValue(null)
             .overrideProvider(getRepositoryToken(PatientMetadataModel))
             .useValue(null)
+            .overrideProvider(getRepositoryToken(CaregiverMetadataModel))
+            .useValue(null)
             .overrideProvider(getRepositoryToken(PatientDataAccessModel))
             .useValue(null)
             .overrideProvider(getRepositoryToken(PatientCategoryModel))
@@ -85,6 +96,8 @@ describe('DoctorController', () => {
             .useValue(null)
             .overrideProvider(IDoctorMetadataRepository)
             .useValue(mockedDoctorMetadataRepository)
+            .overrideProvider(ICaregiverMetadataRepository)
+            .useValue(null)
             .overrideProvider(IPatientDataAccessRepository)
             .useValue(null)
             .overrideProvider(IPatientCategoryRepository)

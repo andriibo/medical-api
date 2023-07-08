@@ -21,7 +21,10 @@ export class CaregiverListProfileUseCase {
         );
 
         const myCaregivers = items.map((patientDataAccess) => {
-            const dto = this.userDtoMapper.mapUserDtoByUser(patientDataAccess.grantedUser) as MyCaregiverDto;
+            const dto = this.userDtoMapper.mapCaregiverDtoByUserAndMetadata(
+                patientDataAccess.grantedUser,
+                patientDataAccess.grantedUser.caregiverMetadata,
+            ) as MyCaregiverDto;
             dto.accessId = patientDataAccess.id;
 
             return dto;

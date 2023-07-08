@@ -4,9 +4,18 @@ import {INestApplication, ValidationPipe} from '@nestjs/common';
 import {MedicationModule} from 'infrastructure/modules/medication/medication.module';
 import {IUserRepository} from 'app/modules/auth/repositories';
 import {getRepositoryToken} from '@nestjs/typeorm';
-import {DoctorMetadataModel, PatientMetadataModel, UserModel} from 'infrastructure/modules/auth/models';
+import {
+    DoctorMetadataModel,
+    PatientMetadataModel,
+    UserModel,
+    CaregiverMetadataModel,
+} from 'infrastructure/modules/auth/models';
 import {User} from 'domain/entities';
-import {IDoctorMetadataRepository, IPatientMetadataRepository} from 'app/modules/profile/repositories';
+import {
+    IDoctorMetadataRepository,
+    IPatientMetadataRepository,
+    ICaregiverMetadataRepository,
+} from 'app/modules/profile/repositories';
 import {TestModule} from 'tests/test.module';
 import {MedicationModel} from 'infrastructure/modules/medication/models/medication.model';
 import {IMedicationRepository} from 'app/modules/medication/repositories';
@@ -49,6 +58,8 @@ describe('MedicationController', () => {
             .useValue(null)
             .overrideProvider(getRepositoryToken(PatientMetadataModel))
             .useValue(null)
+            .overrideProvider(getRepositoryToken(CaregiverMetadataModel))
+            .useValue(null)
             .overrideProvider(getRepositoryToken(MedicationModel))
             .useValue(null)
             .overrideProvider(IUserRepository)
@@ -56,6 +67,8 @@ describe('MedicationController', () => {
             .overrideProvider(IPatientMetadataRepository)
             .useValue(null)
             .overrideProvider(IDoctorMetadataRepository)
+            .useValue(null)
+            .overrideProvider(ICaregiverMetadataRepository)
             .useValue(null)
             .overrideProvider(IMedicationRepository)
             .useValue(mockedMedicationRepository)

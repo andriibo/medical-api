@@ -3,9 +3,9 @@ import {ApiBearerAuth, ApiForbiddenResponse, ApiResponse, ApiTags, ApiUnauthoriz
 import {Roles} from 'presentation/guards';
 import {CaregiverUseCasesFactory} from 'infrastructure/modules/profile/factories';
 import {UpdateCaregiverProfileView} from 'views/request/profile/update-caregiver-profile.view';
-import {UserDto} from 'domain/dtos/response/user/user.dto';
-import {UserView} from 'views/response/user';
 import {TrimPipe} from 'presentation/pipes/trim.pipe';
+import {CaregiverView} from 'presentation/views/response/user';
+import {CaregiverDto} from 'domain/dtos/response/profile/caregiver.dto';
 
 @Controller('caregiver')
 @ApiBearerAuth()
@@ -18,8 +18,8 @@ export class CaregiverController {
     @Roles('Caregiver')
     @Get('my-profile')
     @HttpCode(HttpStatus.OK)
-    @ApiResponse({status: HttpStatus.OK, type: UserView})
-    public async getMyProfile(): Promise<UserDto> {
+    @ApiResponse({status: HttpStatus.OK, type: CaregiverView})
+    public async getMyProfile(): Promise<CaregiverDto> {
         const useCase = this.caregiverUseCasesFactory.createGetCaregiverProfileUseCase();
 
         return await useCase.getProfileInfo();

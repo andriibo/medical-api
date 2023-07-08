@@ -4,4 +4,6 @@ export class UpdateCaregiverProfileDto {
     public lastName: string;
 
     public phone: string;
+
+    public institution?: string;
 }

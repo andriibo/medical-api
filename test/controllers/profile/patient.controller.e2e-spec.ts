@@ -4,9 +4,18 @@ import {INestApplication, ValidationPipe} from '@nestjs/common';
 import {ProfileModule} from 'infrastructure/modules/profile/profile.module';
 import {IUserRepository} from 'app/modules/auth/repositories';
 import {getRepositoryToken} from '@nestjs/typeorm';
-import {DoctorMetadataModel, PatientMetadataModel, UserModel} from 'infrastructure/modules/auth/models';
-import {DoctorMetadata, PatientDataAccess, PatientMetadata, User} from 'domain/entities';
-import {IDoctorMetadataRepository, IPatientMetadataRepository} from 'app/modules/profile/repositories';
+import {
+    DoctorMetadataModel,
+    PatientMetadataModel,
+    UserModel,
+    CaregiverMetadataModel,
+} from 'infrastructure/modules/auth/models';
+import {CaregiverMetadata, DoctorMetadata, PatientDataAccess, PatientMetadata, User} from 'domain/entities';
+import {
+    IDoctorMetadataRepository,
+    IPatientMetadataRepository,
+    ICaregiverMetadataRepository,
+} from 'app/modules/profile/repositories';
 import {PatientDataAccessModel} from 'infrastructure/modules/patient-data-access/models';
 import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repositories';
 import {TestModule} from 'tests/test.module';
@@ -64,7 +73,7 @@ const caregiver: User = {
 };
 
 const patientMetadata: PatientMetadata = {
-    userId: '5nc3e70a-c1y9-121a-c5mv-5aq272098bp0',
+    userId: patient.id,
     dob: new Date(currentUnixTimestamp()),
     gender: 'Male',
     height: 180,
@@ -73,11 +82,18 @@ const patientMetadata: PatientMetadata = {
 };
 
 const doctorMetadata: DoctorMetadata = {
-    userId: '1nc5e10o-b1w9-239h-c7mk-9af242088lw0',
+    userId: doctor.id,
     institution: 'institution',
     user: doctor,
 };
 doctor.doctorMetadata = doctorMetadata;
+
+const caregiverMetadata: CaregiverMetadata = {
+    userId: caregiver.id,
+    institution: 'institution',
+    user: caregiver,
+};
+caregiver.caregiverMetadata = caregiverMetadata;
 
 const patientDataAccessForDoctor: PatientDataAccess = {
     id: '18c3v71a-a0y2-928e-c1mx-1aq202018lp2',
@@ -135,6 +151,8 @@ describe('PatientController', () => {
             .useValue(null)
             .overrideProvider(getRepositoryToken(PatientMetadataModel))
             .useValue(null)
+            .overrideProvider(getRepositoryToken(CaregiverMetadataModel))
+            .useValue(null)
             .overrideProvider(getRepositoryToken(PatientDataAccessModel))
             .useValue(null)
             .overrideProvider(getRepositoryToken(PatientCategoryModel))
@@ -148,6 +166,8 @@ describe('PatientController', () => {
             .overrideProvider(IPatientMetadataRepository)
             .useValue(mockedPatientMetadataRepository)
             .overrideProvider(IDoctorMetadataRepository)
+            .useValue(null)
+            .overrideProvider(ICaregiverMetadataRepository)
             .useValue(null)
             .overrideProvider(IPatientDataAccessRepository)
             .useValue(mockedPatientDataAccessRepository)
@@ -242,6 +262,7 @@ describe('PatientController', () => {
                     phone: caregiver.phone,
                     role: caregiver.role,
                     roleLabel: caregiver.roleLabel,
+                    institution: caregiverMetadata.institution,
                     avatar: caregiver.avatar,
                     deletedAt: null,
                     accessId: patientDataAccessForCaregiver.id,

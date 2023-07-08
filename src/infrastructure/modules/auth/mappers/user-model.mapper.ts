@@ -1,7 +1,12 @@
 import {UserRole, User} from 'domain/entities/user.entity';
 import {CreateDoctorDto} from 'domain/dtos/request/auth/create-doctor.dto';
 import {CreatePatientDto} from 'domain/dtos/request/auth/create-patient.dto';
-import {UserModel, DoctorMetadataModel, PatientMetadataModel} from 'infrastructure/modules/auth/models';
+import {
+    UserModel,
+    DoctorMetadataModel,
+    PatientMetadataModel,
+    CaregiverMetadataModel,
+} from 'infrastructure/modules/auth/models';
 import {IUserEntityMapper} from 'app/modules/auth/mappers/user-entity.mapper';
 import {IAuthModel} from 'app/modules/auth/models';
 import {CreateCaregiverDto} from 'domain/dtos/request/auth/create-caregiver.dto';
@@ -57,6 +62,12 @@ export class UserModelMapper implements IUserEntityMapper {
         user.phone = dto.phone;
         user.role = UserRole.Caregiver;
         user.roleLabel = dto.roleLabel;
+
+        const metadata = new CaregiverMetadataModel();
+        metadata.userId = authModel.getUserId();
+        metadata.institution = dto.institution;
+
+        user.caregiverMetadata = metadata;
 
         return user;
     }

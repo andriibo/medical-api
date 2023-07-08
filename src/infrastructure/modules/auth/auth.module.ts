@@ -3,7 +3,7 @@ import {AuthController} from 'controllers/auth.controller';
 import {IAuthService} from 'app/modules/auth/services/auth.service';
 import {CognitoService} from 'infrastructure/aws/cognito/cognito.service';
 import {TypeOrmModule} from '@nestjs/typeorm';
-import {UserModel, DoctorMetadataModel, PatientMetadataModel} from './models';
+import {UserModel, DoctorMetadataModel, PatientMetadataModel, CaregiverMetadataModel} from './models';
 import {AuthUseCasesFactory} from './factories/auth-use-cases.factory';
 import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service';
 import {AuthedUserService} from './services/authed-user.service';
@@ -22,7 +22,7 @@ import {ForgotPasswordSpecification} from 'app/modules/auth/specifications/forgo
 
 @Module({
     imports: [
-        TypeOrmModule.forFeature([UserModel, DoctorMetadataModel, PatientMetadataModel]),
+        TypeOrmModule.forFeature([UserModel, DoctorMetadataModel, PatientMetadataModel, CaregiverMetadataModel]),
         MailModule,
         FileModule,
         PatientVitalThresholdsIndependentModule,

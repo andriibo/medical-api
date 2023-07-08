@@ -36,6 +36,9 @@ export class UserRepository implements IUserRepository {
             if (entity.doctorMetadata) {
                 await manager.save(entity.doctorMetadata);
             }
+            if (entity.caregiverMetadata) {
+                await manager.save(entity.caregiverMetadata);
+            }
 
             return persistedEntity;
         };

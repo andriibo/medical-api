@@ -4,9 +4,18 @@ import {INestApplication, ValidationPipe} from '@nestjs/common';
 import {ProfileModule} from 'infrastructure/modules/profile/profile.module';
 import {IUserRepository} from 'app/modules/auth/repositories';
 import {getRepositoryToken} from '@nestjs/typeorm';
-import {DoctorMetadataModel, PatientMetadataModel, UserModel} from 'infrastructure/modules/auth/models';
-import {User} from 'domain/entities';
-import {IDoctorMetadataRepository, IPatientMetadataRepository} from 'app/modules/profile/repositories';
+import {
+    DoctorMetadataModel,
+    PatientMetadataModel,
+    UserModel,
+    CaregiverMetadataModel,
+} from 'infrastructure/modules/auth/models';
+import {CaregiverMetadata, User} from 'domain/entities';
+import {
+    IDoctorMetadataRepository,
+    IPatientMetadataRepository,
+    ICaregiverMetadataRepository,
+} from 'app/modules/profile/repositories';
 import {PatientDataAccessModel} from 'infrastructure/modules/patient-data-access/models';
 import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repositories';
 import {TestModule} from 'tests/test.module';
@@ -34,6 +43,12 @@ const caregiver: User = {
     passwordUpdatedAt: 1681305134,
 };
 
+const caregiverMetadata: CaregiverMetadata = {
+    userId: caregiver.id,
+    institution: 'institution',
+    user: caregiver,
+};
+
 describe('CaregiverController', () => {
     let app: INestApplication;
     beforeAll(async () => {
@@ -42,6 +57,9 @@ describe('CaregiverController', () => {
         };
         const mockedRemoveCaregiverOrPatientService = {
             remove: jest.fn(() => Promise.resolve()),
+        };
+        const mockedCaregiverMetadataRepository = {
+            getOneById: jest.fn(() => Promise.resolve(caregiverMetadata)),
         };
         const mockedUserRepository = {
             getOneById: jest.fn(() => Promise.resolve(caregiver)),
@@ -62,6 +80,8 @@ describe('CaregiverController', () => {
             .useValue(null)
             .overrideProvider(getRepositoryToken(PatientMetadataModel))
             .useValue(null)
+            .overrideProvider(getRepositoryToken(CaregiverMetadataModel))
+            .useValue(null)
             .overrideProvider(getRepositoryToken(PatientDataAccessModel))
             .useValue(null)
             .overrideProvider(getRepositoryToken(PatientCategoryModel))
@@ -76,6 +96,8 @@ describe('CaregiverController', () => {
             .useValue(null)
             .overrideProvider(IDoctorMetadataRepository)
             .useValue(null)
+            .overrideProvider(ICaregiverMetadataRepository)
+            .useValue(mockedCaregiverMetadataRepository)
             .overrideProvider(IPatientDataAccessRepository)
             .useValue(null)
             .overrideProvider(IPatientCategoryRepository)
@@ -103,6 +125,7 @@ describe('CaregiverController', () => {
                 email: caregiver.email,
                 firstName: caregiver.firstName,
                 lastName: caregiver.lastName,
+                institution: caregiverMetadata.institution,
                 phone: caregiver.phone,
                 role: caregiver.role,
                 roleLabel: caregiver.roleLabel,
@@ -117,6 +140,7 @@ describe('CaregiverController', () => {
         dto.firstName = 'Test';
         dto.lastName = 'Test';
         dto.phone = '123456789';
+        dto.institution = 'test';
         return request(app.getHttpServer())
             .patch('/caregiver/my-profile')
             .send(dto)

@@ -1,7 +1,6 @@
 import {Entity, Column, PrimaryGeneratedColumn, OneToOne, BeforeInsert} from 'typeorm';
 import {User} from 'domain/entities';
-import {DoctorMetadataModel} from 'infrastructure/modules/auth/models/doctor-metadata.model';
-import {PatientMetadataModel} from 'infrastructure/modules/auth/models/patient-metadata.model';
+import {DoctorMetadataModel, PatientMetadataModel, CaregiverMetadataModel} from 'infrastructure/modules/auth/models';
 import {currentUnixTimestamp} from 'support/date.helper';
 
 @Entity('user')
@@ -44,6 +43,9 @@ export class UserModel implements User {
 
     @OneToOne(() => PatientMetadataModel, (metadata) => metadata.user)
     public patientMetadata?: PatientMetadataModel | null;
+
+    @OneToOne(() => CaregiverMetadataModel, (metadata) => metadata.user)
+    public caregiverMetadata?: CaregiverMetadataModel | null;
 
     @BeforeInsert()
     insertCreated() {

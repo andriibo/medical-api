@@ -15,6 +15,7 @@ import {EmergencyContact} from './emergency-contact.entity';
 import {OrganizationEmergencyContact} from './organization-emergency-contact.entity';
 import {SuggestedContact} from './suggested-contact.entity';
 import {OrganizationSuggestedContact} from './organization-suggested-contact.entity';
+import {CaregiverMetadata} from './caregiver-metadata.entity';
 
 export {
     User,
@@ -34,4 +35,5 @@ export {
     OrganizationEmergencyContact,
     SuggestedContact,
     OrganizationSuggestedContact,
+    CaregiverMetadata,
 };

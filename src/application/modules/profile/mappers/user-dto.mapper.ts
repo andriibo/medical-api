@@ -1,8 +1,9 @@
 import {IFileUrlService} from 'app/modules/profile/services/file-url.service';
-import {DoctorMetadata, PatientMetadata, User} from 'domain/entities';
+import {DoctorMetadata, PatientMetadata, User, CaregiverMetadata} from 'domain/entities';
 import {UserDto} from 'domain/dtos/response/user/user.dto';
 import {PatientDto} from 'domain/dtos/response/profile/patient.dto';
 import {DoctorDto} from 'domain/dtos/response/profile/doctor.dto';
+import {CaregiverDto} from 'domain/dtos/response/profile/caregiver.dto';
 
 export class UserDtoMapper {
     public constructor(private readonly fileUrlService: IFileUrlService) {}
@@ -25,6 +26,13 @@ export class UserDtoMapper {
 
     public mapDoctorDtoByUserAndMetadata(user: User, metadata: DoctorMetadata): DoctorDto {
         const dto = this.mapUserDtoByUser(user) as DoctorDto;
+        dto.institution = metadata.institution;
+
+        return dto;
+    }
+
+    public mapCaregiverDtoByUserAndMetadata(user: User, metadata: CaregiverMetadata): CaregiverDto {
+        const dto = this.mapUserDtoByUser(user) as CaregiverDto;
         dto.institution = metadata.institution;
 
         return dto;
