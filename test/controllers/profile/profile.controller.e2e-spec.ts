@@ -28,6 +28,7 @@ import {IPatientStatusRepository} from 'app/modules/patient-status/repositories'
 import {IPatientVitalThresholdsRepository} from 'app/modules/patient-vital-thresholds/repositories';
 import {currentUnixTimestamp} from 'support/date.helper';
 import {IRemoveMyAvatarService} from 'app/modules/profile/services/remove-my-avatar.service';
+import {IUserAvatarService} from 'app/modules/profile/services/user-avatar.service';
 
 const doctor: User = {
     id: '8bfbd95c-c8a5-404b-b3eb-6ac648052ac4',
@@ -60,6 +61,9 @@ const removedDoctor: User = {
 describe('ProfileController', () => {
     let app: INestApplication;
     beforeAll(async () => {
+        const mockedUserAvatarService = {
+            uploadFile: jest.fn(() => Promise.resolve()),
+        };
         const mockedRemoveDoctorService = {
             remove: jest.fn(() => Promise.resolve()),
         };
@@ -99,6 +103,8 @@ describe('ProfileController', () => {
             .useValue(null)
             .overrideProvider(getRepositoryToken(VitalModel))
             .useValue(null)
+            .overrideProvider(IUserAvatarService)
+            .useValue(mockedUserAvatarService)
             .overrideProvider(IUserRepository)
             .useValue(mockedUserRepository)
             .overrideProvider(IPatientMetadataRepository)
