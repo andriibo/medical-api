@@ -2,7 +2,8 @@ import {Test, TestingModule} from '@nestjs/testing';
 import * as request from 'supertest';
 import {INestApplication, ValidationPipe} from '@nestjs/common';
 import {PersonEmergencyContact, PatientDataAccess, User} from 'domain/entities';
-import {OrganizationType, OrganizationEmergencyContact} from 'domain/entities/organization-emergency-contact.entity';
+import {OrganizationEmergencyContact} from 'domain/entities/organization-emergency-contact.entity';
+import {OrganizationTypeEnum} from 'domain/constants/emergency-contact.const';
 import {TestModule} from 'tests/test.module';
 import {getRepositoryToken} from '@nestjs/typeorm';
 import {
@@ -82,7 +83,7 @@ const organizationEmergencyContact: OrganizationEmergencyContact = {
     email: 'suggested@gmail.com',
     phone: '2930412345',
     fax: '2930412345',
-    type: OrganizationType.Pharmacy,
+    type: OrganizationTypeEnum.Pharmacy,
     createdAt: '2022-12-10 17:31:07.016236',
     rank: null,
 };

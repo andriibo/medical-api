@@ -1,7 +1,7 @@
 import {ApiProperty} from '@nestjs/swagger';
 import {Length, IsNotEmpty, IsOptional, IsNumberString} from 'class-validator';
 import {UpdateDoctorProfileDto} from 'domain/dtos/request/profile/update-doctor-profile.dto';
-import {MaxPhoneLength, MinPhoneLength} from 'domain/constants/phone.const';
+import {MaxPhoneLength, MinPhoneLength} from 'domain/constants/user.const';
 import {Transform, TransformFnParams} from 'class-transformer';
 
 export class UpdateDoctorProfileView extends UpdateDoctorProfileDto {

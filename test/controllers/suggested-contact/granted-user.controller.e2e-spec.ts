@@ -43,7 +43,7 @@ import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repo
 import {PersonSuggestedContactDto} from 'domain/dtos/request/suggested-contact/person-suggested-contact.dto';
 import {OrganizationSuggestedContactDto} from 'domain/dtos/request/suggested-contact/organization-suggested-contact.dto';
 import {convertToUnixTimestamp} from 'support/date.helper';
-import {OrganizationType} from 'domain/entities/organization-emergency-contact.entity';
+import {OrganizationTypeEnum} from 'domain/constants/emergency-contact.const';
 
 const doctor: User = {
     id: '8bfbd95c-c8a5-404b-b3eb-6ac648052ac4',
@@ -92,7 +92,7 @@ const organizationSuggestedContact: OrganizationSuggestedContact = {
     email: 'suggested@gmail.com',
     phone: '2930412345',
     fax: '2930412345',
-    type: OrganizationType.Pharmacy,
+    type: OrganizationTypeEnum.Pharmacy,
     suggestedAt: '2022-12-10 17:31:07.016236',
     suggestedBy: doctor.id,
 };
@@ -208,7 +208,7 @@ describe('GrantedUserController', () => {
             email: 'suggested@gmail.com',
             phone: '2930412345',
             fax: '2930412345',
-            type: OrganizationType.Pharmacy,
+            type: OrganizationTypeEnum.Pharmacy,
         };
         return request(app.getHttpServer())
             .post('/organization-suggested-contact')

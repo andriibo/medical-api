@@ -1,4 +1,5 @@
-import {PatientDataAccess, PatientDataAccessStatus} from 'domain/entities/patient-data-access.entity';
+import {PatientDataAccess} from 'domain/entities/patient-data-access.entity';
+import {PatientDataAccessStatusEnum} from 'domain/constants/patient-data-access.const';
 
 export interface IPatientDataAccessRepository {
     create(patientDataAccess: PatientDataAccess): Promise<void>;
@@ -27,15 +28,18 @@ export interface IPatientDataAccessRepository {
 
     getDoctorsByPatientUserIdAndStatus(
         patientUserId: string,
-        status: PatientDataAccessStatus,
+        status: PatientDataAccessStatusEnum,
     ): Promise<PatientDataAccess[]>;
 
     getCaregiversByPatientUserIdAndStatus(
         patientUserId: string,
-        status: PatientDataAccessStatus,
+        status: PatientDataAccessStatusEnum,
     ): Promise<PatientDataAccess[]>;
 
-    getByGrantedUserIdAndStatus(grantedUserId: string, status: PatientDataAccessStatus): Promise<PatientDataAccess[]>;
+    getByGrantedUserIdAndStatus(
+        grantedUserId: string,
+        status: PatientDataAccessStatusEnum,
+    ): Promise<PatientDataAccess[]>;
 
     getOneWithPatientAndMetadataByGrantedUserIdAndPatientUserId(
         grantedUserId: string,

@@ -1,6 +1,7 @@
 import {IUserRepository} from 'app/modules/auth/repositories';
 import {IRemoveUserService} from 'app/modules/profile/services/remove-user.service';
-import {User, UserRole} from 'domain/entities/user.entity';
+import {User} from 'domain/entities/user.entity';
+import {UserRoleEnum} from 'domain/constants/user.const';
 
 export class RemoveUsersUseCase {
     public constructor(
@@ -17,7 +18,7 @@ export class RemoveUsersUseCase {
     }
 
     private async removeUser(user: User): Promise<void> {
-        if (user.role === UserRole.Doctor) {
+        if (user.role === UserRoleEnum.Doctor) {
             await this.removeDoctorService.remove(user);
         } else {
             await this.removeCaregiverOrPatientService.remove(user);

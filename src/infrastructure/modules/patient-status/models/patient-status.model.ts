@@ -1,5 +1,6 @@
 import {Entity, Column, PrimaryColumn} from 'typeorm';
-import {PatientStatus, PatientStatusEnum} from 'domain/entities/patient-status.entity';
+import {PatientStatus} from 'domain/entities/patient-status.entity';
+import {PatientStatusEnum} from 'domain/constants/patient.const';
 import {currentUnixTimestamp} from 'support/date.helper';
 
 @Entity('patient_status')

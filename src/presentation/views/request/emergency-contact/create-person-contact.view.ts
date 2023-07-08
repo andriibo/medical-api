@@ -1,8 +1,9 @@
 import {ApiProperty} from '@nestjs/swagger';
 import {Length, IsEmail, IsNotEmpty, IsIn, MaxLength, IsNumberString} from 'class-validator';
 import {PersonEmergencyContactDto} from 'domain/dtos/request/emergency-contact/person-emergency-contact.dto';
-import {MaxPhoneLength, MinPhoneLength} from 'domain/constants/phone.const';
+import {MaxPhoneLength, MinPhoneLength} from 'domain/constants/user.const';
 import {Transform, TransformFnParams} from 'class-transformer';
+import {PersonEmergencyContactRelationshipEnum} from 'domain/constants/emergency-contact.const';
 
 export class CreatePersonContactView extends PersonEmergencyContactDto {
     @ApiProperty({minLength: 1, maxLength: 30})
@@ -31,8 +32,18 @@ export class CreatePersonContactView extends PersonEmergencyContactDto {
     @IsNumberString()
     public phone: string;
 
-    @ApiProperty({enum: ['MedicalProfessional', 'Caregiver', 'Friends&Family']})
+    @ApiProperty({
+        enum: [
+            PersonEmergencyContactRelationshipEnum.MedicalProfessional,
+            PersonEmergencyContactRelationshipEnum.Caregiver,
+            PersonEmergencyContactRelationshipEnum.FriendsFamily,
+        ],
+    })
     @IsNotEmpty()
-    @IsIn(['MedicalProfessional', 'Caregiver', 'Friends&Family'])
+    @IsIn([
+        PersonEmergencyContactRelationshipEnum.MedicalProfessional,
+        PersonEmergencyContactRelationshipEnum.Caregiver,
+        PersonEmergencyContactRelationshipEnum.FriendsFamily,
+    ])
     public relationship: string;
 }

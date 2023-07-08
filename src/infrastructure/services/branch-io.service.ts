@@ -1,6 +1,6 @@
 import * as branchio from 'branchio-sdk';
 import {ConfigService} from '@nestjs/config';
-import {UserRole} from 'domain/entities/user.entity';
+import {UserRoleEnum} from 'domain/constants/user.const';
 import {Inject} from '@nestjs/common';
 import {IDeepLinkService} from 'app/modules/mail/services/deep-link.service';
 
@@ -23,8 +23,8 @@ export class BranchIoService implements IDeepLinkService {
         const marketingTitle = 'patient invite';
         const normalizedEmail = this.normalizeEmail(email);
         const desktopUrl = `${this.webAppUrl}/sign-up-patient?email=${normalizedEmail}`;
-        const iosDeeplinkPath = `${this.mobileAppUrl}auth?email=${email}&role=${UserRole.Patient}`;
-        const androidDeeplinkPath = `${this.mobileAppUrl}auth?email=${email}&role=${UserRole.Patient}`;
+        const iosDeeplinkPath = `${this.mobileAppUrl}auth?email=${email}&role=${UserRoleEnum.Patient}`;
+        const androidDeeplinkPath = `${this.mobileAppUrl}auth?email=${email}&role=${UserRoleEnum.Patient}`;
 
         return await this.sendRequest(marketingTitle, desktopUrl, iosDeeplinkPath, androidDeeplinkPath);
     }
@@ -33,8 +33,8 @@ export class BranchIoService implements IDeepLinkService {
         const marketingTitle = 'caregiver invite';
         const normalizedEmail = this.normalizeEmail(email);
         const desktopUrl = `${this.webAppUrl}/sign-up-caregiver?email=${normalizedEmail}`;
-        const iosDeeplinkPath = `${this.mobileAppUrl}auth?email=${email}&role=${UserRole.Caregiver}`;
-        const androidDeeplinkPath = `${this.mobileAppUrl}auth?email=${email}&role=${UserRole.Caregiver}`;
+        const iosDeeplinkPath = `${this.mobileAppUrl}auth?email=${email}&role=${UserRoleEnum.Caregiver}`;
+        const androidDeeplinkPath = `${this.mobileAppUrl}auth?email=${email}&role=${UserRoleEnum.Caregiver}`;
 
         return await this.sendRequest(marketingTitle, desktopUrl, iosDeeplinkPath, androidDeeplinkPath);
     }
@@ -43,8 +43,8 @@ export class BranchIoService implements IDeepLinkService {
         const marketingTitle = 'doctor invite';
         const normalizedEmail = this.normalizeEmail(email);
         const desktopUrl = `${this.webAppUrl}/sign-up-doctor?email=${normalizedEmail}`;
-        const iosDeeplinkPath = `${this.mobileAppUrl}auth?email=${email}&role=${UserRole.Doctor}`;
-        const androidDeeplinkPath = `${this.mobileAppUrl}auth?email=${email}&role=${UserRole.Doctor}`;
+        const iosDeeplinkPath = `${this.mobileAppUrl}auth?email=${email}&role=${UserRoleEnum.Doctor}`;
+        const androidDeeplinkPath = `${this.mobileAppUrl}auth?email=${email}&role=${UserRoleEnum.Doctor}`;
 
         return await this.sendRequest(marketingTitle, desktopUrl, iosDeeplinkPath, androidDeeplinkPath);
     }

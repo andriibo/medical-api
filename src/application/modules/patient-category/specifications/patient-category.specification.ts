@@ -1,5 +1,6 @@
-import {PatientCategory, PatientCategoryEnum} from 'domain/entities/patient-category.entity';
+import {PatientCategory} from 'domain/entities/patient-category.entity';
 import {PatientCategorySpecificationError} from 'app/modules/patient-category/errors';
+import {PatientCategoryEnum} from 'domain/constants/patient.const';
 
 export class PatientCategorySpecification {
     public assertGrantedUserCanSetNormal(patientCategory: PatientCategory): void {

@@ -1,4 +1,5 @@
-import {PatientCategory, PatientCategoryEnum} from 'domain/entities/patient-category.entity';
+import {PatientCategory} from 'domain/entities/patient-category.entity';
+import {PatientCategoryEnum} from 'domain/constants/patient.const';
 
 export interface IPatientCategoryRepository {
     update(data: PatientCategory | PatientCategory[]): Promise<void>;

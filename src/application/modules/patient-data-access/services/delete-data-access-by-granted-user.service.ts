@@ -3,7 +3,7 @@ import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repo
 import {PatientDataAccessSpecification} from 'app/modules/patient-data-access/specifications/patient-data-access.specification';
 import {IPatientDataAccessEventEmitter} from 'app/modules/patient-data-access/event-emitters/patient-data-access.event-emitter';
 import {IUserRepository} from 'app/modules/auth/repositories';
-import {PatientDataAccessStatus} from 'domain/entities/patient-data-access.entity';
+import {PatientDataAccessStatusEnum} from 'domain/constants/patient-data-access.const';
 
 export class DeleteDataAccessByGrantedUserService {
     public constructor(
@@ -16,7 +16,7 @@ export class DeleteDataAccessByGrantedUserService {
     public async deleteDataAccess(grantedUser: User, dataAccess: PatientDataAccess): Promise<void> {
         await this.patientDataAccessSpecification.assertGrantedUserCanDeleteAccess(grantedUser, dataAccess);
         await this.patientDataAccessRepository.delete(dataAccess);
-        if (dataAccess.status !== PatientDataAccessStatus.Refused) {
+        if (dataAccess.status !== PatientDataAccessStatusEnum.Refused) {
             await this.sendNotification(grantedUser, dataAccess);
         }
     }
@@ -24,7 +24,7 @@ export class DeleteDataAccessByGrantedUserService {
     private async sendNotification(grantedUser: User, dataAccess: PatientDataAccess): Promise<void> {
         const patientEmail = await this.getPatientEmail(dataAccess);
 
-        if (dataAccess.status === PatientDataAccessStatus.Initiated) {
+        if (dataAccess.status === PatientDataAccessStatusEnum.Initiated) {
             await this.patientDataAccessEventEmitter.emitAccessWithdrawnByGrantedUser(grantedUser, patientEmail);
         } else {
             await this.patientDataAccessEventEmitter.emitAccessDeletedByGrantedUser(grantedUser, patientEmail);

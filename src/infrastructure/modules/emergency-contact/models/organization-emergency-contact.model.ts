@@ -1,5 +1,6 @@
 import {Entity, Column, PrimaryGeneratedColumn} from 'typeorm';
-import {OrganizationEmergencyContact, OrganizationType} from 'domain/entities/organization-emergency-contact.entity';
+import {OrganizationEmergencyContact} from 'domain/entities/organization-emergency-contact.entity';
+import {OrganizationTypeEnum} from 'domain/constants/emergency-contact.const';
 
 @Entity('organization_emergency_contact')
 export class OrganizationEmergencyContactModel implements OrganizationEmergencyContact {
@@ -22,7 +23,7 @@ export class OrganizationEmergencyContactModel implements OrganizationEmergencyC
     public fax: string | null;
 
     @Column()
-    public type: OrganizationType;
+    public type: OrganizationTypeEnum;
 
     @Column({name: 'created_at'})
     public createdAt: string;

@@ -5,7 +5,7 @@ import {AccessToGrantedUserBindingService} from 'app/modules/patient-data-access
 import {IMailService} from 'app/modules/mail/services/abstract/mail.service';
 import {AccessToPatientBindingService} from 'app/modules/patient-data-access/services/access-to-patient-binding.service';
 import {IDataAccessApprovedService} from 'app/modules/patient-data-access/services/data-access-approved.service';
-import {UserRole} from 'domain/entities/user.entity';
+import {UserRoleEnum} from 'domain/constants/user.const';
 
 @Injectable()
 export class PatientDataAccessListener {
@@ -73,9 +73,9 @@ export class PatientDataAccessListener {
             return;
         }
 
-        if (grantedUser.role === UserRole.Doctor) {
+        if (grantedUser.role === UserRoleEnum.Doctor) {
             await this.mailService.sendNotificationThatPatientDeletedDataAccessForDoctor(patient, grantedUser.email);
-        } else if (grantedUser.role === UserRole.Caregiver) {
+        } else if (grantedUser.role === UserRoleEnum.Caregiver) {
             await this.mailService.sendNotificationThatPatientDeletedDataAccessForCaregiver(patient, grantedUser.email);
         }
     }

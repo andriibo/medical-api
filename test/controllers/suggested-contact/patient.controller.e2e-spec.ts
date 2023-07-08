@@ -41,7 +41,7 @@ import {
 } from 'app/modules/profile/repositories';
 import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repositories';
 import {convertToUnixTimestamp} from 'support/date.helper';
-import {OrganizationType} from 'domain/entities/organization-emergency-contact.entity';
+import {OrganizationTypeEnum} from 'domain/constants/emergency-contact.const';
 
 const patient: User = {
     id: '5nc3e70a-c1y9-121a-c5mv-5aq272098bp0',
@@ -76,7 +76,7 @@ const organizationSuggestedContact: OrganizationSuggestedContact = {
     email: 'suggested@gmail.com',
     phone: '2930412345',
     fax: '2930412345',
-    type: OrganizationType.Pharmacy,
+    type: OrganizationTypeEnum.Pharmacy,
     suggestedAt: '2022-12-10 17:31:07.016236',
     suggestedBy: '5nc3e70a-c1y9-121a-c5mv-5aq272098bp0',
 };

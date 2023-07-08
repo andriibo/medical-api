@@ -1,7 +1,8 @@
 import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repositories';
 import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service';
 import {PatientDataAccessSpecification} from 'app/modules/patient-data-access/specifications/patient-data-access.specification';
-import {PatientDataAccessStatus, PatientDataAccess} from 'domain/entities/patient-data-access.entity';
+import {PatientDataAccess} from 'domain/entities/patient-data-access.entity';
+import {PatientDataAccessStatusEnum} from 'domain/constants/patient-data-access.const';
 import {EntityNotFoundError} from 'app/errors/entity-not-found.error';
 
 export class RefuseDataAccessUseCase {
@@ -17,7 +18,7 @@ export class RefuseDataAccessUseCase {
 
         await this.patientDataAccessSpecification.assertGrantedUserCanRefuseAccess(user, dataAccess);
 
-        dataAccess.status = PatientDataAccessStatus.Refused;
+        dataAccess.status = PatientDataAccessStatusEnum.Refused;
 
         await this.patientDataAccessRepository.update(dataAccess);
     }

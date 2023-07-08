@@ -1,7 +1,7 @@
 import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service';
 import {IPatientStatusRepository} from 'app/modules/patient-status/repositories';
 import {IPatientStatusEntityMapper} from 'app/modules/patient-status/mappers/patient-status-entity.mapper';
-import {PatientStatusEnum} from 'domain/entities/patient-status.entity';
+import {PatientStatusEnum} from 'domain/constants/patient.const';
 
 export class PatientStatusNormalUseCase {
     public constructor(

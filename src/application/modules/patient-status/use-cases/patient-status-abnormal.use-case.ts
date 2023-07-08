@@ -1,10 +1,9 @@
 import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service';
 import {IPatientStatusRepository} from 'app/modules/patient-status/repositories';
 import {IPatientStatusEntityMapper} from 'app/modules/patient-status/mappers/patient-status-entity.mapper';
-import {PatientStatusEnum} from 'domain/entities/patient-status.entity';
 import {IPatientCategoryRepository} from 'app/modules/patient-category/repositories';
 import {currentUnixTimestamp} from 'support/date.helper';
-import {PatientCategoryEnum} from 'domain/entities/patient-category.entity';
+import {PatientCategoryEnum, PatientStatusEnum} from 'domain/constants/patient.const';
 
 export class PatientStatusAbnormalUseCase {
     public constructor(

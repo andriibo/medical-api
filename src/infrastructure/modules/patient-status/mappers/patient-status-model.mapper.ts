@@ -1,6 +1,7 @@
 import {User} from 'domain/entities/user.entity';
 import {IPatientStatusEntityMapper} from 'app/modules/patient-status/mappers/patient-status-entity.mapper';
-import {PatientStatus, PatientStatusEnum} from 'domain/entities/patient-status.entity';
+import {PatientStatus} from 'domain/entities/patient-status.entity';
+import {PatientStatusEnum} from 'domain/constants/patient.const';
 import {PatientStatusModel} from 'infrastructure/modules/patient-status/models';
 import {currentUnixTimestamp} from 'support/date.helper';
 

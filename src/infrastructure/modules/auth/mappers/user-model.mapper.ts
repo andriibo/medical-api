@@ -1,4 +1,5 @@
-import {UserRole, User} from 'domain/entities/user.entity';
+import {User} from 'domain/entities/user.entity';
+import {UserRoleEnum} from 'domain/constants/user.const';
 import {CreateDoctorDto} from 'domain/dtos/request/auth/create-doctor.dto';
 import {CreatePatientDto} from 'domain/dtos/request/auth/create-patient.dto';
 import {
@@ -19,7 +20,7 @@ export class UserModelMapper implements IUserEntityMapper {
         user.firstName = dto.firstName;
         user.lastName = dto.lastName;
         user.phone = dto.phone;
-        user.role = UserRole.Doctor;
+        user.role = UserRoleEnum.Doctor;
         user.roleLabel = dto.roleLabel;
 
         const metadata = new DoctorMetadataModel();
@@ -39,7 +40,7 @@ export class UserModelMapper implements IUserEntityMapper {
         user.firstName = dto.firstName;
         user.lastName = dto.lastName;
         user.phone = dto.phone;
-        user.role = UserRole.Patient;
+        user.role = UserRoleEnum.Patient;
         user.roleLabel = dto.roleLabel;
 
         const metadata = new PatientMetadataModel();
@@ -61,7 +62,7 @@ export class UserModelMapper implements IUserEntityMapper {
         user.firstName = dto.firstName;
         user.lastName = dto.lastName;
         user.phone = dto.phone;
-        user.role = UserRole.Caregiver;
+        user.role = UserRoleEnum.Caregiver;
         user.roleLabel = dto.roleLabel;
 
         const metadata = new CaregiverMetadataModel();

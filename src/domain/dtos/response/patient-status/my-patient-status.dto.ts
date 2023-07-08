@@ -1,4 +1,5 @@
-import {PatientStatus, PatientStatusEnum} from 'domain/entities/patient-status.entity';
+import {PatientStatus} from 'domain/entities/patient-status.entity';
+import {PatientStatusEnum} from 'domain/constants/patient.const';
 
 export class MyPatientStatusDto {
     public status: string;

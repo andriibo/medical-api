@@ -14,9 +14,9 @@ import {
 } from 'class-validator';
 import {CreatePatientDto} from 'domain/dtos/request/auth/create-patient.dto';
 import {Transform, TransformFnParams} from 'class-transformer';
-import {MaxPhoneLength, MinPhoneLength} from 'domain/constants/phone.const';
+import {MaxPhoneLength, MinPhoneLength} from 'domain/constants/user.const';
 import {MaxDate, MinDate} from 'infrastructure/validators/date.validator';
-import {UserRoleLabel} from 'domain/entities/user.entity';
+import {GenderEnum, UserRoleLabelEnum} from 'domain/constants/user.const';
 
 export class SignUpPatientView extends CreatePatientDto {
     @ApiProperty({maxLength: 100})
@@ -52,9 +52,9 @@ export class SignUpPatientView extends CreatePatientDto {
     @MaxDate(new Date())
     public dob: Date;
 
-    @ApiProperty({enum: ['Male', 'Female', 'Other']})
+    @ApiProperty({enum: [GenderEnum.Male, GenderEnum.Female, GenderEnum.Other]})
     @IsNotEmpty()
-    @IsIn(['Male', 'Female', 'Other'])
+    @IsIn([GenderEnum.Male, GenderEnum.Female, GenderEnum.Other])
     public gender: string;
 
     @ApiProperty({minimum: 50, maximum: 250})
@@ -76,8 +76,8 @@ export class SignUpPatientView extends CreatePatientDto {
     @MinLength(8)
     public password: string;
 
-    @ApiProperty({enum: [UserRoleLabel.Patient]})
+    @ApiProperty({enum: [UserRoleLabelEnum.Patient]})
     @IsNotEmpty()
-    @IsIn([UserRoleLabel.Patient])
+    @IsIn([UserRoleLabelEnum.Patient])
     public roleLabel: string;
 }

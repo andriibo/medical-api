@@ -1,20 +1,5 @@
 import {DoctorMetadata, PatientMetadata, CaregiverMetadata} from 'domain/entities';
 
-export enum UserRole {
-    Caregiver = 'Caregiver',
-    Doctor = 'Doctor',
-    Patient = 'Patient',
-}
-
-export enum UserRoleLabel {
-    CaregiverProfessional = 'CaregiverProfessional',
-    Doctor = 'Doctor',
-    Family = 'Family',
-    Friend = 'Friend',
-    Nurse = 'Nurse',
-    Patient = 'Patient',
-}
-
 export interface User {
     id: string;
 

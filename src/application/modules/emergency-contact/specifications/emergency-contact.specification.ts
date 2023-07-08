@@ -1,5 +1,5 @@
 import {EmergencyContact, User} from 'domain/entities';
-import {UserRole} from 'domain/entities/user.entity';
+import {UserRoleEnum} from 'domain/constants/user.const';
 import {EmergencyContactSpecificationError} from 'app/modules/emergency-contact/errors';
 import {IEmergencyContactRepository} from 'app/modules/emergency-contact/repositories';
 import {arrayDiff} from 'support/array.helper';
@@ -9,7 +9,7 @@ export abstract class EmergencyContactSpecification {
     public constructor(private readonly emergencyContactRepository: IEmergencyContactRepository) {}
 
     public assertUserCanCreateContact(user: User): void {
-        const isUserPatient = user.role === UserRole.Patient;
+        const isUserPatient = user.role === UserRoleEnum.Patient;
 
         if (!isUserPatient) {
             throw new EmergencyContactSpecificationError('Create Emergency Contact Not Allowed.');

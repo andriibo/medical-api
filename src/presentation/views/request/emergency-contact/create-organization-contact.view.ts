@@ -1,9 +1,9 @@
 import {ApiProperty} from '@nestjs/swagger';
 import {Length, IsEmail, IsNotEmpty, IsIn, MaxLength, IsNumberString, IsOptional} from 'class-validator';
 import {OrganizationEmergencyContactDto} from 'domain/dtos/request/emergency-contact/organization-emergency-contact.dto';
-import {MaxPhoneLength, MinPhoneLength} from 'domain/constants/phone.const';
+import {MaxPhoneLength, MinPhoneLength} from 'domain/constants/user.const';
 import {Transform, TransformFnParams} from 'class-transformer';
-import {OrganizationType} from 'domain/entities/organization-emergency-contact.entity';
+import {OrganizationTypeEnum} from 'domain/constants/emergency-contact.const';
 
 export class CreateOrganizationContactView extends OrganizationEmergencyContactDto {
     @ApiProperty({minLength: 1, maxLength: 60})
@@ -33,8 +33,8 @@ export class CreateOrganizationContactView extends OrganizationEmergencyContactD
     @Length(MinPhoneLength, MaxPhoneLength)
     public fax: string | null;
 
-    @ApiProperty({enum: [OrganizationType.Pharmacy, OrganizationType.NursingHome, OrganizationType.Other]})
+    @ApiProperty({enum: [OrganizationTypeEnum.Pharmacy, OrganizationTypeEnum.NursingHome, OrganizationTypeEnum.Other]})
     @IsNotEmpty()
-    @IsIn([OrganizationType.Pharmacy, OrganizationType.NursingHome, OrganizationType.Other])
+    @IsIn([OrganizationTypeEnum.Pharmacy, OrganizationTypeEnum.NursingHome, OrganizationTypeEnum.Other])
     public type: string;
 }

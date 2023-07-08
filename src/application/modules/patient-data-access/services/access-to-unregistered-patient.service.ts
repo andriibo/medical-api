@@ -2,7 +2,7 @@ import {PatientDataAccess, User} from 'domain/entities';
 import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repositories';
 import {IPatientDataAccessEntityMapper} from 'app/modules/patient-data-access/mappers/patient-data-access-entity.mapper';
 import {PatientDataAccessSpecification} from 'app/modules/patient-data-access/specifications/patient-data-access.specification';
-import {PatientDataAccessRequestDirection} from 'domain/entities/patient-data-access.entity';
+import {PatientDataAccessRequestDirectionEnum} from 'domain/constants/patient-data-access.const';
 import {IPatientDataAccessEventEmitter} from 'app/modules/patient-data-access/event-emitters/patient-data-access.event-emitter';
 
 export class AccessToUnregisteredPatientService {
@@ -34,7 +34,7 @@ export class AccessToUnregisteredPatientService {
             grantedUser,
             patientEmail,
         );
-        dataAccess.direction = PatientDataAccessRequestDirection.ToPatient;
+        dataAccess.direction = PatientDataAccessRequestDirectionEnum.ToPatient;
 
         return dataAccess;
     }

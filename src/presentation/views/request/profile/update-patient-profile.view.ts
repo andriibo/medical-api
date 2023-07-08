@@ -1,9 +1,10 @@
 import {ApiProperty} from '@nestjs/swagger';
 import {Length, IsNotEmpty, IsIn, IsInt, Min, Max, IsNumberString, IsISO8601} from 'class-validator';
 import {UpdatePatientProfileDto} from 'domain/dtos/request/profile/update-patient-profile.dto';
-import {MaxPhoneLength, MinPhoneLength} from 'domain/constants/phone.const';
+import {MaxPhoneLength, MinPhoneLength} from 'domain/constants/user.const';
 import {Transform, TransformFnParams} from 'class-transformer';
 import {MaxDate, MinDate} from 'infrastructure/validators/date.validator';
+import {GenderEnum} from 'domain/constants/user.const';
 
 export class UpdatePatientProfileView extends UpdatePatientProfileDto {
     @ApiProperty({minLength: 1, maxLength: 30})
@@ -32,9 +33,9 @@ export class UpdatePatientProfileView extends UpdatePatientProfileDto {
     @MaxDate(new Date())
     public dob: Date;
 
-    @ApiProperty({enum: ['Male', 'Female', 'Other']})
+    @ApiProperty({enum: [GenderEnum.Male, GenderEnum.Female, GenderEnum.Other]})
     @IsNotEmpty()
-    @IsIn(['Male', 'Female', 'Other'])
+    @IsIn([GenderEnum.Male, GenderEnum.Female, GenderEnum.Other])
     public gender: string;
 
     @ApiProperty({minimum: 50, maximum: 250})

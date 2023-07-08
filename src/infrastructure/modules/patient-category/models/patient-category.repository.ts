@@ -3,7 +3,8 @@ import {InjectDataSource} from '@nestjs/typeorm';
 import {DataSource, In} from 'typeorm';
 import {PatientCategoryModel} from './patient-category.model';
 import {IPatientCategoryRepository} from 'app/modules/patient-category/repositories';
-import {PatientCategory, PatientCategoryEnum} from 'domain/entities/patient-category.entity';
+import {PatientCategory} from 'domain/entities/patient-category.entity';
+import {PatientCategoryEnum} from 'domain/constants/patient.const';
 
 @Injectable()
 export class PatientCategoryRepository implements IPatientCategoryRepository {

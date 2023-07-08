@@ -2,7 +2,7 @@ import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service'
 import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repositories';
 import {MyDoctorDto} from 'domain/dtos/response/profile/my-doctor.dto';
 import {sortUserDtosByName} from 'support/sort.helper';
-import {PatientDataAccessStatus} from 'domain/entities/patient-data-access.entity';
+import {PatientDataAccessStatusEnum} from 'domain/constants/patient-data-access.const';
 import {UserDtoMapper} from 'app/modules/profile/mappers/user-dto.mapper';
 
 export class DoctorListProfileUseCase {
@@ -17,7 +17,7 @@ export class DoctorListProfileUseCase {
 
         const items = await this.patientDataAccessRepository.getDoctorsByPatientUserIdAndStatus(
             patient.id,
-            PatientDataAccessStatus.Approved,
+            PatientDataAccessStatusEnum.Approved,
         );
 
         const myDoctors = items.map((patientDataAccess) => {

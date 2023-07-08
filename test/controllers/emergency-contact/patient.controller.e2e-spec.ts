@@ -2,7 +2,8 @@ import {Test, TestingModule} from '@nestjs/testing';
 import * as request from 'supertest';
 import {INestApplication, ValidationPipe} from '@nestjs/common';
 import {PersonEmergencyContact, User} from 'domain/entities';
-import {OrganizationEmergencyContact, OrganizationType} from 'domain/entities/organization-emergency-contact.entity';
+import {OrganizationEmergencyContact} from 'domain/entities/organization-emergency-contact.entity';
+import {OrganizationTypeEnum} from 'domain/constants/emergency-contact.const';
 import {TestModule} from 'tests/test.module';
 import {getRepositoryToken} from '@nestjs/typeorm';
 import {
@@ -71,7 +72,7 @@ const organizationEmergencyContact: OrganizationEmergencyContact = {
     email: 'suggested@gmail.com',
     phone: '2930412345',
     fax: '2930412345',
-    type: OrganizationType.Pharmacy,
+    type: OrganizationTypeEnum.Pharmacy,
     createdAt: '2022-12-10 17:31:07.016236',
     rank: null,
 };
@@ -166,7 +167,7 @@ describe('PatientController', () => {
             email: 'email@gmail.com',
             phone: '2930412345',
             fax: null,
-            type: OrganizationType.Pharmacy,
+            type: OrganizationTypeEnum.Pharmacy,
         };
         return request(app.getHttpServer())
             .post('/patient/organization-emergency-contact')
@@ -251,7 +252,7 @@ describe('PatientController', () => {
             email: null,
             phone: '2930412325',
             fax: '2930412325',
-            type: OrganizationType.Pharmacy,
+            type: OrganizationTypeEnum.Pharmacy,
         };
         return request(app.getHttpServer())
             .patch(`/patient/organization-emergency-contact/${organizationEmergencyContact.id}`)

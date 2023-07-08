@@ -2,7 +2,7 @@ import {PatientDataAccess, User} from 'domain/entities';
 import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repositories';
 import {IPatientDataAccessEntityMapper} from 'app/modules/patient-data-access/mappers/patient-data-access-entity.mapper';
 import {PatientDataAccessSpecification} from 'app/modules/patient-data-access/specifications/patient-data-access.specification';
-import {PatientDataAccessRequestDirection} from 'domain/entities/patient-data-access.entity';
+import {PatientDataAccessRequestDirectionEnum} from 'domain/constants/patient-data-access.const';
 import {IPatientDataAccessEventEmitter} from 'app/modules/patient-data-access/event-emitters/patient-data-access.event-emitter';
 
 export abstract class AccessForRegisteredUserService {
@@ -29,7 +29,7 @@ export abstract class AccessForRegisteredUserService {
 
     private createDataAccess(patient: User, userToGrant: User): PatientDataAccess {
         const dataAccess = this.patientDataAccessEntityMapper.mapByPatientAndGrantedUser(patient, userToGrant);
-        dataAccess.direction = PatientDataAccessRequestDirection.FromPatient;
+        dataAccess.direction = PatientDataAccessRequestDirectionEnum.FromPatient;
 
         return dataAccess;
     }

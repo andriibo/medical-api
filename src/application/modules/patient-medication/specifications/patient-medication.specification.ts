@@ -1,5 +1,5 @@
 import {User} from 'domain/entities';
-import {UserRole} from 'domain/entities/user.entity';
+import {UserRoleEnum} from 'domain/constants/user.const';
 import {PatientDataAccessSpecification} from 'app/modules/patient-data-access/specifications/patient-data-access.specification';
 
 export class PatientMedicationSpecification {
@@ -17,6 +17,6 @@ export class PatientMedicationSpecification {
     }
 
     private isUserPatientAndOwner(user: User, patientUserId: string): boolean {
-        return user.role === UserRole.Patient && user.id === patientUserId;
+        return user.role === UserRoleEnum.Patient && user.id === patientUserId;
     }
 }

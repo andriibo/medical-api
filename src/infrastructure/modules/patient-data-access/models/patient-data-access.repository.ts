@@ -4,8 +4,8 @@ import {DataSource} from 'typeorm';
 import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repositories';
 import {PatientDataAccess} from 'domain/entities';
 import {PatientDataAccessModel} from './patient-data-access.model';
-import {PatientDataAccessStatus} from 'domain/entities/patient-data-access.entity';
-import {UserRole} from 'domain/entities/user.entity';
+import {PatientDataAccessStatusEnum} from 'domain/constants/patient-data-access.const';
+import {UserRoleEnum} from 'domain/constants/user.const';
 
 @Injectable()
 export class PatientDataAccessRepository implements IPatientDataAccessRepository {
@@ -94,9 +94,9 @@ export class PatientDataAccessRepository implements IPatientDataAccessRepository
 
     public async getDoctorsByPatientUserIdAndStatus(
         patientUserId: string,
-        status: PatientDataAccessStatus,
+        status: PatientDataAccessStatusEnum,
     ): Promise<PatientDataAccess[]> {
-        const role = UserRole.Doctor;
+        const role = UserRoleEnum.Doctor;
         return await this.dataSource
             .createQueryBuilder(PatientDataAccessModel, 'pda')
             .leftJoinAndSelect('pda.grantedUser', 'user')
@@ -111,9 +111,9 @@ export class PatientDataAccessRepository implements IPatientDataAccessRepository
 
     public async getCaregiversByPatientUserIdAndStatus(
         patientUserId: string,
-        status: PatientDataAccessStatus,
+        status: PatientDataAccessStatusEnum,
     ): Promise<PatientDataAccess[]> {
-        const role = UserRole.Caregiver;
+        const role = UserRoleEnum.Caregiver;
         return await this.dataSource
             .createQueryBuilder(PatientDataAccessModel, 'pda')
             .leftJoinAndSelect('pda.grantedUser', 'user')
@@ -128,7 +128,7 @@ export class PatientDataAccessRepository implements IPatientDataAccessRepository
 
     public async getByGrantedUserIdAndStatus(
         grantedUserId: string,
-        status: PatientDataAccessStatus,
+        status: PatientDataAccessStatusEnum,
     ): Promise<PatientDataAccess[]> {
         return await this.dataSource
             .createQueryBuilder(PatientDataAccessModel, 'pda')

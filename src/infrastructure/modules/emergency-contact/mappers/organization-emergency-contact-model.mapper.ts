@@ -1,7 +1,8 @@
 import {OrganizationEmergencyContactModel} from 'infrastructure/modules/emergency-contact/models';
 import {IOrganizationEmergencyContactEntityMapper} from 'app/modules/emergency-contact/mappers/organization-emergency-contact-entity.mapper';
 import {OrganizationEmergencyContactDto} from 'domain/dtos/request/emergency-contact/organization-emergency-contact.dto';
-import {OrganizationEmergencyContact, OrganizationType} from 'domain/entities/organization-emergency-contact.entity';
+import {OrganizationEmergencyContact} from 'domain/entities/organization-emergency-contact.entity';
+import {OrganizationTypeEnum} from 'domain/constants/emergency-contact.const';
 import {OrganizationSuggestedContact} from 'domain/entities';
 
 export class OrganizationEmergencyContactModelMapper implements IOrganizationEmergencyContactEntityMapper {
@@ -17,7 +18,7 @@ export class OrganizationEmergencyContactModelMapper implements IOrganizationEme
         contact.email = contactDto.email;
         contact.phone = contactDto.phone;
         contact.fax = contactDto.fax;
-        contact.type = contactDto.type as OrganizationType;
+        contact.type = contactDto.type as OrganizationTypeEnum;
 
         return contact;
     }

@@ -1,9 +1,9 @@
 import {ApiProperty} from '@nestjs/swagger';
 import {Length, IsEmail, IsNotEmpty, IsOptional, MaxLength, IsNumberString, MinLength, IsIn} from 'class-validator';
 import {CreateDoctorDto} from 'domain/dtos/request/auth/create-doctor.dto';
-import {MaxPhoneLength, MinPhoneLength} from 'domain/constants/phone.const';
+import {MaxPhoneLength, MinPhoneLength} from 'domain/constants/user.const';
 import {Transform, TransformFnParams} from 'class-transformer';
-import {UserRoleLabel} from 'domain/entities/user.entity';
+import {UserRoleLabelEnum} from 'domain/constants/user.const';
 
 export class SignUpDoctorView extends CreateDoctorDto {
     @ApiProperty({maxLength: 100})
@@ -47,8 +47,8 @@ export class SignUpDoctorView extends CreateDoctorDto {
     @MinLength(8)
     public password: string;
 
-    @ApiProperty({enum: [UserRoleLabel.Doctor, UserRoleLabel.Nurse]})
+    @ApiProperty({enum: [UserRoleLabelEnum.Doctor, UserRoleLabelEnum.Nurse]})
     @IsNotEmpty()
-    @IsIn([UserRoleLabel.Doctor, UserRoleLabel.Nurse])
+    @IsIn([UserRoleLabelEnum.Doctor, UserRoleLabelEnum.Nurse])
     public roleLabel: string;
 }

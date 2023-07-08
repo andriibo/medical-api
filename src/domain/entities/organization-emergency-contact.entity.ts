@@ -1,10 +1,5 @@
 import {EmergencyContact} from './emergency-contact.entity';
-
-export enum OrganizationType {
-    Pharmacy = 'Pharmacy',
-    NursingHome = 'Nursing Home',
-    Other = 'Other',
-}
+import {OrganizationTypeEnum} from 'domain/constants/emergency-contact.const';
 
 export interface OrganizationEmergencyContact extends EmergencyContact {
     name: string;
@@ -15,5 +10,5 @@ export interface OrganizationEmergencyContact extends EmergencyContact {
 
     fax: string | null;
 
-    type: OrganizationType;
+    type: OrganizationTypeEnum;
 }

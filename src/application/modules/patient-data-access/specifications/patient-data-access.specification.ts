@@ -1,11 +1,12 @@
-import {UserRole, User} from 'domain/entities/user.entity';
+import {User} from 'domain/entities/user.entity';
+import {UserRoleEnum} from 'domain/constants/user.const';
 import {IUserRepository} from 'app/modules/auth/repositories';
 import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repositories';
+import {PatientDataAccess} from 'domain/entities/patient-data-access.entity';
 import {
-    PatientDataAccessStatus,
-    PatientDataAccessRequestDirection,
-    PatientDataAccess,
-} from 'domain/entities/patient-data-access.entity';
+    PatientDataAccessRequestDirectionEnum,
+    PatientDataAccessStatusEnum,
+} from 'domain/constants/patient-data-access.const';
 import {PatientDataAccessSpecificationError} from 'app/modules/patient-data-access/errors';
 
 export class PatientDataAccessSpecification {
@@ -15,7 +16,7 @@ export class PatientDataAccessSpecification {
     ) {}
 
     public async assertPatientCanGiveAccessForDoctor(patient: User, doctor: User): Promise<void> {
-        if (doctor.role !== UserRole.Doctor) {
+        if (doctor.role !== UserRoleEnum.Doctor) {
             throw new PatientDataAccessSpecificationError(
                 `This email address is already associated with ${doctor.role} role.`,
             );
@@ -33,7 +34,7 @@ export class PatientDataAccessSpecification {
     }
 
     public async assertPatientCanGiveAccessForCaregiver(patient: User, caregiver: User): Promise<void> {
-        if (caregiver.role !== UserRole.Caregiver) {
+        if (caregiver.role !== UserRoleEnum.Caregiver) {
             throw new PatientDataAccessSpecificationError(
                 `This email address is already associated with ${caregiver.role} role.`,
             );
@@ -51,7 +52,7 @@ export class PatientDataAccessSpecification {
     }
 
     public async assertGrantedUserCanGetAccessToPatient(grantedUser: User, patient: User): Promise<void> {
-        if (patient.role !== UserRole.Patient) {
+        if (patient.role !== UserRoleEnum.Patient) {
             throw new PatientDataAccessSpecificationError(
                 'This email address is already used by another doctor. Try another one.',
             );
@@ -101,8 +102,8 @@ export class PatientDataAccessSpecification {
 
     public async assertGrantedUserCanRefuseAccess(grantedUser: User, dataAccess: PatientDataAccess): Promise<void> {
         const isUserGranted = dataAccess.grantedUserId === grantedUser.id;
-        const isAccessStatusInitiated = dataAccess.status === PatientDataAccessStatus.Initiated;
-        const isGrantedUserRequested = dataAccess.direction === PatientDataAccessRequestDirection.FromPatient;
+        const isAccessStatusInitiated = dataAccess.status === PatientDataAccessStatusEnum.Initiated;
+        const isGrantedUserRequested = dataAccess.direction === PatientDataAccessRequestDirectionEnum.FromPatient;
 
         const isRefuseAllowed = isUserGranted && isAccessStatusInitiated && isGrantedUserRequested;
 
@@ -112,9 +113,9 @@ export class PatientDataAccessSpecification {
     }
 
     public async assertGrantedUserCanResendRequest(grantedUser: User, dataAccess: PatientDataAccess): Promise<void> {
-        const isPatientRequested = dataAccess.direction === PatientDataAccessRequestDirection.ToPatient;
+        const isPatientRequested = dataAccess.direction === PatientDataAccessRequestDirectionEnum.ToPatient;
         const isUserGranted = dataAccess.grantedUserId === grantedUser.id;
-        const isAccessStatusNotApproved = dataAccess.status !== PatientDataAccessStatus.Approved;
+        const isAccessStatusNotApproved = dataAccess.status !== PatientDataAccessStatusEnum.Approved;
 
         const isResendAllowed = isUserGranted && isAccessStatusNotApproved && isPatientRequested;
 
@@ -125,8 +126,8 @@ export class PatientDataAccessSpecification {
 
     public async assertPatientCanRefuseAccess(patient: User, dataAccess: PatientDataAccess): Promise<void> {
         const isPatient = dataAccess.patientUserId === patient.id;
-        const isAccessStatusInitiated = dataAccess.status === PatientDataAccessStatus.Initiated;
-        const isPatientRequested = dataAccess.direction === PatientDataAccessRequestDirection.ToPatient;
+        const isAccessStatusInitiated = dataAccess.status === PatientDataAccessStatusEnum.Initiated;
+        const isPatientRequested = dataAccess.direction === PatientDataAccessRequestDirectionEnum.ToPatient;
 
         const isRefuseAllowed = isPatient && isAccessStatusInitiated && isPatientRequested;
 
@@ -137,8 +138,8 @@ export class PatientDataAccessSpecification {
 
     public async assertGrantedUserCanApproveAccess(grantedUser: User, dataAccess: PatientDataAccess): Promise<void> {
         const isUserGranted = dataAccess.grantedUserId === grantedUser.id;
-        const isAccessStatusInitiated = dataAccess.status === PatientDataAccessStatus.Initiated;
-        const isGrantedUserRequested = dataAccess.direction === PatientDataAccessRequestDirection.FromPatient;
+        const isAccessStatusInitiated = dataAccess.status === PatientDataAccessStatusEnum.Initiated;
+        const isGrantedUserRequested = dataAccess.direction === PatientDataAccessRequestDirectionEnum.FromPatient;
 
         const isApproveAllowed = isUserGranted && isAccessStatusInitiated && isGrantedUserRequested;
 
@@ -149,8 +150,8 @@ export class PatientDataAccessSpecification {
 
     public async assertPatientCanApproveAccess(patient: User, dataAccess: PatientDataAccess): Promise<void> {
         const isPatient = dataAccess.patientUserId === patient.id;
-        const isAccessStatusInitiated = dataAccess.status === PatientDataAccessStatus.Initiated;
-        const isPatientRequested = dataAccess.direction === PatientDataAccessRequestDirection.ToPatient;
+        const isAccessStatusInitiated = dataAccess.status === PatientDataAccessStatusEnum.Initiated;
+        const isPatientRequested = dataAccess.direction === PatientDataAccessRequestDirectionEnum.ToPatient;
 
         const isApproveAllowed = isPatient && isAccessStatusInitiated && isPatientRequested;
 
@@ -161,8 +162,8 @@ export class PatientDataAccessSpecification {
 
     public async assertGrantedUserCanDeleteAccess(grantedUser: User, dataAccess: PatientDataAccess): Promise<void> {
         const isUserGranted = dataAccess.grantedUserId === grantedUser.id;
-        const isPatientRequested = dataAccess.direction === PatientDataAccessRequestDirection.ToPatient;
-        const isAccessStatusApproved = dataAccess.status === PatientDataAccessStatus.Approved;
+        const isPatientRequested = dataAccess.direction === PatientDataAccessRequestDirectionEnum.ToPatient;
+        const isAccessStatusApproved = dataAccess.status === PatientDataAccessStatusEnum.Approved;
 
         const isDeleteAllowed = isUserGranted && (isPatientRequested || isAccessStatusApproved);
 
@@ -173,8 +174,8 @@ export class PatientDataAccessSpecification {
 
     public async assertPatientCanDeleteAccess(patient: User, dataAccess: PatientDataAccess): Promise<void> {
         const isUserGranted = dataAccess.patientUserId === patient.id;
-        const isGrantedUserRequested = dataAccess.direction === PatientDataAccessRequestDirection.FromPatient;
-        const isAccessStatusApproved = dataAccess.status === PatientDataAccessStatus.Approved;
+        const isGrantedUserRequested = dataAccess.direction === PatientDataAccessRequestDirectionEnum.FromPatient;
+        const isAccessStatusApproved = dataAccess.status === PatientDataAccessStatusEnum.Approved;
 
         const isDeleteAllowed = isUserGranted && (isGrantedUserRequested || isAccessStatusApproved);
 
@@ -192,7 +193,7 @@ export class PatientDataAccessSpecification {
         }
 
         const isAccessStatusApproved =
-            dataAccess.status === PatientDataAccessStatus.Approved && dataAccess.grantedUserId === grantedUserId;
+            dataAccess.status === PatientDataAccessStatusEnum.Approved && dataAccess.grantedUserId === grantedUserId;
 
         if (!isAccessStatusApproved) {
             throw new PatientDataAccessSpecificationError('Access Is Absent.');

@@ -1,5 +1,5 @@
 import {SuggestedContact} from './suggested-contact.entity';
-import {OrganizationType} from './organization-emergency-contact.entity';
+import {OrganizationTypeEnum} from 'domain/constants/emergency-contact.const';
 
 export interface OrganizationSuggestedContact extends SuggestedContact {
     name: string;
@@ -10,5 +10,5 @@ export interface OrganizationSuggestedContact extends SuggestedContact {
 
     fax: string | null;
 
-    type: OrganizationType;
+    type: OrganizationTypeEnum;
 }

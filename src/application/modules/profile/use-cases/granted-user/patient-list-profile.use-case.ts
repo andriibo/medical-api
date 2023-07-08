@@ -2,7 +2,7 @@ import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service'
 import {MyPatientDto} from 'domain/dtos/response/profile/my-patient.dto';
 import {IMyPatientsService} from 'app/modules/profile/services/my-patients.service';
 import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repositories';
-import {PatientDataAccessStatus} from 'domain/entities/patient-data-access.entity';
+import {PatientDataAccessStatusEnum} from 'domain/constants/patient-data-access.const';
 
 export class PatientListProfileUseCase {
     public constructor(
@@ -15,7 +15,7 @@ export class PatientListProfileUseCase {
         const grantedUser = await this.authedUserService.getUser();
         const dataAccesses = await this.patientDataAccessRepository.getByGrantedUserIdAndStatus(
             grantedUser.id,
-            PatientDataAccessStatus.Approved,
+            PatientDataAccessStatusEnum.Approved,
         );
 
         return await this.myPatientsService.getMyPatients(dataAccesses);

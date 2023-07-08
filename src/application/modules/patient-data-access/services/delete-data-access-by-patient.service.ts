@@ -3,7 +3,7 @@ import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repo
 import {PatientDataAccessSpecification} from 'app/modules/patient-data-access/specifications/patient-data-access.specification';
 import {IPatientDataAccessEventEmitter} from 'app/modules/patient-data-access/event-emitters/patient-data-access.event-emitter';
 import {IUserRepository} from 'app/modules/auth/repositories';
-import {PatientDataAccessStatus} from 'domain/entities/patient-data-access.entity';
+import {PatientDataAccessStatusEnum} from 'domain/constants/patient-data-access.const';
 
 export class DeleteDataAccessByPatientService {
     public constructor(
@@ -16,13 +16,13 @@ export class DeleteDataAccessByPatientService {
     public async deleteDataAccess(patient: User, dataAccess: PatientDataAccess): Promise<void> {
         await this.patientDataAccessSpecification.assertPatientCanDeleteAccess(patient, dataAccess);
         await this.patientDataAccessRepository.delete(dataAccess);
-        if (dataAccess.status !== PatientDataAccessStatus.Refused) {
+        if (dataAccess.status !== PatientDataAccessStatusEnum.Refused) {
             await this.sendNotification(patient, dataAccess);
         }
     }
 
     private async sendNotification(patient: User, dataAccess: PatientDataAccess): Promise<void> {
-        if (dataAccess.status === PatientDataAccessStatus.Initiated) {
+        if (dataAccess.status === PatientDataAccessStatusEnum.Initiated) {
             await this.sendAccessWithdrawnNotification(patient, dataAccess);
         } else {
             await this.sendAccessDeletedNotification(patient, dataAccess);

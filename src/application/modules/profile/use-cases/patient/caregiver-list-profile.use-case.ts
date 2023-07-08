@@ -2,7 +2,7 @@ import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service'
 import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repositories';
 import {sortUserDtosByName} from 'support/sort.helper';
 import {MyCaregiverDto} from 'domain/dtos/response/profile/my-caregiver.dto';
-import {PatientDataAccessStatus} from 'domain/entities/patient-data-access.entity';
+import {PatientDataAccessStatusEnum} from 'domain/constants/patient-data-access.const';
 import {UserDtoMapper} from 'app/modules/profile/mappers/user-dto.mapper';
 
 export class CaregiverListProfileUseCase {
@@ -17,7 +17,7 @@ export class CaregiverListProfileUseCase {
 
         const items = await this.patientDataAccessRepository.getCaregiversByPatientUserIdAndStatus(
             patient.id,
-            PatientDataAccessStatus.Approved,
+            PatientDataAccessStatusEnum.Approved,
         );
 
         const myCaregivers = items.map((patientDataAccess) => {
