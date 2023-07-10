@@ -27,6 +27,7 @@ import {PatientCategoryModel} from 'infrastructure/modules/patient-category/mode
 import {IPatientStatusRepository} from 'app/modules/patient-status/repositories';
 import {IPatientCategoryRepository} from 'app/modules/patient-category/repositories';
 import {IPatientVitalThresholdsRepository} from 'app/modules/patient-vital-thresholds/repositories';
+import {TimesPerDayEnum} from 'domain/constants/medication.const';
 
 const patient: User = {
     id: 'bd58571c-c935-41e9-9e08-a8d4e0e93f5f',
@@ -68,6 +69,8 @@ const patientMedication: PatientMedication = {
     patientUserId: patient.id,
     genericName: 'Generic Name',
     brandNames: ['One', 'Two'],
+    dose: 0,
+    timesPerDay: TimesPerDayEnum.QD,
     createdBy: patient.id,
     createdAt: '2022-10-10 07:31:17.016236',
 };
@@ -136,6 +139,8 @@ describe('PatientMedicationController', () => {
         dto.patientUserId = patient.id;
         dto.genericName = 'Test';
         dto.brandNames = ['One', 'Two'];
+        dto.dose = 0;
+        dto.timesPerDay = TimesPerDayEnum.QD;
         return request(app.getHttpServer())
             .post('/patient-medication')
             .set('Authorization', 'Bearer patient')
@@ -153,19 +158,10 @@ describe('PatientMedicationController', () => {
                     genericName: patientMedication.genericName,
                     brandNames: patientMedication.brandNames,
                     medicationId: patientMedication.id,
+                    dose: patientMedication.dose,
+                    timesPerDay: patientMedication.timesPerDay,
+                    createdBy: patientMedication.createdBy,
                     createdAt: patientMedication.createdAt,
-                    createdByUser: {
-                        userId: patient.id,
-                        email: patient.email,
-                        firstName: patient.firstName,
-                        lastName: patient.lastName,
-                        phone: patient.phone,
-                        avatar: patient.avatar,
-                        role: patient.role,
-                        roleLabel: patient.roleLabel,
-                        deletedAt: patient.deletedAt,
-                        passwordUpdatedAt: patient.passwordUpdatedAt,
-                    },
                 },
             ]);
     });
