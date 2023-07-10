@@ -1,5 +1,4 @@
 import {PatientDiagnosis} from 'domain/entities/patient-diagnosis.entity';
-import {UserDto} from 'domain/dtos/response/user/user.dto';
 
 export class PatientDiagnosisDto {
     public diagnosisId: string;
@@ -8,12 +7,13 @@ export class PatientDiagnosisDto {
 
     public createdAt: string;
 
-    public createdByUser: UserDto;
+    public createdBy: string;
 
     public static fromPatientDiagnosis(patientDiagnosis: PatientDiagnosis): PatientDiagnosisDto {
         const dto = new PatientDiagnosisDto();
         dto.diagnosisId = patientDiagnosis.id;
         dto.diagnosisName = patientDiagnosis.diagnosisName;
+        dto.createdBy = patientDiagnosis.createdBy;
         dto.createdAt = patientDiagnosis.createdAt;
 
         return dto;

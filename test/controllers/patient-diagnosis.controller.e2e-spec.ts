@@ -151,19 +151,8 @@ describe('PatientDiagnosisController', () => {
                 {
                     diagnosisId: patientDiagnosis.id,
                     diagnosisName: patientDiagnosis.diagnosisName,
+                    createdBy: patientDiagnosis.createdBy,
                     createdAt: patientDiagnosis.createdAt,
-                    createdByUser: {
-                        userId: patient.id,
-                        email: patient.email,
-                        firstName: patient.firstName,
-                        lastName: patient.lastName,
-                        phone: patient.phone,
-                        avatar: patient.avatar,
-                        role: patient.role,
-                        roleLabel: patient.roleLabel,
-                        deletedAt: patient.deletedAt,
-                        passwordUpdatedAt: patient.passwordUpdatedAt,
-                    },
                 },
             ]);
     });
