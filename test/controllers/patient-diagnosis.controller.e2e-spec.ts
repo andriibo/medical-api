@@ -19,6 +19,7 @@ import {
 import {TestModule} from 'tests/test.module';
 import {PatientDiagnosisModel} from 'infrastructure/modules/patient-diagnosis/models';
 import {DiagnosisDto} from 'domain/dtos/request/patient-diagnosis/diagnosis.dto';
+import {UpdateDiagnosisDto} from 'domain/dtos/request/patient-diagnosis/update-diagnosis.dto';
 import {IPatientDiagnosisRepository} from 'app/modules/patient-diagnosis/repositories';
 import {PatientDataAccessModel} from 'infrastructure/modules/patient-data-access/models';
 import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repositories';
@@ -83,6 +84,7 @@ describe('PatientDiagnosisController', () => {
         };
         const mockedPatientDiagnosisRepository = {
             create: jest.fn(() => Promise.resolve()),
+            update: jest.fn(() => Promise.resolve()),
             getByPatientUserId: jest.fn(() => Promise.resolve([patientDiagnosis])),
             getOneById: jest.fn(() => Promise.resolve(patientDiagnosis)),
             delete: jest.fn(() => Promise.resolve()),
@@ -140,6 +142,16 @@ describe('PatientDiagnosisController', () => {
             .set('Authorization', 'Bearer patient')
             .send(dto)
             .expect(201);
+    });
+
+    it('/patient-diagnosis/:diagnosisId (PATCH)', async () => {
+        const dto = new UpdateDiagnosisDto();
+        dto.diagnosisName = 'Test';
+        return request(app.getHttpServer())
+            .patch(`/patient-diagnosis/${patientDiagnosis.id}`)
+            .set('Authorization', 'Bearer patient')
+            .send(dto)
+            .expect(200);
     });
 
     it('/patient-diagnoses/:patientUserId (GET)', async () => {

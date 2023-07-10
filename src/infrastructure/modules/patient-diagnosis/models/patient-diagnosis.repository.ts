@@ -13,6 +13,10 @@ export class PatientDiagnosisRepository implements IPatientDiagnosisRepository {
         await this.dataSource.manager.save(patientDiagnosis);
     }
 
+    public async update(patientDiagnosis: PatientDiagnosisModel): Promise<void> {
+        await this.dataSource.manager.save(patientDiagnosis);
+    }
+
     public async delete(patientDiagnosis: PatientDiagnosisModel): Promise<void> {
         await this.dataSource.manager.remove(patientDiagnosis);
     }

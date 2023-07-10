@@ -3,6 +3,7 @@ import {
     CreateDiagnosisUseCase,
     DeleteDiagnosisUseCase,
     DiagnosisListUseCase,
+    UpdateDiagnosisUseCase,
 } from 'app/modules/patient-diagnosis/use-cases';
 import {IPatientDiagnosisRepository} from 'app/modules/patient-diagnosis/repositories';
 import {IPatientDiagnosisEntityMapper} from 'app/modules/patient-diagnosis/mappers/patient-diagnosis-entity.mapper';
@@ -22,6 +23,15 @@ export class PatientDiagnosisUseCasesFactory {
 
     public createCreateDiagnosisUseCase(): CreateDiagnosisUseCase {
         return new CreateDiagnosisUseCase(
+            this.authedUserService,
+            this.patientDiagnosisRepository,
+            this.patientDiagnosisEntityMapper,
+            this.patientDiagnosisSpecification,
+        );
+    }
+
+    public updateCreateDiagnosisUseCase(): UpdateDiagnosisUseCase {
+        return new UpdateDiagnosisUseCase(
             this.authedUserService,
             this.patientDiagnosisRepository,
             this.patientDiagnosisEntityMapper,

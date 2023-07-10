@@ -9,11 +9,12 @@ import {
     Param,
     ParseUUIDPipe,
     HttpCode,
+    Patch,
 } from '@nestjs/common';
 import {ApiBearerAuth, ApiForbiddenResponse, ApiResponse, ApiTags, ApiUnauthorizedResponse} from '@nestjs/swagger';
 import {Roles} from 'presentation/guards';
 import {PatientDiagnosisUseCasesFactory} from 'infrastructure/modules/patient-diagnosis/factories/patient-diagnosis-use-cases.factory';
-import {CreateDiagnosisView} from 'presentation/views/request/patient-diagnosis/create-diagnosis.view';
+import {CreateDiagnosisView, UpdateDiagnosisView} from 'presentation/views/request/patient-diagnosis';
 import {PatientDiagnosisDto} from 'domain/dtos/response/patient-diagnosis/patient-diagnosis.dto';
 import {PatientDiagnosisView} from 'views/response/patient-diagnosis';
 
@@ -35,6 +36,24 @@ export class PatientDiagnosisController {
 
         try {
             await useCase.createDiagnosis(requestBody);
+        } catch (error) {
+            throw new BadRequestException(error.message);
+        }
+    }
+
+    @Roles('Doctor', 'Patient')
+    @Patch('patient-diagnosis/:diagnosisId')
+    @HttpCode(HttpStatus.OK)
+    @HttpCode(HttpStatus.BAD_REQUEST)
+    @ApiResponse({status: HttpStatus.OK})
+    public async updatePatientDiagnosis(
+        @Param('diagnosisId', ParseUUIDPipe) diagnosisId: string,
+        @Body() requestBody: UpdateDiagnosisView,
+    ): Promise<void> {
+        const useCase = this.patientDiagnosisUseCasesFactory.updateCreateDiagnosisUseCase();
+
+        try {
+            await useCase.updateDiagnosis(diagnosisId, requestBody);
         } catch (error) {
             throw new BadRequestException(error.message);
         }
