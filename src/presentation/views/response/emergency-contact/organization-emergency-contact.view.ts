@@ -1,5 +1,6 @@
 import {ApiProperty} from '@nestjs/swagger';
 import {OrganizationEmergencyContactDto} from 'domain/dtos/response/emergency-contact';
+import {OrganizationTypeEnum} from 'domain/constants/emergency-contact.const';
 
 export class OrganizationEmergencyContactView implements OrganizationEmergencyContactDto {
     @ApiProperty()
@@ -8,16 +9,16 @@ export class OrganizationEmergencyContactView implements OrganizationEmergencyCo
     @ApiProperty()
     public name: string;
 
-    @ApiProperty()
+    @ApiProperty({nullable: true})
     public email: string | null;
 
     @ApiProperty()
     public phone: string;
 
-    @ApiProperty()
+    @ApiProperty({nullable: true})
     public fax: string | null;
 
-    @ApiProperty()
+    @ApiProperty({enum: OrganizationTypeEnum})
     public type: string;
 
     @ApiProperty()

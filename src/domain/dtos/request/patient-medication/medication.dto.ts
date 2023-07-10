@@ -4,4 +4,8 @@ export class MedicationDto {
     public genericName: string;
 
     public brandNames: string[];
+
+    public dose: number;
+
+    public timesPerDay: string;
 }
