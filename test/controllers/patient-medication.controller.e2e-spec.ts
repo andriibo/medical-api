@@ -17,7 +17,8 @@ import {
     ICaregiverMetadataRepository,
 } from 'app/modules/profile/repositories';
 import {TestModule} from 'tests/test.module';
-import {MedicationDto} from 'domain/dtos/request/patient-medication/medication.dto';
+import {CreateMedicationDto} from 'domain/dtos/request/patient-medication/create-medication.dto';
+import {UpdateMedicationDto} from 'domain/dtos/request/patient-medication/update-medication.dto';
 import {PatientMedicationModel} from 'infrastructure/modules/patient-medication/models';
 import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repositories';
 import {PatientDataAccessModel} from 'infrastructure/modules/patient-data-access/models';
@@ -86,6 +87,7 @@ describe('PatientMedicationController', () => {
         };
         const mockedPatientMedicationRepository = {
             create: jest.fn(() => Promise.resolve()),
+            update: jest.fn(() => Promise.resolve()),
             getOneById: jest.fn(() => Promise.resolve(patientMedication)),
             getByPatientUserId: jest.fn(() => Promise.resolve([patientMedication])),
             delete: jest.fn(() => Promise.resolve()),
@@ -135,7 +137,7 @@ describe('PatientMedicationController', () => {
     });
 
     it('/patient-medication (POST)', async () => {
-        const dto = new MedicationDto();
+        const dto = new CreateMedicationDto();
         dto.patientUserId = patient.id;
         dto.genericName = 'Test';
         dto.brandNames = ['One', 'Two'];
@@ -146,6 +148,19 @@ describe('PatientMedicationController', () => {
             .set('Authorization', 'Bearer patient')
             .send(dto)
             .expect(201);
+    });
+
+    it('/patient-medication/:medicationId (PATCH)', async () => {
+        const dto = new UpdateMedicationDto();
+        dto.genericName = 'Test';
+        dto.brandNames = ['One', 'Two'];
+        dto.dose = 0;
+        dto.timesPerDay = TimesPerDayEnum.QD;
+        return request(app.getHttpServer())
+            .patch(`/patient-medication/${patientMedication.id}`)
+            .set('Authorization', 'Bearer patient')
+            .send(dto)
+            .expect(200);
     });
 
     it('/patient-medications/:patientUserId (GET)', async () => {

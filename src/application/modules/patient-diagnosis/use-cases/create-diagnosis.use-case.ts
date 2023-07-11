@@ -1,4 +1,4 @@
-import {DiagnosisDto} from 'domain/dtos/request/patient-diagnosis/diagnosis.dto';
+import {CreateDiagnosisDto} from 'domain/dtos/request/patient-diagnosis/create-diagnosis.dto';
 import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service';
 import {PatientDiagnosis, User} from 'domain/entities';
 import {IPatientDiagnosisRepository} from 'app/modules/patient-diagnosis/repositories';
@@ -13,7 +13,7 @@ export class CreateDiagnosisUseCase {
         private readonly patientDiagnosisSpecification: PatientDiagnosisSpecification,
     ) {}
 
-    public async createDiagnosis(dto: DiagnosisDto): Promise<void> {
+    public async createDiagnosis(dto: CreateDiagnosisDto): Promise<void> {
         const user = await this.authedUserService.getUser();
 
         await this.patientDiagnosisSpecification.assertUserCanOperateDiagnosis(user, dto.patientUserId);
@@ -23,8 +23,8 @@ export class CreateDiagnosisUseCase {
         await this.patientDiagnosisRepository.create(patientDiagnosis);
     }
 
-    private createPatientDiagnosis(createdBy: User, dto: DiagnosisDto): PatientDiagnosis {
-        const patientDiagnosis = this.patientDiagnosisEntityMapper.mapByDiagnosisDto(dto);
+    private createPatientDiagnosis(createdBy: User, dto: CreateDiagnosisDto): PatientDiagnosis {
+        const patientDiagnosis = this.patientDiagnosisEntityMapper.mapByCreateDiagnosisDto(dto);
         patientDiagnosis.createdBy = createdBy.id;
 
         return patientDiagnosis;

@@ -1,13 +1,13 @@
 import {PatientDiagnosisModel} from 'infrastructure/modules/patient-diagnosis/models';
 import {IPatientDiagnosisEntityMapper} from 'app/modules/patient-diagnosis/mappers/patient-diagnosis-entity.mapper';
 import {PatientDiagnosis} from 'domain/entities';
-import {DiagnosisDto} from 'domain/dtos/request/patient-diagnosis/diagnosis.dto';
+import {CreateDiagnosisDto} from 'domain/dtos/request/patient-diagnosis/create-diagnosis.dto';
 
 export class PatientDiagnosisModelMapper implements IPatientDiagnosisEntityMapper {
-    public mapByDiagnosisDto(diagnosisDto: DiagnosisDto): PatientDiagnosis {
+    public mapByCreateDiagnosisDto(createDiagnosisDto: CreateDiagnosisDto): PatientDiagnosis {
         const patientDiagnosis = new PatientDiagnosisModel();
-        patientDiagnosis.patientUserId = diagnosisDto.patientUserId;
-        patientDiagnosis.diagnosisName = diagnosisDto.diagnosisName;
+        patientDiagnosis.patientUserId = createDiagnosisDto.patientUserId;
+        patientDiagnosis.diagnosisName = createDiagnosisDto.diagnosisName;
 
         return patientDiagnosis;
     }

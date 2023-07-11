@@ -1,14 +1,9 @@
 import {ApiProperty} from '@nestjs/swagger';
-import {Length, IsNotEmpty, IsUUID, IsArray, IsString, Min, Max, IsIn} from 'class-validator';
-import {CreateMedicationDto} from 'domain/dtos/request/patient-medication/create-medication.dto';
+import {Length, IsNotEmpty, IsArray, IsString, Min, Max, IsIn} from 'class-validator';
+import {UpdateMedicationDto} from 'domain/dtos/request/patient-medication/update-medication.dto';
 import {MinDose, MaxDose, TimesPerDayEnum} from 'domain/constants/medication.const';
 
-export class CreateMedicationView extends CreateMedicationDto {
-    @ApiProperty()
-    @IsNotEmpty()
-    @IsUUID()
-    public patientUserId: string;
-
+export class UpdateMedicationView extends UpdateMedicationDto {
     @ApiProperty({minLength: 2, maxLength: 100})
     @IsNotEmpty()
     @Length(2, 100)

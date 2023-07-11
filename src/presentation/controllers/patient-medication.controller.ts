@@ -8,12 +8,12 @@ import {
     Delete,
     Param,
     ParseUUIDPipe,
-    HttpCode,
+    HttpCode, Patch,
 } from '@nestjs/common';
 import {ApiBearerAuth, ApiForbiddenResponse, ApiResponse, ApiTags, ApiUnauthorizedResponse} from '@nestjs/swagger';
 import {Roles} from 'presentation/guards';
 import {PatientMedicationUseCasesFactory} from 'infrastructure/modules/patient-medication/factories/patient-medication-use-cases.factory';
-import {CreateMedicationView} from 'presentation/views/request/patient-medication/create-medication.view';
+import {CreateMedicationView, UpdateMedicationView} from 'presentation/views/request/patient-medication';
 import {MedicationDto} from 'domain/dtos/response/patient-medication/medication.dto';
 import {PatientMedicationView} from 'views/response/patient-medication';
 
@@ -35,6 +35,24 @@ export class PatientMedicationController {
 
         try {
             await useCase.createMedication(requestBody);
+        } catch (error) {
+            throw new BadRequestException(error.message);
+        }
+    }
+
+    @Roles('Doctor', 'Patient')
+    @Patch('patient-medication/:medicationId')
+    @HttpCode(HttpStatus.OK)
+    @HttpCode(HttpStatus.BAD_REQUEST)
+    @ApiResponse({status: HttpStatus.OK})
+    public async updatePatientMedication(
+        @Param('medicationId', ParseUUIDPipe) medicationId: string,
+        @Body() requestBody: UpdateMedicationView,
+    ): Promise<void> {
+        const useCase = this.patientMedicationUseCasesFactory.createUpdateMedicationUseCase();
+
+        try {
+            await useCase.updateMedication(medicationId, requestBody);
         } catch (error) {
             throw new BadRequestException(error.message);
         }

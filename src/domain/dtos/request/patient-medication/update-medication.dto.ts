@@ -1,6 +1,4 @@
-export class MedicationDto {
-    public patientUserId: string;
-
+export class UpdateMedicationDto {
     public genericName: string;
 
     public brandNames: string[];

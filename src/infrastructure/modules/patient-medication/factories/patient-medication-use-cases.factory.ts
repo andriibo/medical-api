@@ -3,6 +3,7 @@ import {
     CreateMedicationUseCase,
     DeleteMedicationUseCase,
     MedicationListUseCase,
+    UpdateMedicationUseCase,
 } from 'app/modules/patient-medication/use-cases';
 import {IPatientMedicationRepository} from 'app/modules/patient-medication/repositories';
 import {IPatientMedicationEntityMapper} from 'app/modules/patient-medication/mappers/patient-medication-entity.mapper';
@@ -23,6 +24,15 @@ export class PatientMedicationUseCasesFactory {
 
     public createCreateMedicationUseCase(): CreateMedicationUseCase {
         return new CreateMedicationUseCase(
+            this.authedUserService,
+            this.patientMedicationRepository,
+            this.patientMedicationEntityMapper,
+            this.patientMedicationSpecification,
+        );
+    }
+
+    public createUpdateMedicationUseCase(): UpdateMedicationUseCase {
+        return new UpdateMedicationUseCase(
             this.authedUserService,
             this.patientMedicationRepository,
             this.patientMedicationEntityMapper,

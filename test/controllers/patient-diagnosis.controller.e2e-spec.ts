@@ -18,7 +18,7 @@ import {
 } from 'app/modules/profile/repositories';
 import {TestModule} from 'tests/test.module';
 import {PatientDiagnosisModel} from 'infrastructure/modules/patient-diagnosis/models';
-import {DiagnosisDto} from 'domain/dtos/request/patient-diagnosis/diagnosis.dto';
+import {CreateDiagnosisDto} from 'domain/dtos/request/patient-diagnosis/create-diagnosis.dto';
 import {UpdateDiagnosisDto} from 'domain/dtos/request/patient-diagnosis/update-diagnosis.dto';
 import {IPatientDiagnosisRepository} from 'app/modules/patient-diagnosis/repositories';
 import {PatientDataAccessModel} from 'infrastructure/modules/patient-data-access/models';
@@ -134,7 +134,7 @@ describe('PatientDiagnosisController', () => {
     });
 
     it('/patient-diagnosis (POST)', async () => {
-        const dto = new DiagnosisDto();
+        const dto = new CreateDiagnosisDto();
         dto.patientUserId = patient.id;
         dto.diagnosisName = 'Test';
         return request(app.getHttpServer())

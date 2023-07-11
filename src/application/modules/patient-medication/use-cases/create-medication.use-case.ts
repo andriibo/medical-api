@@ -1,4 +1,4 @@
-import {MedicationDto} from 'domain/dtos/request/patient-medication/medication.dto';
+import {CreateMedicationDto} from 'domain/dtos/request/patient-medication/create-medication.dto';
 import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service';
 import {PatientMedication, User} from 'domain/entities';
 import {IPatientMedicationRepository} from 'app/modules/patient-medication/repositories';
@@ -13,7 +13,7 @@ export class CreateMedicationUseCase {
         private readonly patientMedicationSpecification: PatientMedicationSpecification,
     ) {}
 
-    public async createMedication(dto: MedicationDto): Promise<void> {
+    public async createMedication(dto: CreateMedicationDto): Promise<void> {
         const user = await this.authedUserService.getUser();
 
         await this.patientMedicationSpecification.assertUserCanOperateMedication(user, dto.patientUserId);
@@ -23,8 +23,8 @@ export class CreateMedicationUseCase {
         await this.patientMedicationRepository.create(patientMedication);
     }
 
-    private createPatientMedication(createdBy: User, dto: MedicationDto): PatientMedication {
-        const patientMedication = this.patientMedicationEntityMapper.mapByMedicationDto(dto);
+    private createPatientMedication(createdBy: User, dto: CreateMedicationDto): PatientMedication {
+        const patientMedication = this.patientMedicationEntityMapper.mapByCreateMedicationDto(dto);
         patientMedication.createdBy = createdBy.id;
 
         return patientMedication;
