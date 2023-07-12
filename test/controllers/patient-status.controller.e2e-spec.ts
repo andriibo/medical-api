@@ -2,6 +2,7 @@ import {Test, TestingModule} from '@nestjs/testing';
 import * as request from 'supertest';
 import {INestApplication, ValidationPipe} from '@nestjs/common';
 import {PatientStatusModule} from 'infrastructure/modules/patient-status/patient-status.module';
+import {PatientDataAccessModule} from 'infrastructure/modules/patient-data-access/patient-data-access.module';
 import {IUserRepository} from 'app/modules/auth/repositories';
 import {getRepositoryToken} from '@nestjs/typeorm';
 import {
@@ -27,9 +28,12 @@ import {IPatientCategoryRepository} from 'app/modules/patient-category/repositor
 import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repositories';
 import {PatientCategory} from 'domain/entities/patient-category.entity';
 import {IPatientVitalThresholdsRepository} from 'app/modules/patient-vital-thresholds/repositories';
+import {PatientStatusEnum} from 'domain/constants/patient.const';
+import {PatientStatusSpecification} from 'app/modules/patient-status/specifications/patient-status.specification';
+import {PatientDataAccessSpecification} from 'app/modules/patient-data-access/specifications/patient-data-access.specification';
 
 const patient: User = {
-    id: '5nc3e70a-c1y9-121a-c5mv-5aq272098bp0',
+    id: '3db4ddee-78b7-42d3-bb79-c38c9f5b7700',
     email: 'patient@gmail.com',
     firstName: 'Marc',
     lastName: 'Goldman',
@@ -51,7 +55,8 @@ const patientCategory: PatientCategory = {
 
 const patientStatus: PatientStatus = {
     patientUserId: patient.id,
-    status: 'Normal',
+    status: PatientStatusEnum.Normal,
+    setBy: patient.id,
     setAt: currentUnixTimestamp(),
 };
 describe('PatientStatusController', () => {
@@ -69,7 +74,16 @@ describe('PatientStatusController', () => {
             update: jest.fn(() => Promise.resolve()),
         };
         const moduleRef: TestingModule = await Test.createTestingModule({
-            imports: [TestModule, PatientStatusModule],
+            imports: [TestModule, PatientStatusModule, PatientDataAccessModule],
+            providers: [
+                {
+                    provide: PatientStatusSpecification,
+                    useFactory: (patientDataAccessSpecification: PatientDataAccessSpecification) => {
+                        return new PatientStatusSpecification(patientDataAccessSpecification);
+                    },
+                    inject: [PatientDataAccessSpecification],
+                },
+            ],
         })
             .overrideProvider(getRepositoryToken(UserModel))
             .useValue(null)
@@ -108,9 +122,9 @@ describe('PatientStatusController', () => {
         await app.init();
     });
 
-    it('/patient/my-status (GET)', async () => {
+    it('/patient-status/:patientUserId (GET)', async () => {
         return request(app.getHttpServer())
-            .get('/patient/my-status')
+            .get(`/patient-status/${patientStatus.patientUserId}`)
             .set('Authorization', 'Bearer patient')
             .expect(200)
             .expect({

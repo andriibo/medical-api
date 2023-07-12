@@ -1,3 +1,3 @@
-import {MyPatientStatusView} from './my-patient-status.view';
+import {PatientStatusView} from './patient-status.view';
 
-export {MyPatientStatusView};
+export {PatientStatusView};

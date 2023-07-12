@@ -7,10 +7,12 @@ import {PatientStatusUseCasesFactory} from 'infrastructure/modules/patient-statu
 import {IPatientStatusRepository} from 'app/modules/patient-status/repositories';
 import {IPatientStatusEntityMapper} from 'app/modules/patient-status/mappers/patient-status-entity.mapper';
 import {PatientStatusModelMapper} from 'infrastructure/modules/patient-status/mappers/patient-status-model.mapper';
-import {PatientCategoryModule} from 'infrastructure/modules/patient-category/patient-category.module';
+import {PatientDataAccessSpecification} from 'app/modules/patient-data-access/specifications/patient-data-access.specification';
+import {PatientStatusSpecification} from 'app/modules/patient-status/specifications/patient-status.specification';
+import {PatientDataAccessModule} from 'infrastructure/modules/patient-data-access/patient-data-access.module';
 
 @Module({
-    imports: [TypeOrmModule.forFeature([PatientStatusModel]), AuthModule, PatientCategoryModule],
+    imports: [TypeOrmModule.forFeature([PatientStatusModel]), AuthModule, PatientDataAccessModule],
     exports: [IPatientStatusRepository],
     controllers: [PatientStatusController],
     providers: [
@@ -22,6 +24,13 @@ import {PatientCategoryModule} from 'infrastructure/modules/patient-category/pat
         {
             provide: IPatientStatusEntityMapper,
             useClass: PatientStatusModelMapper,
+        },
+        {
+            provide: PatientStatusSpecification,
+            useFactory: (patientDataAccessSpecification: PatientDataAccessSpecification) => {
+                return new PatientStatusSpecification(patientDataAccessSpecification);
+            },
+            inject: [PatientDataAccessSpecification],
         },
     ],
 })

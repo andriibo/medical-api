@@ -1,7 +1,7 @@
 import {ApiProperty} from '@nestjs/swagger';
-import {MyPatientStatusDto} from 'domain/dtos/response/patient-status/my-patient-status.dto';
+import {PatientStatusDto} from 'domain/dtos/response/patient-status/patient-status.dto';
 
-export class MyPatientStatusView implements MyPatientStatusDto {
+export class PatientStatusView implements PatientStatusDto {
     @ApiProperty()
     public status: string;
 

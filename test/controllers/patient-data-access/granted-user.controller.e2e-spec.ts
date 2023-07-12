@@ -34,6 +34,7 @@ import {IDeepLinkService} from 'app/modules/mail/services/deep-link.service';
 import {PatientStatus} from 'domain/entities/patient-status.entity';
 import {currentUnixTimestamp} from 'support/date.helper';
 import {AccessToRegisteredPatientService} from 'app/modules/patient-data-access/services/access-to-registered-patient.service';
+import {PatientStatusEnum} from 'domain/constants/patient.const';
 
 const patient: User = {
     id: '5nc3e70a-c1y9-121a-c5mv-5aq272098bp0',
@@ -76,7 +77,8 @@ const patientDataAccess: PatientDataAccess = {
 
 const patientStatus: PatientStatus = {
     patientUserId: patient.id,
-    status: 'Normal',
+    status: PatientStatusEnum.Normal,
+    setBy: patient.id,
     setAt: currentUnixTimestamp(),
 };
 

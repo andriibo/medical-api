@@ -9,7 +9,10 @@ export class PatientStatusModel implements PatientStatus {
     public patientUserId: string;
 
     @Column()
-    public status: string;
+    public status: PatientStatusEnum;
+
+    @Column({name: 'set_by'})
+    public setBy: string;
 
     @Column({name: 'set_at'})
     public setAt: number;
@@ -18,6 +21,7 @@ export class PatientStatusModel implements PatientStatus {
         const model = new PatientStatusModel();
         model.patientUserId = patientUserId;
         model.status = PatientStatusEnum.Normal;
+        model.setBy = patientUserId;
         model.setAt = currentUnixTimestamp();
 
         return model;

@@ -1,11 +1,14 @@
 import {Inject, Injectable} from '@nestjs/common';
 import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service';
-import {PatientStatusUseCase} from 'app/modules/patient-status/use-cases';
+import {
+    PatientStatusUseCase,
+    GetPatientStatusUseCase,
+    PatientStatusAbnormalUseCase,
+    PatientStatusNormalUseCase,
+} from 'app/modules/patient-status/use-cases';
 import {IPatientStatusRepository} from 'app/modules/patient-status/repositories';
-import {PatientStatusNormalUseCase} from 'app/modules/patient-status/use-cases/patient-status-normal.use-case';
 import {IPatientStatusEntityMapper} from 'app/modules/patient-status/mappers/patient-status-entity.mapper';
-import {PatientStatusAbnormalUseCase} from 'app/modules/patient-status/use-cases/patient-status-abnormal.use-case';
-import {IPatientCategoryRepository} from 'app/modules/patient-category/repositories';
+import {PatientStatusSpecification} from 'app/modules/patient-status/specifications/patient-status.specification';
 
 @Injectable()
 export class PatientStatusUseCasesFactory {
@@ -13,11 +16,20 @@ export class PatientStatusUseCasesFactory {
         @Inject(IAuthedUserService) private readonly authedUserService: IAuthedUserService,
         @Inject(IPatientStatusRepository) private readonly patientStatusRepository: IPatientStatusRepository,
         @Inject(IPatientStatusEntityMapper) private readonly patientStatusMapper: IPatientStatusEntityMapper,
-        @Inject(IPatientCategoryRepository) private readonly patientCategoryRepository: IPatientCategoryRepository,
+        @Inject(PatientStatusSpecification)
+        private readonly patientStatusSpecification: PatientStatusSpecification,
     ) {}
 
     public createMyPatientStatusUseCase(): PatientStatusUseCase {
         return new PatientStatusUseCase(this.authedUserService, this.patientStatusRepository);
+    }
+
+    public createGetPatientStatusUseCase(): GetPatientStatusUseCase {
+        return new GetPatientStatusUseCase(
+            this.authedUserService,
+            this.patientStatusRepository,
+            this.patientStatusSpecification,
+        );
     }
 
     public createMyPatientStatusNormalUseCase(): PatientStatusNormalUseCase {
@@ -33,7 +45,6 @@ export class PatientStatusUseCasesFactory {
             this.authedUserService,
             this.patientStatusRepository,
             this.patientStatusMapper,
-            this.patientCategoryRepository,
         );
     }
 }

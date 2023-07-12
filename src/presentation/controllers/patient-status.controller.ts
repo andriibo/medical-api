@@ -1,11 +1,18 @@
-import {Controller, HttpStatus, Get, HttpCode, Put} from '@nestjs/common';
-import {ApiBearerAuth, ApiForbiddenResponse, ApiResponse, ApiTags, ApiUnauthorizedResponse} from '@nestjs/swagger';
+import {Controller, HttpStatus, Get, HttpCode, Put, Param, ParseUUIDPipe} from '@nestjs/common';
+import {
+    ApiBearerAuth,
+    ApiForbiddenResponse,
+    ApiResponse,
+    ApiTags,
+    ApiUnauthorizedResponse,
+    ApiOperation,
+} from '@nestjs/swagger';
 import {Roles} from 'presentation/guards';
 import {PatientStatusUseCasesFactory} from 'infrastructure/modules/patient-status/factories/patient-status-use-cases.factory';
-import {MyPatientStatusView} from 'views/response/patient-status';
-import {MyPatientStatusDto} from 'domain/dtos/response/patient-status/my-patient-status.dto';
+import {PatientStatusView} from 'views/response/patient-status';
+import {PatientStatusDto} from 'domain/dtos/response/patient-status/patient-status.dto';
 
-@Controller('patient')
+@Controller()
 @ApiBearerAuth()
 @ApiTags('Patient Status')
 @ApiUnauthorizedResponse({description: 'Unauthorized.'})
@@ -14,17 +21,30 @@ export class PatientStatusController {
     public constructor(private readonly patientStatusUseCasesFactory: PatientStatusUseCasesFactory) {}
 
     @Roles('Patient')
-    @Get('my-status')
+    @Get('patient/my-status')
     @HttpCode(HttpStatus.OK)
-    @ApiResponse({status: HttpStatus.OK, type: MyPatientStatusView})
-    public async getMyPatientStatus(): Promise<MyPatientStatusDto> {
+    @ApiResponse({status: HttpStatus.OK, type: PatientStatusView})
+    @ApiOperation({deprecated: true, summary: 'use GET /patient-status/:patientUserId'})
+    public async getMyPatientStatus(): Promise<PatientStatusDto> {
         const useCase = this.patientStatusUseCasesFactory.createMyPatientStatusUseCase();
 
         return await useCase.getMyPatientStatus();
     }
 
+    @Roles('Caregiver', 'Doctor', 'Patient')
+    @Get('patient-status/:patientUserId')
+    @HttpCode(HttpStatus.OK)
+    @ApiResponse({status: HttpStatus.OK, type: PatientStatusView})
+    public async getPatientStatus(
+        @Param('patientUserId', ParseUUIDPipe) patientUserId: string,
+    ): Promise<PatientStatusDto> {
+        const useCase = this.patientStatusUseCasesFactory.createGetPatientStatusUseCase();
+
+        return await useCase.getPatientStatus(patientUserId);
+    }
+
     @Roles('Patient')
-    @Put('my-status/normal')
+    @Put('patient/my-status/normal')
     @HttpCode(HttpStatus.OK)
     @ApiResponse({status: HttpStatus.OK})
     public async setPatientStatusNormal(): Promise<void> {
@@ -33,7 +53,7 @@ export class PatientStatusController {
     }
 
     @Roles('Patient')
-    @Put('my-status/abnormal')
+    @Put('patient/my-status/abnormal')
     @HttpCode(HttpStatus.OK)
     @ApiResponse({status: HttpStatus.OK})
     public async setPatientStatusAbnormal(): Promise<void> {
