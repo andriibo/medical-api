@@ -13,7 +13,6 @@ import {SpecialtiesDto} from 'domain/dtos/response/specialty/specialties.dto';
 export class SpecialtyController {
     public constructor(private readonly specialtyUseCasesFactory: SpecialtyUseCasesFactory) {}
 
-    @Auth()
     @Get('specialties')
     @HttpCode(HttpStatus.OK)
     @ApiResponse({status: HttpStatus.OK, type: SpecialtiesView})
