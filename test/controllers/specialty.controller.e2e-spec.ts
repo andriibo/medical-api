@@ -88,11 +88,7 @@ describe('SpecialtyController', () => {
     });
 
     it('/specialties (GET)', async () => {
-        return request(app.getHttpServer())
-            .get('/specialties')
-            .set('Authorization', 'Bearer doctor')
-            .expect(200)
-            .expect(specialtyNames);
+        return request(app.getHttpServer()).get('/specialties').expect(200).expect(specialtyNames);
     });
 
     afterAll(async () => {

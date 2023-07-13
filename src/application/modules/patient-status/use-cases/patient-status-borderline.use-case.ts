@@ -4,7 +4,7 @@ import {IPatientStatusEntityMapper} from 'app/modules/patient-status/mappers/pat
 import {PatientStatusEnum} from 'domain/constants/patient.const';
 import {PatientStatusSpecification} from 'app/modules/patient-status/specifications/patient-status.specification';
 
-export class PatientStatusAbnormalUseCase {
+export class PatientStatusBorderlineUseCase {
     public constructor(
         private readonly authedUserService: IAuthedUserService,
         private readonly patientStatusRepository: IPatientStatusRepository,
@@ -12,17 +12,17 @@ export class PatientStatusAbnormalUseCase {
         private readonly patientStatusSpecification: PatientStatusSpecification,
     ) {}
 
-    public async setStatusAbnormal(patientUserId: string): Promise<void> {
+    public async setStatusBorderline(patientUserId: string): Promise<void> {
         const user = await this.authedUserService.getUser();
         const patientStatus = await this.patientStatusRepository.getByPatientUserId(patientUserId);
 
-        await this.patientStatusSpecification.assertUserCanSetAbnormal(user, patientStatus);
+        await this.patientStatusSpecification.assertUserCanSetBorderline(user, patientStatus);
 
-        if (patientStatus.status === PatientStatusEnum.Abnormal) {
+        if (patientStatus.status === PatientStatusEnum.Borderline) {
             return;
         }
 
-        patientStatus.status = PatientStatusEnum.Abnormal;
+        patientStatus.status = PatientStatusEnum.Borderline;
 
         await this.patientStatusRepository.persist(patientStatus);
     }

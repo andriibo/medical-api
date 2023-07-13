@@ -11,7 +11,7 @@ import {
     UserModel,
     CaregiverMetadataModel,
 } from 'infrastructure/modules/auth/models';
-import {User} from 'domain/entities';
+import {PatientDataAccess, User} from 'domain/entities';
 import {
     IDoctorMetadataRepository,
     IPatientMetadataRepository,
@@ -24,9 +24,7 @@ import {PatientStatus} from 'domain/entities/patient-status.entity';
 import {currentUnixTimestamp} from 'support/date.helper';
 import {PatientCategoryModel} from 'infrastructure/modules/patient-category/models';
 import {PatientDataAccessModel} from 'infrastructure/modules/patient-data-access/models';
-import {IPatientCategoryRepository} from 'app/modules/patient-category/repositories';
 import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repositories';
-import {PatientCategory} from 'domain/entities/patient-category.entity';
 import {IPatientVitalThresholdsRepository} from 'app/modules/patient-vital-thresholds/repositories';
 import {PatientStatusEnum} from 'domain/constants/patient.const';
 import {PatientStatusSpecification} from 'app/modules/patient-status/specifications/patient-status.specification';
@@ -45,13 +43,6 @@ const patient: User = {
     deletedAt: null,
     passwordUpdatedAt: 1681305134,
 };
-const patientCategory: PatientCategory = {
-    id: '3db4ddee-78b7-42d3-bb79-c38c9f5b770d',
-    patientUserId: patient.id,
-    grantedUserId: '8bfbd95c-c8a5-404b-b3eb-6ac648052ac4',
-    patientCategory: 'Normal',
-    patientCategoryUpdatedAt: currentUnixTimestamp(),
-};
 
 const patientStatus: PatientStatus = {
     patientUserId: patient.id,
@@ -59,19 +50,44 @@ const patientStatus: PatientStatus = {
     setBy: patient.id,
     setAt: currentUnixTimestamp(),
 };
+
+const doctor: User = {
+    id: '8bfbd95c-c8a5-404b-b3eb-6ac648052ac4',
+    email: 'doctor@gmail.com',
+    firstName: 'Marc',
+    lastName: 'Goldman',
+    phone: '2930412345',
+    avatar: null,
+    role: 'Doctor',
+    roleLabel: 'Doctor',
+    createdAt: '2022-10-10 07:31:17.016236',
+    deletedAt: null,
+    passwordUpdatedAt: 1681305134,
+};
+
+const patientDataAccess: PatientDataAccess = {
+    id: 'f7c5009e-dd15-41f0-a8f9-77e69aa87c99',
+    patientUserId: patient.id,
+    grantedUserId: doctor.id,
+    direction: 'FromPatient',
+    status: 'Approved',
+    createdAt: new Date().toISOString(),
+    patientUser: patient,
+    lastInviteSentAt: 0,
+};
+
 describe('PatientStatusController', () => {
     let app: INestApplication;
     beforeAll(async () => {
         const mockedUserRepository = {
-            getOneById: jest.fn(() => Promise.resolve(patient)),
+            getOneById: jest.fn(() => Promise.resolve(doctor)),
         };
         const mockedPatientStatusRepository = {
             getByPatientUserId: jest.fn(() => Promise.resolve(patientStatus)),
             persist: jest.fn(() => Promise.resolve()),
         };
-        const mockedPatientCategoryRepository = {
-            getNormalByPatientUserId: jest.fn(() => Promise.resolve([patientCategory])),
-            update: jest.fn(() => Promise.resolve()),
+        const mockedPatientDataAccessRepository = {
+            getOneByPatientUserIdAndGrantedUserId: jest.fn(() => Promise.resolve(patientDataAccess)),
         };
         const moduleRef: TestingModule = await Test.createTestingModule({
             imports: [TestModule, PatientStatusModule, PatientDataAccessModule],
@@ -109,10 +125,8 @@ describe('PatientStatusController', () => {
             .useValue(null)
             .overrideProvider(IPatientStatusRepository)
             .useValue(mockedPatientStatusRepository)
-            .overrideProvider(IPatientCategoryRepository)
-            .useValue(mockedPatientCategoryRepository)
             .overrideProvider(IPatientDataAccessRepository)
-            .useValue(null)
+            .useValue(mockedPatientDataAccessRepository)
             .overrideProvider(IPatientVitalThresholdsRepository)
             .useValue(null)
             .compile();
@@ -125,7 +139,7 @@ describe('PatientStatusController', () => {
     it('/patient-status/:patientUserId (GET)', async () => {
         return request(app.getHttpServer())
             .get(`/patient-status/${patientStatus.patientUserId}`)
-            .set('Authorization', 'Bearer patient')
+            .set('Authorization', 'Bearer doctor')
             .expect(200)
             .expect({
                 status: patientStatus.status,
@@ -133,17 +147,24 @@ describe('PatientStatusController', () => {
             });
     });
 
-    it('/patient/my-status/normal (PUT)', async () => {
+    it('/patient-status/normal/:patientUserId (PUT)', async () => {
         return request(app.getHttpServer())
-            .put('/patient/my-status/normal')
-            .set('Authorization', 'Bearer patient')
+            .put(`/patient-status/normal/${patientStatus.patientUserId}`)
+            .set('Authorization', 'Bearer doctor')
             .expect(200);
     });
 
-    it('/patient/my-status/abnormal (PUT)', async () => {
+    it('/patient-status/borderline/:patientUserId (PUT)', async () => {
         return request(app.getHttpServer())
-            .put('/patient/my-status/abnormal')
-            .set('Authorization', 'Bearer patient')
+            .put(`/patient-status/borderline/${patientStatus.patientUserId}`)
+            .set('Authorization', 'Bearer doctor')
+            .expect(200);
+    });
+
+    it('/patient-status/abnormal/:patientUserId (PUT)', async () => {
+        return request(app.getHttpServer())
+            .put(`/patient-status/abnormal/${patientStatus.patientUserId}`)
+            .set('Authorization', 'Bearer doctor')
             .expect(200);
     });
 

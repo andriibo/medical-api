@@ -3,9 +3,11 @@ import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service'
 import {
     PatientStatusUseCase,
     GetPatientStatusUseCase,
-    PatientStatusAbnormalUseCase,
+    DeprecatedPatientStatusAbnormalUseCase,
     DeprecatedPatientStatusNormalUseCase,
     PatientStatusNormalUseCase,
+    PatientStatusBorderlineUseCase,
+    PatientStatusAbnormalUseCase,
 } from 'app/modules/patient-status/use-cases';
 import {IPatientStatusRepository} from 'app/modules/patient-status/repositories';
 import {IPatientStatusEntityMapper} from 'app/modules/patient-status/mappers/patient-status-entity.mapper';
@@ -50,8 +52,26 @@ export class PatientStatusUseCasesFactory {
         );
     }
 
-    public createMyPatientStatusAbnormalUseCase(): PatientStatusAbnormalUseCase {
+    public createPatientStatusBorderlineUseCase(): PatientStatusBorderlineUseCase {
+        return new PatientStatusBorderlineUseCase(
+            this.authedUserService,
+            this.patientStatusRepository,
+            this.patientStatusMapper,
+            this.patientStatusSpecification,
+        );
+    }
+
+    public createPatientStatusAbnormalUseCase(): PatientStatusAbnormalUseCase {
         return new PatientStatusAbnormalUseCase(
+            this.authedUserService,
+            this.patientStatusRepository,
+            this.patientStatusMapper,
+            this.patientStatusSpecification,
+        );
+    }
+
+    public createMyPatientStatusAbnormalUseCase(): DeprecatedPatientStatusAbnormalUseCase {
+        return new DeprecatedPatientStatusAbnormalUseCase(
             this.authedUserService,
             this.patientStatusRepository,
             this.patientStatusMapper,

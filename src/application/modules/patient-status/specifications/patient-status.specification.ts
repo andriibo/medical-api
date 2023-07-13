@@ -24,6 +24,24 @@ export class PatientStatusSpecification {
         );
     }
 
+    public async assertUserCanSetBorderline(user: User, patientStatus: PatientStatus): Promise<void> {
+        await this.patientDataAccessSpecification.assertAccessIsOpenByGrantedUserIdAndPatientUserId(
+            user.id,
+            patientStatus.patientUserId,
+        );
+    }
+
+    public async assertUserCanSetAbnormal(user: User, patientStatus: PatientStatus): Promise<void> {
+        if (this.isUserPatientAndOwner(user, patientStatus.patientUserId)) {
+            return;
+        }
+
+        await this.patientDataAccessSpecification.assertAccessIsOpenByGrantedUserIdAndPatientUserId(
+            user.id,
+            patientStatus.patientUserId,
+        );
+    }
+
     private isUserPatientAndOwner(user: User, patientUserId: string): boolean {
         return user.role === UserRoleEnum.Patient && user.id === patientUserId;
     }

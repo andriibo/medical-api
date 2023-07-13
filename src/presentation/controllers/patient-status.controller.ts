@@ -46,6 +46,7 @@ export class PatientStatusController {
     @Roles('Patient')
     @Put('patient/my-status/normal')
     @HttpCode(HttpStatus.OK)
+    @HttpCode(HttpStatus.BAD_REQUEST)
     @ApiResponse({status: HttpStatus.OK})
     @ApiOperation({deprecated: true})
     public async deprecatedSetPatientStatusNormal(): Promise<void> {
@@ -56,6 +57,7 @@ export class PatientStatusController {
     @Roles('Caregiver', 'Doctor')
     @Put('patient-status/normal/:patientUserId')
     @HttpCode(HttpStatus.OK)
+    @HttpCode(HttpStatus.BAD_REQUEST)
     @ApiResponse({status: HttpStatus.OK})
     public async setPatientStatusNormal(@Param('patientUserId', ParseUUIDPipe) patientUserId: string): Promise<void> {
         const useCase = this.patientStatusUseCasesFactory.createPatientStatusNormalUseCase();
@@ -66,8 +68,29 @@ export class PatientStatusController {
     @Put('patient/my-status/abnormal')
     @HttpCode(HttpStatus.OK)
     @ApiResponse({status: HttpStatus.OK})
-    public async setPatientStatusAbnormal(): Promise<void> {
+    @ApiOperation({deprecated: true})
+    public async deprecatedSetPatientStatusAbnormal(): Promise<void> {
         const useCase = this.patientStatusUseCasesFactory.createMyPatientStatusAbnormalUseCase();
         await useCase.setStatusAbnormal();
+    }
+
+    @Roles('Caregiver', 'Doctor')
+    @Put('patient-status/borderline/:patientUserId')
+    @HttpCode(HttpStatus.OK)
+    @HttpCode(HttpStatus.BAD_REQUEST)
+    @ApiResponse({status: HttpStatus.OK})
+    public async setPatientStatusBorderline(@Param('patientUserId', ParseUUIDPipe) patientUserId: string): Promise<void> {
+        const useCase = this.patientStatusUseCasesFactory.createPatientStatusBorderlineUseCase();
+        await useCase.setStatusBorderline(patientUserId);
+    }
+
+    @Roles('Caregiver', 'Doctor', 'Patient')
+    @Put('patient-status/abnormal/:patientUserId')
+    @HttpCode(HttpStatus.OK)
+    @HttpCode(HttpStatus.BAD_REQUEST)
+    @ApiResponse({status: HttpStatus.OK})
+    public async setPatientStatusAbnormal(@Param('patientUserId', ParseUUIDPipe) patientUserId: string): Promise<void> {
+        const useCase = this.patientStatusUseCasesFactory.createPatientStatusAbnormalUseCase();
+        await useCase.setStatusAbnormal(patientUserId);
     }
 }
