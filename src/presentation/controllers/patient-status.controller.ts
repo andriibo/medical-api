@@ -47,9 +47,19 @@ export class PatientStatusController {
     @Put('patient/my-status/normal')
     @HttpCode(HttpStatus.OK)
     @ApiResponse({status: HttpStatus.OK})
-    public async setPatientStatusNormal(): Promise<void> {
+    @ApiOperation({deprecated: true})
+    public async deprecatedSetPatientStatusNormal(): Promise<void> {
         const useCase = this.patientStatusUseCasesFactory.createMyPatientStatusNormalUseCase();
         await useCase.setStatusNormal();
+    }
+
+    @Roles('Caregiver', 'Doctor')
+    @Put('patient-status/normal/:patientUserId')
+    @HttpCode(HttpStatus.OK)
+    @ApiResponse({status: HttpStatus.OK})
+    public async setPatientStatusNormal(@Param('patientUserId', ParseUUIDPipe) patientUserId: string): Promise<void> {
+        const useCase = this.patientStatusUseCasesFactory.createPatientStatusNormalUseCase();
+        await useCase.setStatusNormal(patientUserId);
     }
 
     @Roles('Patient')

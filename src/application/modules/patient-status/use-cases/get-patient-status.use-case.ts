@@ -13,12 +13,10 @@ export class GetPatientStatusUseCase {
     public async getPatientStatus(patientUserId: string): Promise<PatientStatusDto> {
         const user = await this.authedUserService.getUser();
 
-        await this.patientStatusSpecification.assertUserCanOperatePatientStatus(user, patientUserId);
+        await this.patientStatusSpecification.assertUserCanGetPatientStatus(user, patientUserId);
 
         const patientStatus = await this.patientStatusRepository.getByPatientUserId(user.id);
 
-        return patientStatus === null
-            ? PatientStatusDto.getDtoWithDefaultValues()
-            : PatientStatusDto.fromPatientStatus(patientStatus);
+        return PatientStatusDto.fromPatientStatus(patientStatus);
     }
 }

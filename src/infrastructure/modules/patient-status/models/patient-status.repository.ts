@@ -10,12 +10,9 @@ export class PatientStatusRepository implements IPatientStatusRepository {
     public constructor(@InjectDataSource() private dataSource: DataSource) {}
 
     public async getByPatientUserId(patientUserId: string): Promise<PatientStatus> {
-        let entity = await this.dataSource.manager.findOneBy(PatientStatusModel, {patientUserId});
-        if (entity === null) {
-            entity = PatientStatusModel.getModelWithDefaultValues(patientUserId);
-        }
+        const entity = await this.dataSource.manager.findOneBy(PatientStatusModel, {patientUserId});
 
-        return entity;
+        return entity || PatientStatusModel.getModelWithDefaultValues(patientUserId);
     }
 
     public async persist(entity: PatientStatusModel): Promise<PatientStatus> {

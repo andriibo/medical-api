@@ -4,6 +4,7 @@ import {
     PatientStatusUseCase,
     GetPatientStatusUseCase,
     PatientStatusAbnormalUseCase,
+    DeprecatedPatientStatusNormalUseCase,
     PatientStatusNormalUseCase,
 } from 'app/modules/patient-status/use-cases';
 import {IPatientStatusRepository} from 'app/modules/patient-status/repositories';
@@ -32,11 +33,20 @@ export class PatientStatusUseCasesFactory {
         );
     }
 
-    public createMyPatientStatusNormalUseCase(): PatientStatusNormalUseCase {
+    public createMyPatientStatusNormalUseCase(): DeprecatedPatientStatusNormalUseCase {
+        return new DeprecatedPatientStatusNormalUseCase(
+            this.authedUserService,
+            this.patientStatusRepository,
+            this.patientStatusMapper,
+        );
+    }
+
+    public createPatientStatusNormalUseCase(): PatientStatusNormalUseCase {
         return new PatientStatusNormalUseCase(
             this.authedUserService,
             this.patientStatusRepository,
             this.patientStatusMapper,
+            this.patientStatusSpecification,
         );
     }
 
