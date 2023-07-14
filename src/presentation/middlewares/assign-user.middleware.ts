@@ -7,7 +7,7 @@ import {RequestUserService} from 'infrastructure/services/request-user.service';
 export class AssignUserMiddleware implements NestMiddleware {
     public constructor(private readonly requestUserService: RequestUserService) {}
 
-    public async use(request: UserRequest, response: Response, next: Function): Promise<any> {
+    public async use(request: UserRequest, response: Response, next: (error?: Error | any) => void): Promise<any> {
         request.user = await this.requestUserService.getUserDataByHttpHeaders(request.headers);
         next();
     }

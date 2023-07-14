@@ -53,7 +53,9 @@ export class GrantedUserController {
     @HttpCode(HttpStatus.CREATED)
     @ApiResponse({status: HttpStatus.CREATED, description: 'Created.'})
     @ApiBadRequestResponse({description: 'Bad request.'})
-    public async createPersonSuggestedContact(@Body(TrimPipe) requestBody: CreatePersonSuggestedContactView): Promise<void> {
+    public async createPersonSuggestedContact(
+        @Body(TrimPipe) requestBody: CreatePersonSuggestedContactView,
+    ): Promise<void> {
         const useCase = this.grantedUserUseCasesFactory.createPersonSuggestedContactUseCase();
 
         try {

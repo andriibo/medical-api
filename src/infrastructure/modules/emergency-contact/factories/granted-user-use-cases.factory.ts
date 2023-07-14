@@ -6,7 +6,7 @@ import {
 import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service';
 import {
     IOrganizationEmergencyContactRepository,
-    IPersonEmergencyContactRepository
+    IPersonEmergencyContactRepository,
 } from 'app/modules/emergency-contact/repositories';
 import {PatientDataAccessSpecification} from 'app/modules/patient-data-access/specifications/patient-data-access.specification';
 

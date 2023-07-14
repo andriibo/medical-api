@@ -3,6 +3,7 @@ import {
     ApiBadRequestResponse,
     ApiBearerAuth,
     ApiForbiddenResponse,
+    ApiOperation,
     ApiResponse,
     ApiTags,
     ApiUnauthorizedResponse,
@@ -23,6 +24,7 @@ export class PatientCategoryController {
     @Patch('normal/:patientUserId')
     @HttpCode(HttpStatus.OK)
     @ApiResponse({status: HttpStatus.OK})
+    @ApiOperation({deprecated: true})
     public async setPatientCategoryNormal(@Param('patientUserId', ParseUUIDPipe) patientUserId: string): Promise<void> {
         const useCase = this.patientCategoryUseCasesFactory.createPatientCategoryNormalUseCase();
 
@@ -37,6 +39,7 @@ export class PatientCategoryController {
     @Patch('borderline/:patientUserId')
     @HttpCode(HttpStatus.OK)
     @ApiResponse({status: HttpStatus.OK})
+    @ApiOperation({deprecated: true})
     public async setPatientCategoryBorderline(
         @Param('patientUserId', ParseUUIDPipe) patientUserId: string,
     ): Promise<void> {

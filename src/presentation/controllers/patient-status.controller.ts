@@ -79,7 +79,9 @@ export class PatientStatusController {
     @HttpCode(HttpStatus.OK)
     @HttpCode(HttpStatus.BAD_REQUEST)
     @ApiResponse({status: HttpStatus.OK})
-    public async setPatientStatusBorderline(@Param('patientUserId', ParseUUIDPipe) patientUserId: string): Promise<void> {
+    public async setPatientStatusBorderline(
+        @Param('patientUserId', ParseUUIDPipe) patientUserId: string,
+    ): Promise<void> {
         const useCase = this.patientStatusUseCasesFactory.createPatientStatusBorderlineUseCase();
         await useCase.setStatusBorderline(patientUserId);
     }

@@ -21,7 +21,7 @@ export class VitalsGateway implements OnGatewayInit, OnGatewayConnection, OnGate
     @WebSocketServer() server: Server;
     private logger: Logger = new Logger('AppGateway');
 
-    public afterInit(client: Server): void {
+    public afterInit(): void {
         return this.logger.log('Init');
     }
 

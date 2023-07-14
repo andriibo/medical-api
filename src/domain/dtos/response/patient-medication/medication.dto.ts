@@ -1,5 +1,4 @@
 import {PatientMedication} from 'domain/entities/patient-medication.entity';
-import {UserDto} from 'domain/dtos/response/user/user.dto';
 
 export class MedicationDto {
     public medicationId: string;

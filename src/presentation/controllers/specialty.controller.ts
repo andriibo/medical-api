@@ -1,6 +1,5 @@
 import {Controller, HttpStatus, Get, HttpCode} from '@nestjs/common';
 import {ApiBearerAuth, ApiForbiddenResponse, ApiResponse, ApiTags, ApiUnauthorizedResponse} from '@nestjs/swagger';
-import {Auth} from 'presentation/guards';
 import {SpecialtyUseCasesFactory} from 'infrastructure/modules/specialty/factories/specialty-use-cases.factory';
 import {SpecialtiesView} from 'views/response/specialty';
 import {SpecialtiesDto} from 'domain/dtos/response/specialty/specialties.dto';

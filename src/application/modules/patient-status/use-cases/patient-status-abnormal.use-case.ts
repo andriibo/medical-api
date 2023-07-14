@@ -1,14 +1,13 @@
 import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service';
 import {IPatientStatusRepository} from 'app/modules/patient-status/repositories';
-import {IPatientStatusEntityMapper} from 'app/modules/patient-status/mappers/patient-status-entity.mapper';
 import {PatientStatusEnum} from 'domain/constants/patient.const';
 import {PatientStatusSpecification} from 'app/modules/patient-status/specifications/patient-status.specification';
+import {currentUnixTimestamp} from 'support/date.helper';
 
 export class PatientStatusAbnormalUseCase {
     public constructor(
         private readonly authedUserService: IAuthedUserService,
         private readonly patientStatusRepository: IPatientStatusRepository,
-        private readonly patientStatusMapper: IPatientStatusEntityMapper,
         private readonly patientStatusSpecification: PatientStatusSpecification,
     ) {}
 
@@ -23,6 +22,8 @@ export class PatientStatusAbnormalUseCase {
         }
 
         patientStatus.status = PatientStatusEnum.Abnormal;
+        patientStatus.setBy = user.id;
+        patientStatus.setAt = currentUnixTimestamp();
 
         await this.patientStatusRepository.persist(patientStatus);
     }

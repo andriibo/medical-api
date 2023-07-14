@@ -318,9 +318,7 @@ export class CognitoService implements IAuthService {
         };
     }
 
-    private getResendCodeResult(
-        resendConfirmationCodeResponse: ResendConfirmationCodeResponse,
-    ): ConfirmEmailResentDto {
+    private getResendCodeResult(resendConfirmationCodeResponse: ResendConfirmationCodeResponse): ConfirmEmailResentDto {
         const emailDeliveryDetails = resendConfirmationCodeResponse?.CodeDeliveryDetails;
 
         return {

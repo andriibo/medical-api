@@ -1,6 +1,5 @@
 import {ApiProperty} from '@nestjs/swagger';
 import {MedicationDto} from 'domain/dtos/response/patient-medication/medication.dto';
-import {UserView} from 'presentation/views/response/user';
 import {MedicationView} from 'views/response/medication';
 import {TimesPerDayEnum} from 'domain/constants/medication.const';
 
