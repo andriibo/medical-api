@@ -32,7 +32,6 @@ import {AuthResultModel, IAuthModel} from 'app/modules/auth/models';
 import {IAuthService} from 'app/modules/auth/services/auth.service';
 import {IMailSender} from 'app/modules/mail/services/abstract/mail-sender';
 import {AuthModel} from 'infrastructure/aws/cognito/auth.model';
-import {PatientCategoryModel} from 'infrastructure/modules/patient-category/models';
 import {IPatientVitalThresholdsRepository} from 'app/modules/patient-vital-thresholds/repositories';
 import {ConfirmEmailResentDto, ForgotPasswordMailSentDto} from 'domain/dtos/response/auth';
 
@@ -130,8 +129,6 @@ describe('AuthController', () => {
             .overrideProvider(getRepositoryToken(PatientMetadataModel))
             .useValue(null)
             .overrideProvider(getRepositoryToken(CaregiverMetadataModel))
-            .useValue(null)
-            .overrideProvider(getRepositoryToken(PatientCategoryModel))
             .useValue(null)
             .overrideProvider(IUserRepository)
             .useValue(mockedUserRepository)

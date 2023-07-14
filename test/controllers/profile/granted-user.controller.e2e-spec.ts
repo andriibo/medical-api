@@ -22,13 +22,12 @@ import {TestModule} from 'tests/test.module';
 import {currentUnixTimestamp} from 'support/date.helper';
 import {IVitalRepository} from 'app/modules/vital/repositories';
 import {VitalModel} from 'infrastructure/modules/vital/models';
-import {PatientCategoryModel} from 'infrastructure/modules/patient-category/models';
-import {PatientCategory} from 'domain/entities/patient-category.entity';
-import {IPatientCategoryRepository} from 'app/modules/patient-category/repositories';
+import {PatientStatus} from 'domain/entities/patient-status.entity';
 import {PatientStatusModel} from 'infrastructure/modules/patient-status/models';
 import {IPatientStatusRepository} from 'app/modules/patient-status/repositories';
 import {IPatientVitalThresholdsRepository} from 'app/modules/patient-vital-thresholds/repositories';
 import {IRemoveMyAvatarService} from 'app/modules/profile/services/remove-my-avatar.service';
+import {PatientStatusEnum} from 'domain/constants/patient.const';
 
 const caregiver: User = {
     id: '4babe90f-b1a3-145e-c0mz-9aq248098ac0',
@@ -84,12 +83,11 @@ const patientDataAccess: PatientDataAccess = {
     lastInviteSentAt: 0,
 };
 
-const patientCategory: PatientCategory = {
-    id: '17c3e70s-b0w2-126s-c8mo-1cq901092qm9',
+const patientStatus: PatientStatus = {
     patientUserId: patient.id,
-    grantedUserId: caregiver.id,
-    patientCategory: 'Normal',
-    patientCategoryUpdatedAt: currentUnixTimestamp(),
+    status: PatientStatusEnum.Normal,
+    setBy: patient.id,
+    setAt: currentUnixTimestamp(),
 };
 
 const usersLastConnectionTime = [{userId: '5nc3e70a-c1y9-121a-c5mv-5aq272098bp0', timestamp: currentUnixTimestamp()}];
@@ -106,8 +104,8 @@ describe('GrantedUserController', () => {
         const mockedUserRepository = {
             getOneById: jest.fn((userId: string) => Promise.resolve(users[userId])),
         };
-        const mockedPatientCategoryRepository = {
-            getByPatientUserIdsAndGrantedUserId: jest.fn(() => Promise.resolve([patientCategory])),
+        const mockedPatientStatusRepository = {
+            getByPatientUserIds: jest.fn(() => Promise.resolve([patientStatus])),
         };
         const mockedPatientMetadataRepository = {
             getOneById: jest.fn(() => Promise.resolve(patientMetadata)),
@@ -141,8 +139,6 @@ describe('GrantedUserController', () => {
             .useValue(null)
             .overrideProvider(getRepositoryToken(PatientDataAccessModel))
             .useValue(null)
-            .overrideProvider(getRepositoryToken(PatientCategoryModel))
-            .useValue(null)
             .overrideProvider(getRepositoryToken(PatientStatusModel))
             .useValue(null)
             .overrideProvider(getRepositoryToken(VitalModel))
@@ -157,10 +153,8 @@ describe('GrantedUserController', () => {
             .useValue(null)
             .overrideProvider(IPatientDataAccessRepository)
             .useValue(mockedPatientDataAccessRepository)
-            .overrideProvider(IPatientCategoryRepository)
-            .useValue(mockedPatientCategoryRepository)
             .overrideProvider(IPatientStatusRepository)
-            .useValue(null)
+            .useValue(mockedPatientStatusRepository)
             .overrideProvider(IVitalRepository)
             .useValue(mockedVitalRepository)
             .overrideProvider(IPatientVitalThresholdsRepository)
@@ -194,7 +188,7 @@ describe('GrantedUserController', () => {
                     deletedAt: null,
                     accessId: patientDataAccess.id,
                     lastConnected: null,
-                    category: patientCategory.patientCategory,
+                    status: patientStatus.status,
                     passwordUpdatedAt: patient.passwordUpdatedAt,
                 },
             ]);
@@ -221,7 +215,7 @@ describe('GrantedUserController', () => {
                 avatar: patient.avatar,
                 deletedAt: null,
                 lastConnected: null,
-                category: patientCategory.patientCategory,
+                status: patientStatus.status,
                 passwordUpdatedAt: patient.passwordUpdatedAt,
             });
     });

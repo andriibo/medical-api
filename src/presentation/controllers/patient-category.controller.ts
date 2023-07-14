@@ -1,4 +1,4 @@
-import {Controller, HttpStatus, HttpCode, Param, ParseUUIDPipe, BadRequestException, Patch} from '@nestjs/common';
+import {Controller, HttpStatus, HttpCode, Param, ParseUUIDPipe, Patch} from '@nestjs/common';
 import {
     ApiBadRequestResponse,
     ApiBearerAuth,
@@ -9,7 +9,6 @@ import {
     ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 import {Roles} from 'presentation/guards';
-import {PatientCategoryUseCasesFactory} from 'infrastructure/modules/patient-category/factories/patient-category-use-cases.factory';
 
 @Controller('patient-category')
 @ApiBearerAuth()
@@ -18,22 +17,15 @@ import {PatientCategoryUseCasesFactory} from 'infrastructure/modules/patient-cat
 @ApiBadRequestResponse({description: 'Bad request.'})
 @ApiTags('Patient Category')
 export class PatientCategoryController {
-    public constructor(private readonly patientCategoryUseCasesFactory: PatientCategoryUseCasesFactory) {}
-
     @Roles('Caregiver', 'Doctor')
     @Patch('normal/:patientUserId')
     @HttpCode(HttpStatus.OK)
     @ApiResponse({status: HttpStatus.OK})
     @ApiOperation({deprecated: true})
-    public async setPatientCategoryNormal(@Param('patientUserId', ParseUUIDPipe) patientUserId: string): Promise<void> {
-        const useCase = this.patientCategoryUseCasesFactory.createPatientCategoryNormalUseCase();
-
-        try {
-            await useCase.setNormal(patientUserId);
-        } catch (error) {
-            throw new BadRequestException(error.message);
-        }
-    }
+    public async setPatientCategoryNormal(
+        @Param('patientUserId', ParseUUIDPipe) patientUserId: string,
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
+    ): Promise<void> {}
 
     @Roles('Caregiver', 'Doctor')
     @Patch('borderline/:patientUserId')
@@ -42,13 +34,6 @@ export class PatientCategoryController {
     @ApiOperation({deprecated: true})
     public async setPatientCategoryBorderline(
         @Param('patientUserId', ParseUUIDPipe) patientUserId: string,
-    ): Promise<void> {
-        const useCase = this.patientCategoryUseCasesFactory.createPatientCategoryBorderlineUseCase();
-
-        try {
-            await useCase.setBorderline(patientUserId);
-        } catch (error) {
-            throw new BadRequestException(error.message);
-        }
-    }
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
+    ): Promise<void> {}
 }

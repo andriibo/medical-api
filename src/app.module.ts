@@ -22,7 +22,6 @@ import {
     WebsocketModule,
     FileModule,
     PatientStatusModule,
-    PatientCategoryModule,
     SpecialtyModule,
 } from 'infrastructure/modules';
 import {AssignUserMiddleware} from 'presentation/middlewares/assign-user.middleware';
@@ -49,7 +48,6 @@ const APP_MODULES_IMPORT = [
     FileModule,
     CronModule,
     PatientStatusModule,
-    PatientCategoryModule,
     SpecialtyModule,
 ];
 

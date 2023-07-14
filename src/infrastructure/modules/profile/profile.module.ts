@@ -24,15 +24,15 @@ import {RemoveDoctorService} from 'infrastructure/modules/profile/services/remov
 import {RemoveCaregiverOrPatientService} from 'infrastructure/modules/profile/services/remove-caregiver-or-patient.service';
 import {IMyPatientsService} from 'app/modules/profile/services/my-patients.service';
 import {MyPatientsService} from 'infrastructure/modules/profile/services/my-patients.service';
-import {IPatientCategoryRepository} from 'app/modules/patient-category/repositories';
+import {IPatientStatusRepository} from 'app/modules/patient-status/repositories';
 import {IVitalRepository} from 'app/modules/vital/repositories';
-import {PatientCategoryModule} from 'infrastructure/modules/patient-category/patient-category.module';
 import {UserIndependentModule} from 'infrastructure/modules/auth/user.ind.module';
 import {UserDtoMapper} from 'app/modules/profile/mappers/user-dto.mapper';
 import {FileModule} from 'infrastructure/modules/file/file.module';
 import {IRemoveMyAvatarService} from 'app/modules/profile/services/remove-my-avatar.service';
 import {IUserAvatarService} from 'app/modules/profile/services/user-avatar.service';
 import {RemoveMyAvatarService} from 'infrastructure/modules/profile/services/remove-my-avatar.service';
+import {PatientStatusModule} from 'infrastructure/modules/patient-status/patient-status.module';
 
 @Module({
     imports: [
@@ -40,7 +40,7 @@ import {RemoveMyAvatarService} from 'infrastructure/modules/profile/services/rem
         AuthModule,
         FileModule,
         UserIndependentModule,
-        PatientCategoryModule,
+        PatientStatusModule,
         PatientDataAccessModule,
         VitalIndependentModule,
     ],
@@ -77,13 +77,13 @@ import {RemoveMyAvatarService} from 'infrastructure/modules/profile/services/rem
         {
             provide: IMyPatientsService,
             useFactory: (
-                patientCategoryRepository: IPatientCategoryRepository,
+                patientStatusRepository: IPatientStatusRepository,
                 userDtoMapper: UserDtoMapper,
                 vitalRepository: IVitalRepository,
             ) => {
-                return new MyPatientsService(patientCategoryRepository, userDtoMapper, vitalRepository);
+                return new MyPatientsService(patientStatusRepository, userDtoMapper, vitalRepository);
             },
-            inject: [IPatientCategoryRepository, UserDtoMapper, IVitalRepository],
+            inject: [IPatientStatusRepository, UserDtoMapper, IVitalRepository],
         },
         {
             provide: IRemoveMyAvatarService,

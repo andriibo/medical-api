@@ -23,8 +23,6 @@ import {VitalModel} from 'infrastructure/modules/vital/models';
 import {IPatientVitalThresholdsRepository} from 'app/modules/patient-vital-thresholds/repositories';
 import {PatientDataAccessModel} from 'infrastructure/modules/patient-data-access/models';
 import {PatientStatusModel} from 'infrastructure/modules/patient-status/models';
-import {PatientCategoryModel} from 'infrastructure/modules/patient-category/models';
-import {IPatientCategoryRepository} from 'app/modules/patient-category/repositories';
 import {IPatientStatusRepository} from 'app/modules/patient-status/repositories';
 import {IVitalRepository} from 'app/modules/vital/repositories';
 import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repositories';
@@ -137,8 +135,6 @@ describe('PatientController', () => {
             .useValue(null)
             .overrideProvider(getRepositoryToken(PatientStatusModel))
             .useValue(null)
-            .overrideProvider(getRepositoryToken(PatientCategoryModel))
-            .useValue(null)
             .overrideProvider(getRepositoryToken(PatientVitalThresholdsModel))
             .useValue(null)
             .overrideProvider(IUserRepository)
@@ -153,8 +149,6 @@ describe('PatientController', () => {
             .useValue(null)
             .overrideProvider(IPatientVitalThresholdsRepository)
             .useValue(mockedPatientVitalThresholdsRepository)
-            .overrideProvider(IPatientCategoryRepository)
-            .useValue(null)
             .overrideProvider(IPatientStatusRepository)
             .useValue(null)
             .overrideProvider(IPatientDataAccessRepository)

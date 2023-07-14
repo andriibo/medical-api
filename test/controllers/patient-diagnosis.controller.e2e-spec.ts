@@ -24,9 +24,7 @@ import {IPatientDiagnosisRepository} from 'app/modules/patient-diagnosis/reposit
 import {PatientDataAccessModel} from 'infrastructure/modules/patient-data-access/models';
 import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repositories';
 import {PatientStatusModel} from 'infrastructure/modules/patient-status/models';
-import {PatientCategoryModel} from 'infrastructure/modules/patient-category/models';
 import {IPatientStatusRepository} from 'app/modules/patient-status/repositories';
-import {IPatientCategoryRepository} from 'app/modules/patient-category/repositories';
 import {IPatientVitalThresholdsRepository} from 'app/modules/patient-vital-thresholds/repositories';
 
 const patient: User = {
@@ -106,8 +104,6 @@ describe('PatientDiagnosisController', () => {
             .useValue(null)
             .overrideProvider(getRepositoryToken(PatientStatusModel))
             .useValue(null)
-            .overrideProvider(getRepositoryToken(PatientCategoryModel))
-            .useValue(null)
             .overrideProvider(IUserRepository)
             .useValue(mockedUserRepository)
             .overrideProvider(IPatientMetadataRepository)
@@ -121,8 +117,6 @@ describe('PatientDiagnosisController', () => {
             .overrideProvider(IPatientDiagnosisRepository)
             .useValue(mockedPatientDiagnosisRepository)
             .overrideProvider(IPatientStatusRepository)
-            .useValue(null)
-            .overrideProvider(IPatientCategoryRepository)
             .useValue(null)
             .overrideProvider(IPatientVitalThresholdsRepository)
             .useValue(null)

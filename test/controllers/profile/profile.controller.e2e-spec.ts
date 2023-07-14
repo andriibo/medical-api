@@ -21,8 +21,6 @@ import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repo
 import {TestModule} from 'tests/test.module';
 import {VitalModel} from 'infrastructure/modules/vital/models';
 import {IVitalRepository} from 'app/modules/vital/repositories';
-import {PatientCategoryModel} from 'infrastructure/modules/patient-category/models';
-import {IPatientCategoryRepository} from 'app/modules/patient-category/repositories';
 import {PatientStatusModel} from 'infrastructure/modules/patient-status/models';
 import {IPatientStatusRepository} from 'app/modules/patient-status/repositories';
 import {IPatientVitalThresholdsRepository} from 'app/modules/patient-vital-thresholds/repositories';
@@ -97,8 +95,6 @@ describe('ProfileController', () => {
             .useValue(null)
             .overrideProvider(getRepositoryToken(PatientDataAccessModel))
             .useValue(null)
-            .overrideProvider(getRepositoryToken(PatientCategoryModel))
-            .useValue(null)
             .overrideProvider(getRepositoryToken(PatientStatusModel))
             .useValue(null)
             .overrideProvider(getRepositoryToken(VitalModel))
@@ -114,8 +110,6 @@ describe('ProfileController', () => {
             .overrideProvider(ICaregiverMetadataRepository)
             .useValue(null)
             .overrideProvider(IPatientDataAccessRepository)
-            .useValue(null)
-            .overrideProvider(IPatientCategoryRepository)
             .useValue(null)
             .overrideProvider(IPatientStatusRepository)
             .useValue(null)

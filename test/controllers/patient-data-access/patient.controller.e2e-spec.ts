@@ -21,8 +21,6 @@ import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repo
 import {PatientDataAccessModule} from 'infrastructure/modules';
 import {IPatientVitalThresholdsRepository} from 'app/modules/patient-vital-thresholds/repositories';
 import {PatientStatusModel} from 'infrastructure/modules/patient-status/models';
-import {PatientCategoryModel} from 'infrastructure/modules/patient-category/models';
-import {IPatientCategoryRepository} from 'app/modules/patient-category/repositories';
 import {IPatientStatusRepository} from 'app/modules/patient-status/repositories';
 import {IPatientDataAccessEntityMapper} from 'app/modules/patient-data-access/mappers/patient-data-access-entity.mapper';
 import {IPatientDataAccessEventEmitter} from 'app/modules/patient-data-access/event-emitters/patient-data-access.event-emitter';
@@ -108,9 +106,6 @@ describe('PatientController', () => {
         const mockedPatientStatusRepository = {
             getByPatientUserId: jest.fn(() => Promise.resolve(patientStatus)),
         };
-        const mockedPatientCategoryRepository = {
-            updateCategoryAndUpdatedAtById: jest.fn(() => Promise.resolve()),
-        };
         const mockedMailSender = {
             sendMail: jest.fn(() => Promise.resolve()),
         };
@@ -191,8 +186,6 @@ describe('PatientController', () => {
             .useValue(null)
             .overrideProvider(getRepositoryToken(PatientStatusModel))
             .useValue(null)
-            .overrideProvider(getRepositoryToken(PatientCategoryModel))
-            .useValue(null)
             .overrideProvider(IUserRepository)
             .useValue(mockedUserRepository)
             .overrideProvider(IPatientMetadataRepository)
@@ -203,8 +196,6 @@ describe('PatientController', () => {
             .useValue(null)
             .overrideProvider(IPatientVitalThresholdsRepository)
             .useValue(null)
-            .overrideProvider(IPatientCategoryRepository)
-            .useValue(mockedPatientCategoryRepository)
             .overrideProvider(IPatientStatusRepository)
             .useValue(mockedPatientStatusRepository)
             .overrideProvider(IPatientDataAccessRepository)

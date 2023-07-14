@@ -2,14 +2,14 @@ import {Inject} from '@nestjs/common';
 import {IMyPatientsService} from 'app/modules/profile/services/my-patients.service';
 import {MyPatientDto} from 'domain/dtos/response/profile/my-patient.dto';
 import {PatientDataAccess} from 'domain/entities/patient-data-access.entity';
-import {IPatientCategoryRepository} from 'app/modules/patient-category/repositories';
+import {IPatientStatusRepository} from 'app/modules/patient-status/repositories';
 import {IVitalRepository} from 'app/modules/vital/repositories';
 import {sortUserDtosByName} from 'support/sort.helper';
 import {UserDtoMapper} from 'app/modules/profile/mappers/user-dto.mapper';
 
 export class MyPatientsService implements IMyPatientsService {
     public constructor(
-        @Inject(IPatientCategoryRepository) private readonly patientCategoryRepository: IPatientCategoryRepository,
+        @Inject(IPatientStatusRepository) private readonly patientStatusRepository: IPatientStatusRepository,
         @Inject(UserDtoMapper) private readonly userDtoMapper: UserDtoMapper,
         @Inject(IVitalRepository) private readonly vitalRepository: IVitalRepository,
     ) {}
@@ -20,8 +20,7 @@ export class MyPatientsService implements IMyPatientsService {
         }
         const patientIds = dataAccesses.map((item) => item.patientUserId);
         const indexedUsersLastConnectionTime = await this.getIndexedUsersLastConnectionTime(patientIds);
-        const grantedUserId = dataAccesses[0].grantedUserId;
-        const indexedPatientCategories = await this.getIndexedPatientCategories(patientIds, grantedUserId);
+        const indexedPatientStatuses = await this.getIndexedPatientStatuses(patientIds);
         const myPatients = dataAccesses.map((patientDataAccess) => {
             const dto = this.userDtoMapper.mapPatientDtoByUserAndMetadata(
                 patientDataAccess.patientUser,
@@ -32,7 +31,7 @@ export class MyPatientsService implements IMyPatientsService {
             if (patientDataAccess.patientUserId in indexedUsersLastConnectionTime) {
                 dto.lastConnected = indexedUsersLastConnectionTime[patientDataAccess.patientUserId];
             }
-            dto.category = indexedPatientCategories[patientDataAccess.patientUserId];
+            dto.status = indexedPatientStatuses[patientDataAccess.patientUserId];
 
             return dto;
         });
@@ -51,17 +50,14 @@ export class MyPatientsService implements IMyPatientsService {
         return indexedUsersLastConnectionTime;
     }
 
-    private async getIndexedPatientCategories(patientIds: string[], grantedUserId: string): Promise<object> {
-        const patientCategories = await this.patientCategoryRepository.getByPatientUserIdsAndGrantedUserId(
-            patientIds,
-            grantedUserId,
-        );
-        const indexedPatientCategories = {};
-        patientCategories.map(
-            (patientCategory) =>
-                (indexedPatientCategories[patientCategory.patientUserId] = patientCategory.patientCategory),
+    private async getIndexedPatientStatuses(patientIds: string[]): Promise<object> {
+        const patientStatuses = await this.patientStatusRepository.getByPatientUserIds(patientIds);
+
+        const indexedPatientStatuses = {};
+        patientStatuses.map(
+            (patientStatus) => (indexedPatientStatuses[patientStatus.patientUserId] = patientStatus.status),
         );
 
-        return indexedPatientCategories;
+        return indexedPatientStatuses;
     }
 }

@@ -22,7 +22,6 @@ import {PatientStatusModel} from 'infrastructure/modules/patient-status/models';
 import {IPatientStatusRepository} from 'app/modules/patient-status/repositories';
 import {PatientStatus} from 'domain/entities/patient-status.entity';
 import {currentUnixTimestamp} from 'support/date.helper';
-import {PatientCategoryModel} from 'infrastructure/modules/patient-category/models';
 import {PatientDataAccessModel} from 'infrastructure/modules/patient-data-access/models';
 import {IPatientDataAccessRepository} from 'app/modules/patient-data-access/repositories';
 import {IPatientVitalThresholdsRepository} from 'app/modules/patient-vital-thresholds/repositories';
@@ -110,8 +109,6 @@ describe('PatientStatusController', () => {
             .overrideProvider(getRepositoryToken(CaregiverMetadataModel))
             .useValue(null)
             .overrideProvider(getRepositoryToken(PatientStatusModel))
-            .useValue(null)
-            .overrideProvider(getRepositoryToken(PatientCategoryModel))
             .useValue(null)
             .overrideProvider(getRepositoryToken(PatientDataAccessModel))
             .useValue(null)

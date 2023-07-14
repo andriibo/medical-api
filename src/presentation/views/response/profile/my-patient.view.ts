@@ -1,7 +1,7 @@
 import {ApiProperty} from '@nestjs/swagger';
 import {MyPatientDto} from 'domain/dtos/response/profile/my-patient.dto';
 import {PatientView} from 'views/response/user';
-import {PatientCategoryEnum} from 'domain/constants/patient.const';
+import {PatientStatusEnum} from 'domain/constants/patient.const';
 
 export class MyPatientView extends PatientView implements MyPatientDto {
     @ApiProperty()
@@ -10,6 +10,6 @@ export class MyPatientView extends PatientView implements MyPatientDto {
     @ApiProperty({nullable: true})
     public lastConnected: number | null;
 
-    @ApiProperty({enum: PatientCategoryEnum})
-    public category: string;
+    @ApiProperty({enum: PatientStatusEnum})
+    public status: PatientStatusEnum;
 }

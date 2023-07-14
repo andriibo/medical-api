@@ -22,8 +22,6 @@ import {
 } from 'infrastructure/modules/emergency-contact/models';
 import {PatientDataAccessModel} from 'infrastructure/modules/patient-data-access/models';
 import {PatientStatusModel} from 'infrastructure/modules/patient-status/models';
-import {PatientCategoryModel} from 'infrastructure/modules/patient-category/models';
-import {IPatientCategoryRepository} from 'app/modules/patient-category/repositories';
 import {
     IPersonEmergencyContactRepository,
     IOrganizationEmergencyContactRepository,
@@ -152,11 +150,7 @@ describe('GrantedUserController', () => {
             .useValue(null)
             .overrideProvider(getRepositoryToken(PatientStatusModel))
             .useValue(null)
-            .overrideProvider(getRepositoryToken(PatientCategoryModel))
-            .useValue(null)
             .overrideProvider(IPatientVitalThresholdsRepository)
-            .useValue(null)
-            .overrideProvider(IPatientCategoryRepository)
             .useValue(null)
             .overrideProvider(IPersonEmergencyContactRepository)
             .useValue(null)
