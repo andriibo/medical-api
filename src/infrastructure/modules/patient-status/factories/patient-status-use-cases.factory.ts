@@ -3,14 +3,11 @@ import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service'
 import {
     PatientStatusUseCase,
     GetPatientStatusUseCase,
-    DeprecatedPatientStatusAbnormalUseCase,
-    DeprecatedPatientStatusNormalUseCase,
     PatientStatusNormalUseCase,
     PatientStatusBorderlineUseCase,
     PatientStatusAbnormalUseCase,
 } from 'app/modules/patient-status/use-cases';
 import {IPatientStatusRepository} from 'app/modules/patient-status/repositories';
-import {IPatientStatusEntityMapper} from 'app/modules/patient-status/mappers/patient-status-entity.mapper';
 import {PatientStatusSpecification} from 'app/modules/patient-status/specifications/patient-status.specification';
 
 @Injectable()
@@ -18,7 +15,6 @@ export class PatientStatusUseCasesFactory {
     public constructor(
         @Inject(IAuthedUserService) private readonly authedUserService: IAuthedUserService,
         @Inject(IPatientStatusRepository) private readonly patientStatusRepository: IPatientStatusRepository,
-        @Inject(IPatientStatusEntityMapper) private readonly patientStatusMapper: IPatientStatusEntityMapper,
         @Inject(PatientStatusSpecification)
         private readonly patientStatusSpecification: PatientStatusSpecification,
     ) {}
@@ -32,14 +28,6 @@ export class PatientStatusUseCasesFactory {
             this.authedUserService,
             this.patientStatusRepository,
             this.patientStatusSpecification,
-        );
-    }
-
-    public createMyPatientStatusNormalUseCase(): DeprecatedPatientStatusNormalUseCase {
-        return new DeprecatedPatientStatusNormalUseCase(
-            this.authedUserService,
-            this.patientStatusRepository,
-            this.patientStatusMapper,
         );
     }
 
@@ -64,14 +52,6 @@ export class PatientStatusUseCasesFactory {
             this.authedUserService,
             this.patientStatusRepository,
             this.patientStatusSpecification,
-        );
-    }
-
-    public createMyPatientStatusAbnormalUseCase(): DeprecatedPatientStatusAbnormalUseCase {
-        return new DeprecatedPatientStatusAbnormalUseCase(
-            this.authedUserService,
-            this.patientStatusRepository,
-            this.patientStatusMapper,
         );
     }
 }

@@ -5,8 +5,6 @@ import {PatientStatusModel, PatientStatusRepository} from 'infrastructure/module
 import {PatientStatusController} from 'controllers/patient-status.controller';
 import {PatientStatusUseCasesFactory} from 'infrastructure/modules/patient-status/factories/patient-status-use-cases.factory';
 import {IPatientStatusRepository} from 'app/modules/patient-status/repositories';
-import {IPatientStatusEntityMapper} from 'app/modules/patient-status/mappers/patient-status-entity.mapper';
-import {PatientStatusModelMapper} from 'infrastructure/modules/patient-status/mappers/patient-status-model.mapper';
 import {PatientDataAccessSpecification} from 'app/modules/patient-data-access/specifications/patient-data-access.specification';
 import {PatientStatusSpecification} from 'app/modules/patient-status/specifications/patient-status.specification';
 import {PatientDataAccessModule} from 'infrastructure/modules/patient-data-access/patient-data-access.module';
@@ -20,10 +18,6 @@ import {PatientDataAccessModule} from 'infrastructure/modules/patient-data-acces
         {
             provide: IPatientStatusRepository,
             useClass: PatientStatusRepository,
-        },
-        {
-            provide: IPatientStatusEntityMapper,
-            useClass: PatientStatusModelMapper,
         },
         {
             provide: PatientStatusSpecification,

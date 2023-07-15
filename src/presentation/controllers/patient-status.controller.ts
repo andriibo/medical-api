@@ -49,10 +49,8 @@ export class PatientStatusController {
     @HttpCode(HttpStatus.BAD_REQUEST)
     @ApiResponse({status: HttpStatus.OK})
     @ApiOperation({deprecated: true})
-    public async deprecatedSetPatientStatusNormal(): Promise<void> {
-        const useCase = this.patientStatusUseCasesFactory.createMyPatientStatusNormalUseCase();
-        await useCase.setStatusNormal();
-    }
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    public async deprecatedSetPatientStatusNormal(): Promise<void> {}
 
     @Roles('Caregiver', 'Doctor')
     @Put('patient-status/normal/:patientUserId')
@@ -69,10 +67,8 @@ export class PatientStatusController {
     @HttpCode(HttpStatus.OK)
     @ApiResponse({status: HttpStatus.OK})
     @ApiOperation({deprecated: true})
-    public async deprecatedSetPatientStatusAbnormal(): Promise<void> {
-        const useCase = this.patientStatusUseCasesFactory.createMyPatientStatusAbnormalUseCase();
-        await useCase.setStatusAbnormal();
-    }
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    public async deprecatedSetPatientStatusAbnormal(): Promise<void> {}
 
     @Roles('Caregiver', 'Doctor')
     @Put('patient-status/borderline/:patientUserId')
