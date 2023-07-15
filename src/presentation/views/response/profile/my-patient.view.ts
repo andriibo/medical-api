@@ -12,4 +12,7 @@ export class MyPatientView extends PatientView implements MyPatientDto {
 
     @ApiProperty({enum: PatientStatusEnum})
     public status: PatientStatusEnum;
+
+    @ApiProperty({enum: PatientStatusEnum})
+    public category: PatientStatusEnum;
 }

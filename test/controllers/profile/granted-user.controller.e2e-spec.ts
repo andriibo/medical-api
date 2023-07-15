@@ -189,6 +189,7 @@ describe('GrantedUserController', () => {
                     accessId: patientDataAccess.id,
                     lastConnected: null,
                     status: patientStatus.status,
+                    category: patientStatus.status,
                     passwordUpdatedAt: patient.passwordUpdatedAt,
                 },
             ]);
@@ -216,6 +217,7 @@ describe('GrantedUserController', () => {
                 deletedAt: null,
                 lastConnected: null,
                 status: patientStatus.status,
+                category: patientStatus.status,
                 passwordUpdatedAt: patient.passwordUpdatedAt,
             });
     });

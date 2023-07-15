@@ -7,4 +7,6 @@ export class MyPatientDto extends PatientDto {
     public lastConnected: number | null;
 
     public status: PatientStatusEnum;
+
+    public category: PatientStatusEnum;
 }

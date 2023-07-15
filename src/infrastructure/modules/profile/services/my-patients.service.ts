@@ -32,6 +32,7 @@ export class MyPatientsService implements IMyPatientsService {
                 dto.lastConnected = indexedUsersLastConnectionTime[patientDataAccess.patientUserId];
             }
             dto.status = indexedPatientStatuses[patientDataAccess.patientUserId];
+            dto.category = dto.status;
 
             return dto;
         });
