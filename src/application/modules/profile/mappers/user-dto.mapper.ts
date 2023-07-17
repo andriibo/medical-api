@@ -26,15 +26,15 @@ export class UserDtoMapper {
 
     public mapDoctorDtoByUserAndMetadata(user: User, metadata: DoctorMetadata): DoctorDto {
         const dto = this.mapUserDtoByUser(user) as DoctorDto;
-        dto.institution = metadata.institution;
-        dto.specialty = metadata.specialty;
+        dto.institution = metadata?.institution || '';
+        dto.specialty = metadata?.specialty || '';
 
         return dto;
     }
 
     public mapCaregiverDtoByUserAndMetadata(user: User, metadata: CaregiverMetadata): CaregiverDto {
         const dto = this.mapUserDtoByUser(user) as CaregiverDto;
-        dto.institution = metadata.institution;
+        dto.institution = metadata?.institution || '';
 
         return dto;
     }
