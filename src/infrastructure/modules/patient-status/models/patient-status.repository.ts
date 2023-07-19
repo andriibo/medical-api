@@ -22,7 +22,7 @@ export class PatientStatusRepository implements IPatientStatusRepository {
         const entities = await this.dataSource.manager.findBy(PatientStatusModel, {patientUserId: In(patientUserIds)});
 
         const indexedEntities = {};
-        entities.map((entity) => indexedEntities[entity.patientUserId]);
+        entities.map((entity) => (indexedEntities[entity.patientUserId] = entity));
 
         patientUserIds.map((patientUserId) => {
             if (!(patientUserId in indexedEntities)) {
