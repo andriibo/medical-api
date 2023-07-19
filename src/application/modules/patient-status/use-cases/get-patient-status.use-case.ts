@@ -15,7 +15,7 @@ export class GetPatientStatusUseCase {
 
         await this.patientStatusSpecification.assertUserCanGetPatientStatus(user, patientUserId);
 
-        const patientStatus = await this.patientStatusRepository.getByPatientUserId(user.id);
+        const patientStatus = await this.patientStatusRepository.getByPatientUserId(patientUserId);
 
         return PatientStatusDto.fromPatientStatus(patientStatus);
     }
