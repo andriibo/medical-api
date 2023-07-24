@@ -1,8 +1,5 @@
 import {Inject, Injectable} from '@nestjs/common';
-import {
-    PatientContactListUseCase,
-    GetPatientContactsUseCase,
-} from 'app/modules/emergency-contact/use-cases/granted-user';
+import {GetPatientContactsUseCase} from 'app/modules/emergency-contact/use-cases/granted-user';
 import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service';
 import {
     IOrganizationEmergencyContactRepository,
@@ -21,14 +18,6 @@ export class GrantedUserUseCasesFactory {
         @Inject(PatientDataAccessSpecification)
         private readonly patientDataAccessSpecification: PatientDataAccessSpecification,
     ) {}
-
-    public createPatientContactUseCase(): PatientContactListUseCase {
-        return new PatientContactListUseCase(
-            this.authedUserService,
-            this.personEmergencyContactRepository,
-            this.patientDataAccessSpecification,
-        );
-    }
 
     public createGetPatientContactsUseCase(): GetPatientContactsUseCase {
         return new GetPatientContactsUseCase(

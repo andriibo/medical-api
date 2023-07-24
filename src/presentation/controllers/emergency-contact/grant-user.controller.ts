@@ -22,24 +22,6 @@ export class GrantUserController {
     public constructor(private readonly grantedUserUseCasesFactory: GrantedUserUseCasesFactory) {}
 
     @Roles('Caregiver', 'Doctor')
-    @Get('patient-emergency-contacts/:patientUserId')
-    @HttpCode(HttpStatus.OK)
-    @HttpCode(HttpStatus.BAD_REQUEST)
-    @ApiResponse({status: HttpStatus.OK, type: [PersonEmergencyContactView]})
-    @ApiOperation({deprecated: true, summary: 'use GET /emergency-contacts/:patientUserId'})
-    public async getPatientEmergencyContacts(
-        @Param('patientUserId', ParseUUIDPipe) patientUserId: string,
-    ): Promise<PersonEmergencyContactDto[]> {
-        const useCase = this.grantedUserUseCasesFactory.createPatientContactUseCase();
-
-        try {
-            return await useCase.getList(patientUserId);
-        } catch (error) {
-            throw new BadRequestException(error.message);
-        }
-    }
-
-    @Roles('Caregiver', 'Doctor')
     @Get('emergency-contacts/:patientUserId')
     @HttpCode(HttpStatus.OK)
     @HttpCode(HttpStatus.BAD_REQUEST)

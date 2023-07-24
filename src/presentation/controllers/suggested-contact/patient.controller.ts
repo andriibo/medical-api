@@ -33,17 +33,6 @@ export class PatientController {
     public constructor(private readonly patientUseCasesFactory: PatientUseCasesFactory) {}
 
     @Roles('Patient')
-    @Delete('suggested-contact/:contactId')
-    @HttpCode(HttpStatus.NO_CONTENT)
-    @ApiResponse({status: HttpStatus.NO_CONTENT, description: 'No content.'})
-    @ApiBadRequestResponse({description: 'Bad request.'})
-    @ApiNotFoundResponse({description: 'Not Found.'})
-    @ApiOperation({deprecated: true, summary: 'use DELETE /person-suggested-contact/:contactId'})
-    public async deleteSuggestedContact(@Param('contactId', ParseUUIDPipe) contactId: string): Promise<void> {
-        await this.deletePersonSuggestedContact(contactId);
-    }
-
-    @Roles('Patient')
     @Delete('person-suggested-contact/:contactId')
     @HttpCode(HttpStatus.NO_CONTENT)
     @ApiResponse({status: HttpStatus.NO_CONTENT, description: 'No content.'})
@@ -75,17 +64,6 @@ export class PatientController {
         } catch (error) {
             throw new BadRequestException(error.message);
         }
-    }
-
-    @Roles('Patient')
-    @Post('suggested-contact/approve/:contactId')
-    @HttpCode(HttpStatus.OK)
-    @ApiResponse({status: HttpStatus.OK, description: 'OK.'})
-    @ApiBadRequestResponse({description: 'Bad request.'})
-    @ApiNotFoundResponse({description: 'Not Found.'})
-    @ApiOperation({deprecated: true, summary: 'use POST /person-suggested-contact/approve/:contactId'})
-    public async approveSuggestedContact(@Param('contactId', ParseUUIDPipe) contactId: string): Promise<void> {
-        await this.approvePersonSuggestedContact(contactId);
     }
 
     @Roles('Patient')

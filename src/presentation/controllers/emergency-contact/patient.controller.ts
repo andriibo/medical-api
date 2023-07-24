@@ -17,7 +17,6 @@ import {
     ApiResponse,
     ApiTags,
     ApiUnauthorizedResponse,
-    ApiOperation,
 } from '@nestjs/swagger';
 import {Roles} from 'presentation/guards';
 import {PatientUseCasesFactory} from 'infrastructure/modules/emergency-contact/factories/patient-use-cases.factory';
@@ -28,8 +27,7 @@ import {
     CreateOrganizationContactView,
     UpdateOrganizationContactView,
 } from 'presentation/views/request/emergency-contact';
-import {PersonEmergencyContactView} from 'presentation/views/response/emergency-contact';
-import {EmergencyContactsDto, PersonEmergencyContactDto} from 'domain/dtos/response/emergency-contact';
+import {EmergencyContactsDto} from 'domain/dtos/response/emergency-contact';
 import {TrimPipe} from 'presentation/pipes/trim.pipe';
 import {EmergencyContactsView} from 'views/response/emergency-contact/emergency-contacts.view';
 
@@ -40,16 +38,6 @@ import {EmergencyContactsView} from 'views/response/emergency-contact/emergency-
 @ApiForbiddenResponse({description: 'Forbidden.'})
 export class PatientController {
     public constructor(private readonly patientUseCasesFactory: PatientUseCasesFactory) {}
-
-    @Roles('Patient')
-    @Post('my-emergency-contact')
-    @HttpCode(HttpStatus.CREATED)
-    @HttpCode(HttpStatus.BAD_REQUEST)
-    @ApiResponse({status: HttpStatus.CREATED})
-    @ApiOperation({deprecated: true, summary: 'use POST /patient/person-emergency-contact'})
-    public async createMyEmergencyContact(@Body(TrimPipe) requestBody: CreatePersonContactView): Promise<void> {
-        return await this.createPersonEmergencyContact(requestBody);
-    }
 
     @Roles('Patient')
     @Post('person-emergency-contact')
@@ -84,17 +72,6 @@ export class PatientController {
     }
 
     @Roles('Patient')
-    @Get('my-emergency-contacts')
-    @HttpCode(HttpStatus.OK)
-    @ApiResponse({status: HttpStatus.OK, type: [PersonEmergencyContactView]})
-    @ApiOperation({deprecated: true, summary: 'use GET /patient/emergency-contacts'})
-    public async getMyEmergencyContacts(): Promise<PersonEmergencyContactDto[]> {
-        const useCase = this.patientUseCasesFactory.createContactListUseCase();
-
-        return await useCase.getList();
-    }
-
-    @Roles('Patient')
     @Get('emergency-contacts')
     @HttpCode(HttpStatus.OK)
     @ApiResponse({status: HttpStatus.OK, type: EmergencyContactsView})
@@ -102,19 +79,6 @@ export class PatientController {
         const useCase = this.patientUseCasesFactory.createGetContactsUseCase();
 
         return await useCase.getContacts();
-    }
-
-    @Roles('Patient')
-    @Patch('my-emergency-contact/:contactId')
-    @HttpCode(HttpStatus.OK)
-    @HttpCode(HttpStatus.BAD_REQUEST)
-    @ApiResponse({status: HttpStatus.OK})
-    @ApiOperation({deprecated: true, summary: 'use PATCH /patient/person-emergency-contact/:contactId'})
-    public async updateMyEmergencyContact(
-        @Param('contactId', ParseUUIDPipe) contactId: string,
-        @Body(TrimPipe) requestBody: UpdatePersonContactView,
-    ): Promise<void> {
-        return await this.updatePersonEmergencyContact(contactId, requestBody);
     }
 
     @Roles('Patient')
@@ -154,16 +118,6 @@ export class PatientController {
     }
 
     @Roles('Patient')
-    @Patch('my-emergency-contacts/order')
-    @HttpCode(HttpStatus.OK)
-    @HttpCode(HttpStatus.BAD_REQUEST)
-    @ApiResponse({status: HttpStatus.OK})
-    @ApiOperation({deprecated: true, summary: 'use PATCH /patient/person-emergency-contacts/order'})
-    public async setOrderOfMyEmergencyContacts(@Body(TrimPipe) requestBody: SetContactsOrderView): Promise<void> {
-        return await this.setOrderOfPersonEmergencyContacts(requestBody);
-    }
-
-    @Roles('Patient')
     @Patch('person-emergency-contacts/order')
     @HttpCode(HttpStatus.OK)
     @HttpCode(HttpStatus.BAD_REQUEST)
@@ -193,16 +147,6 @@ export class PatientController {
         } catch (error) {
             throw new BadRequestException(error.message);
         }
-    }
-
-    @Roles('Patient')
-    @Delete('my-emergency-contact/:contactId')
-    @HttpCode(HttpStatus.NO_CONTENT)
-    @HttpCode(HttpStatus.BAD_REQUEST)
-    @ApiResponse({status: HttpStatus.NO_CONTENT, description: 'No Content.'})
-    @ApiOperation({deprecated: true, summary: 'use DELETE /patient/person-emergency-contact/:contactId'})
-    public async deleteMyEmergencyContact(@Param('contactId', ParseUUIDPipe) contactId: string): Promise<void> {
-        return await this.deletePersonEmergencyContact(contactId);
     }
 
     @Roles('Patient')

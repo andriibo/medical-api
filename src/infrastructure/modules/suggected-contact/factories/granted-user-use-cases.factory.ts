@@ -12,7 +12,6 @@ import {
     CreateOrganizationSuggestedContactUseCase,
     DeletePersonSuggestedContactUseCase,
     DeleteOrganizationSuggestedContactUseCase,
-    PatientContactListUseCase,
     GetGrantedUserContactsUseCase,
 } from 'app/modules/suggested-contact/use-cases/granted-user';
 import {
@@ -77,14 +76,6 @@ export class GrantedUserUseCasesFactory {
             this.authedUserService,
             this.organizationSuggestedContactRepository,
             this.deleteOrganizationSuggestedContactByGrantedUserService,
-        );
-    }
-
-    public createPatientContactUseCase(): PatientContactListUseCase {
-        return new PatientContactListUseCase(
-            this.authedUserService,
-            this.personSuggestedContactRepository,
-            this.personSuggestedContactDtoMapper,
         );
     }
 

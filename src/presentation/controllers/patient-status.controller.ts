@@ -20,17 +20,6 @@ import {PatientStatusDto} from 'domain/dtos/response/patient-status/patient-stat
 export class PatientStatusController {
     public constructor(private readonly patientStatusUseCasesFactory: PatientStatusUseCasesFactory) {}
 
-    @Roles('Patient')
-    @Get('patient/my-status')
-    @HttpCode(HttpStatus.OK)
-    @ApiResponse({status: HttpStatus.OK, type: PatientStatusView})
-    @ApiOperation({deprecated: true, summary: 'use GET /patient-status/:patientUserId'})
-    public async getMyPatientStatus(): Promise<PatientStatusDto> {
-        const useCase = this.patientStatusUseCasesFactory.createMyPatientStatusUseCase();
-
-        return await useCase.getMyPatientStatus();
-    }
-
     @Roles('Caregiver', 'Doctor', 'Patient')
     @Get('patient-status/:patientUserId')
     @HttpCode(HttpStatus.OK)
@@ -43,15 +32,6 @@ export class PatientStatusController {
         return await useCase.getPatientStatus(patientUserId);
     }
 
-    @Roles('Patient')
-    @Put('patient/my-status/normal')
-    @HttpCode(HttpStatus.OK)
-    @HttpCode(HttpStatus.BAD_REQUEST)
-    @ApiResponse({status: HttpStatus.OK})
-    @ApiOperation({deprecated: true})
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
-    public async deprecatedSetPatientStatusNormal(): Promise<void> {}
-
     @Roles('Caregiver', 'Doctor')
     @Put('patient-status/normal/:patientUserId')
     @HttpCode(HttpStatus.OK)
@@ -61,14 +41,6 @@ export class PatientStatusController {
         const useCase = this.patientStatusUseCasesFactory.createPatientStatusNormalUseCase();
         await useCase.setStatusNormal(patientUserId);
     }
-
-    @Roles('Patient')
-    @Put('patient/my-status/abnormal')
-    @HttpCode(HttpStatus.OK)
-    @ApiResponse({status: HttpStatus.OK})
-    @ApiOperation({deprecated: true})
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
-    public async deprecatedSetPatientStatusAbnormal(): Promise<void> {}
 
     @Roles('Caregiver', 'Doctor')
     @Put('patient-status/borderline/:patientUserId')

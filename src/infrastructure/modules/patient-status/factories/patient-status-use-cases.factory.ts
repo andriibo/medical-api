@@ -1,7 +1,6 @@
 import {Inject, Injectable} from '@nestjs/common';
 import {IAuthedUserService} from 'app/modules/auth/services/authed-user.service';
 import {
-    PatientStatusUseCase,
     GetPatientStatusUseCase,
     PatientStatusNormalUseCase,
     PatientStatusBorderlineUseCase,
@@ -18,10 +17,6 @@ export class PatientStatusUseCasesFactory {
         @Inject(PatientStatusSpecification)
         private readonly patientStatusSpecification: PatientStatusSpecification,
     ) {}
-
-    public createMyPatientStatusUseCase(): PatientStatusUseCase {
-        return new PatientStatusUseCase(this.authedUserService, this.patientStatusRepository);
-    }
 
     public createGetPatientStatusUseCase(): GetPatientStatusUseCase {
         return new GetPatientStatusUseCase(

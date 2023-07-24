@@ -1,7 +1,6 @@
 import {Inject, Injectable} from '@nestjs/common';
 import {
     CreatePersonContactUseCase,
-    ContactListUseCase,
     DeletePersonContactUseCase,
     SetPersonContactsOrderUseCase,
     UpdatePersonContactUseCase,
@@ -57,10 +56,6 @@ export class PatientUseCasesFactory {
             this.organizationEmergencyContactEntityMapper,
             this.organizationEmergencyContactSpecification,
         );
-    }
-
-    public createContactListUseCase(): ContactListUseCase {
-        return new ContactListUseCase(this.authedUserService, this.personEmergencyContactRepository);
     }
 
     public createGetContactsUseCase(): GetContactsUseCase {

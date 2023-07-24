@@ -39,16 +39,6 @@ export class GrantedUserController {
     public constructor(private readonly grantedUserUseCasesFactory: GrantedUserUseCasesFactory) {}
 
     @Roles('Caregiver', 'Doctor')
-    @Post('suggested-contact')
-    @HttpCode(HttpStatus.CREATED)
-    @ApiResponse({status: HttpStatus.CREATED, description: 'Created.'})
-    @ApiBadRequestResponse({description: 'Bad request.'})
-    @ApiOperation({deprecated: true, summary: 'use POST /person-suggested-contact'})
-    public async createSuggestedContact(@Body(TrimPipe) requestBody: CreatePersonSuggestedContactView): Promise<void> {
-        await this.createPersonSuggestedContact(requestBody);
-    }
-
-    @Roles('Caregiver', 'Doctor')
     @Post('person-suggested-contact')
     @HttpCode(HttpStatus.CREATED)
     @ApiResponse({status: HttpStatus.CREATED, description: 'Created.'})
@@ -83,17 +73,6 @@ export class GrantedUserController {
     }
 
     @Roles('Caregiver', 'Doctor')
-    @Delete('suggested-contact/:contactId')
-    @HttpCode(HttpStatus.NO_CONTENT)
-    @ApiResponse({status: HttpStatus.NO_CONTENT, description: 'No content.'})
-    @ApiBadRequestResponse({description: 'Bad request.'})
-    @ApiNotFoundResponse({description: 'Not Found.'})
-    @ApiOperation({deprecated: true, summary: 'use DELETE /person-suggested-contact/:contactId'})
-    public async deleteSuggestedContact(@Param('contactId', ParseUUIDPipe) contactId: string): Promise<void> {
-        await this.deletePersonSuggestedContact(contactId);
-    }
-
-    @Roles('Caregiver', 'Doctor')
     @Delete('person-suggested-contact/:contactId')
     @HttpCode(HttpStatus.NO_CONTENT)
     @ApiResponse({status: HttpStatus.NO_CONTENT, description: 'No content.'})
@@ -122,23 +101,6 @@ export class GrantedUserController {
 
         try {
             await useCase.deleteContact(contactId);
-        } catch (error) {
-            throw new BadRequestException(error.message);
-        }
-    }
-
-    @Roles('Caregiver', 'Doctor')
-    @Get('my-suggested-contacts/:patientUserId')
-    @HttpCode(HttpStatus.OK)
-    @ApiResponse({status: HttpStatus.OK, type: [PersonSuggestedContactView]})
-    @ApiOperation({deprecated: true, summary: 'use GET /suggested-contacts/:patientUserId'})
-    public async getPatientSuggestedContacts(
-        @Param('patientUserId', ParseUUIDPipe) patientUserId: string,
-    ): Promise<PersonSuggestedContactDto[]> {
-        const useCase = this.grantedUserUseCasesFactory.createPatientContactUseCase();
-
-        try {
-            return await useCase.getList(patientUserId);
         } catch (error) {
             throw new BadRequestException(error.message);
         }
