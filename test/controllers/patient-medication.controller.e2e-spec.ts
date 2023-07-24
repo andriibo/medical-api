@@ -68,7 +68,7 @@ const patientMedication: PatientMedication = {
     patientUserId: patient.id,
     genericName: 'Generic Name',
     brandNames: ['One', 'Two'],
-    dose: 0,
+    dose: 1.1,
     timesPerDay: TimesPerDayEnum.QD,
     createdBy: patient.id,
     createdAt: '2022-10-10 07:31:17.016236',
