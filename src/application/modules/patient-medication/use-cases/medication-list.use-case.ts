@@ -23,11 +23,10 @@ export class MedicationListUseCase {
         await this.patientMedicationSpecification.assertUserCanOperateMedication(user, patientUserId);
 
         const items = await this.patientMedicationRepository.getByPatientUserId(patientUserId);
-        const users = await this.getUsers(items);
 
         const dto = new PatientMedicationsDto();
         dto.medications = items.map((item) => MedicationDto.fromPatientMedication(item));
-        dto.users = users;
+        dto.users = await this.getUsers(items);
 
         return dto;
     }

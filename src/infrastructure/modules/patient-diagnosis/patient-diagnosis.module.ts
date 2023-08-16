@@ -10,6 +10,8 @@ import {AuthModule} from 'infrastructure/modules/auth/auth.module';
 import {PatientDataAccessModule} from 'infrastructure/modules/patient-data-access/patient-data-access.module';
 import {PatientDiagnosisSpecification} from 'app/modules/patient-diagnosis/specifications/patient-diagnosis.specification';
 import {PatientDataAccessSpecification} from 'app/modules/patient-data-access/specifications/patient-data-access.specification';
+import {IUserRepository} from 'app/modules/auth/repositories';
+import {UserRepository} from 'infrastructure/modules/auth/models';
 
 @Module({
     imports: [TypeOrmModule.forFeature([PatientDiagnosisModel]), AuthModule, PatientDataAccessModule],
@@ -23,6 +25,10 @@ import {PatientDataAccessSpecification} from 'app/modules/patient-data-access/sp
         {
             provide: IPatientDiagnosisEntityMapper,
             useClass: PatientDiagnosisModelMapper,
+        },
+        {
+            provide: IUserRepository,
+            useClass: UserRepository,
         },
         {
             provide: PatientDiagnosisSpecification,
