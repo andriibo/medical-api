@@ -70,7 +70,7 @@ const patientMedication: PatientMedication = {
     brandNames: ['One', 'Two'],
     dose: 1.1,
     timesPerDay: TimesPerDayEnum.QD,
-    createdBy: patient.id,
+    createdBy: doctor.id,
     createdAt: '2022-10-10 07:31:17.016236',
 };
 describe('PatientMedicationController', () => {
@@ -78,7 +78,7 @@ describe('PatientMedicationController', () => {
     beforeAll(async () => {
         const mockedUserRepository = {
             getOneById: jest.fn(() => Promise.resolve(patient)),
-            getByIds: jest.fn(() => Promise.resolve([patient])),
+            getByIds: jest.fn(() => Promise.resolve([doctor])),
         };
         const mockedPatientDataAccessRepository = {
             getOneByPatientUserIdAndGrantedUserId: jest.fn(() => Promise.resolve(patientDataAccess)),
@@ -162,17 +162,33 @@ describe('PatientMedicationController', () => {
             .get(`/patient-medications/${patient.id}`)
             .set('Authorization', 'Bearer doctor')
             .expect(200)
-            .expect([
-                {
-                    genericName: patientMedication.genericName,
-                    brandNames: patientMedication.brandNames,
-                    medicationId: patientMedication.id,
-                    dose: patientMedication.dose,
-                    timesPerDay: patientMedication.timesPerDay,
-                    createdBy: patientMedication.createdBy,
-                    createdAt: patientMedication.createdAt,
-                },
-            ]);
+            .expect({
+                medications: [
+                    {
+                        genericName: patientMedication.genericName,
+                        brandNames: patientMedication.brandNames,
+                        medicationId: patientMedication.id,
+                        dose: patientMedication.dose,
+                        timesPerDay: patientMedication.timesPerDay,
+                        createdBy: patientMedication.createdBy,
+                        createdAt: patientMedication.createdAt,
+                    },
+                ],
+                users: [
+                    {
+                        avatar: doctor.avatar,
+                        deletedAt: doctor.deletedAt,
+                        userId: doctor.id,
+                        email: doctor.email,
+                        firstName: doctor.firstName,
+                        lastName: doctor.lastName,
+                        phone: doctor.phone,
+                        role: doctor.role,
+                        roleLabel: doctor.roleLabel,
+                        passwordUpdatedAt: doctor.passwordUpdatedAt,
+                    },
+                ],
+            });
     });
 
     it('/patient-medication/:medicationId (DELETE)', async () => {

@@ -9,6 +9,8 @@ import {PatientMedicationModelMapper} from './mappers/patient-medication-model.m
 import {AuthModule, PatientDataAccessModule} from 'infrastructure/modules';
 import {PatientMedicationSpecification} from 'app/modules/patient-medication/specifications/patient-medication.specification';
 import {PatientDataAccessSpecification} from 'app/modules/patient-data-access/specifications/patient-data-access.specification';
+import {IUserRepository} from 'app/modules/auth/repositories';
+import {UserRepository} from 'infrastructure/modules/auth/models';
 
 @Module({
     imports: [TypeOrmModule.forFeature([PatientMedicationModel]), AuthModule, PatientDataAccessModule],
@@ -22,6 +24,10 @@ import {PatientDataAccessSpecification} from 'app/modules/patient-data-access/sp
         {
             provide: IPatientMedicationEntityMapper,
             useClass: PatientMedicationModelMapper,
+        },
+        {
+            provide: IUserRepository,
+            useClass: UserRepository,
         },
         {
             provide: PatientMedicationSpecification,
