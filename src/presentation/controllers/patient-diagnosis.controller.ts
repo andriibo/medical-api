@@ -15,8 +15,8 @@ import {ApiBearerAuth, ApiForbiddenResponse, ApiResponse, ApiTags, ApiUnauthoriz
 import {Roles} from 'presentation/guards';
 import {PatientDiagnosisUseCasesFactory} from 'infrastructure/modules/patient-diagnosis/factories/patient-diagnosis-use-cases.factory';
 import {CreateDiagnosisView, UpdateDiagnosisView} from 'presentation/views/request/patient-diagnosis';
-import {PatientDiagnosisDto} from 'domain/dtos/response/patient-diagnosis/patient-diagnosis.dto';
-import {PatientDiagnosisView} from 'views/response/patient-diagnosis';
+import {PatientDiagnosesView} from 'views/response/patient-diagnosis';
+import {PatientDiagnosesDto} from 'domain/dtos/response/patient-diagnosis/patient-diagnoses.dto';
 
 @Controller()
 @ApiBearerAuth()
@@ -62,10 +62,10 @@ export class PatientDiagnosisController {
     @Roles('Caregiver', 'Doctor', 'Patient')
     @Get('patient-diagnoses/:patientUserId')
     @HttpCode(HttpStatus.OK)
-    @ApiResponse({status: HttpStatus.OK, type: [PatientDiagnosisView]})
+    @ApiResponse({status: HttpStatus.OK, type: PatientDiagnosesView})
     public async getPatientDiagnoses(
         @Param('patientUserId', ParseUUIDPipe) patientUserId: string,
-    ): Promise<PatientDiagnosisDto[]> {
+    ): Promise<PatientDiagnosesDto> {
         const useCase = this.patientDiagnosisUseCasesFactory.createDiagnosisListUseCase();
 
         try {

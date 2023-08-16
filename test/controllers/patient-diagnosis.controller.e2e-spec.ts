@@ -66,7 +66,7 @@ const patientDiagnosis: PatientDiagnosis = {
     id: 'eee3adc4-9e36-4bb1-8911-e2161a2a3975',
     patientUserId: patient.id,
     diagnosisName: 'Diagnosis Name',
-    createdBy: patient.id,
+    createdBy: doctor.id,
     createdAt: '2022-10-10 07:31:17.016236',
 };
 
@@ -75,7 +75,7 @@ describe('PatientDiagnosisController', () => {
     beforeAll(async () => {
         const mockedUserRepository = {
             getOneById: jest.fn(() => Promise.resolve(patient)),
-            getByIds: jest.fn(() => Promise.resolve([patient])),
+            getByIds: jest.fn(() => Promise.resolve([doctor])),
         };
         const mockedPatientDataAccessRepository = {
             getOneByPatientUserIdAndGrantedUserId: jest.fn(() => Promise.resolve(patientDataAccess)),
@@ -153,14 +153,30 @@ describe('PatientDiagnosisController', () => {
             .get(`/patient-diagnoses/${patient.id}`)
             .set('Authorization', 'Bearer doctor')
             .expect(200)
-            .expect([
-                {
-                    diagnosisId: patientDiagnosis.id,
-                    diagnosisName: patientDiagnosis.diagnosisName,
-                    createdBy: patientDiagnosis.createdBy,
-                    createdAt: patientDiagnosis.createdAt,
-                },
-            ]);
+            .expect({
+                diagnoses: [
+                    {
+                        diagnosisId: patientDiagnosis.id,
+                        diagnosisName: patientDiagnosis.diagnosisName,
+                        createdBy: patientDiagnosis.createdBy,
+                        createdAt: patientDiagnosis.createdAt,
+                    },
+                ],
+                users: [
+                    {
+                        avatar: doctor.avatar,
+                        deletedAt: doctor.deletedAt,
+                        userId: doctor.id,
+                        email: doctor.email,
+                        firstName: doctor.firstName,
+                        lastName: doctor.lastName,
+                        phone: doctor.phone,
+                        role: doctor.role,
+                        roleLabel: doctor.roleLabel,
+                        passwordUpdatedAt: doctor.passwordUpdatedAt,
+                    },
+                ],
+            });
     });
 
     it('/patient-diagnosis/:diagnosisId (DELETE)', async () => {
