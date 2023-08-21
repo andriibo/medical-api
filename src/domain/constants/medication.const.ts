@@ -5,5 +5,5 @@ export enum TimesPerDayEnum {
     QID = 'QID',
 }
 
-export const MinDose = 0.0;
+export const MinDose = 0.001;
 export const MaxDose = 10000.0;
