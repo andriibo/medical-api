@@ -11,13 +11,7 @@ import {
     ParseUUIDPipe,
     HttpCode,
 } from '@nestjs/common';
-import {
-    ApiBearerAuth,
-    ApiForbiddenResponse,
-    ApiResponse,
-    ApiTags,
-    ApiUnauthorizedResponse,
-} from '@nestjs/swagger';
+import {ApiBearerAuth, ApiForbiddenResponse, ApiResponse, ApiTags, ApiUnauthorizedResponse} from '@nestjs/swagger';
 import {Roles} from 'presentation/guards';
 import {PatientUseCasesFactory} from 'infrastructure/modules/emergency-contact/factories/patient-use-cases.factory';
 import {

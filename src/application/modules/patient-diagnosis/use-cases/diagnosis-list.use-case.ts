@@ -32,8 +32,7 @@ export class DiagnosisListUseCase {
     }
 
     private async getUsers(medications: PatientDiagnosis[]): Promise<UserDto[]> {
-        const userIds = [];
-        medications.map((item) => userIds.push(item.createdBy));
+        const userIds = medications.map((item) => item.createdBy);
 
         const users = await this.userRepository.getByIds(userIds);
 

@@ -12,9 +12,15 @@ import {PatientDiagnosisSpecification} from 'app/modules/patient-diagnosis/speci
 import {PatientDataAccessSpecification} from 'app/modules/patient-data-access/specifications/patient-data-access.specification';
 import {IUserRepository} from 'app/modules/auth/repositories';
 import {UserRepository} from 'infrastructure/modules/auth/models';
+import {UserIndependentModule} from 'infrastructure/modules/auth/user.ind.module';
 
 @Module({
-    imports: [TypeOrmModule.forFeature([PatientDiagnosisModel]), AuthModule, PatientDataAccessModule],
+    imports: [
+        TypeOrmModule.forFeature([PatientDiagnosisModel]),
+        AuthModule,
+        PatientDataAccessModule,
+        UserIndependentModule,
+    ],
     controllers: [PatientDiagnosisController],
     providers: [
         PatientDiagnosisUseCasesFactory,
