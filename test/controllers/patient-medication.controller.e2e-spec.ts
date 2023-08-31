@@ -135,7 +135,7 @@ describe('PatientMedicationController', () => {
         dto.patientUserId = patient.id;
         dto.genericName = 'Test';
         dto.brandNames = ['One', 'Two'];
-        dto.dose = 0;
+        dto.dose = 1;
         dto.timesPerDay = TimesPerDayEnum.QD;
         return request(app.getHttpServer())
             .post('/patient-medication')
@@ -148,7 +148,7 @@ describe('PatientMedicationController', () => {
         const dto = new UpdateMedicationDto();
         dto.genericName = 'Test';
         dto.brandNames = ['One', 'Two'];
-        dto.dose = 0;
+        dto.dose = 1;
         dto.timesPerDay = TimesPerDayEnum.QD;
         return request(app.getHttpServer())
             .patch(`/patient-medication/${patientMedication.id}`)
