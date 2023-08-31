@@ -16,7 +16,7 @@ export class VitalsDto {
                 vital.id,
                 vital.thresholdsId,
                 vital.timestamp,
-                Number(vital.temp),
+                vital.temp === null ? null : Number(vital.temp),
                 vital.isTempNormal === null ? null : Number(vital.isTempNormal),
                 vital.hr,
                 vital.isHrNormal === null ? null : Number(vital.isHrNormal),
